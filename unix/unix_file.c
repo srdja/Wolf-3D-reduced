@@ -29,10 +29,12 @@
 
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <stdlib.h>
 #include <errno.h>
 #include <stdio.h>
 #include <dirent.h>
 #include <unistd.h>
+#include <pwd.h>
 #include <string.h>
 
 
@@ -239,8 +241,31 @@ PUBLIC _boolean FS_RemoveDirectory( const char *pathname )
 	return( ! rmdir( pathname ) );	
 }
 
+/**
+ * \brief Retrieves current user directory.
+ */
 PUBLIC  char *FS_Userdir()
 {
-/* This is a stub. */
-return "/home/dean/.wolf3d";
+	static char *home = NULL;
+	static char W3Dlocaldir[128] = {0};
+
+	if ( !W3Dlocaldir[0] ){
+		home = getenv("HOME");
+	
+		/* Mac OSX doesn't always have the HOME variable defined, so if
+		   looking for $HOME fails, try with getpwuid. */
+		if (!home){
+			struct passwd* pw;
+			pw = getpwuid( getuid() );
+			home = pw->pw_dir;
+		}
+
+		com_snprintf( W3Dlocaldir, 128, "%s%c%s%c%s%c", home, PATH_SEP,
+				".local", PATH_SEP, "wolf3dredux", PATH_SEP );
+		W3Dlocaldir[127] = '\0';
+
+		FS_CreateDirectory(W3Dlocaldir);
+		printf("FS_UserDir = '%s'\n", W3Dlocaldir);
+	}
+	return W3Dlocaldir;
 }
