@@ -247,8 +247,10 @@ PUBLIC _boolean FS_RemoveDirectory( const char *pathname )
 PUBLIC  char *FS_Userdir()
 {
 	static char *home = NULL;
-	static char W3Dlocaldir[128] = {0};
+	static char W3Dlocaldir[128] = {'\0'};
 
+	/* Since the game directory doesn't change in all runtime, it makes
+	   sense to only look for it if it wasn't found yet. */ 
 	if ( !W3Dlocaldir[0] ){
 		home = getenv("HOME");
 	
@@ -265,7 +267,6 @@ PUBLIC  char *FS_Userdir()
 		W3Dlocaldir[127] = '\0';
 
 		FS_CreateDirectory(W3Dlocaldir);
-		printf("FS_UserDir = '%s'\n", W3Dlocaldir);
 	}
 	return W3Dlocaldir;
 }
