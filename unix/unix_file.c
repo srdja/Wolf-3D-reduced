@@ -1,6 +1,6 @@
 /*
 	Copyright (C) 2004 Michael Liebscher <johnnycanuck@users.sourceforge.net>
-	Copyright (C) 1997-2001 Id Software, Inc.	
+	Copyright (C) 1997-2001 Id Software, Inc.
 
 	This program is free software; you can redistribute it and/or
 	modify it under the terms of the GNU General Public License
@@ -55,7 +55,7 @@ PRIVATE	DIR     *fdir;
 
 /**
  * \brief Creates a new directory.
- * \param[in] dirname Pointer to a NUL-terminated string that specifies the path of the directory to be created. 
+ * \param[in] dirname Pointer to a NUL-terminated string that specifies the path of the directory to be created.
  * \return On success nonzero, otherwise zero.
  */
 PUBLIC W8 FS_CreateDirectory( const char *dirname )
@@ -66,13 +66,13 @@ PUBLIC W8 FS_CreateDirectory( const char *dirname )
 	{
 		return 1;
 	}
-	
+
 	return  (W8)(! ret_val);
 }
 
 /**
- * \brief Changes the current directory 
- * \param[in] path Pointer to a NUL-terminated string that specifies the path to the new directory. 
+ * \brief Changes the current directory
+ * \param[in] path Pointer to a NUL-terminated string that specifies the path to the new directory.
  * \return On success nonzero, otherwise zero.
  */
 PUBLIC W8 FS_ChangeCurrentDirectory( const char *path )
@@ -81,8 +81,8 @@ PUBLIC W8 FS_ChangeCurrentDirectory( const char *path )
 }
 
 /**
- * \brief Compare directory and file attributes.  
- * \param[in] found Specifies the file attributes of the file found. 
+ * \brief Compare directory and file attributes.
+ * \param[in] found Specifies the file attributes of the file found.
  * \param[in] musthave File or directory must have these attributes.
  * \param[in] canthave File or directory can not have these attributes.
  * \return On success true, otherwise false.
@@ -93,7 +93,7 @@ PRIVATE _boolean CompareAttributes( const char *path, W32 musthave, W32 canthave
 
 	if( stat( path, &st ) == -1 )
 	{
-		return false; 
+		return false;
 	}
 
 	if( ( st.st_mode & S_IFDIR ) && ( canthave & FA_DIR ) )
@@ -110,8 +110,8 @@ PRIVATE _boolean CompareAttributes( const char *path, W32 musthave, W32 canthave
 }
 
 /**
- * \brief Searches a directory for a file.   
- * \param[in] path Pointer to a NUL-terminated string that specifies a valid directory or path and file name. 
+ * \brief Searches a directory for a file.
+ * \param[in] path Pointer to a NUL-terminated string that specifies a valid directory or path and file name.
  * \param[in] musthave File or directory must have these attributes.
  * \param[in] canthave File or directory can not have these attributes.
  * \return On success string of file name or directory, otherwise NULL.
@@ -127,7 +127,7 @@ PUBLIC char *FS_FindFirst( const char *path, W32 musthave, W32 canthave )
 		return NULL;
 	}
 
-	com_strlcpy( findpattern, FS_getFileName( path ), sizeof( findpattern ) );
+	com_strlcpy( findpattern, FS_getFileName( (char *) path ), sizeof( findpattern ) );
 
 	FS_getPath( path, findbase, 1024 );
 
@@ -143,12 +143,12 @@ PUBLIC char *FS_FindFirst( const char *path, W32 musthave, W32 canthave )
 		if( (fdir = opendir( findbase )) == NULL )
 		{
 			return NULL;
-		}	
+		}
 	}
 
 	while( (d = readdir( fdir )) != NULL )
 	{
-		if( ! *findpattern || glob_match( findpattern, d->d_name ) ) 
+		if( ! *findpattern || glob_match( findpattern, d->d_name ) )
 		{
 			if( ! *findbase )
 			{
@@ -160,9 +160,9 @@ PUBLIC char *FS_FindFirst( const char *path, W32 musthave, W32 canthave )
 			}
 
 			if( CompareAttributes( findpath, musthave, canthave ) )
-			{				
+			{
 				return findpath;
-			}			
+			}
 		}
 	}
 
@@ -172,7 +172,7 @@ PUBLIC char *FS_FindFirst( const char *path, W32 musthave, W32 canthave )
 
 /**
  * \brief Continues a file search from a previous call to the FS_FindFirst function.
- * \param[in] musthave File or directory must have these attributes. 
+ * \param[in] musthave File or directory must have these attributes.
  * \param[in] canthave File or directory can not have these attributes.
  * \return On success string of file name or directory, otherwise NULL.
  */
@@ -218,7 +218,7 @@ PUBLIC void FS_FindClose( void )
 		closedir( fdir );
 	}
 
-	fdir = NULL;	
+	fdir = NULL;
 }
 
 /**
@@ -228,7 +228,7 @@ PUBLIC void FS_FindClose( void )
  */
 PUBLIC _boolean FS_DeleteFile( const char *filename )
 {
-	return( ! unlink( filename ) );	
+	return( ! unlink( filename ) );
 }
 
 /**
@@ -238,7 +238,7 @@ PUBLIC _boolean FS_DeleteFile( const char *filename )
  */
 PUBLIC _boolean FS_RemoveDirectory( const char *pathname )
 {
-	return( ! rmdir( pathname ) );	
+	return( ! rmdir( pathname ) );
 }
 
 /**
@@ -250,10 +250,10 @@ PUBLIC  char *FS_Userdir()
 	static char W3Dlocaldir[128] = {'\0'};
 
 	/* Since the game directory doesn't change in all runtime, it makes
-	   sense to only look for it if it wasn't found yet. */ 
+	   sense to only look for it if it wasn't found yet. */
 	if ( !W3Dlocaldir[0] ){
 		home = getenv("HOME");
-	
+
 		/* Mac OSX doesn't always have the HOME variable defined, so if
 		   looking for $HOME fails, try with getpwuid. */
 		if (!home){
@@ -262,8 +262,8 @@ PUBLIC  char *FS_Userdir()
 			home = pw->pw_dir;
 		}
 
-		com_snprintf( W3Dlocaldir, 128, "%s%c%s%c%s%c", home, PATH_SEP,
-				".local", PATH_SEP, "wolf3dredux", PATH_SEP );
+		com_snprintf( W3Dlocaldir, 128, "%s%c%s%c%s%c%s%c", home, PATH_SEP,
+				".local", PATH_SEP, "share", PATH_SEP, "wolf3dredux", PATH_SEP );
 		W3Dlocaldir[127] = '\0';
 
 		FS_CreateDirectory(W3Dlocaldir);

@@ -38,13 +38,13 @@
 
 /**
  * \brief Returns file name from path string.
- * \param[in] path Path to get file name from. 
+ * \param[in] path Path to get file name from.
  * \return Pointer to start of file name, otherwise NULL.
  */
 PUBLIC char *FS_getFileName( char *path )
 {
-	char	*last;
-	
+	char *last;
+
 	last = path;
 	while( *path )
 	{
@@ -60,8 +60,8 @@ PUBLIC char *FS_getFileName( char *path )
 
 /**
  * \brief Removes file extension from path string.
- * \param[in] in Path to remove file extension. 
- * \param[in] out Pointer to hold path string. 
+ * \param[in] in Path to remove file extension.
+ * \param[in] out Pointer to hold path string.
  * \return Nothing.
  */
 PUBLIC void FS_RemoveExtension( const char *in, char *out )
@@ -76,7 +76,7 @@ PUBLIC void FS_RemoveExtension( const char *in, char *out )
 
 /**
  * \brief Returns file extension from path string.
- * \param[in] in Path to get file extension from. 
+ * \param[in] in Path to get file extension from.
  * \return Pointer to file extension, otherwise NULL.
  * \note Extension cannot be longer than 31 characters.
  */
@@ -116,10 +116,10 @@ PUBLIC char *FS_getFileExtension( const char *in )
 PUBLIC _boolean FS_getFileBase( const char *in, char *out, W32 size_out )
 {
 	const char *start, *end;
-	
+
 	start = in + strlen( in ) - 1;
 	end = start;
-	
+
 	while( start != in && *start != PATH_SEP )
 	{
 		start--;
@@ -153,9 +153,9 @@ PUBLIC _boolean FS_getFileBase( const char *in, char *out, W32 size_out )
 PUBLIC _boolean FS_getPath( const char *in, char *out, W32 size_out )
 {
 	const char *start;
-	
+
 	start = in + strlen( in ) - 1;
-	
+
 	while( start != in && *start != PATH_SEP )
 	{
 		start--;
@@ -168,7 +168,7 @@ PUBLIC _boolean FS_getPath( const char *in, char *out, W32 size_out )
 		return false;
 	}
 
-	com_strlcpy( out, in, (start - in) + 1 );	
+	com_strlcpy( out, in, (start - in) + 1 );
 
 	return true;
 }
@@ -177,9 +177,9 @@ PUBLIC _boolean FS_getPath( const char *in, char *out, W32 size_out )
  * \brief Append file extension to path if necessary.
  * \param[in] in Path with file name.
  * \param[in] maxSize Max size of path buffer.
- * \param[in] extension Extension to append to path. 
+ * \param[in] extension Extension to append to path.
  */
-PUBLIC void FS_DefaultExtension (char *path, const int maxSize, const char *extension ) 
+PUBLIC void FS_DefaultExtension (char *path, const int maxSize, const char *extension )
 {
 	char	oldPath[MAX_OSPATH];
 	char    *src;
@@ -190,15 +190,15 @@ PUBLIC void FS_DefaultExtension (char *path, const int maxSize, const char *exte
 //
 	src = path + strlen(path) - 1;
 
-	while (*src != '/' && src != path) 
+	while (*src != '/' && src != path)
     {
-		if ( *src == '.' ) 
+		if ( *src == '.' )
         {
 			return;                 // it has an extension
 		}
 		src--;
 	}
-    
+
     com_strlcpy( oldPath, path, sizeof( oldPath ) );
 	com_snprintf( path, maxSize, "%s%s", oldPath, extension );
 }

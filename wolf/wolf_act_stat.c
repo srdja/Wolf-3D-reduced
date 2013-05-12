@@ -22,7 +22,7 @@
 /**
  * \file wolf_act_stat.c
  * \brief Wolfenstein 3-D entity management.
- * \author Michael Liebscher 
+ * \author Michael Liebscher
  * \date 2004-2013
  * \author DarkOne the Hacker
  * \date 2000-2002
@@ -56,7 +56,7 @@ stateinfo objstate[ NUMENEMIES ][ NUMSTATES ] =
 
 		{ 0, SPR_GRD_PAIN_1,	10, NULL,	NULL, st_chase1},// st_pain,
 		{ 0, SPR_GRD_PAIN_2,	10, NULL,	NULL, st_chase1},// st_pain1,
-	
+
 		{ 0, SPR_GRD_SHOOT1,	20, NULL,	NULL,	st_shoot2},// st_shoot1,
 		{ 0, SPR_GRD_SHOOT2,	20, NULL,	T_Shoot,st_shoot3},// st_shoot2,
 		{ 0, SPR_GRD_SHOOT3,	20, NULL,	NULL,	st_chase1},// st_shoot3,
@@ -102,7 +102,7 @@ stateinfo objstate[ NUMENEMIES ][ NUMSTATES ] =
 
 		{0, SPR_OFC_PAIN_1,	10, NULL,	 NULL, st_chase1},// st_pain,
 		{0, SPR_OFC_PAIN_2,	10, NULL,	 NULL, st_chase1},// st_pain1,
-	
+
 		{0, SPR_OFC_SHOOT1,	 6, NULL,	 NULL, st_shoot2},// st_shoot1,
 		{0, SPR_OFC_SHOOT2,	20, NULL,	 T_Shoot, st_shoot3},// st_shoot2,
 		{0, SPR_OFC_SHOOT3,	10, NULL,	 NULL, st_chase1},// st_shoot3,
@@ -148,7 +148,7 @@ stateinfo objstate[ NUMENEMIES ][ NUMSTATES ] =
 
 		{0, SPR_SS_PAIN_1,	10, NULL,	 NULL, st_chase1},// st_pain,
 		{0, SPR_SS_PAIN_2,	10, NULL,	 NULL, st_chase1},// st_pain1,
-	
+
 		{0, SPR_SS_SHOOT1, 20, NULL, NULL,		st_shoot2},// st_shoot1,
 		{0, SPR_SS_SHOOT2, 20, NULL, T_Shoot, st_shoot3},// st_shoot2,
 		{0, SPR_SS_SHOOT3, 10, NULL, NULL,		st_shoot4},// st_shoot3,
@@ -193,7 +193,7 @@ stateinfo objstate[ NUMENEMIES ][ NUMSTATES ] =
 
 		{0, SPR_DEMO,	0, NULL, NULL, st_chase1},// st_pain,
 		{0, SPR_DEMO,	0, NULL, NULL, st_chase1},// st_pain1,
-	
+
 		{0, SPR_DOG_JUMP1, 10, NULL,	 NULL,	 st_shoot2},// st_shoot1,
 		{0, SPR_DOG_JUMP2, 10, NULL,	 T_Bite, st_shoot3},// st_shoot2,
 		{0, SPR_DOG_JUMP3, 10, NULL,	 NULL,   st_shoot4},// st_shoot3,
@@ -239,7 +239,7 @@ stateinfo objstate[ NUMENEMIES ][ NUMSTATES ] =
 
 		{0, SPR_DEMO,	0, NULL, NULL, st_chase1},// st_pain,
 		{0, SPR_DEMO,	0, NULL, NULL, st_chase1},// st_pain1,
-	
+
 		{0, SPR_BOSS_SHOOT1, 30, NULL, NULL,		st_shoot2},// st_shoot1,
 		{0, SPR_BOSS_SHOOT2, 10, NULL, T_Shoot, st_shoot3},// st_shoot2,
 		{0, SPR_BOSS_SHOOT3, 10, NULL, T_Shoot, st_shoot4},// st_shoot3,
@@ -285,10 +285,10 @@ stateinfo objstate[ NUMENEMIES ][ NUMSTATES ] =
 
 		{0, SPR_DEMO,	0, NULL, NULL, st_chase1},// st_pain,
 		{0, SPR_DEMO,	0, NULL, NULL, st_chase1},// st_pain1,
-	
+
 		{0, SPR_SCHABB_SHOOT1, 30, NULL, NULL,     st_shoot2},// st_shoot1,
 		{0, SPR_SCHABB_SHOOT2, 10, NULL, T_Launch, st_chase1},// st_shoot2,
-		
+
 		{0, SPR_DEMO,	0, NULL,	 NULL, st_chase1},// st_shoot3,
 		{0, SPR_DEMO,	0, NULL,	 NULL, st_chase1},//  st_shoot4,
 		{0, SPR_DEMO,	0, NULL,	 NULL, st_chase1},// st_shoot5,
@@ -331,7 +331,7 @@ stateinfo objstate[ NUMENEMIES ][ NUMSTATES ] =
 
 		{0, SPR_DEMO,	0, NULL, NULL, st_chase1},// st_pain,
 		{0, SPR_DEMO,	0, NULL, NULL, st_chase1},// st_pain1,
-	
+
 		{0, SPR_FAKE_SHOOT, 8, NULL, T_Launch, st_shoot2},// st_shoot1,
 		{0, SPR_FAKE_SHOOT, 8, NULL, T_Launch, st_shoot3},// st_shoot2,
 		{0, SPR_FAKE_SHOOT,	8, NULL, T_Launch, st_shoot4},// st_shoot3,
@@ -376,7 +376,7 @@ stateinfo objstate[ NUMENEMIES ][ NUMSTATES ] =
 
 		{0, SPR_DEMO,	0, NULL, NULL, st_chase1},// st_pain,
 		{0, SPR_DEMO,	0, NULL, NULL, st_chase1},// st_pain1,
-	
+
 		{0, SPR_MECHA_SHOOT1, 30, NULL, NULL, st_shoot2},// st_shoot1,
 		{0, SPR_MECHA_SHOOT2, 10, NULL, T_Shoot, st_shoot3},// st_shoot2,
 		{0, SPR_MECHA_SHOOT3, 10, NULL, T_Shoot, st_shoot4},// st_shoot3,
@@ -422,7 +422,7 @@ stateinfo objstate[ NUMENEMIES ][ NUMSTATES ] =
 
 		{0, SPR_DEMO,	0, NULL, NULL, st_chase1},// st_pain,
 		{0, SPR_DEMO,	0, NULL, NULL, st_chase1},// st_pain1,
-	
+
 		{0, SPR_HITLER_SHOOT1, 30, NULL, NULL, st_shoot2},// st_shoot1,
 		{0, SPR_HITLER_SHOOT2, 10, NULL, T_Shoot, st_shoot3},// st_shoot2,
 		{0, SPR_HITLER_SHOOT3, 10, NULL, T_Shoot, st_shoot4},// st_shoot3,
@@ -467,7 +467,7 @@ stateinfo objstate[ NUMENEMIES ][ NUMSTATES ] =
 
 		{0, SPR_MUT_PAIN_1,	10, NULL,	 NULL, st_chase1},// st_pain,
 		{0, SPR_MUT_PAIN_2,	10, NULL,	 NULL, st_chase1},// st_pain1,
-	
+
 		{0, SPR_MUT_SHOOT1,	 6, NULL, T_Shoot, st_shoot2}, // st_shoot1,
 		{0, SPR_MUT_SHOOT2,	20, NULL, NULL,		 st_shoot3}, // st_shoot2,
 		{0, SPR_MUT_SHOOT3,	10, NULL, T_Shoot, st_shoot4}, // st_shoot3,
@@ -513,7 +513,7 @@ stateinfo objstate[ NUMENEMIES ][ NUMSTATES ] =
 
 		{0, SPR_DEMO,	0, NULL, NULL, st_chase1},// st_pain,
 		{0, SPR_DEMO,	0, NULL, NULL, st_chase1},// st_pain1,
-	
+
 		{0, SPR_DEMO, 0, NULL, NULL, st_shoot2},// st_shoot1,
 		{0, SPR_DEMO, 0, NULL, NULL, st_shoot3},// st_shoot2,
 		{0, SPR_DEMO, 0, NULL, NULL, st_shoot4},// st_shoot3,
@@ -558,7 +558,7 @@ stateinfo objstate[ NUMENEMIES ][ NUMSTATES ] =
 
 		{0, SPR_DEMO,	0, NULL, NULL, st_chase1},// st_pain,
 		{0, SPR_DEMO,	0, NULL, NULL, st_chase1},// st_pain1,
-	
+
 		{0, SPR_DEMO, 0, NULL, NULL, st_shoot2},// st_shoot1,
 		{0, SPR_DEMO, 0, NULL, NULL, st_shoot3},// st_shoot2,
 		{0, SPR_DEMO, 0, NULL, NULL, st_shoot4},// st_shoot3,
@@ -603,7 +603,7 @@ stateinfo objstate[ NUMENEMIES ][ NUMSTATES ] =
 
 		{0, SPR_DEMO,	0, NULL, NULL, st_chase1},// st_pain,
 		{0, SPR_DEMO,	0, NULL, NULL, st_chase1},// st_pain1,
-	
+
 		{0, SPR_DEMO, 0, NULL, NULL, st_shoot2},// st_shoot1,
 		{0, SPR_DEMO, 0, NULL, NULL, st_shoot3},// st_shoot2,
 		{0, SPR_DEMO, 0, NULL, NULL, st_shoot4},// st_shoot3,
@@ -648,7 +648,7 @@ stateinfo objstate[ NUMENEMIES ][ NUMSTATES ] =
 
 		{0, SPR_DEMO,	0, NULL, NULL, st_chase1},// st_pain,
 		{0, SPR_DEMO,	0, NULL, NULL, st_chase1},// st_pain1,
-	
+
 		{0, SPR_DEMO, 0, NULL, NULL, st_shoot2},// st_shoot1,
 		{0, SPR_DEMO, 0, NULL, NULL, st_shoot3},// st_shoot2,
 		{0, SPR_DEMO, 0, NULL, NULL, st_shoot4},// st_shoot3,
@@ -693,7 +693,7 @@ stateinfo objstate[ NUMENEMIES ][ NUMSTATES ] =
 
 		{0, SPR_DEMO,	0, NULL, NULL, st_chase1},// st_pain,
 		{0, SPR_DEMO,	0, NULL, NULL, st_chase1},// st_pain1,
-	
+
 		{0, SPR_GRETEL_SHOOT1, 30, NULL, NULL,		st_shoot2},// st_shoot1,
 		{0, SPR_GRETEL_SHOOT2, 10, NULL, T_Shoot, st_shoot3},// st_shoot2,
 		{0, SPR_GRETEL_SHOOT3, 10, NULL, T_Shoot, st_shoot4},// st_shoot3,
@@ -739,10 +739,10 @@ stateinfo objstate[ NUMENEMIES ][ NUMSTATES ] =
 
 		{0, SPR_DEMO,	0, NULL, NULL, st_chase1},// st_pain,
 		{0, SPR_DEMO,	0, NULL, NULL, st_chase1},// st_pain1,
-	
+
 		{0, SPR_GIFT_SHOOT1, 30, NULL, NULL,     st_shoot2},// st_shoot1,
 		{0, SPR_GIFT_SHOOT2, 10, NULL, T_Launch, st_chase1},// st_shoot2,
-		
+
 		{0, SPR_DEMO,	0, NULL,	 NULL, st_chase1},// st_shoot3,
 		{0, SPR_DEMO,	0, NULL,	 NULL, st_chase1},//  st_shoot4,
 		{0, SPR_DEMO,	0, NULL,	 NULL, st_chase1},// st_shoot5,
@@ -785,7 +785,7 @@ stateinfo objstate[ NUMENEMIES ][ NUMSTATES ] =
 
 		{0, SPR_DEMO,	0, NULL, NULL, st_chase1},// st_pain,
 		{0, SPR_DEMO,	0, NULL, NULL, st_chase1},// st_pain1,
-	
+
 		{0, SPR_FAT_SHOOT1, 30, NULL, NULL,				 st_shoot2},// st_shoot1,
 		{0, SPR_FAT_SHOOT2, 10, NULL, T_Launch, st_shoot3},// st_shoot2,
 		{0, SPR_FAT_SHOOT3,	10, NULL,	T_Shoot, st_shoot4},// st_shoot3,
@@ -832,7 +832,7 @@ stateinfo objstate[ NUMENEMIES ][ NUMSTATES ] =
 
 		ST_INFO_NULL,// st_pain,
 		ST_INFO_NULL,// st_pain1,
-	
+
 		ST_INFO_NULL,// st_shoot1,
 		ST_INFO_NULL,// st_shoot2,
 		ST_INFO_NULL,// st_shoot3,
@@ -878,7 +878,7 @@ stateinfo objstate[ NUMENEMIES ][ NUMSTATES ] =
 
 		ST_INFO_NULL,// st_pain,
 		ST_INFO_NULL,// st_pain1,
-	
+
 		ST_INFO_NULL,// st_shoot1,
 		ST_INFO_NULL,// st_shoot2,
 		ST_INFO_NULL,// st_shoot3,
@@ -924,7 +924,7 @@ stateinfo objstate[ NUMENEMIES ][ NUMSTATES ] =
 
 		ST_INFO_NULL,// st_pain,
 		ST_INFO_NULL,// st_pain1,
-	
+
 		ST_INFO_NULL,// st_shoot1,
 		ST_INFO_NULL,// st_shoot2,
 		ST_INFO_NULL,// st_shoot3,
@@ -970,7 +970,7 @@ stateinfo objstate[ NUMENEMIES ][ NUMSTATES ] =
 
 		ST_INFO_NULL, // st_pain,
 		ST_INFO_NULL, // st_pain1,
-	
+
 		ST_INFO_NULL, // st_shoot1,
 		ST_INFO_NULL, // st_shoot2,
 		ST_INFO_NULL, // st_shoot3,
@@ -1016,7 +1016,7 @@ stateinfo objstate[ NUMENEMIES ][ NUMSTATES ] =
 
 		ST_INFO_NULL, // st_pain,
 		ST_INFO_NULL, // st_pain1,
-	
+
 		{0, SPR_BJ_JUMP1, 14, T_BJJump, NULL, st_shoot2}, // st_shoot1,
 		{0, SPR_BJ_JUMP2, 14, T_BJJump, T_BJYell, st_shoot3}, // st_shoot2,
 		{0, SPR_BJ_JUMP3, 14, T_BJJump, NULL, st_shoot4}, // st_shoot3,
@@ -1064,7 +1064,7 @@ stateinfo objstate[ NUMENEMIES ][ NUMSTATES ] =
 
 		ST_INFO_NULL,// st_pain,
 		ST_INFO_NULL,// st_pain1,
-	
+
 		ST_INFO_NULL,// st_shoot1,
 		ST_INFO_NULL,// st_shoot2,
 		ST_INFO_NULL,// st_shoot3,
@@ -1110,7 +1110,7 @@ stateinfo objstate[ NUMENEMIES ][ NUMSTATES ] =
 
 		ST_INFO_NULL,// st_pain,
 		ST_INFO_NULL,// st_pain1,
-	
+
 		ST_INFO_NULL,// st_shoot1,
 		ST_INFO_NULL,// st_shoot2,
 		ST_INFO_NULL,// st_shoot3,
@@ -1156,7 +1156,7 @@ stateinfo objstate[ NUMENEMIES ][ NUMSTATES ] =
 
 		ST_INFO_NULL, // st_pain,
 		ST_INFO_NULL, // st_pain1,
-	
+
 		ST_INFO_NULL, // st_shoot1,
 		ST_INFO_NULL, // st_shoot2,
 		ST_INFO_NULL, // st_shoot3,
@@ -1202,7 +1202,7 @@ stateinfo objstate[ NUMENEMIES ][ NUMSTATES ] =
 
 		ST_INFO_NULL, // st_pain,
 		ST_INFO_NULL, // st_pain1,
-	
+
 		ST_INFO_NULL, // st_shoot1,
 		ST_INFO_NULL, // st_shoot2,
 		ST_INFO_NULL, // st_shoot3,
@@ -1248,7 +1248,7 @@ stateinfo objstate[ NUMENEMIES ][ NUMSTATES ] =
 
 		{0, SPR_ANGEL_TIRED1, 40, NULL,	A_Breathing, st_pain1}, // st_pain,
 		{0, SPR_ANGEL_TIRED2, 40, NULL,	NULL, st_shoot4}, // st_pain1,
-	
+
 		{0, SPR_ANGEL_SHOOT1, 10, NULL,	A_StartAttack, st_shoot2}, // st_shoot1,
 		{0, SPR_ANGEL_SHOOT2, 20, NULL,	T_Launch, st_shoot3}, // st_shoot2,
 		{0, SPR_ANGEL_SHOOT1, 10, NULL,	A_Relaunch, st_shoot2}, // st_shoot3,
@@ -1293,7 +1293,7 @@ stateinfo objstate[ NUMENEMIES ][ NUMSTATES ] =
 
 		ST_INFO_NULL, // st_pain,
 		ST_INFO_NULL, // st_pain1,
-	
+
 		{0, SPR_TRANS_SHOOT1, 30, NULL,	NULL, st_shoot2}, // st_shoot1,
 		{0, SPR_TRANS_SHOOT2, 10, NULL,	T_Shoot, st_shoot3}, // st_shoot2,
 		{0, SPR_TRANS_SHOOT3, 10, NULL,	T_Shoot, st_shoot4}, // st_shoot3,
@@ -1337,7 +1337,7 @@ stateinfo objstate[ NUMENEMIES ][ NUMSTATES ] =
 
 		ST_INFO_NULL, // st_pain,
 		ST_INFO_NULL, // st_pain1,
-	
+
 		{0, SPR_UBER_SHOOT1, 30, NULL, NULL, st_shoot2}, // st_shoot1,
 		{0, SPR_UBER_SHOOT2, 12, NULL, T_UShoot, st_shoot3}, // st_shoot2,
 		{0, SPR_UBER_SHOOT3, 12, NULL, T_UShoot, st_shoot4}, // st_shoot3,
@@ -1381,7 +1381,7 @@ stateinfo objstate[ NUMENEMIES ][ NUMSTATES ] =
 
 		ST_INFO_NULL, // st_pain,
 		ST_INFO_NULL, // st_pain1,
-	
+
 		{0, SPR_WILL_SHOOT1, 30, NULL, NULL, st_shoot2}, // st_shoot1,
 		{0, SPR_WILL_SHOOT2, 10, NULL, T_Launch, st_shoot3}, // st_shoot2,
 		{0, SPR_WILL_SHOOT3, 10, NULL, T_Shoot, st_shoot4}, // st_shoot3,
@@ -1425,7 +1425,7 @@ stateinfo objstate[ NUMENEMIES ][ NUMSTATES ] =
 
 		ST_INFO_NULL, // st_pain,
 		ST_INFO_NULL, // st_pain1,
-	
+
 		{0, SPR_DEATH_SHOOT1, 30, NULL, NULL, st_shoot2}, // st_shoot1,
 		{0, SPR_DEATH_SHOOT2, 10, NULL, T_Launch, st_shoot3}, // st_shoot2,
 		{0, SPR_DEATH_SHOOT4, 10, NULL, T_Shoot, st_shoot4}, // st_shoot3,
@@ -1628,7 +1628,7 @@ int	starthitpoints[ 4 ][ NUMENEMIES ] =
 };
 
 // FIXME: unnecessary coupling
-extern W8	sound_initialized;
+extern _boolean sound_initialized;
 
 void CorrectBossDeathTimeouts()
 {

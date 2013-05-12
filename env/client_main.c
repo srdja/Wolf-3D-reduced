@@ -223,17 +223,8 @@ PUBLIC void Client_Init( void )
 
 	Con_Init();
 
-#if defined __unix__
-
-	Sound_Init();
-	Video_Init();
-
-#else
-
 	Video_Init();
 	Sound_Init();	// sound must be initialized after window is created
-
-#endif
 
 	Menu_Init();
 

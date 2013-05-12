@@ -21,7 +21,7 @@
 
 /*
  *	filesystem.h:  Interface to filesystem layer.
- *	
+ *
  *	Author:	Michael Liebscher	<johnnycanuck@users.sourceforge.net>
  *
  *	Acknowledgement:
@@ -31,7 +31,7 @@
  */
 
 /*
-	Notes:	
+	Notes:
 	This module is implemented by filestring.c.
 
 */

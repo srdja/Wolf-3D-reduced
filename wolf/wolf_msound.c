@@ -129,7 +129,7 @@ PRIVATE void Sound_MenuInit( void )
 		s_sound_device_list.generic.fontBaseColour = &textcolour;
 		s_sound_device_list.generic.fontHighColour = &readcolour;
 		s_sound_device_list.generic.callback = UpdateSoundDeviceFunc;
-		s_sound_device_list.itemnames	= &sound_devices;
+		s_sound_device_list.itemnames	= sound_devices;
 		s_sound_device_list.curvalue	= numDefaultSoundDevice;
 	}
 

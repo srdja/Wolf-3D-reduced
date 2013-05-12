@@ -10,7 +10,7 @@
 
 	This program is distributed in the hope that it will be useful,
 	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 	See the GNU General Public License for more details.
 
@@ -21,9 +21,9 @@
 */
 
 /*
- *	unix_mouse.c: unix mouse input layer. 
- *	
- *	Author:	Michael Liebscher <johnnycanuck@users.sourceforge.net>	
+ *	unix_mouse.c: unix mouse input layer.
+ *
+ *	Author:	Michael Liebscher <johnnycanuck@users.sourceforge.net>
  *	Date:	2004
  *
  *	Acknowledgement:
@@ -88,12 +88,12 @@ PRIVATE cvar_t *freelook;
 
  Returns: cursor ID associated with the null cursor.
 
- Notes: 
+ Notes:
 -----------------------------------------------------------------------------
 */
 PRIVATE Cursor CreateNullCursor( Display *display, Window root )
 {
-    Pixmap cursormask; 
+    Pixmap cursormask;
     XGCValues xgc;
     GC gc;
     XColor dummycolour;
@@ -116,13 +116,13 @@ PRIVATE Cursor CreateNullCursor( Display *display, Window root )
 
 /*
 -----------------------------------------------------------------------------
- Function: 
+ Function:
 
  Parameters:
 
  Returns:
 
- Notes: 
+ Notes:
 -----------------------------------------------------------------------------
 */
 PUBLIC void install_grabs( void )
@@ -139,24 +139,24 @@ PUBLIC void install_grabs( void )
 				 None,
 				 CurrentTime );
 
-	if( in_dgamouse->value ) 
+	if( in_dgamouse->value )
 	{
 		int MajorVersion, MinorVersion;
 
 		if( ! XF86DGAQueryVersion( display, &MajorVersion, &MinorVersion ) )
-		{ 
+		{
 			// unable to query, probalby not supported
 			Com_Printf( "Failed to detect XF86DGA Mouse\n" );
 			Cvar_Set( "in_dgamouse", "0" );
-		} 
+		}
 		else
 		{
 			dgamouse = true;
 			XF86DGADirectVideo( display, DefaultScreen( display ), XF86DGADirectMouse );
 			XWarpPointer( display, None, mainwin, 0, 0, 0, 0, 0, 0 );
 		}
-	} 
-	else 
+	}
+	else
 	{
 		XWarpPointer( display, None, mainwin,
 					 0, 0, 0, 0,
@@ -176,13 +176,13 @@ PUBLIC void install_grabs( void )
 
 /*
 -----------------------------------------------------------------------------
- Function: 
+ Function:
 
  Parameters:
 
  Returns:
 
- Notes: 
+ Notes:
 -----------------------------------------------------------------------------
 */
 PUBLIC void uninstall_grabs( void )
@@ -192,7 +192,7 @@ PUBLIC void uninstall_grabs( void )
 		return;
 	}
 
-	if( dgamouse ) 
+	if( dgamouse )
 	{
 		dgamouse = false;
 		XF86DGADirectVideo( display, DefaultScreen( display ), 0 );
@@ -210,13 +210,13 @@ PUBLIC void uninstall_grabs( void )
 
 /*
 -----------------------------------------------------------------------------
- Function: 
+ Function:
 
  Parameters:
 
  Returns:
 
- Notes: 
+ Notes:
 -----------------------------------------------------------------------------
 */
 PRIVATE void Force_CenterView_f( void )
@@ -226,32 +226,32 @@ PRIVATE void Force_CenterView_f( void )
 
 /*
 -----------------------------------------------------------------------------
- Function: 
+ Function:
 
  Parameters:
 
  Returns:
 
- Notes: 
+ Notes:
 -----------------------------------------------------------------------------
 */
-PRIVATE void RW_IN_MLookDown( void ) 
-{ 
-	mlooking = true; 
+PRIVATE void RW_IN_MLookDown( void )
+{
+	mlooking = true;
 }
 
 /*
 -----------------------------------------------------------------------------
- Function: 
+ Function:
 
  Parameters:
 
  Returns:
 
- Notes: 
+ Notes:
 -----------------------------------------------------------------------------
 */
-PRIVATE void RW_IN_MLookUp( void ) 
+PRIVATE void RW_IN_MLookUp( void )
 {
 	mlooking = false;
 	IN_CenterView();
@@ -259,13 +259,13 @@ PRIVATE void RW_IN_MLookUp( void )
 
 /*
 -----------------------------------------------------------------------------
- Function: 
+ Function:
 
  Parameters:
 
  Returns:
 
- Notes: 
+ Notes:
 -----------------------------------------------------------------------------
 */
 PUBLIC void IN_StartupMouse( void )
@@ -276,11 +276,11 @@ PUBLIC void IN_StartupMouse( void )
     in_dgamouse = Cvar_Get( "in_dgamouse", "1", CVAR_ARCHIVE );
 	freelook = Cvar_Get( "freelook", "0", 0 );
 	lookstrafe = Cvar_Get( "lookstrafe", "0", 0 );
-	sensitivity = Cvar_Get( "m_sensitivity", "3", 0 );
+//	sensitivity = Cvar_Get( "m_sensitivity", "3", 0 );
 	m_pitch = Cvar_Get( "m_pitch", "0.022", 0 );
-	m_yaw = Cvar_Get( "m_yaw", "0.022", 0 );
+//	m_yaw = Cvar_Get( "m_yaw", "0.022", 0 );
 	m_forward = Cvar_Get( "m_forward", "1", 0 );
-	m_side = Cvar_Get( "m_side", "0.8", 0 );
+//	m_side = Cvar_Get( "m_side", "0.8", 0 );
 
 	Cmd_AddCommand( "+mlook", RW_IN_MLookDown );
 	Cmd_AddCommand( "-mlook", RW_IN_MLookUp );
@@ -290,18 +290,18 @@ PUBLIC void IN_StartupMouse( void )
 	mx = my = 0.0;
 	mouse_avail = true;
 
-	install_grabs();	
+	install_grabs();
 }
 
 /*
 -----------------------------------------------------------------------------
- Function: 
+ Function:
 
  Parameters:
 
  Returns:
 
- Notes: 
+ Notes:
 -----------------------------------------------------------------------------
 */
 PUBLIC void RW_IN_Shutdown( void )
@@ -311,13 +311,13 @@ PUBLIC void RW_IN_Shutdown( void )
 
 /*
 -----------------------------------------------------------------------------
- Function: 
+ Function:
 
  Parameters:
 
  Returns:
 
- Notes: 
+ Notes:
 -----------------------------------------------------------------------------
 */
 PUBLIC void IN_MouseMove( usercmd_t *cmd )
@@ -326,7 +326,7 @@ PUBLIC void IN_MouseMove( usercmd_t *cmd )
 	{
 		return;
 	}
-   
+
 	if( m_filter->value )
 	{
 		mx = (mx + old_mouse_x) * 0.5;
@@ -340,7 +340,7 @@ PUBLIC void IN_MouseMove( usercmd_t *cmd )
 	my *= sensitivity->value;
 
 // add mouse X/Y movement to cmd
-	if( (in_strafe.state & 1) || 
+	if( (in_strafe.state & 1) ||
 		(lookstrafe->value && mlooking ) )
 	{
 		cmd->sidemove += m_side->value * mx;
@@ -351,7 +351,7 @@ PUBLIC void IN_MouseMove( usercmd_t *cmd )
 	}
 
 
-	if( (mlooking || freelook->value) && 
+	if( (mlooking || freelook->value) &&
 		! (in_strafe.state & 1) )
 	{
 		ClientState.viewangles[ PITCH ] += m_pitch->value * my;
@@ -366,37 +366,37 @@ PUBLIC void IN_MouseMove( usercmd_t *cmd )
 
 /*
 -----------------------------------------------------------------------------
- Function: 
+ Function:
 
  Parameters:
 
  Returns:
 
- Notes: 
+ Notes:
 -----------------------------------------------------------------------------
 */
-PUBLIC void IN_DeactivateMouse( void ) 
+PUBLIC void IN_DeactivateMouse( void )
 {
 	if( ! mouse_avail || ! display || ! mainwin )
 	{
 		return;
 	}
 
-	if( mouse_active ) 
+	if( mouse_active )
 	{
 		uninstall_grabs();
 		mouse_active = false;
 	}
 }
 
-PUBLIC void IN_ActivateMouse( void ) 
+PUBLIC void IN_ActivateMouse( void )
 {
 	if( ! mouse_avail || ! display || ! mainwin )
 	{
 		return;
 	}
 
-	if( ! mouse_active ) 
+	if( ! mouse_active )
 	{
 		mx = my = 0; // don't spazz
 		install_grabs();

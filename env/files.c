@@ -32,19 +32,19 @@
 	contents  of the file  system can be transparently  merged from several
 	sources.
 
-	The  "base  directory"  is  the  path  to  the  directory  holding  the 
-	executable  and  all  game  directories.  The  sys_* files pass this to 
-	host_init  in  quakeparms_t->basedir.  This  can be overridden with the 
-	"-basedir"  command  line  parm  to allow code debugging in a different 
-	directory.  The  base  directory  is  only   used  during  file  system 
+	The  "base  directory"  is  the  path  to  the  directory  holding  the
+	executable  and  all  game  directories.  The  sys_* files pass this to
+	host_init  in  quakeparms_t->basedir.  This  can be overridden with the
+	"-basedir"  command  line  parm  to allow code debugging in a different
+	directory.  The  base  directory  is  only   used  during  file  system
 	initialization.
 
 	The "game directory" is the first tree on the search path and directory
-	that  all  generated  files  (save  games, screen  shots, demos, config 
-	files)  will  be  saved  to.  This  can  be overridden with the "-game" 
-	command line parameter.   The game directory can never be changed while 
-	the  application  is  executing.  This is a precaution against having a 
-	malicious  server  instruct  clients  to  write  files  over areas they 
+	that  all  generated  files  (save  games, screen  shots, demos, config
+	files)  will  be  saved  to.  This  can  be overridden with the "-game"
+	command line parameter.   The game directory can never be changed while
+	the  application  is  executing.  This is a precaution against having a
+	malicious  server  instruct  clients  to  write  files  over areas they
 	shouldn't.
 
 */
@@ -124,18 +124,18 @@ PRIVATE void FS_AddGameDirectory( const char *dir )
 	fs_searchpaths = search;
 
 	//
-	// add any pak files 
+	// add any pak files
 	//
 	FS_AddCompressed(search, path, "pak");
 
 	//
-	// add any zip files 
+	// add any zip files
 	//
 	FS_AddCompressed(search, path, "zip");
 }
 
 /**
- * \brief Get root directory. 
+ * \brief Get root directory.
  * \return String with the name of the root directory.
  */
 PUBLIC char *FS_Gamedir( void )
@@ -161,11 +161,11 @@ PUBLIC void FS_ExecAutoexec( void )
 	dir = Cvar_VariableString( "gamedir" );
 	if( *dir )
 	{
-		com_snprintf( name, sizeof( name ), "%s%c%s%cautoexec.cfg", fs_basedir->string, PATH_SEP, dir, PATH_SEP ); 
+		com_snprintf( name, sizeof( name ), "%s%c%s%cautoexec.cfg", fs_basedir->string, PATH_SEP, dir, PATH_SEP );
 	}
 	else
 	{
-		com_snprintf(name, sizeof(name), "%s%c%s%cautoexec.cfg", fs_basedir->string, PATH_SEP, BASE_DIRECTORY, PATH_SEP); 
+		com_snprintf(name, sizeof(name), "%s%c%s%cautoexec.cfg", fs_basedir->string, PATH_SEP, BASE_DIRECTORY, PATH_SEP);
 	}
 
 	if( FS_FindFirst( name, 0, FA_DIR | FA_HIDDEN | FA_SYSTEM ) )
@@ -315,7 +315,7 @@ PRIVATE char **FS_ListFiles( char *findname, int *numfiles, unsigned musthave, u
 	while( s )
 	{
 		if( s[ strlen( s ) - 1 ] != '.' )
-		{            
+		{
 			list[ nfiles ] = strdup( s );
 
 			(void)com_strlwr( list[ nfiles ] );
@@ -353,7 +353,7 @@ PRIVATE void FS_Dir_f( void )
 
 		while ( *tmp != 0 )
 		{
-			if ( *tmp == '\\' ) 
+			if ( *tmp == '\\' )
 				*tmp = '/';
 			tmp++;
 		}
@@ -459,7 +459,7 @@ PUBLIC void FS_InitFilesystem( void )
 
 	//
 	// cddir <path>
-	// Logically concatenates the cddir after the basedir. This 
+	// Logically concatenates the cddir after the basedir. This
 	// allows the game to run from outside the data tree.
 	//
 	fs_cddir = Cvar_Get( "cddir", "", CVAR_ROM );
@@ -471,9 +471,9 @@ PUBLIC void FS_InitFilesystem( void )
 
 	//
 	// start up with BASEDIRNAME by default
-	//    
+	//
     com_snprintf( path, sizeof(path), "%s%c%s", fs_basedir->string, PATH_SEP, BASE_DIRECTORY );
-    FS_AddGameDirectory( path ); 
+    FS_AddGameDirectory( path );
 
 	// any set gamedirs will be freed up to here
 	fs_base_searchpaths = fs_searchpaths;
