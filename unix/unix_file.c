@@ -262,8 +262,8 @@ PUBLIC  char *FS_Userdir()
 			home = pw->pw_dir;
 		}
 
-		com_snprintf( W3Dlocaldir, 128, "%s%c%s%c%s%c%s%c", home, PATH_SEP,
-				".local", PATH_SEP, "share", PATH_SEP, "wolf3dredux", PATH_SEP );
+		com_snprintf( W3Dlocaldir, 128, "%s%c.local%cshare%cwolf3dredux%c",
+				home, PATH_SEP, PATH_SEP, PATH_SEP, PATH_SEP );
 		W3Dlocaldir[127] = '\0';
 
 		FS_CreateDirectory(W3Dlocaldir);
