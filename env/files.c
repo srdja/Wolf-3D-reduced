@@ -77,12 +77,8 @@ void FS_AddCompressed(searchpath_t* search, char* path, char* format)
 {
 	pack_t			*pak;
 	char			*pakfile;
-	char* regex = MM_MALLOC(sizeof(format) + sizeof("%s%c/*.") + 1);
 
-	strcat(regex, "%s%c*.");
-	strcat(regex, format);
-
-	com_snprintf( path, MAX_OSPATH, regex, fs_gamedir, PATH_SEP );
+	com_snprintf( path, MAX_OSPATH, "%s%c*.%s", fs_gamedir, PATH_SEP, format );
 
 	pakfile = FS_FindFirst( path, 0, 0 );
 
@@ -100,7 +96,6 @@ void FS_AddCompressed(searchpath_t* search, char* path, char* format)
 	}
 
 	FS_FindClose();
-	MM_FREE(regex);
 }
 
 /**
