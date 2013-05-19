@@ -73,39 +73,6 @@ PRIVATE cvar_t	*fs_cddir;
 PRIVATE cvar_t	*fs_gamedirvar;
 
 /**
- * Find and open compressed files on gamedir.
- *
- * @param extension A string with the extension of the compressed format to look for.
- */
-void FS_AddCompressed(char* extension)
-{
-	pack_t		*pak;
-	searchpath_t	*search;
-	char		*pakfile;
-	char		path[ MAX_OSPATH ];
-
-	com_snprintf( path, MAX_OSPATH, "%s%c*.%s", fs_gamedir, PATH_SEP, extension );
-
-	pakfile = FS_FindFirst( path, 0, 0 );
-
-	if( pakfile ){
-		search = (searchpath_t *) Z_Malloc( sizeof( searchpath_t ) );
-		do{
-			pak = FS_LoadZipFile( pakfile );
-			if( pak )
-			{
-				search->pack = pak;
-				search->next = fs_searchpaths;
-				fs_searchpaths = search;
-			}
-		}while( (pakfile = FS_FindNext( 0, 0 )) != NULL );
-		Z_Free(search);
-	}
-
-	FS_FindClose();
-}
-
-/**
  * \brief Add directory to search path.
  * \param[in] dir Game directory path.
  * \note Sets fs_gamedir, adds the directory to the head of the path, then loads and adds *.pak then *.zip files.
@@ -114,6 +81,8 @@ PRIVATE void FS_AddGameDirectory( const char *dir )
 {
 	searchpath_t	*search;
 	char		path[ MAX_OSPATH ];
+	pack_t		*pak;
+	char		*pakfile;
 
 	com_strlcpy( fs_gamedir, dir, sizeof( fs_gamedir ) );
 
@@ -125,15 +94,29 @@ PRIVATE void FS_AddGameDirectory( const char *dir )
 	search->next = fs_searchpaths;
 	fs_searchpaths = search;
 
-	//
-	// add any pak files
-	//
-	FS_AddCompressed("pak");
+	// add compressed files
+	W8 count;
+	const char ext_zip[4] = "zip";
+	char extension[4] = "pak";
+	for( count = 0; count < 2; ++count){
+		com_snprintf( path, MAX_OSPATH, "%s%c*.%s", fs_gamedir, PATH_SEP, extension );
 
-	//
-	// add any zip files
-	//
-	FS_AddCompressed("zip");
+		pakfile = FS_FindFirst( path, 0, 0 );
+
+		if( pakfile ){
+			do{
+				pak = FS_LoadZipFile( pakfile );
+				if( pak )
+				{
+					search->pack = pak;
+					search->next = fs_searchpaths;
+					fs_searchpaths = search;
+				}
+			}while( (pakfile = FS_FindNext( 0, 0 )) != NULL );
+		}
+		FS_FindClose();
+		com_strlcpy( extension, ext_zip, 4 ); //FIXME: hack for avoiding code duplication and fix a leak
+	}
 }
 
 /**
