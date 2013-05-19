@@ -61,11 +61,6 @@
 
 #include "zippak.h"
 
-
-
-
-
-
 PRIVATE char fs_gamedir[ MAX_OSPATH ];
 
 PRIVATE cvar_t	*fs_basedir;
