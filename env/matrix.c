@@ -33,33 +33,33 @@
  * \param[in] in1 3x3 matrices.
  * \param[in] in2 3x3 matrices.
  * \param[out] out 3x3 matrices.
- * \return 
- * \note 
+ * \return
+ * \note
  *  Product of two 3x3 matrices
  *	( a b c ) ( r u x )	  ( ar + bs + ct  au + bv + cw  ax + by + cz )
  *	( d e f ) ( s v y ) = ( dr + es + ft  du + ev + fw  dx + ey + fz )
  *	( h i j ) ( t w z )	  ( hr + hs + ht  iu + iv + iw  jx + jy + jz )
  */
-PUBLIC void Matrix3x3Multiply( mat3_t in1, mat3_t in2, mat3_t out ) 
+PUBLIC void Matrix3x3Multiply( mat3_t in1, mat3_t in2, mat3_t out )
 {
 	out[0] = in1[0] * in2[0] + in1[1] * in2[3] + in1[2] * in2[6];
 	out[1] = in1[0] * in2[1] + in1[1] * in2[4] + in1[2] * in2[7];
 	out[2] = in1[0] * in2[2] + in1[1] * in2[5] + in1[2] * in2[8];
-	
+
 	out[3] = in1[3] * in2[0] + in1[4] * in2[3] + in1[5] * in2[6];
 	out[4] = in1[3] * in2[1] + in1[4] * in2[4] + in1[5] * in2[7];
 	out[5] = in1[3] * in2[2] + in1[4] * in2[5] + in1[5] * in2[8];
-	
+
 	out[6] = in1[6] * in2[0] + in1[7] * in2[3] + in1[8] * in2[6];
 	out[7] = in1[6] * in2[1] + in1[7] * in2[4] + in1[8] * in2[7];
-	out[8] = in1[6] * in2[2] + in1[7] * in2[5] + in1[8] * in2[8];	
+	out[8] = in1[6] * in2[2] + in1[7] * in2[5] + in1[8] * in2[8];
 }
 
 /**
  * \brief Set matrix to the identity matrix (unit matrix).
  * \param[in/out] in1 4x4 matrix.
- * \return 
- * \note 
+ * \return
+ * \note
  */
 PUBLIC void MatrixIdentity( mat4_t matrix )
 {
@@ -73,7 +73,7 @@ PUBLIC void MatrixIdentity( mat4_t matrix )
  * \brief Invert a matrix.
  * \param[in] in 4x4 Input matrix
  * \param[out] out 4x4 Output matrix.
- * \return 
+ * \return
  * \note Matrix MUST be orthonormal
  */
 PUBLIC void MatrixInvert( mat4_t in, mat4_t out )
@@ -97,7 +97,7 @@ PUBLIC void MatrixInvert( mat4_t in, mat4_t out )
  * \param[in] vectorIn Input vector.
  * \param[in] m Input matrix.
  * \param[out] vectorOut Output vector.
- * \return 
+ * \return
  * \note
  */
 PUBLIC void VectorMatrixMultiply( vec3_t vectorIn, mat4_t m, vec3_t vectorOut )
@@ -112,7 +112,7 @@ PUBLIC void VectorMatrixMultiply( vec3_t vectorIn, mat4_t m, vec3_t vectorOut )
  * \param[in] in Input vector.
  * \param[in] m Input matrix.
  * \param[out] out Output vector.
- * \return 
+ * \return
  * \note
  */
 PUBLIC void VectorMatrix3x3Multiply( vec3_t in, mat4_t m, vec3_t out )

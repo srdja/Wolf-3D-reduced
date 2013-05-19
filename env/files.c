@@ -72,27 +72,34 @@ PRIVATE cvar_t	*fs_basedir;
 PRIVATE cvar_t	*fs_cddir;
 PRIVATE cvar_t	*fs_gamedirvar;
 
-/* Found this code was kind of duplicated, so turned it into a function. Mario. */
-void FS_AddCompressed(searchpath_t* search, char* path, char* format)
+/**
+ * Find and open compressed files on gamedir.
+ *
+ * @param extension A string with the extension of the compressed format to look for.
+ */
+void FS_AddCompressed(char* extension)
 {
-	pack_t			*pak;
-	char			*pakfile;
+	pack_t		*pak;
+	searchpath_t	*search;
+	char		*pakfile;
+	char		path[ MAX_OSPATH ];
 
-	com_snprintf( path, MAX_OSPATH, "%s%c*.%s", fs_gamedir, PATH_SEP, format );
+	com_snprintf( path, MAX_OSPATH, "%s%c*.%s", fs_gamedir, PATH_SEP, extension );
 
 	pakfile = FS_FindFirst( path, 0, 0 );
 
 	if( pakfile ){
+		search = (searchpath_t *) Z_Malloc( sizeof( searchpath_t ) );
 		do{
 			pak = FS_LoadZipFile( pakfile );
 			if( pak )
 			{
-				search = (searchpath_t *) Z_Malloc( sizeof( searchpath_t ) );
 				search->pack = pak;
 				search->next = fs_searchpaths;
 				fs_searchpaths = search;
 			}
 		}while( (pakfile = FS_FindNext( 0, 0 )) != NULL );
+		Z_Free(search);
 	}
 
 	FS_FindClose();
@@ -106,7 +113,7 @@ void FS_AddCompressed(searchpath_t* search, char* path, char* format)
 PRIVATE void FS_AddGameDirectory( const char *dir )
 {
 	searchpath_t	*search;
-	char			path[ MAX_OSPATH ];
+	char		path[ MAX_OSPATH ];
 
 	com_strlcpy( fs_gamedir, dir, sizeof( fs_gamedir ) );
 
@@ -121,12 +128,12 @@ PRIVATE void FS_AddGameDirectory( const char *dir )
 	//
 	// add any pak files
 	//
-	FS_AddCompressed(search, path, "pak");
+	FS_AddCompressed("pak");
 
 	//
 	// add any zip files
 	//
-	FS_AddCompressed(search, path, "zip");
+	FS_AddCompressed("zip");
 }
 
 /**

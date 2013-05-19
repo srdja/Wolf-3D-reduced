@@ -140,7 +140,7 @@ void Field_Draw( menufield_s *f )
 
 _boolean Field_Key( menufield_s *f, int key )
 {
-	extern int keydown[];
+	extern _boolean keydown[];
 
 	switch( key )
 	{
