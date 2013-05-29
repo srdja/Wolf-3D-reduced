@@ -185,8 +185,6 @@ elseif(UNIX)
 		${CMAKE_SOURCE_DIR}/unix/unix_timer.c
 		${CMAKE_SOURCE_DIR}/unix/unix_vid_sys.c
 	)
-		
-	set( COMPILE_FLAGS  "-Wall -Wextra -g -pg -pedantic -c -ffast-math -funroll-loops -s -L/usr/X11R6/lib -lX11 -lXext -lXxf86dga -lXxf86vm -lvorbis -lvorbisfile -logg -lglob" )
 	
 else ()
 
@@ -203,6 +201,7 @@ set( HEADER ${env_HEADER} ${wolf_HEADER} ${platform_HEADER} )
 
 add_executable( ${EXE_NAME} ${SOURCE} ${HEADER} )
 
-
-
+if (UNIX)
+	target_link_libraries( ${EXE_NAME} dl m X11 Xxf86dga Xxf86vm GL z vorbisfile )
+endif ()
 
