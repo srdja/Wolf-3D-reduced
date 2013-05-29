@@ -248,7 +248,7 @@ PRIVATE void ToughPic( int i )
 }
 
 
-PRIVATE void SkillMenuCursorDrawFunc( void *data )
+PRIVATE void SkillMenuCursorDrawFunc( struct _tag_menuframework *data )
 {
 	menuframework_s *menu = (menuframework_s *)data;
 	M_DrawCursor( ((viddef.width - 450) >> 1) + 5, 187 + menu->cursor * 30 );
