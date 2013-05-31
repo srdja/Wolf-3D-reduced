@@ -62,7 +62,7 @@ void Cmd_Wait_f( void ) {
 }
 
 /**
- * @addtogroup COMMAND BUFFER
+ * @defgroup COMMAND BUFFER
  */
 
 /**
@@ -221,19 +221,18 @@ void Cbuf_Execute (void)
 
 
 /**
- * addtogroup SCRIPT COMMANDS
+ * @defgroup SCRIPT COMMANDS
  */
 
-/*
-===============
-Cmd_Exec_f
-===============
-*/
+/**
+ * Execute script given as argument to exec command.
+ * @ingroup SCRIPT COMMANDS
+ */
 void Cmd_Exec_f( void ) {
-	char	*f;
+	char		*f;
 	int		len;
-	char	filename[MAX_OSPATH];
-    filehandle_t *scriptFileHandle;
+	char		filename[MAX_OSPATH];
+	filehandle_t	*scriptFileHandle;
 
 	if (Cmd_Argc () != 2) {
 		Com_Printf ("exec <filename> : execute a script file\n");
@@ -244,12 +243,12 @@ void Cmd_Exec_f( void ) {
 	com_strlcpy( filename, Cmd_Argv(1), sizeof( filename ) );
 	FS_DefaultExtension( filename, sizeof( filename ), ".cfg" ); 
     
-    scriptFileHandle = FS_OpenFile( filename, DA_GENERIC_READ );
-    len = FS_GetFileSize( scriptFileHandle );
+	scriptFileHandle = FS_OpenFile( filename, DA_GENERIC_READ );
+	len = FS_GetFileSize( scriptFileHandle );
 
-    f = (char *)Z_Malloc( len );
+	f = (char *)Z_Malloc( len );
 
-    len = FS_ReadFile( f, 1, len, scriptFileHandle);
+	len = FS_ReadFile( f, 1, len, scriptFileHandle);
 	if (!f) {
 		Com_Printf ("couldn't exec %s\n",Cmd_Argv(1));
 		return;
@@ -258,18 +257,14 @@ void Cmd_Exec_f( void ) {
 	
 	Cbuf_InsertText (f);
 
-    Z_Free( f );
+	Z_Free( f );
 	FS_CloseFile (scriptFileHandle);
 }
 
-
-/*
-===============
-Cmd_Vstr_f
-
-Inserts the current value of a variable as command text
-===============
-*/
+/**
+ * Insert the current value of a variable as next instruction in the command buffer.
+ * @ingroup SCRIPT COMMANDS
+ */
 void Cmd_Vstr_f( void ) {
 	char	*v;
 
@@ -282,62 +277,54 @@ void Cmd_Vstr_f( void ) {
 	Cbuf_InsertText( va("%s\n", v ) );
 }
 
-
-/*
-===============
-Cmd_Echo_f
-
-Just prints the rest of the line to the console
-===============
-*/
+/**
+ * Print the rest of the line to the console.
+ * @ingroup SCRIPT COMMANDS
+ */
 void Cmd_Echo_f (void)
 {
-	int		i;
+	int	i;
 	
 	for (i=1 ; i<Cmd_Argc() ; i++)
 		Com_Printf ("%s ",Cmd_Argv(i));
 	Com_Printf ("\n");
 }
 
-
-/*
-=============================================================================
-
-					COMMAND EXECUTION
-
-=============================================================================
-*/
+/**
+ * @defgroup COMMAND EXECUTION
+ */
 
 typedef struct cmd_function_s
 {
 	struct cmd_function_s	*next;
-	char					*name;
-	xcommand_t				function;
+	char			*name;
+	xcommand_t		function;
 } cmd_function_t;
 
 
-static	int			cmd_argc;
-static	char		*cmd_argv[MAX_STRING_TOKENS];		// points into cmd_tokenized
-static	char		cmd_tokenized[BIG_INFO_STRING+MAX_STRING_TOKENS];	// will have 0 bytes inserted
-static	char		cmd_cmd[BIG_INFO_STRING]; // the original command we received (no token processing)
+static int	cmd_argc;
+static char	*cmd_argv[MAX_STRING_TOKENS]; // points into cmd_tokenized
+static char	cmd_tokenized[BIG_INFO_STRING+MAX_STRING_TOKENS]; // will have 0 bytes inserted
+static char	cmd_cmd[BIG_INFO_STRING]; // the original command we received (no token processing)
 
-static	cmd_function_t	*cmd_functions;		// possible commands to execute
+static cmd_function_t *cmd_functions; // possible commands to execute
 
-/*
-============
-Cmd_Argc
-============
-*/
-int		Cmd_Argc( void ) {
+/**
+ * Return argument count for the command.
+ * @return Argument count.
+ * @ingroup COMMAND EXECUTION
+ */
+int Cmd_Argc ( void ) {
 	return cmd_argc;
 }
 
-/*
-============
-Cmd_Argv
-============
-*/
-char	*Cmd_Argv( int arg ) {
+/**
+ * Return a pointer to the argument with index arg for the command.
+ * @param[in] arg Argument's index.
+ * @return Pointer to argument with index arg.
+ * @ingroup COMMAND EXECUTION
+ */
+char *Cmd_Argv ( int arg ) {
 	if ( (unsigned)arg >= cmd_argc ) {
 		return "";
 	}
@@ -352,10 +339,9 @@ The interpreted versions use this because
 they can't have pointers returned to them
 ============
 */
-void	Cmd_ArgvBuffer( int arg, char *buffer, int bufferLength ) {
-    com_strlcpy( buffer, Cmd_Argv( arg ), bufferLength );
+void Cmd_ArgvBuffer( int arg, char *buffer, int bufferLength ) {
+	com_strlcpy( buffer, Cmd_Argv( arg ), bufferLength );
 }
-
 
 /*
 ============
@@ -364,8 +350,8 @@ Cmd_Args
 Returns a single string containing argv(1) to argv(argc()-1)
 ============
 */
-char	*Cmd_Args( void ) {
-	static	char		cmd_args[MAX_STRING_CHARS];
+char *Cmd_Args( void ) {
+	static char	cmd_args[MAX_STRING_CHARS];
 	int		i;
 
 	cmd_args[0] = 0;
@@ -387,7 +373,7 @@ Returns a single string containing argv(arg) to argv(argc()-1)
 ============
 */
 char *Cmd_ArgsFrom( int arg ) {
-	static	char		cmd_args[BIG_INFO_STRING];
+	static char	cmd_args[BIG_INFO_STRING];
 	int		i;
 
 	cmd_args[0] = 0;
@@ -411,7 +397,7 @@ The interpreted versions use this because
 they can't have pointers returned to them
 ============
 */
-void	Cmd_ArgsBuffer( char *buffer, int bufferLength ) {
+void Cmd_ArgsBuffer( char *buffer, int bufferLength ) {
 	com_strlcpy( buffer, Cmd_Args(), bufferLength );
 }
 
@@ -443,11 +429,11 @@ will point into this temporary buffer.
 //#define TKN_DBG
 void Cmd_TokenizeString( const char *text_in ) {
 	const char	*text;
-	char	*textOut;
+	char		*textOut;
 
 #ifdef TKN_DBG
-  // FIXME TTimo blunt hook to try to find the tokenization of userinfo
-  Com_DPrintf("Cmd_TokenizeString: %s\n", text_in);
+	// FIXME TTimo blunt hook to try to find the tokenization of userinfo
+	Com_DPrintf("Cmd_TokenizeString: %s\n", text_in);
 #endif
 
 	// clear previous args
@@ -543,13 +529,12 @@ void Cmd_TokenizeString( const char *text_in ) {
 	
 }
 
-
 /*
 ============
 Cmd_AddCommand
 ============
 */
-void	Cmd_AddCommand( const char *cmd_name, xcommand_t function ) {
+void Cmd_AddCommand( const char *cmd_name, xcommand_t function ) {
 	cmd_function_t	*cmd;
 	
 	// fail if the command already exists
@@ -565,7 +550,7 @@ void	Cmd_AddCommand( const char *cmd_name, xcommand_t function ) {
 
 	// use a small malloc to avoid zone fragmentation
 	//cmd = S_Malloc (sizeof(cmd_function_t));
-    cmd = Z_Malloc (sizeof(cmd_function_t));
+	cmd = Z_Malloc (sizeof(cmd_function_t));
 	cmd->name = com_strcopy( cmd_name );
 	cmd->function = function;
 	cmd->next = cmd_functions;
@@ -599,22 +584,19 @@ void	Cmd_RemoveCommand( const char *cmd_name ) {
 	}
 }
 
-
 /*
 ============
 Cmd_CommandCompletion
 ============
 */
-void	Cmd_CommandCompletion( void(*callback)(const char *s) ) 
+void Cmd_CommandCompletion( void(*callback)(const char *s) ) 
 {
 	cmd_function_t	*cmd;
 	
-	for (cmd=cmd_functions ; cmd ; cmd=cmd->next) 
-    {
+	for (cmd=cmd_functions ; cmd ; cmd=cmd->next) {
 		callback( cmd->name );
 	}
 }
-
 
 /*
 ============
@@ -623,22 +605,19 @@ Cmd_ExecuteString
 A complete command line has been parsed, so try to execute it
 ============
 */
-void	Cmd_ExecuteString( const char *text ) {	
+void Cmd_ExecuteString( const char *text ) {	
 	cmd_function_t	*cmd, **prev;
 
 	// execute the command line
 	Cmd_TokenizeString( text );		
-	if ( !Cmd_Argc() ) 
-    {
+	if ( !Cmd_Argc() ) {
 		return;		// no tokens
 	}
 
 	// check registered command functions	
-	for ( prev = &cmd_functions ; *prev ; prev = &cmd->next ) 
-    {
+	for ( prev = &cmd_functions ; *prev ; prev = &cmd->next ) {
 		cmd = *prev;
-		if ( !com_stricmp( cmd_argv[0],cmd->name ) ) 
-        {
+		if ( !com_stricmp( cmd_argv[0],cmd->name ) ) {
 			// rearrange the links so that the command will be
 			// near the head of the list next time it is used
 			*prev = cmd->next;
@@ -646,13 +625,10 @@ void	Cmd_ExecuteString( const char *text ) {
 			cmd_functions = cmd;
 
 			// perform the action
-			if ( !cmd->function ) 
-            {
+			if ( !cmd->function ) {
 				// let the cgame or game handle it
 				break;
-			} 
-            else 
-            {
+			} else {
 				cmd->function ();
 			}
 			return;
@@ -692,21 +668,17 @@ Cmd_List_f
 void Cmd_List_f (void)
 {
 	cmd_function_t	*cmd;
-	int				i;
-	char			*match;
+	int		i;
+	char		*match;
 
-	if ( Cmd_Argc() > 1 ) 
-    {
+	if ( Cmd_Argc() > 1 ) {
 		match = Cmd_Argv( 1 );
-	} 
-    else 
-    {
+	} else {
 		match = NULL;
 	}
 
 	i = 0;
-	for (cmd=cmd_functions ; cmd ; cmd=cmd->next) 
-    {
+	for (cmd=cmd_functions ; cmd ; cmd=cmd->next) {
 		if (match && !Com_Filter(match, cmd->name, false)) continue;
 
 		Com_Printf ("%s\n", cmd->name);
