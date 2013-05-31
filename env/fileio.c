@@ -53,7 +53,7 @@ PUBLIC void *FS_GetLoadedFilePointer( filehandle_t *fhandle, W32 origin )
 	if( !fhandle->bLoaded )
 	{
 		return NULL;
-	}		
+	}
 
 	switch( origin )
 	{
@@ -83,7 +83,7 @@ PUBLIC SW32 FS_GetFileSize( filehandle_t *fhandle )
 	if( fhandle->bLoaded )
 	{
 		return fhandle->filesize;
-	}		
+	}
 
 	pos = ftell( fhandle->hFile );
 	fseek( fhandle->hFile, 0, SEEK_END );
@@ -115,7 +115,7 @@ PUBLIC W32 FS_FileSeek( filehandle_t *fhandle, SW32 offset, W32 origin )
 				{
 					return 1;
 				}
-				
+
 				fhandle->ptrCurrent = fhandle->ptrStart + offset;
 				break;
 
@@ -125,13 +125,13 @@ PUBLIC W32 FS_FileSeek( filehandle_t *fhandle, SW32 offset, W32 origin )
 					return 1;
 				}
 
-				// offset is negative 
+				// offset is negative
 				if( (fhandle->filesize + offset) < 0  )
 				{
 					return 1;
 				}
 
-				// offset is negative 
+				// offset is negative
 				fhandle->ptrCurrent = fhandle->ptrEnd + offset;
 				break;
 
@@ -183,7 +183,7 @@ PUBLIC SW32 FS_FileTell( filehandle_t *fhandle )
 
 /**
  * \brief Close file handle.
- * \param[in] filestream Pointer to valid FILE structure.	
+ * \param[in] filestream Pointer to valid FILE structure.
  * \note Closes a file stream that was returned by FS_FOpenFile.
  */
 PUBLIC void FS_CloseFile( filehandle_t *fhandle )
@@ -215,7 +215,7 @@ PRIVATE _boolean LoadCompressedFile( filehandle_t *hFile, packfile_t *pakfiles )
 	W8 *buf;
 	z_stream d_stream; /* decompression stream */
 
-	buf = Z_Malloc( pakfiles->filelength + 2 );						
+	buf = Z_Malloc( pakfiles->filelength + 2 );
 
 	// Zlib expects the 2 byte head that the inflate method adds.
 	buf[ 0 ] = 120;
@@ -241,14 +241,14 @@ PRIVATE _boolean LoadCompressedFile( filehandle_t *hFile, packfile_t *pakfiles )
 	d_stream.next_in  = buf;
 	d_stream.avail_in = (uInt)pakfiles->filelength+2;
 
-	d_stream.next_out = uncompr; 
+	d_stream.next_out = uncompr;
 	d_stream.avail_out = (uInt)pakfiles->uncompressed_length;
 
 	err = inflateInit( &d_stream );
 	if( err != Z_OK )
 	{
 		MM_FREE( uncompr );
-		Z_Free( buf );							
+		Z_Free( buf );
 		FS_CloseFile( hFile );
 
 		return false;
@@ -258,22 +258,22 @@ PRIVATE _boolean LoadCompressedFile( filehandle_t *hFile, packfile_t *pakfiles )
 	if( err != Z_OK )
 	{
 		Z_Free( uncompr );
-		Z_Free( buf );							
+		Z_Free( buf );
 		FS_CloseFile( hFile );
-		
+
 		return false;
 	}
-			
+
 	err = inflateEnd( &d_stream );
 	if( err != Z_OK )
 	{
 		Z_Free( uncompr );
-		Z_Free( buf );							
+		Z_Free( buf );
 		FS_CloseFile( hFile );
-		
+
 		return false;
 	}
-						
+
 	Z_Free( buf );
 
 	hFile->filedata = uncompr;
@@ -324,12 +324,12 @@ PRIVATE _boolean LoadFile( filehandle_t *hFile )
 /**
  * \brief Open file from the file system.
  * \param[in] filename Pointer to a NUL-terminated string with the
- * \param[in] FlagsAndAttributes Flags and attributes when opening file 
+ * \param[in] FlagsAndAttributes Flags and attributes when opening file
  * \return NULL on error, otherwise pointer to valid filehandle_t structure.
  * \note Finds the file in the search path.
  *      Used for streaming data out of either a pak file or a seperate file.
  *		Use the FS_CloseFile function to close an object handle returned
- *		by FS_OpenFile. 
+ *		by FS_OpenFile.
  */
 PUBLIC filehandle_t *FS_OpenFile( const char *filename, W32 FlagsAndAttributes )
 {
@@ -341,7 +341,7 @@ PUBLIC filehandle_t *FS_OpenFile( const char *filename, W32 FlagsAndAttributes )
 	W32				hashid;
 	filehandle_t	*hFile;
 
-	
+
 	hFile = (filehandle_t *)Z_Malloc( sizeof( filehandle_t ) );
 	memset( hFile, 0, sizeof( filehandle_t ) );
 
@@ -353,10 +353,10 @@ PUBLIC filehandle_t *FS_OpenFile( const char *filename, W32 FlagsAndAttributes )
 			com_snprintf( netpath, sizeof( netpath ), "%s%s", link->to, filename + link->fromlength );
 			hFile->hFile = fopen( netpath, "rb" );
 			if( ! hFile->hFile )
-			{		
+			{
 				FS_CloseFile( hFile );
 
-				return NULL;	
+				return NULL;
 			}
 
 			Com_DPrintf( "link file: %s\n", netpath );
@@ -380,7 +380,7 @@ PUBLIC filehandle_t *FS_OpenFile( const char *filename, W32 FlagsAndAttributes )
 //	Check for the file in the directory tree
 //
 	com_snprintf( netpath, sizeof( netpath ), "%s/%s", FS_Gamedir(), filename );
-			
+
 	hFile->hFile = fopen( netpath, "rb" );
 	if( hFile->hFile )
 	{
@@ -395,10 +395,10 @@ PUBLIC filehandle_t *FS_OpenFile( const char *filename, W32 FlagsAndAttributes )
 				return NULL;
 			}
 		}
-	
+
 		return hFile;
 	}
-	
+
 
 //
 // search through the path, one element at a time
@@ -418,14 +418,14 @@ PUBLIC filehandle_t *FS_OpenFile( const char *filename, W32 FlagsAndAttributes )
 					hFile->filesize = pakfiles->uncompressed_length;
 
 					Com_DPrintf( "PackFile: %s : %s\n", pak->filename, filename );
-				
+
 					// open a new file handle on the pakfile
 					hFile->hFile = fopen( pak->filename, "rb" );
 					if( hFile->hFile == NULL )
 					{
 						FS_CloseFile( hFile );
 
-						Com_Error( ERR_FATAL, "Could not reopen (%s)\n", pak->filename );	
+						Com_Error( ERR_FATAL, "Could not reopen (%s)\n", pak->filename );
 					}
 
 					fseek( hFile->hFile, pakfiles->fileoffset, SEEK_SET );
@@ -437,7 +437,7 @@ PUBLIC filehandle_t *FS_OpenFile( const char *filename, W32 FlagsAndAttributes )
 							FS_CloseFile( hFile );
 
 							return NULL;
-						}	
+						}
 					}
 					else if( FlagsAndAttributes & FA_FILE_FLAG_LOAD )
 					{
@@ -448,23 +448,23 @@ PUBLIC filehandle_t *FS_OpenFile( const char *filename, W32 FlagsAndAttributes )
 							return NULL;
 						}
 					}
-					
+
 					return hFile;
 				}
 			}
 		}
 		else
-		{	
+		{
 		// check a file in the directory tree
-			
+
 			com_snprintf( netpath, sizeof( netpath ), "%s%c%s", search->filename, PATH_SEP, filename );
-			
+
 			hFile->hFile = fopen( netpath, "rb" );
 			if( ! hFile->hFile )
 			{
 				continue;
 			}
-			
+
 			Com_DPrintf( "[FS_OpenFile]: %s\n", netpath );
 
 			if( FlagsAndAttributes & FA_FILE_FLAG_LOAD )
@@ -479,13 +479,13 @@ PUBLIC filehandle_t *FS_OpenFile( const char *filename, W32 FlagsAndAttributes )
 
 			return hFile;
 		}
-		
+
 	}
-	
+
 	Com_DPrintf( "[FS_OpenFile]: Could not find (%s)\n", filename );
 
 	FS_CloseFile( hFile );
-	
+
 	return NULL;
 }
 
@@ -498,7 +498,7 @@ PUBLIC filehandle_t *FS_OpenFile( const char *filename, W32 FlagsAndAttributes )
  * \return On success number of full items actually read, otherwise -1.
  */
 PUBLIC SW32 FS_ReadFile( void *buffer, W32 size, W32 count, filehandle_t *fhandle )
-{		
+{
 	W8	*buf = (PW8)buffer;
 
 	if( fhandle->bLoaded )
@@ -517,7 +517,7 @@ PUBLIC SW32 FS_ReadFile( void *buffer, W32 size, W32 count, filehandle_t *fhandl
 			}
 
 			fhandle->ptrCurrent = fhandle->ptrEnd;
-			
+
 			return( read );
 		}
 		else
@@ -526,7 +526,7 @@ PUBLIC SW32 FS_ReadFile( void *buffer, W32 size, W32 count, filehandle_t *fhandl
 			{
 				buf[ i ] = *fhandle->ptrCurrent;
 			}
-		
+
 			return( (size * count) / size );
 		}
 	}

@@ -181,40 +181,41 @@
 
 /*
 	correct numeric types:  W8, SW8, W16, SW16, W32, SW32, W64, SW64
-	correct char types:		char
-	correct misc types:		void, float, wtwtBoolean
+	correct char types:	char
+	correct misc types:	void, float, wtwtBoolean
 
 	s       -signed
 	XX      -Number of bits
-
 */
 #ifdef OS_WINDOWS
 
-	typedef unsigned	__int8		W8,		*PW8;
-	typedef signed		__int8		SW8,    *PSW8;
-	typedef unsigned	__int16		W16,    *PW16;
-	typedef signed		__int16		SW16,   *PSW16;
-	typedef unsigned	__int32		W32,    *PW32;
-	typedef signed		__int32		SW32,   *PSW32;
-	typedef unsigned	__int64		W64,	*PW64;
-	typedef signed		__int64		SW64,   *PSW64;
+	#include <windows.h>
+
+	typedef UINT8		W8,	*PW8;
+	typedef INT8		SW8,    *PSW8;
+	typedef UINT16		W16,    *PW16;
+	typedef INT16		SW16,   *PSW16;
+	typedef UINT32		W32,    *PW32;
+	typedef INT32		SW32,   *PSW32;
+	typedef UINT64		W64,	*PW64;
+	typedef INT64		SW64,   *PSW64;
 
 #elif OS_UNIX
 
 	#include <inttypes.h>
 
-	typedef	uint8_t				W8,	*PW8;
-	typedef	int8_t				SW8,    *PSW8;
-	typedef	uint16_t			W16,    *PW16;
-	typedef	int16_t				SW16,   *PSW16;
-	typedef	uint32_t			W32,    *PW32;
-	typedef	int32_t				SW32,   *PSW32;
-	typedef	uint64_t			W64,	*PW64;
-	typedef	int64_t				SW64,   *PSW64;
+	typedef	uint8_t		W8,	*PW8;
+	typedef	int8_t		SW8,    *PSW8;
+	typedef	uint16_t	W16,    *PW16;
+	typedef	int16_t		SW16,   *PSW16;
+	typedef	uint32_t	W32,    *PW32;
+	typedef	int32_t		SW32,   *PSW32;
+	typedef	uint64_t	W64,	*PW64;
+	typedef	int64_t		SW64,   *PSW64;
+	typedef POINTERSIZE	INT_PTR;
 
 #endif
 
-	typedef POINTERSIZE			INTPTR;
 
 
 

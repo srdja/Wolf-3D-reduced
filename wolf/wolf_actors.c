@@ -1,6 +1,6 @@
 /*
 
-	Copyright (C) 2004-2013 Michael Liebscher <johnnycanuck@users.sourceforge.net>	 
+	Copyright (C) 2004-2013 Michael Liebscher <johnnycanuck@users.sourceforge.net>
 	Copyright (C) 2001 by DarkOne the Hacker
 
 	This program is free software; you can redistribute it and/or
@@ -22,7 +22,7 @@
 /**
  * \file wolf_actors.c
  * \brief Wolfenstein 3-D actor management.
- * \author Michael Liebscher 
+ * \author Michael Liebscher
  * \date 2004-2013
  * \author DarkOne the Hacker
  * \date 2001
@@ -45,7 +45,7 @@
 
 entity_t Guards[ MAX_GUARDS + 1 ], *New;
 W16 NumGuards = 0;
-W8 add8dir[ 9 ]	= { 4, 5, 6, 7, 0, 1, 2, 3, 0 }; 
+W8 add8dir[ 9 ]	= { 4, 5, 6, 7, 0, 1, 2, 3, 0 };
 W8 r_add8dir[ 9 ]= { 4, 7, 6, 5, 0, 1, 2, 3, 0 };
 
 
@@ -59,11 +59,11 @@ PUBLIC void A_StateChange( entity_t *ent, en_state newState )
 {
 	ent->state = newState;
 	assert( ent->type >= 0 && ent->type < NUMENEMIES );
-	if ( newState == st_remove ) 
+	if ( newState == st_remove )
     {
 		ent->ticcount = 0;
-	} 
-    else 
+	}
+    else
     {
 		assert( ent->state >= 0 && ent->state < NUMSTATES );
 		ent->ticcount = objstate[ ent->type ][ ent->state ].timeout; //0;
@@ -72,11 +72,11 @@ PUBLIC void A_StateChange( entity_t *ent, en_state newState )
 
 /**
  * \brief Allow the guards to think.
- * \param[in] self Valid Pointer to an entity_t structure 
+ * \param[in] self Valid Pointer to an entity_t structure
  * \return 0 if we must remove this guard from Guards list, otherwise 1
  */
 PRIVATE int DoGuard( entity_t *ent ) // FIXME: revise!
-{ 
+{
 	think_t think;
 
 	assert( ent->tilex >= 0 && ent->tilex < 64 );
@@ -89,7 +89,7 @@ PRIVATE int DoGuard( entity_t *ent ) // FIXME: revise!
 		while( ent->ticcount <= 0 )
 		{
 			assert( ent->type >= 0 && ent->type < NUMENEMIES );
-			assert( ent->state >= 0 && ent->state < NUMSTATES );	
+			assert( ent->state >= 0 && ent->state < NUMSTATES );
 			think = objstate[ ent->type ][ ent->state ].action; // end of state action
 			if( think )
 			{
@@ -141,7 +141,7 @@ PRIVATE int DoGuard( entity_t *ent ) // FIXME: revise!
 PRIVATE void RemoveActor( entity_t *actor )
 {
 	Sprite_RemoveSprite( actor->sprite );
-	memmove( actor, actor+1, (INTPTR)(&Guards[ NumGuards ]) - (INTPTR)(actor+1) );
+	memmove( actor, actor+1, (INT_PTR)(&Guards[ NumGuards ]) - (INT_PTR)(actor+1) );
 	NumGuards--;
 }
 
@@ -163,7 +163,7 @@ PUBLIC void ProcessGuards( void )
 
 		Sprite_SetPos( Guards[ n ].sprite, Guards[ n ].x, Guards[ n ].y, Guards[ n ].angle );
 		tex = objstate[ Guards[ n ].type ][ Guards[ n ].state ].texture;
-		
+
 		if( objstate[ Guards[ n ].type ][ Guards[ n ].state ].rotate )
 		{
 			if( Guards[ n ].type == en_rocket || Guards[ n ].type == en_hrocket )
@@ -175,7 +175,7 @@ PUBLIC void ProcessGuards( void )
 				tex += add8dir[ Get8dir( angle_wise( Player.position.angle, FINE2RAD(Guards[ n ].angle) ) ) ];
 			}
 		}
-		
+
 		Sprite_SetTex( Guards[ n ].sprite, 0, tex );
 	}
 }
@@ -196,13 +196,13 @@ PUBLIC void ResetGuards( void )
  */
 PUBLIC entity_t *GetNewActor( void )
 {
-	if( NumGuards > MAX_GUARDS ) 
+	if( NumGuards > MAX_GUARDS )
 	{
 		return NULL;
 	}
-	
+
 	memset( &Guards[ NumGuards ], 0, sizeof( Guards[ 0 ] ) );
-	
+
 	return &Guards[ NumGuards++ ];
 }
 
@@ -241,7 +241,7 @@ PUBLIC entity_t *SpawnActor( enemy_t which, int x, int y, dir4type dir, LevelDat
 		// ambush marker tiles are listed as -3 area
 		new_actor->areanumber = 0;
 	}
-	
+
 	assert( new_actor->areanumber >= 0 && new_actor->areanumber < NUMAREAS );
 	new_actor->type = which;
 
@@ -297,7 +297,7 @@ PUBLIC void SpawnPatrol( enemy_t which, int x, int y, int dir )
 	{
 		return;
 	}
-	
+
 	self->state = st_path1;
 	self->speed = (which == en_dog) ? SPDDOG : SPDPATROL;
 	self->distance = TILE_GLOBAL;
@@ -318,16 +318,16 @@ PUBLIC void SpawnDeadGuard( enemy_t which, int x, int y )
 	entity_t *self;
 
 	self = SpawnActor( which, x, y, dir4_nodir, r_world );
-	if( ! self ) 
+	if( ! self )
 	{
 		return;
 	}
-	
+
 	self->state = st_dead;
 	self->speed = 0;
 	self->health = 0;
 	self->ticcount = objstate[ which ][ st_dead ].timeout ? US_RndT() % objstate[ which ][ st_dead ].timeout + 1 : 0;
-  
+
 }
 
 /**
@@ -375,7 +375,7 @@ PUBLIC void SpawnBoss( enemy_t which, int x, int y )
 	{
 		return;
 	}
-	
+
 	self->state = which == en_spectre ? st_path1 : st_stand;
 	self->speed = SPDPATROL;
 	self->health = starthitpoints[ (int)skill->value ][ which ];
@@ -383,7 +383,7 @@ PUBLIC void SpawnBoss( enemy_t which, int x, int y )
 	self->flags |= FL_SHOOTABLE | FL_AMBUSH;
 
 	levelstate.total_monsters++;
-	
+
 }
 
 /**
@@ -401,7 +401,7 @@ PUBLIC void SpawnGhosts( enemy_t which, int x, int y )
 	{
 		return;
 	}
-	
+
 	self->state = st_chase1;
 	self->speed = SPDPATROL * 3;
 	self->health = starthitpoints[ (int)skill->value ][ which ];

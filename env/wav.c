@@ -84,7 +84,7 @@ PRIVATE void Wav_FindNextChunk( const char *name )
 			iff_pdata = NULL;
 			return;
 		}
-		
+
 		iff_pdata += 4;
 		iff_chunk_len = Wav_GetLittleLong();
 		if( iff_chunk_len < 0 )
@@ -113,7 +113,7 @@ PRIVATE void Wav_FindChunk( const char *name )
 PRIVATE void DumpChunks( void )
 {
 	char str[ 5 ];
-	
+
 	str[ 4 ] = 0;
 	iff_pdata = iff_data;
 	do
@@ -121,7 +121,7 @@ PRIVATE void DumpChunks( void )
 		memcpy( str, iff_pdata, 4 );
 		iff_pdata += 4;
 		iff_chunk_len = Wav_GetLittleLong();
-		Com_Printf( "0x%x : %s (%d)\n", (INTPTR)(iff_pdata - 4), str, iff_chunk_len );
+		Com_Printf( "0x%x : %s (%d)\n", (INT_PTR)(iff_pdata - 4), str, iff_chunk_len );
 		iff_pdata += (iff_chunk_len + 1) & ~1;
 
 	} while( iff_pdata < iff_end );
@@ -132,7 +132,7 @@ PRIVATE void DumpChunks( void )
  * \brief Load wav file.
  * \param[in] filename Name of wav file to load.
  * \param[in] wav wav data.
- * \param[in] info wav sound info. 
+ * \param[in] info wav sound info.
  * \return True if file loaded, otherwise false.
  * \note Caller is responsible for freeing wav data by calling Z_Free.
  */

@@ -165,7 +165,7 @@ PUBLIC void SaveTheGame( const char *name )
 
 	for ( i = 0 ; i < copiedLevelData.Doors.doornum ; i++ )
     {
-		INTPTR	index = r_world->Doors.Doors[i] - &r_world->Doors.DoorMap[0][0];
+		INT_PTR	index = r_world->Doors.Doors[i] - &r_world->Doors.DoorMap[0][0];
 		assert( index >= 0 && index < 4096 );
 		copiedLevelData.Doors.Doors[i] = (void *)index;
 	}
@@ -262,7 +262,7 @@ PUBLIC int LoadTheGame( const char *name )
 	// turn the r_world->Doors.doors back to pointers
 	for ( i = 0 ; i < r_world->Doors.doornum ; i++ )
     {
-		int	index = (INTPTR)r_world->Doors.Doors[i];
+		int	index = (INT_PTR)r_world->Doors.Doors[i];
 		assert( index >= 0 && index < 4096 );
 		r_world->Doors.Doors[i] = &r_world->Doors.DoorMap[0][0] + index;
 	}

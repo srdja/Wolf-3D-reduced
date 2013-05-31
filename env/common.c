@@ -801,7 +801,7 @@ PUBLIC void common_Init( int argc, char *argv[] )
 	Com_ParseCommandLine( commandLine );
 */
 
-/* Linux Experiment */
+/** @FIXME Check this doesn't break Windows' version. */
 	com_numConsoleLines = argc;
 	com_consoleLines = argv;
     Cbuf_Init ();
