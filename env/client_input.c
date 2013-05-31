@@ -20,13 +20,13 @@
 */
 
 /**
- * \file client_input.c
- * \brief Builds an intended movement command to send to the server.
- * \author Michael Liebscher
- * \date 2004-2012
- * \author Id Software, Inc.
- * \date 1997-2001
- * \note This code was derived from Quake II, and was originally written by Id Software, Inc.
+ * @file client_input.c
+ * @brief Builds an intended movement command to send to the server.
+ * @author Michael Liebscher
+ * @date 2004-2012
+ * @author Id Software, Inc.
+ * @date 1997-2001
+ * @note This code was derived from Quake II, and was originally written by Id Software, Inc.
  */
 
 #include <stdlib.h>
@@ -44,7 +44,7 @@ PRIVATE W32	frame_msec;
 PRIVATE W32	old_sys_frame_time;
 
 /*!
-	\note
+	@note
 
 	KEY BUTTONS
 
@@ -75,16 +75,16 @@ kbutton_t	in_lookup, in_lookdown, in_moveleft, in_moveright;
 kbutton_t	in_strafe, in_speed, in_use, in_attack;
 kbutton_t	in_up, in_down;
 
-int			in_impulse;
+int		in_impulse;
 
 
 /**
- * \brief Called whenever a key goes into the down state.
- * \param[in] b Valid pointer to a kbutton_t structure.
+ * Called whenever a key goes into the down state.
+ * @param[in] b Valid pointer to a kbutton_t structure.
  */
 PRIVATE void KeyDown( kbutton_t *b )
 {
-	int		k;
+	int	k;
 	char	*c;
 
 	c = Cmd_Argv( 1 );
@@ -134,8 +134,8 @@ PRIVATE void KeyDown( kbutton_t *b )
 }
 
 /**
- * \brief Called whenever a key goes into the up state.
- * \param[in] b Valid pointer to a kbutton_t structure.
+ * Called whenever a key goes into the up state.
+ * @param[in] b Valid pointer to a kbutton_t structure.
  */
 PRIVATE void KeyUp( kbutton_t *b )
 {
@@ -231,9 +231,9 @@ void IN_UseUp( void )	{ KeyUp( &in_use ); }
 void IN_Impulse( void )	{ in_impulse = atoi( Cmd_Argv( 1 ) ); }
 
 /**
- * \brief Key state tracking.
- * \param[in] b Valid pointer to a kbutton_t structure.
- * \return Returns the fraction of the frame that the key was down.
+ * Key state tracking.
+ * @param[in] b Valid pointer to a kbutton_t structure.
+ * @return Returns the fraction of the frame that the key was down.
  */
 PRIVATE float Client_KeyState( kbutton_t *key )
 {
@@ -305,7 +305,7 @@ cvar_t	*cl_anglespeedkey;
 
 
 /**
- * \brief Moves the local angle positions.
+ * Moves the local angle positions.
  */
 PRIVATE void Client_AdjustAngles( void )
 {
@@ -334,8 +334,8 @@ PRIVATE void Client_AdjustAngles( void )
 }
 
 /**
- * \brief Send the intended movement message to the server.
- * \param[in\out] Pointer to valid usercmd_t structure.
+ * Send the intended movement message to the server.
+ * @param[in\out] Pointer to valid usercmd_t structure.
  */
 PRIVATE void Client_BaseMove( usercmd_t *cmd )
 {
@@ -370,7 +370,7 @@ PRIVATE void Client_BaseMove( usercmd_t *cmd )
 }
 
 /**
- * \brief Clamp pitch movement
+ * Clamp pitch movement
  */
 void Client_ClampPitch (void)
 {
@@ -392,8 +392,8 @@ void Client_ClampPitch (void)
 }
 
 /**
- * \brief Final movement adjustments applied to move command.
- * \param[in] cmd Valid pointer to usercmd_t structure.
+ * Final movement adjustments applied to move command.
+ * @param[in] cmd Valid pointer to usercmd_t structure.
  */
 PRIVATE void Client_FinishMove( usercmd_t *cmd )
 {
@@ -441,8 +441,8 @@ PRIVATE void Client_FinishMove( usercmd_t *cmd )
 }
 
 /**
- * \brief Create the movement command.
- * \return Filled out usercmd_t structure.
+ * Create the movement command.
+ * @return Filled out usercmd_t structure.
  */
 PRIVATE usercmd_t Client_CreateCmd( void )
 {
@@ -475,7 +475,7 @@ PRIVATE usercmd_t Client_CreateCmd( void )
 }
 
 /**
- * \brief Center view
+ * Center view
  */
 void IN_CenterView (void)
 {
@@ -484,7 +484,7 @@ void IN_CenterView (void)
 
 
 /**
- * \brief Initialize input commands.
+ * Initialize input commands.
  */
 PUBLIC void Client_InitInput( void )
 {
@@ -526,7 +526,7 @@ PUBLIC void Client_InitInput( void )
 }
 
 /**
- * \brief Create a movement command to send to the server
+ * Create a movement command to send to the server
  */
 PUBLIC void Client_SendCommand( void )
 {
@@ -542,7 +542,3 @@ PUBLIC void Client_SendCommand( void )
 
 	return;
 }
-
-
-
-

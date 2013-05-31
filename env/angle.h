@@ -19,10 +19,10 @@
 */
 
 /**
- * \file angle.h
- * \brief Angle math routines.
- * \author Michael Liebscher
- * \date 2005-2013
+ * @file angle.h
+ * @brief Angle math routines.
+ * @author Michael Liebscher
+ * @date 2005-2013
  */
 
 #ifndef __ANGLE_H__

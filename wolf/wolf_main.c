@@ -19,10 +19,9 @@
 */
 
 /**
- * \file wolf_main.c
- * \brief
- * \author Michael Liebscher
- * \date 2004-2013
+ * @file wolf_main.c
+ * @author Michael Liebscher
+ * @date 2004-2013
  */
 
 #include <assert.h>
@@ -58,7 +57,7 @@ PRIVATE _boolean ingame;
 
 
 /**
- * \brief Reset level state
+ * Reset level state
  */
 PUBLIC void Game_Reset( void )
 {
@@ -71,7 +70,7 @@ extern void Save_f( void );
 extern void Con_ToggleAutomap_f( void );
 
 /**
- * \brief Initialize game
+ * Initialize game
  */
 PUBLIC void Game_Init( void )
 {
@@ -114,7 +113,7 @@ PUBLIC void Game_Init( void )
 }
 
 /**
- * \brief Shutdown game
+ * Shutdown game
  */
 PUBLIC void Game_Shutdown( void )
 {
@@ -131,8 +130,8 @@ extern W8	areaconnect[ NUMAREAS ][ NUMAREAS ];
 extern _boolean	areabyplayer[ NUMAREAS ];
 
 /**
- * \brief Save current game state to file
- * \param[in] name Name of save game file.
+ * Save current game state to file
+ * @param[in] name Name of save game file.
  */
 PUBLIC void SaveTheGame( const char *name )
 {
@@ -196,9 +195,9 @@ PUBLIC void SaveTheGame( const char *name )
 extern PUBLIC void StartGame( int episode, int mission, int skill );
 
 /**
- * \brief Load game state from file
- * \param[in] name Name of save game file to load.
- * \return 1 on success, otherwise 0
+ * Load game state from file
+ * @param[in] name Name of save game file to load.
+ * @return 1 on success, otherwise 0
  */
 PUBLIC int LoadTheGame( const char *name )
 {

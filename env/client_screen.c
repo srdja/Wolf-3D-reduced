@@ -20,13 +20,13 @@
 */
 
 /**
- * \file client_screen.c
- * \brief Master for refresh, status bar, console, chat, notify, etc.
- * \author Michael Liebscher
- * \date 2004-2013
- * \author Id Software, Inc.
- * \date 1997-2001
- * \note This code was derived from Quake II, and was originally written by Id Software, Inc.
+ * @file client_screen.c
+ * @brief Master for refresh, status bar, console, chat, notify, etc.
+ * @author Michael Liebscher
+ * @date 2004-2013
+ * @author Id Software, Inc.
+ * @date 1997-2001
+ * @note This code was derived from Quake II, and was originally written by Id Software, Inc.
  */
 
 #include "client.h"
@@ -51,7 +51,7 @@ cvar_t		*scr_conspeed;
 
 
 /**
- * \brief Figure out how the console should be drawn.
+ * Figure out how the console should be drawn.
  */
 PUBLIC void Client_Screen_RunConsole( void )
 {
@@ -86,7 +86,7 @@ PUBLIC void Client_Screen_RunConsole( void )
 }
 
 /**
- * \brief Draw the console on the screen.
+ * Draw the console on the screen.
  */
 PUBLIC void Client_Screen_DrawConsole( void )
 {
@@ -127,7 +127,7 @@ PUBLIC void Client_Screen_DrawConsole( void )
 }
 
 /**
- * \brief Initialize client screen variables.
+ * Initialize client screen variables.
  */
 PUBLIC void Client_Screen_Init( void )
 {	

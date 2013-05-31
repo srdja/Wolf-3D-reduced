@@ -18,9 +18,11 @@
 
 */
 
-/*
- *	app_def.h:	Engine interface to game layer.
- *
+/**
+ * @file app_def.h
+ * @brief Engine interface to game layer.
+ * @author Michael Liebscher
+ * @date 2004-2013
  */
 
 #ifndef __APP_DEF__

@@ -20,10 +20,10 @@
 
 
 /**
- * \file angle.c
- * \brief Angle math routines.
- * \author Michael Liebscher
- * \date 2005-2013
+ * @file angle.c
+ * @brief Angle math routines.
+ * @author Michael Liebscher
+ * @date 2005-2013
  */
 
 
@@ -32,10 +32,10 @@
 
 
 /**
- * \brief Finds the difference between two angles.
- * \param[in] angle1 Angle in radians. 
- * \param[in] angle2 Angle in radians. 
- * \return Returns the absolute difference between two angles in radians, this will always be between 0 and PI.
+ * Finds the difference between two angles.
+ * @param[in] angle1 Angle in radians. 
+ * @param[in] angle2 Angle in radians. 
+ * @return Returns the absolute difference between two angles in radians, this will always be between 0 and PI.
  */
 INLINECALL float angle_diff( float angle1, float angle2 )
 {
@@ -61,10 +61,10 @@ INLINECALL float angle_diff( float angle1, float angle2 )
 }
 
 /**
- * \brief Clockwise distance between two angles.
- * \param[in] angle1 Angle in radians. 
- * \param[in] angle2 Angle in radians. 
- * \return Returns the clockwise distance from angle2 to angle1, this may be greater than 180 degrees.
+ * Clockwise distance between two angles.
+ * @param[in] angle1 Angle in radians. 
+ * @param[in] angle2 Angle in radians. 
+ * @return Returns the clockwise distance from angle2 to angle1, this may be greater than 180 degrees.
  */
 INLINECALL float angle_wise( float angle1, float angle2 )
 {
@@ -79,9 +79,9 @@ INLINECALL float angle_wise( float angle1, float angle2 )
 }
 
 /**
- * \brief Angles normalized to the range [-180 < angle <= 180]
- * \param[in] angle Angle in radians.  
- * \return Angle normalized to the range [-180 < angle <= 180] in radians
+ * Angles normalized to the range [-180 < angle <= 180]
+ * @param[in] angle Angle in radians.  
+ * @return Angle normalized to the range [-180 < angle <= 180] in radians
  */
 INLINECALL float angle_normalize( float angle )
 {

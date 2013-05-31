@@ -21,11 +21,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
 /**
- * \file cmd.c
- * \brief Command text buffering and command execution.
- * \author Id Software, Inc.
- * \date 1999-2005
- * \note This code was derived from Quake III Arena, and was originally written by Id Software, Inc.
+ * @file cmd.c
+ * @brief Command text buffering and command execution.
+ * @author Id Software, Inc.
+ * @date 1999-2005
+ * @note This code was derived from Quake III Arena, and was originally written by Id Software, Inc.
  */
 
 #include <string.h>
@@ -40,26 +40,19 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 typedef struct {
 	byte	*data;
-	int		maxsize;
-	int		cursize;
+	int	maxsize;
+	int	cursize;
 } cmd_t;
 
-int			cmd_wait;
-cmd_t		cmd_text;
-byte		cmd_text_buf[MAX_CMD_BUFFER];
+int	cmd_wait;
+cmd_t	cmd_text;
+byte	cmd_text_buf[MAX_CMD_BUFFER];
 
-
-//=============================================================================
-
-/*
-============
-Cmd_Wait_f
-
-Causes execution of the remainder of the command buffer to be delayed until
-next frame.  This allows commands like:
-bind g "cmd use rocket ; +attack ; wait ; -attack ; cmd use blaster"
-============
-*/
+/**
+ * Delay execution of the remainder of the command buffer until next frame.
+ * @note This allows commands like:
+ * bind g "cmd use rocket ; +attack ; wait ; -attack ; cmd use blaster"
+ */
 void Cmd_Wait_f( void ) {
 	if ( Cmd_Argc() == 2 ) {
 		cmd_wait = atoi( Cmd_Argv( 1 ) );
@@ -68,20 +61,14 @@ void Cmd_Wait_f( void ) {
 	}
 }
 
+/**
+ * @addtogroup COMMAND BUFFER
+ */
 
-/*
-=============================================================================
-
-						COMMAND BUFFER
-
-=============================================================================
-*/
-
-/*
-============
-Cbuf_Init
-============
-*/
+/**
+ * Initialize command buffer.
+ * @ingroup COMMAND BUFFER
+ */
 void Cbuf_Init (void)
 {
 	cmd_text.data = cmd_text_buf;
@@ -89,13 +76,12 @@ void Cbuf_Init (void)
 	cmd_text.cursize = 0;
 }
 
-/*
-============
-Cbuf_AddText
-
-Adds command text at the end of the buffer, does NOT add a final \n
-============
-*/
+/**
+ * Add command text at the end of the command buffer.
+ * @param text Pointer to the command.
+ * @note Does NOT add a final \n.
+ * @ingroup COMMAND BUFFER
+ */
 void Cbuf_AddText( const char *text ) {
 	int		l;
 	
@@ -111,15 +97,12 @@ void Cbuf_AddText( const char *text ) {
 	cmd_text.cursize += l;
 }
 
-
-/*
-============
-Cbuf_InsertText
-
-Adds command text immediately after the current command
-Adds a \n to the text
-============
-*/
+/**
+ * Add command text immediately after the current command in the command buffer.
+ * @param text Pointer to the command.
+ * @note Adds a \n at the end of text.
+ * @ingroup COMMAND BUFFER
+ */
 void Cbuf_InsertText( const char *text ) {
 	int		len;
 	int		i;
@@ -145,12 +128,14 @@ void Cbuf_InsertText( const char *text ) {
 	cmd_text.cursize += len;
 }
 
-
-/*
-============
-Cbuf_ExecuteText
-============
-*/
+/**
+ * Execute command text at exec_when.
+ * @param exec_when Desired time of execution. If EXEC_NOW, execute right away.
+ * If EXEC_INSERT, execute it after the current command. If EXEC_APPEND, append
+ * at the end of command buffer. Puts out a fatal error if an invalid value is given.
+ * @param text Pointer to the command.
+ * @ingroup COMMAND BUFFER
+ */
 void Cbuf_ExecuteText (int exec_when, const char *text)
 {
 	switch (exec_when)
@@ -173,17 +158,16 @@ void Cbuf_ExecuteText (int exec_when, const char *text)
 	}
 }
 
-/*
-============
-Cbuf_Execute
-============
-*/
+/**
+ * Execute all commands in the command buffer.
+ * @ingroup COMMAND BUFFER
+ */
 void Cbuf_Execute (void)
 {
-	int		i;
+	int	i;
 	char	*text;
 	char	line[MAX_CMD_LINE];
-	int		quotes;
+	int	quotes;
 
 	while (cmd_text.cursize)
 	{
@@ -213,7 +197,7 @@ void Cbuf_Execute (void)
 		}
 				
 		//Com_Memcpy (line, text, i);
-        memcpy (line, text, i);
+		memcpy (line, text, i);
 		line[i] = 0;
 		
 // delete the text from the command buffer and move remaining commands down
@@ -236,14 +220,9 @@ void Cbuf_Execute (void)
 }
 
 
-/*
-==============================================================================
-
-						SCRIPT COMMANDS
-
-==============================================================================
-*/
-
+/**
+ * addtogroup SCRIPT COMMANDS
+ */
 
 /*
 ===============

@@ -20,12 +20,12 @@
 */
 
 /**
- * \file client_main.c
- * \brief Client main loop.
- * \author Michael Liebscher
- * \date 2004
- * \author Id Software, Inc.
- * \date 1997-2001
+ * @file client_main.c
+ * @brief Client main loop.
+ * @author Michael Liebscher
+ * @date 2004
+ * @author Id Software, Inc.
+ * @date 1997-2001
  */
 
 #include <stdio.h>
@@ -122,8 +122,8 @@ client_static_t	ClientStatic;
 
 
 /**
- * \brief Disconnect the client from the server.
- * \note Called after an ERR_DROP was thrown.
+ * Disconnect the client from the server.
+ * @note Called after an ERR_DROP was thrown.
  */
 PUBLIC void Client_Drop( void )
 {
@@ -143,7 +143,7 @@ PUBLIC void Client_Drop( void )
 }
 
 /**
- * \brief Console command to disconnect client from server.
+ * Console command to disconnect client from server.
  */
 PUBLIC void Client_Quit_f( void )
 {
@@ -152,7 +152,7 @@ PUBLIC void Client_Quit_f( void )
 }
 
 /**
- * \brief Initialize client variables and commands.
+ * Initialize client variables and commands.
  */
 PRIVATE void Client_InitLocal( void )
 {
@@ -210,8 +210,8 @@ PRIVATE void Client_InitLocal( void )
 }
 
 /**
- * \brief Initialize Client sub-systems.
- * \return Initialize video and sound sub-systems.
+ * Initialize Client sub-systems.
+ * @return Initialize video and sound sub-systems.
  */
 PUBLIC void Client_Init( void )
 {
@@ -236,7 +236,7 @@ PUBLIC void Client_Init( void )
 }
 
 /**
- * \brief Writes key bindings and archived cvars to config.cfg.
+ * Writes key bindings and archived cvars to config.cfg.
  */
 PRIVATE void Client_WriteConfiguration( void )
 {
@@ -265,7 +265,7 @@ PRIVATE void Client_WriteConfiguration( void )
 }
 
 /**
- * \brief Shutdown client sub-systems.
+ * Shutdown client sub-systems.
  */
 PUBLIC void Client_Shutdown( void )
 {
