@@ -135,34 +135,28 @@
 #if defined(_M_IX86) || defined(__i386__) || defined(__i486__) || defined(__i586__) || defined(__i686__)
 
 	#define CPUSTRING       "x86"
-	#define POINTER_SIZE	W32
 	#define __ARCH_X86__    1
 
 #elif defined(__amd64__) || defined(__X86_64__) || defined(__amd64) || (__x86_64)
 
 	#define CPUSTRING	"x86_64"
-	#define POINTERSIZE	W64
 	#define __ARCH_X64__	1
 
 #elif defined(_M_ALPHA) || defined(__alpha__)
 
 	#define CPUSTRING       "Alpha"
-	#define POINTERSIZE	W32
 
 #elif defined(__powerpc__)
 
 	#define CPUSTRING	"PowerPC"
-	#define POINTERSIZE	W32
 
 #elif defined(__sparc__)
 
 	#define CPUSTRING	"Sparc"
-	#define POINTERSIZE	W32
 
 #else
 
 	#define CPUSTRING       "Unknown CPU"
-	#define POINTERSIZE	W64
 
 #endif
 
@@ -187,7 +181,7 @@
 	s       -signed
 	XX      -Number of bits
 */
-#ifdef OS_WINDOWS
+#if defined(OS_WINDOWS) && !defined(__MINGW32__)
 
 	#include <basetsd.h>
 
@@ -200,8 +194,9 @@
 	typedef UINT64		W64,	*PW64;
 	typedef INT64		SW64,   *PSW64;
 
-#elif OS_UNIX
+#elif defined(OS_UNIX) || defined(__MINGW32__)
 
+	#include <stdint.h>
 	#include <inttypes.h>
 
 	typedef	uint8_t		W8,	*PW8;
@@ -212,7 +207,7 @@
 	typedef	int32_t		SW32,   *PSW32;
 	typedef	uint64_t	W64,	*PW64;
 	typedef	int64_t		SW64,   *PSW64;
-	typedef POINTERSIZE	INT_PTR;
+	typedef intptr_t	INT_PTR;
 
 #endif
 
