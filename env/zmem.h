@@ -33,8 +33,8 @@
 #include <stdlib.h>
 
 // memory tags to allow dynamic memory to be cleaned up
-#define	TAG_GAME		765		/* clear when unloading the dll */
-#define	TAG_LEVEL		766		/* clear when loading a new level */
+#define	TAG_GAME	765		/* clear when unloading the dll */
+#define	TAG_LEVEL	766		/* clear when loading a new level */
 #define	TAG_LEVEL_SCP	767		/* clear when unloading level script */
 
 
@@ -45,7 +45,7 @@ typedef struct zhead_s
 
 	short	magic;
 	short	tag;			// for group free
-	int		size;
+	int	size;
 
 } zhead_t;
 

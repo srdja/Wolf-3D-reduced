@@ -425,14 +425,14 @@ are inserted in the apropriate place, The argv array
 will point into this temporary buffer.
 ============
 */
-// NOTE TTimo define that to track tokenization issues
+/* NOTE TTimo define that to track tokenization issues */
 //#define TKN_DBG
 void Cmd_TokenizeString( const char *text_in ) {
 	const char	*text;
 	char		*textOut;
 
 #ifdef TKN_DBG
-	// FIXME TTimo blunt hook to try to find the tokenization of userinfo
+	/** @FIXME TTimo blunt hook to try to find the tokenization of userinfo */
 	Com_DPrintf("Cmd_TokenizeString: %s\n", text_in);
 #endif
 
@@ -483,6 +483,7 @@ void Cmd_TokenizeString( const char *text_in ) {
 
 		// handle quoted strings
     // NOTE TTimo this doesn't handle \" escaping
+    // NOTE Mario text[0] != '\' && (text[0] == '"' || text[1] == '"') or something similar may handle it.
 		if ( *text == '"' ) {
 			cmd_argv[cmd_argc] = textOut;
 			cmd_argc++;

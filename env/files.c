@@ -89,28 +89,31 @@ PRIVATE void FS_AddGameDirectory( const char *dir )
 	search->next = fs_searchpaths;
 	fs_searchpaths = search;
 
-	// add compressed files
-	W8 count;
-	const char ext_zip[4] = "zip";
-	char extension[4] = "pak";
-	for( count = 0; count < 2; ++count){
-		com_snprintf( path, MAX_OSPATH, "%s%c*.%s", fs_gamedir, PATH_SEP, extension );
+	//
+	// add any pak files
+	//
+	com_snprintf( path, sizeof( path ), "%s%c*.pak", fs_gamedir, PATH_SEP );
 
-		pakfile = FS_FindFirst( path, 0, 0 );
-
-		if( pakfile ){
-			do{
-				pak = FS_LoadZipFile( pakfile );
-				if( pak )
-				{
-					search->pack = pak;
-					search->next = fs_searchpaths;
-					fs_searchpaths = search;
-				}
-			}while( (pakfile = FS_FindNext( 0, 0 )) != NULL );
+	pakfile = FS_FindFirst( path, 0, 0 );
+	if( pakfile ){
+		pak = FS_LoadZipFile( pakfile );
+		if( pak ){
+			search = (searchpath_t *) Z_Malloc( sizeof( searchpath_t ) );
+			search->pack = pak;
+			search->next = fs_searchpaths;
+			fs_searchpaths = search;
 		}
-		FS_FindClose();
-		com_strlcpy( extension, ext_zip, 4 ); //FIXME: hack for avoiding code duplication and fix a leak
+
+		while( (pakfile = FS_FindNext( 0, 0 )) != NULL ){
+			pak = FS_LoadZipFile( pakfile );
+			if( ! pak ){
+				continue;
+			}
+			search = Z_Malloc( sizeof( searchpath_t ) );
+			search->pack = pak;
+			search->next = fs_searchpaths;
+			fs_searchpaths = search;
+		}
 	}
 }
 
