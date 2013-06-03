@@ -479,8 +479,8 @@ PUBLIC char *com_parse( char **data_p )
 {
 	int		c;
 	int		len;
-	char	*data;
-	static char	com_token[ 128 ];
+	char		*data;
+	static char	com_token[ MAX_TOKEN_CHARS ];
 
 	data = *data_p;
 	len = 0;

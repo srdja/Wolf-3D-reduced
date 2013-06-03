@@ -71,15 +71,15 @@ statinfo_t static_wl6[]=
 	{ true, -1},			// stuff				(SOD:gibs)
 	{false, -1},			// stuff
 	{false, pow_food},		// Good food       spr4v
-	{false, pow_firstaid},	// First aid       "
+	{false, pow_firstaid},		// First aid       "
 	{false, pow_clip},		// Clip            "
-	{false, pow_machinegun},// Machine gun     "
-	{false, pow_gatlinggun},// Gatling gun     "
+	{false, pow_machinegun},	// Machine gun     "
+	{false, pow_gatlinggun},	// Gatling gun     "
 	{false, pow_cross},		// Cross           "
-	{false, pow_chalice},	// Chalice         "
+	{false, pow_chalice},		// Chalice         "
 	{false, pow_bible},		// Bible           "
 	{false, pow_crown},		// crown           spr5v
-	{false, pow_fullheal},	// one up          "
+	{false, pow_fullheal},		// one up          "
 	{false, pow_gibs},		// gibs            "
 	{ true, -1},			// barrel          "
 	{ true, -1},			// well            "
@@ -124,15 +124,15 @@ statinfo_t static_sod[] =
 	{ true, -1},			// stuff				(SOD:gibs)
 	{false, -1},			// stuff
 	{false, pow_food},		// Good food       spr4v
-	{false, pow_firstaid},	// First aid       "
+	{false, pow_firstaid},		// First aid       "
 	{false, pow_clip},		// Clip            "
-	{false, pow_machinegun},// Machine gun     "
-	{false, pow_gatlinggun},// Gatling gun     "
+	{false, pow_machinegun},	// Machine gun     "
+	{false, pow_gatlinggun},	// Gatling gun     "
 	{false, pow_cross},		// Cross           "
-	{false, pow_chalice},	// Chalice         "
+	{false, pow_chalice},		// Chalice         "
 	{false, pow_bible},		// Bible           "
 	{false, pow_crown},		// crown           spr5v
-	{false, pow_fullheal},	// one up          "
+	{false, pow_fullheal},		// one up          "
 	{false, pow_gibs},		// gibs            "
 	{ true, -1},			// barrel          "
 	{ true, -1},			// well            "
@@ -148,7 +148,7 @@ statinfo_t static_sod[] =
 	{ true, -1},			// spears          " (SOD:gibs)
 	{false, -1},			// vines		   "
 	{ true, -1},			// marble pillar
-	{false, pow_25clip},	// bonus 25 clip
+	{false, pow_25clip},		// bonus 25 clip
 	{ true, -1},			// truck
 	{false, pow_spear},		// SPEAR OF DESTINY!
 };
@@ -1238,7 +1238,9 @@ PUBLIC int Level_VerifyMap( const char *levelname )
 	}
 
 cleanup:
+	if (fhandle) {
 	FS_CloseFile(fhandle);
+	}
 	if (mapName) {
 		Z_Free(mapName);
 	}
