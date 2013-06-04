@@ -87,7 +87,7 @@ void vectorCrossProduct( const vec3_t v1, const vec3_t v2, vec3_t cross );
 
 
 int vectorCompare( const vec3_t v1, const vec3_t v2 );
-vec_t vectorLength( const vec3_t v );
+INLINECALL vec_t vectorLength( const vec3_t v );
 vec_t (*pfVectorNormalize)( vec3_t vec ); 
 
 void angleVectors( const vec3_t angles, vec3_t forward, vec3_t right, vec3_t up );

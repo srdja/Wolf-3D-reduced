@@ -1,4 +1,4 @@
-project (WOLF3D_REDUX) 
+project ( WOLF3D_REDUX ) 
 
 
 # Required cmake version
@@ -153,7 +153,8 @@ set ( wolf_HEADER
 
 
 if ( WIN32 )
-	include_directories (win32) 
+
+	include_directories (win32)
 	set( platform_SOURCE 
 		${CMAKE_SOURCE_DIR}/win32/win_openglw_imp.c
 		${CMAKE_SOURCE_DIR}/win32/win_vid_sys.c
@@ -170,7 +171,7 @@ if ( WIN32 )
 		${CMAKE_SOURCE_DIR}/win32/win_def.h
 	)
 
-elseif(UNIX)
+elseif ( UNIX )
 
 	include_directories (unix) 
 	set( platform_SOURCE 
@@ -201,7 +202,9 @@ set( HEADER ${env_HEADER} ${wolf_HEADER} ${platform_HEADER} )
 
 add_executable( ${EXE_NAME} ${SOURCE} ${HEADER} )
 
-if (UNIX)
+if ( WIN32 )
+	target_link_libraries( ${EXE_NAME} zlibstatic winmm vorbisfile )
+elseif ( UNIX )
 	target_link_libraries( ${EXE_NAME} dl m X11 Xxf86dga Xxf86vm GL z vorbisfile )
 endif ()
 

@@ -52,7 +52,7 @@
 
 
 static _boolean GLimp_SwitchFullscreen( int width, int height );
-_boolean GLimp_InitGL (void);
+PRIVATE _boolean GLimp_InitGL (void);
 
 typedef struct
 {

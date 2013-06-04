@@ -139,8 +139,9 @@ static int	console_textlen;
 char *Sys_ConsoleInput( void )
 {
 	INPUT_RECORD	recs[1024];
-	int	dummy;
-	int	ch, numread, numevents;
+	LPDWORD	dummy;
+	int	ch;
+	LPDWORD numevents, numread;
 
 	if( ! dedicated || ! dedicated->value )
 		return NULL;
@@ -278,6 +279,39 @@ void CheckforInstance( void )
 	}
 }
 
+void ParseCommandLine( LPSTR lpCmdLine )
+{
+	argc = 1;
+	argv[ 0 ] = "exe";
+
+	while( *lpCmdLine && (argc < MAX_NUM_ARGVS) )
+	{
+		// Ignore ASCII characters outside the range of '!' and '}'
+		while( *lpCmdLine && ( (*lpCmdLine < 33) || (*lpCmdLine > 126) ) )
+		{
+			++lpCmdLine;
+		}
+
+		if( *lpCmdLine )
+		{
+			argv[ argc ] = lpCmdLine;
+			argc++;
+
+			// Keep ASCII characters within the range of '!' and '}'
+			while( *lpCmdLine && ( (*lpCmdLine > 32) && (*lpCmdLine < 127) ) )
+			{
+				++lpCmdLine;
+			}
+
+			if( *lpCmdLine )
+			{
+				*lpCmdLine = '\0';	// NUL-terminate string
+				++lpCmdLine;
+			}
+		}
+	}
+}
+
 /**
  * \brief The user-provided entry point for a graphical Windows-based application.
  * \param[in] hInstance A handle to the current instance of the application.
@@ -299,9 +333,9 @@ int WINAPI WinMain( HINSTANCE hInstance,
 
 	CheckforInstance();
 
-    com_strlcpy( sys_cmdline, lpCmdLine, sizeof( sys_cmdline ) );
+//    com_strlcpy( sys_cmdline, lpCmdLine, sizeof( sys_cmdline ) );
 
-	Com_ParseCommandLine( lpCmdLine );
+	ParseCommandLine( lpCmdLine );
 
 	common_Init( argc, argv );
 
