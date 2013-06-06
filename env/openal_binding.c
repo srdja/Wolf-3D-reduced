@@ -181,10 +181,10 @@ PUBLIC void OpenAL_Shutdown( void )
 
 /**
  * \brief Setup interface to OpenAL.
- * \param[in] dllname Name of the OpenAL dynamic link library. 
+ * \param[in] dllname Name of the OpenAL dynamic link library.
  * \return true on success, otherwise false.
  * \note This is responsible for binding our al function pointers to
- * the appropriate OpenAL stuff. In Windows this means doing a 
+ * the appropriate OpenAL stuff. In Windows this means doing a
  * LoadLibrary and a bunch of calls to GetProcAddress. On other
  * operating systems we need to do the right thing, whatever that
  * might be.
@@ -199,33 +199,33 @@ PUBLIC _boolean OpenAL_Init( const char *dllname )
 	SearchPath( NULL, dllname, NULL, sizeof( buffer ) - 1, buffer, &ptr );
 
 	Com_Printf( "...calling LoadLibrary( %s ): ", buffer );
-	
+
 	if( ( hinstOpenAL = LoadLibrary( dllname ) ) == 0 )
 	{
 		char *buf = NULL;
 
 		Com_Printf( "failed\n" );
 
-		FormatMessage( FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM, 
-						NULL, GetLastError(), 
+		FormatMessage( FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
+						NULL, GetLastError(),
 						MAKELANGID( LANG_NEUTRAL, SUBLANG_DEFAULT ),
 						(LPTSTR) &buf, 0, NULL );
 
 		Com_Printf( "%s\n", buf );
-		
+
 		return false;
-	}	
+	}
 
 #elif __unix__
 
 	Com_Printf( "...calling dlopen( %s ): ", dllname );
-	
+
 	if( ( OpenALLib = dlopen( dllname, RTLD_LAZY | RTLD_GLOBAL ) ) == 0 )
 	{
 		Com_Printf( "failed\n" );
 
 		Com_Printf( "%s\n", dlerror() );
-		
+
 		return false;
 	}
 
@@ -236,7 +236,7 @@ PUBLIC _boolean OpenAL_Init( const char *dllname )
 #endif
 
 
-	Com_Printf( "succeeded\n" );
+	Com_Printf( "succeeded.\nInitializing OpenAL...\n" );
 
 
 	if( ! (pfalcCloseDevice				= (ALCCLOSEDEVICE)GPA( "alcCloseDevice" )) ) return false;
@@ -311,6 +311,7 @@ PUBLIC _boolean OpenAL_Init( const char *dllname )
 	if( ! (pfalSourceQueueBuffers			= (ALSOURCEQUEUEBUFFERS)GPA("alSourceQueueBuffers")) ) return false;
 	if( ! (pfalSourceUnqueueBuffers			= (ALSOURCEUNQUEUEBUFFERS)GPA("alSourceUnqueueBuffers")) ) return false;
 
+	Com_Printf( "succeeded.\n" );
 
 	return true;
 

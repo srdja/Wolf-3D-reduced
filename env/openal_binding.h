@@ -31,9 +31,13 @@
 #define __OPENAL_BINDING_H__
 
 
-
+#ifdef _MSC_VER
+#include <alc.h>
+#include <al.h>
+#else
 #include <AL/alc.h>
 #include <AL/al.h>
+#endif
 
 #include "platform.h"
 

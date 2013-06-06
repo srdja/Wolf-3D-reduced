@@ -76,11 +76,10 @@ PRIVATE char *Sound_Device_getDeviceList( void )
 		for( numSoundDevices = 0 ; numSoundDevices < 12 ; ++numSoundDevices )
 		{
 			sound_devices[ numSoundDevices ] = NULL;
-/*		}
-
+		}
 		for( numSoundDevices = 0 ; numSoundDevices < 12 ; ++numSoundDevices ) // son las mismas condiciones que el anterior (?)
 		{
-*/			sound_devices[ numSoundDevices ] = deviceList;
+			sound_devices[ numSoundDevices ] = deviceList;
 			if( strcmp( sound_devices[ numSoundDevices ], deviceName ) == 0 )
 			{
 				numDefaultSoundDevice = numSoundDevices;

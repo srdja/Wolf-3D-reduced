@@ -175,6 +175,8 @@ if ( WIN32 )
 		${CMAKE_SOURCE_DIR}/win32/win_def.h
 	)
 
+	set( LIBS ${LIBS} vorbis ogg opengl32 glu32 zlibstatic winmm vorbisfile vorbis )
+
 elseif ( UNIX )
 
 	set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -g -pg" )
@@ -194,6 +196,8 @@ elseif ( UNIX )
 		${CMAKE_SOURCE_DIR}/unix/unix_vid_sys.c
 	)
 	
+	set( LIBS ${LIBS} dl m X11 Xxf86dga Xxf86vm GL z vorbisfile )
+
 else ()
 
   message (FATAL_ERROR "Unknown Platform")
@@ -209,9 +213,4 @@ set( HEADER ${env_HEADER} ${wolf_HEADER} ${platform_HEADER} )
 
 add_executable( ${EXE_NAME} ${SOURCE} ${HEADER} )
 
-if ( WIN32 )
-	target_link_libraries( ${EXE_NAME} vorbis ogg opengl32 glu32 zlibstatic winmm vorbisfile vorbis )
-elseif ( UNIX )
-	target_link_libraries( ${EXE_NAME} dl m X11 Xxf86dga Xxf86vm GL z vorbisfile )
-endif ()
-
+target_link_libraries( ${EXE_NAME} ${LIBS} )
