@@ -139,9 +139,8 @@ static int	console_textlen;
 char *Sys_ConsoleInput( void )
 {
 	INPUT_RECORD	recs[1024];
-	LPDWORD	dummy;
-	int	ch;
-	LPDWORD numevents, numread;
+	int		ch, dummy;
+	int		numevents, numread;
 
 	if( ! dedicated || ! dedicated->value )
 		return NULL;
@@ -149,13 +148,13 @@ char *Sys_ConsoleInput( void )
 
 	for( ;; )
 	{
-		if( ! GetNumberOfConsoleInputEvents( hinput, &numevents ) )
+		if( ! GetNumberOfConsoleInputEvents( hinput, (LPDWORD) &numevents ) )
 			Sys_Error( "Error getting # of console events" );
 
 		if( numevents <= 0 )
 			break;
 
-		if( ! ReadConsoleInput( hinput, recs, 1, &numread ) )
+		if( ! ReadConsoleInput( hinput, recs, 1, (LPDWORD) &numread ) )
 			Sys_Error ("Error reading console input");
 
 		if( numread != 1 )
@@ -170,7 +169,7 @@ char *Sys_ConsoleInput( void )
 				switch( ch )
 				{
 					case '\r':
-						WriteFile( houtput, "\r\n", 2, &dummy, NULL );
+						WriteFile( houtput, "\r\n", 2, (LPDWORD) &dummy, NULL );
 
 						if( console_textlen )
 						{
@@ -184,7 +183,7 @@ char *Sys_ConsoleInput( void )
 						if( console_textlen )
 						{
 							console_textlen--;
-							WriteFile( houtput, "\b \b", 3, &dummy, NULL );
+							WriteFile( houtput, "\b \b", 3, (LPDWORD) &dummy, NULL );
 						}
 						break;
 
@@ -193,7 +192,7 @@ char *Sys_ConsoleInput( void )
 						{
 							if( console_textlen < sizeof( console_text ) - 2 )
 							{
-								WriteFile( houtput, &ch, 1, &dummy, NULL );
+								WriteFile( houtput, &ch, 1, (LPDWORD) &dummy, NULL );
 								console_text[ console_textlen ] = ch;
 								console_textlen++;
 							}
@@ -320,22 +319,25 @@ void ParseCommandLine( LPSTR lpCmdLine )
  * \param[in] nCmdShow Controls how the window is to be shown.
  * \return If the function succeeds, terminating when it receives a WM_QUIT message, it should return the exit value contained in that message's wParam parameter. If the function terminates before entering the message loop, it should return zero.
  */
-int WINAPI WinMain( HINSTANCE hInstance,
-				    HINSTANCE hPrevInstance,
-					LPSTR lpCmdLine,
-					int nCmdShow )
+ #include<tchar.h>
+int WINAPI WinMain(	HINSTANCE hInstance,
+			HINSTANCE hPrevInstance,
+			LPSTR lpCmdLine,
+			int nCmdShow )
 {
-	MSG	 msg;
-	int	 time, oldtime, newtime;
+	MSG	msg;
+	int	time, oldtime, newtime;
 
 
 	global_hInstance = hInstance;
 
 	CheckforInstance();
-
-//    com_strlcpy( sys_cmdline, lpCmdLine, sizeof( sys_cmdline ) );
-
-	ParseCommandLine( lpCmdLine );
+	if( lpCmdLine ) {
+		com_strlcpy( sys_cmdline, lpCmdLine, sizeof( sys_cmdline ) );
+		ParseCommandLine( sys_cmdline );
+	} else {
+		Com_DPrintf( "WARNING: lpCmdLine is NULL. Command line arguments ignored.\n" );
+	}
 
 	common_Init( argc, argv );
 
