@@ -203,7 +203,7 @@ PUBLIC void Com_DPrintf( const char *fmt, ... )
  */
 PUBLIC void Com_Error( int code, const char *fmt, ... )
 {
-	va_list		argptr;
+	va_list			argptr;
 	static char		msg[ MAXPRINTMSG ];
 	static	_boolean	recursive;
 
@@ -765,11 +765,7 @@ PUBLIC void common_Init( int argc, char *argv[] )
 
 	// prepare enough of the subsystems to handle
 	// cvar and command buffer management
-/*
-	Com_ParseCommandLine( commandLine );
-*/
 
-/** @FIXME Check this doesn't break Windows' version. */
 	com_numConsoleLines = argc;
 	com_consoleLines = argv;
     Cbuf_Init ();
@@ -796,7 +792,7 @@ PUBLIC void common_Init( int argc, char *argv[] )
 	//
 	// init commands and vars
 	//
-    Cmd_AddCommand( "z_stats", Z_Stats_f );
+	Cmd_AddCommand( "z_stats", Z_Stats_f );
 	Cmd_AddCommand( "error", Com_Error_f );
 
 //	host_speeds = Cvar_Get( "host_speeds", "0", CVAR_INIT );

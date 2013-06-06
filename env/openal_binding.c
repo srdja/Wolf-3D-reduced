@@ -91,15 +91,15 @@ PUBLIC void OpenAL_Shutdown( void )
 	pfalcCloseDevice			= NULL;
 	pfalcCreateContext			= NULL;
 	pfalcDestroyContext			= NULL;
-	pfalcGetContextsDevice		= NULL;
-	pfalcGetCurrentContext		= NULL;
+	pfalcGetContextsDevice			= NULL;
+	pfalcGetCurrentContext			= NULL;
 	pfalcGetEnumValue			= NULL;
 	pfalcGetError				= NULL;
 	pfalcGetIntegerv			= NULL;
 	pfalcGetProcAddress			= NULL;
 	pfalcGetString				= NULL;
-	pfalcIsExtensionPresent		= NULL;
-	pfalcMakeContextCurrent		= NULL;
+	pfalcIsExtensionPresent			= NULL;
+	pfalcMakeContextCurrent			= NULL;
 	pfalcOpenDevice				= NULL;
 	pfalcProcessContext			= NULL;
 	pfalcSuspendContext			= NULL;
@@ -111,8 +111,8 @@ PUBLIC void OpenAL_Shutdown( void )
 	pfalBufferData				= NULL;
 	pfalGetBufferf				= NULL;
 	pfalGetBufferi				= NULL;
-	pfalEnable					= NULL;
-	pfalDisable					= NULL;
+	pfalEnable				= NULL;
+	pfalDisable				= NULL;
 	pfalDopplerFactor			= NULL;
 	pfalDopplerVelocity			= NULL;
 	pfalDistanceModel			= NULL;
@@ -128,7 +128,7 @@ PUBLIC void OpenAL_Shutdown( void )
 	pfalGetError				= NULL;
 	pfalGetProcAddress			= NULL;
 	pfalGetString				= NULL;
-	pfalIsExtensionPresent		= NULL;
+	pfalIsExtensionPresent			= NULL;
 	pfalIsEnabled				= NULL;
 	pfalListenerf				= NULL;
 	pfalListener3f				= NULL;
@@ -141,10 +141,10 @@ PUBLIC void OpenAL_Shutdown( void )
 	pfalGenSources				= NULL;
 	pfalDeleteSources			= NULL;
 	pfalIsSource				= NULL;
-	pfalSourcef					= NULL;
+	pfalSourcef				= NULL;
 	pfalSourcefv				= NULL;
 	pfalSource3f				= NULL;
-	pfalSourcei					= NULL;
+	pfalSourcei				= NULL;
 	pfalGetSourcef				= NULL;
 	pfalGetSource3f				= NULL;
 	pfalGetSourcefv				= NULL;
@@ -157,8 +157,8 @@ PUBLIC void OpenAL_Shutdown( void )
 	pfalSourceStopv				= NULL;
 	pfalSourceRewind			= NULL;
 	pfalSourceRewindv			= NULL;
-	pfalSourceQueueBuffers		= NULL;
-	pfalSourceUnqueueBuffers	= NULL;
+	pfalSourceQueueBuffers			= NULL;
+	pfalSourceUnqueueBuffers		= NULL;
 
 }
 
@@ -242,15 +242,15 @@ PUBLIC _boolean OpenAL_Init( const char *dllname )
 	if( ! (pfalcCloseDevice				= (ALCCLOSEDEVICE)GPA( "alcCloseDevice" )) ) return false;
 	if( ! (pfalcCreateContext			= (ALCCREATECONTEXT)GPA( "alcCreateContext" )) ) return false;
 	if( ! (pfalcDestroyContext			= (ALCDESTROYCONTEXT)GPA( "alcDestroyContext" )) ) return false;
-	if( ! (pfalcGetContextsDevice		= (ALCGETCONTEXTSDEVICE)GPA( "alcGetContextsDevice" )) ) return false;
-	if( ! (pfalcGetCurrentContext		= (ALCGETCURRENTCONTEXT)GPA( "alcGetCurrentContext" )) ) return false;
+	if( ! (pfalcGetContextsDevice			= (ALCGETCONTEXTSDEVICE)GPA( "alcGetContextsDevice" )) ) return false;
+	if( ! (pfalcGetCurrentContext			= (ALCGETCURRENTCONTEXT)GPA( "alcGetCurrentContext" )) ) return false;
 	if( ! (pfalcGetEnumValue			= (ALCGETENUMVALUE)GPA( "alcGetEnumValue" )) ) return false;
 	if( ! (pfalcGetError				= (ALCGETERROR)GPA( "alcGetError" )) ) return false;
 	if( ! (pfalcGetIntegerv				= (ALCGETINTEGERV)GPA( "alcGetIntegerv" )) ) return false;
 	if( ! (pfalcGetProcAddress			= (ALCGETPROCADDRESS)GPA( "alcGetProcAddress" )) ) return false;
 	if( ! (pfalcGetString				= (ALCGETSTRING)GPA( "alcGetString" )) ) return false;
-	if( ! (pfalcIsExtensionPresent		= (ALCISEXTENSIONPRESENT)GPA( "alcIsExtensionPresent" )) ) return false;
-	if( ! (pfalcMakeContextCurrent		= (ALCMAKECONTEXTCURRENT)GPA( "alcMakeContextCurrent" )) ) return false;
+	if( ! (pfalcIsExtensionPresent			= (ALCISEXTENSIONPRESENT)GPA( "alcIsExtensionPresent" )) ) return false;
+	if( ! (pfalcMakeContextCurrent			= (ALCMAKECONTEXTCURRENT)GPA( "alcMakeContextCurrent" )) ) return false;
 	if( ! (pfalcOpenDevice				= (ALCOPENDEVICE)GPA( "alcOpenDevice" )) ) return false;
 	if( ! (pfalcProcessContext			= (ALCPROCESSCONTEXT)GPA( "alcProcessContext" )) ) return false;
 	if( ! (pfalcSuspendContext			= (ALCSUSPENDCONTEXT)GPA( "alcSuspendContext" )) ) return false;
@@ -258,12 +258,12 @@ PUBLIC _boolean OpenAL_Init( const char *dllname )
 
 	if( ! (pfalGenBuffers				= (ALGENBUFFERS)GPA("alGenBuffers")) ) return false;
 	if( ! (pfalDeleteBuffers			= (ALDELETEBUFFERS)GPA("alDeleteBuffers")) ) return false;
-	if( ! (pfalIsBuffer					= (ALISBUFFER)GPA("alIsBuffer")) ) return false;
+	if( ! (pfalIsBuffer				= (ALISBUFFER)GPA("alIsBuffer")) ) return false;
 	if( ! (pfalBufferData				= (ALBUFFERDATA)GPA("alBufferData")) ) return false;
 	if( ! (pfalGetBufferf				= (ALGETBUFFERF)GPA("alGetBufferf")) ) return false;
 	if( ! (pfalGetBufferi				= (ALGETBUFFERI)GPA("alGetBufferi")) ) return false;
-	if( ! (pfalEnable					= (ALENABLE)GPA("alEnable")) ) return false;
-	if( ! (pfalDisable					= (ALDISABLE)GPA("alDisable")) ) return false;
+	if( ! (pfalEnable				= (ALENABLE)GPA("alEnable")) ) return false;
+	if( ! (pfalDisable				= (ALDISABLE)GPA("alDisable")) ) return false;
 	if( ! (pfalDopplerFactor			= (ALDOPPLERFACTOR)GPA("alDopplerFactor")) ) return false;
 	if( ! (pfalDopplerVelocity			= (ALDOPPLERVELOCITY)GPA("alDopplerVelocity")) ) return false;
 	if( ! (pfalDistanceModel			= (ALDISTANCEMODEL)GPA("alDistanceModel")) ) return false;
@@ -271,15 +271,15 @@ PUBLIC _boolean OpenAL_Init( const char *dllname )
 	if( ! (pfalGetBooleanv				= (ALGETBOOLEANV)GPA("alGetBooleanv")) ) return false;
 	if( ! (pfalGetDouble				= (ALGETDOUBLE)GPA("alGetDouble")) ) return false;
 	if( ! (pfalGetDoublev				= (ALGETDOUBLEV)GPA("alGetDoublev")) ) return false;
-	if( ! (pfalGetFloat					= (ALGETFLOAT)GPA("alGetFloat")) ) return false;
+	if( ! (pfalGetFloat				= (ALGETFLOAT)GPA("alGetFloat")) ) return false;
 	if( ! (pfalGetFloatv				= (ALGETFLOATV)GPA("alGetFloatv")) ) return false;
 	if( ! (pfalGetInteger				= (ALGETINTEGER)GPA("alGetInteger")) ) return false;
 	if( ! (pfalGetIntegerv				= (ALGETINTEGERV)GPA("alGetIntegerv")) ) return false;
 	if( ! (pfalGetEnumValue				= (ALGETENUMVALUE)GPA("alGetEnumValue")) ) return false;
-	if( ! (pfalGetError					= (ALGETERROR)GPA("alGetError")) ) return false;
+	if( ! (pfalGetError				= (ALGETERROR)GPA("alGetError")) ) return false;
 	if( ! (pfalGetProcAddress			= (ALGETPROCADDRESS)GPA("alGetProcAddress")) ) return false;
 	if( ! (pfalGetString				= (ALGETSTRING)GPA("alGetString")) ) return false;
-	if( ! (pfalIsExtensionPresent		= (ALISEXTENSIONPRESENT)GPA("alIsExtensionPresent")) ) return false;
+	if( ! (pfalIsExtensionPresent			= (ALISEXTENSIONPRESENT)GPA("alIsExtensionPresent")) ) return false;
 	if( ! (pfalIsEnabled				= (ALISENABLED)GPA("alIsEnabled")) ) return false;
 	if( ! (pfalListenerf				= (ALLISTENERF)GPA("alListenerf")) ) return false;
 	if( ! (pfalListener3f				= (ALLISTENER3F)GPA("alListener3f")) ) return false;
@@ -291,11 +291,11 @@ PUBLIC _boolean OpenAL_Init( const char *dllname )
 	if( ! (pfalGetListeneri				= (ALGETLISTENERI)GPA("alGetListeneri")) ) return false;
 	if( ! (pfalGenSources				= (ALGENSOURCES)GPA("alGenSources")) ) return false;
 	if( ! (pfalDeleteSources			= (ALDELETESOURCES)GPA("alDeleteSources")) ) return false;
-	if( ! (pfalIsSource					= (ALISSOURCE)GPA("alIsSource")) ) return false;
-	if( ! (pfalSourcef					= (ALSOURCEF)GPA("alSourcef")) ) return false;
-	if( ! (pfalSourcefv					= (ALSOURCEFV)GPA("alSourcefv")) ) return false;
-	if( ! (pfalSource3f					= (ALSOURCE3F)GPA("alSource3f")) ) return false;
-	if( ! (pfalSourcei					= (ALSOURCEI)GPA("alSourcei")) ) return false;
+	if( ! (pfalIsSource				= (ALISSOURCE)GPA("alIsSource")) ) return false;
+	if( ! (pfalSourcef				= (ALSOURCEF)GPA("alSourcef")) ) return false;
+	if( ! (pfalSourcefv				= (ALSOURCEFV)GPA("alSourcefv")) ) return false;
+	if( ! (pfalSource3f				= (ALSOURCE3F)GPA("alSource3f")) ) return false;
+	if( ! (pfalSourcei				= (ALSOURCEI)GPA("alSourcei")) ) return false;
 	if( ! (pfalGetSourcef				= (ALGETSOURCEF)GPA("alGetSourcef")) ) return false;
 	if( ! (pfalGetSource3f				= (ALGETSOURCE3F)GPA("alGetSource3f")) ) return false;
 	if( ! (pfalGetSourcefv				= (ALGETSOURCEFV)GPA("alGetSourcefv")) ) return false;
@@ -308,11 +308,10 @@ PUBLIC _boolean OpenAL_Init( const char *dllname )
 	if( ! (pfalSourceStopv				= (ALSOURCESTOPV)GPA("alSourceStopv")) ) return false;
 	if( ! (pfalSourceRewind				= (ALSOURCEREWIND)GPA("alSourceRewind")) ) return false;
 	if( ! (pfalSourceRewindv			= (ALSOURCEREWINDV)GPA("alSourceRewindv")) ) return false;
-	if( ! (pfalSourceQueueBuffers		= (ALSOURCEQUEUEBUFFERS)GPA("alSourceQueueBuffers")) ) return false;
-	if( ! (pfalSourceUnqueueBuffers		= (ALSOURCEUNQUEUEBUFFERS)GPA("alSourceUnqueueBuffers")) ) return false;
+	if( ! (pfalSourceQueueBuffers			= (ALSOURCEQUEUEBUFFERS)GPA("alSourceQueueBuffers")) ) return false;
+	if( ! (pfalSourceUnqueueBuffers			= (ALSOURCEUNQUEUEBUFFERS)GPA("alSourceUnqueueBuffers")) ) return false;
 
 
 	return true;
 
 }
-

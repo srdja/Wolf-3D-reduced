@@ -50,12 +50,12 @@ typedef struct sfx_s
 	_boolean			defaulted;
 	_boolean			loaded;
 
-	int					samples;
-	int					rate;
+	int				samples;
+	int				rate;
 	unsigned			format;	/* Sound samples: format specifier */
 	unsigned			bufferNum;
 
-	struct sfx_s		*nextHash;
+	struct sfx_s			*nextHash;
 
 } sfx_t;
 
@@ -64,15 +64,15 @@ typedef struct sfx_s
 // assigned to a channel.
 typedef struct playSound_s 
 {
-	struct playSound_s	*prev, *next;
+	struct playSound_s		*prev, *next;
 	sfx_t				*sfx;
-	int					entNum;
-	int					entChannel;
+	int				entNum;
+	int				entChannel;
 	_boolean			fixedPosition;	// Use position instead of fetching entity's origin
-	vec3_t				position;		// Only use if fixedPosition is set
+	vec3_t				position;	// Only use if fixedPosition is set
 	float				volume;
 	float				attenuation;
-	int					beginTime;		// Begin at this time
+	int				beginTime;	// Begin at this time
 
 } playSound_t;
 
@@ -80,13 +80,13 @@ typedef struct
 {
 	_boolean			streaming;
 	sfx_t				*sfx;			// NULL if unused
-	int					entNum;			// To allow overriding a specific sound
-	int					entChannel;
-	int					startTime;		// For overriding oldest sounds
+	int				entNum;			// To allow overriding a specific sound
+	int				entChannel;
+	int				startTime;		// For overriding oldest sounds
 	_boolean			loopSound;		// Looping sound
-	int					loopNum;		// Looping entity number
-	int					loopFrame;		// For stopping looping sounds
-	_boolean			fixedPosition;	// Use position instead of fetching entity's origin
+	int				loopNum;		// Looping entity number
+	int				loopFrame;		// For stopping looping sounds
+	_boolean			fixedPosition;		// Use position instead of fetching entity's origin
 	vec3_t				position;		// Only use if fixedPosition is set
 	float				volume;
 	float				distanceMult;
@@ -106,11 +106,11 @@ typedef struct
 
 void		Sound_SoundList_f( void );
 _boolean	Sound_LoadSound( sfx_t *sfx );
-sfx_t	*Sound_FindSound( const char *name );
-void Sound_FreeSounds( void );
+sfx_t		*Sound_FindSound( const char *name );
+void 		Sound_FreeSounds( void );
 
-_boolean Sound_Device_Setup( void );
-void Sound_Device_Shutdown( void );
+_boolean	Sound_Device_Setup( void );
+void		Sound_Device_Shutdown( void );
 
 
 #endif /* __SOUND_LOCAL_H__ */

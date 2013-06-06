@@ -37,6 +37,7 @@
 
 #include "platform.h"
 
+/** @BUG Multiple storage classes on *nix. */
 #ifndef _WIN32
 #define ALC_API
 #endif

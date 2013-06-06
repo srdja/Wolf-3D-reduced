@@ -43,18 +43,18 @@
 
 #define MAX_CHANNELS		64
 
-PRIVATE playSound_t	s_playSounds[ MAX_PLAYSOUNDS ];
-PRIVATE playSound_t	s_freePlaySounds;
-PRIVATE playSound_t	s_pendingPlaySounds;
+PRIVATE playSound_t		s_playSounds[ MAX_PLAYSOUNDS ];
+PRIVATE playSound_t		s_freePlaySounds;
+PRIVATE playSound_t		s_pendingPlaySounds;
 
-PRIVATE channel_t	s_channels[ MAX_CHANNELS ];
+PRIVATE channel_t		s_channels[ MAX_CHANNELS ];
 PRIVATE int			s_numChannels;
 
-PRIVATE listener_t	s_listener;
+PRIVATE listener_t		s_listener;
 
 PRIVATE int			s_frameCount;
 
-PRIVATE _boolean	s_activeApp;
+PRIVATE _boolean		s_activeApp;
 
 _boolean			sound_initialized = false;
 
