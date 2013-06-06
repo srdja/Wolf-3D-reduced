@@ -153,6 +153,10 @@ set ( wolf_HEADER
 
 
 if ( WIN32 )
+	if ( MINGW )
+		set( CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -mwindows -static -s" )
+		set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -g" )
+	endif ()
 
 	include_directories (win32)
 	set( platform_SOURCE 
@@ -172,6 +176,9 @@ if ( WIN32 )
 	)
 
 elseif ( UNIX )
+
+	set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -g -pg" )
+	set ( CMAKE_EXEC_LINKER_FLAGS "${CMAKE_EXEC_LINKER_FLAGS} -pg -s" )
 
 	include_directories (unix) 
 	set( platform_SOURCE 
@@ -203,7 +210,7 @@ set( HEADER ${env_HEADER} ${wolf_HEADER} ${platform_HEADER} )
 add_executable( ${EXE_NAME} ${SOURCE} ${HEADER} )
 
 if ( WIN32 )
-	target_link_libraries( ${EXE_NAME} zlibstatic winmm vorbisfile )
+	target_link_libraries( ${EXE_NAME} vorbis ogg opengl32 glu32 zlibstatic winmm vorbisfile vorbis )
 elseif ( UNIX )
 	target_link_libraries( ${EXE_NAME} dl m X11 Xxf86dga Xxf86vm GL z vorbisfile )
 endif ()
