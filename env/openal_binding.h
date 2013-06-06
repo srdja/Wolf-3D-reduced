@@ -37,7 +37,8 @@
 
 #include "platform.h"
 
-/** @BUG Multiple storage classes on *nix. */
+/** @BUG No sound on *nix. */
+/** @FIXME Multpile storage classes on *nix, and hack to avoid it. */
 #ifndef _WIN32
 #define ALC_API
 #endif
