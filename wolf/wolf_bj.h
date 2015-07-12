@@ -34,7 +34,7 @@ void SpawnBJVictory (void);
 void T_BJRun (entity_t *Guard);
 void T_BJJump (entity_t *Guard);
 void T_BJYell (entity_t *Guard);
-void T_BJDone (entity_t *Guard);
+void T_BJDone();
 
 
 #endif /* __WOLF_BJ_H__ */

@@ -44,53 +44,12 @@
 
 #include "../app_def.h"
 
-
-
-#define MAX_INFO_STRING     1024
-#define MAX_INFO_KEY        1024
-#define MAX_INFO_VALUE      1024
-
-#define BIG_INFO_STRING     8192  // used for system info key only
-#define BIG_INFO_KEY        8192
-#define BIG_INFO_VALUE      8192
-
-//============================================================================
-
-typedef struct sizebuf_s {
-    _boolean    allowoverflow;  // if false, do a Com_Error
-    _boolean    overflowed;     // set to true if the buffer size failed
-    W8  *data;
-    int     maxsize;
-    int     cursize;
-    int     readcount;
-
-} sizebuf_t;
-
-void SZ_Init (sizebuf_t *buf, PW8 data, int length);
-void SZ_Clear (sizebuf_t *buf);
-void *SZ_GetSpace (sizebuf_t *buf, int length);
-void SZ_Write (sizebuf_t *buf, void *data, int length);
-void SZ_Print (sizebuf_t *buf, W8 *data);    // memcpy onto the sizebuf
+#define BIG_INFO_STRING  8192  // used for system info key only
 
 //============================================================================
 
 char *Com_StringContains (char *str1, char *str2, int casesensitive);
 int Com_Filter (char *filter, char *name, int casesensitive);
-
-
-int COM_Argc (void);
-char *COM_Argv (int arg);    // range and null checked
-void COM_ClearArgv (int arg);
-int COM_CheckParm (char *parm);
-void COM_AddParm (char *parm);
-
-void COM_Init (void);
-void COM_InitArgv (int argc, char *argv[]);
-
-
-//============================================================================
-
-
 
 
 /////////////////////////////////////////////////////////////////////
@@ -100,8 +59,6 @@ void COM_InitArgv (int argc, char *argv[]);
 /////////////////////////////////////////////////////////////////////
 
 extern colour3_t    colourBlack;
-extern colour3_t    colourRed;
-extern colour3_t    colourBlue;
 extern colour3_t    colourGreen;
 extern colour3_t    colourWhite;
 
@@ -109,8 +66,6 @@ extern colour3_t    colourWhite;
 /////////////////////////////////////////////////////////////////////
 //  End Colour
 /////////////////////////////////////////////////////////////////////
-
-
 
 
 /*
@@ -124,15 +79,11 @@ extern colour3_t    colourWhite;
 
 #define ERR_FATAL       0       // exit the entire game with a popup window
 #define ERR_DROP        1       // print to console and disconnect from game
-#define ERR_QUIT        2       // not an error, just a normal exit
 #define ERR_DISCONNECT  4       // don't kill server
 
 #define EXEC_NOW    0       // don't return until completed
 #define EXEC_INSERT 1       // insert at current position, but don't run yet
 #define EXEC_APPEND 2       // add to end of the command buffer
-
-#define PRINT_ALL       0
-#define PRINT_DEVELOPER 1   // only print when "developer 1"
 
 void Com_Printf (const char *fmt, ...);
 void Com_DPrintf (const char *fmt, ...);
@@ -141,23 +92,9 @@ void Com_Quit (void);
 
 extern  cvar_t  *developer;
 extern  cvar_t  *dedicated;
-extern  cvar_t  *host_speeds;
-extern  cvar_t  *log_stats;
-
-extern  FILE *log_stats_file;
-
-// host_speeds times
-extern  int     time_before_game;
-extern  int     time_after_game;
-extern  int     time_before_ref;
-extern  int     time_after_ref;
-
-
 
 void common_Init (int argc, char *argv[]);
 void common_Frame (int msec);
-
-
 
 
 /*
@@ -167,14 +104,9 @@ void common_Frame (int msec);
 
 ==============================================================
 */
-char    *Sys_ConsoleInput (void);
-void    Sys_ConsoleOutput (const char *string);
-void    Sys_SendKeyEvents (void);
 void    Sys_Error (const char *format, ...);
 void    Sys_Quit (void);
 char    *Sys_GetClipboardData (void);
-void    Sys_CopyProtect (void);
-
 
 /*
 ==============================================================
@@ -187,15 +119,6 @@ void Client_Init (void);
 void Client_Drop (void);
 void Client_Shutdown (void);
 void Client_Frame (int msec);
-void SCR_BeginLoadingPlaque (void);
-
-void Server_Init (void);
-
-void Server_Frame (int msec);
-
-
-
-
 
 //
 // button bits

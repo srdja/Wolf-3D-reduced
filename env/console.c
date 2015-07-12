@@ -456,7 +456,7 @@ PRIVATE void Con_DrawInput (void)
     }
 
 
-    heightfont = Font_GetSize (FONT0) + 4;
+    Font_GetSize (FONT0) + 4;
 
 
     text = key_lines[ edit_line ];

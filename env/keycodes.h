@@ -39,7 +39,6 @@ typedef enum {
 
     K_COMMAND = 128,
     K_CAPSLOCK,
-    K_POWER,
     K_PAUSE,
 
     K_UPARROW,

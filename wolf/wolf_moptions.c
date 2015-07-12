@@ -85,12 +85,12 @@ PRIVATE void CustomizeControlsFunc (void *unused)
     M_Menu_Keys_f();
 }
 
-PRIVATE void AlwaysRunFunc (void *unused)
+PRIVATE void AlwaysRunFunc()
 {
     Cvar_SetValue ("cl_run", (float)s_options_alwaysrun_box.curvalue);
 }
 
-PRIVATE void FreeLookFunc (void *unused)
+PRIVATE void FreeLookFunc()
 {
     Cvar_SetValue ("freelook", (float)s_options_freelook_box.curvalue);
 }

@@ -442,9 +442,7 @@ PRIVATE W8 Font_get_line (FONTSELECT fs, int line_width, string_seg_t *sst)
         // we exceeded the space available for this line
         if (x + c_width > line_width) {
             if (in_a_word) {
-                chars_width = last_word_width;
                 sst->end = (char *)word_start;
-                t_spaces = last_word_spaces;
             }
 
             return t_words ? true : false;

@@ -104,7 +104,7 @@ PRIVATE void BrightnessCallback (void *s)
  Notes:
 -----------------------------------------------------------------------------
 */
-PRIVATE void ResetDefaults (void *unused)
+PRIVATE void ResetDefaults()
 {
     Video_MenuInit();
 }

@@ -107,7 +107,7 @@ void T_BJYell (entity_t *bj)
  * \brief Finished with BJ, so show the intermission screen
  * \param[in] bj Valid pointer to BJ's entity_t structure
  */
-void T_BJDone (entity_t *bj)
+void T_BJDone()
 {
     M_ForceMenuOff();
     Player.playstate = ex_victory;

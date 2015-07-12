@@ -27,27 +27,19 @@
 
 #include "client.h"
 
-
-
 _boolean    mouseinitialized;
 // false when not focus app
 
 _boolean    in_appactive;
-
 _boolean    mlooking;
 
 cvar_t  *in_mouse;
-
-
 
 extern void IN_StartupMouse (void);
 extern void IN_ActivateMouse (void);
 extern void IN_DeactivateMouse (void);
 extern void IN_MouseMove (usercmd_t *cmd);
-
-
 extern void IN_StartupJoystick (void);
-extern void IN_JoyMove (usercmd_t *cmd);
 
 /*
 =========================================================================
@@ -57,18 +49,11 @@ VIEW CENTERING
 =========================================================================
 */
 
-cvar_t  *v_centermove;
-cvar_t  *v_centerspeed;
-
 /**
  * \brief Initialize mouse and joy-stick.
  */
 void IN_Init (void)
 {
-    // centering
-    v_centermove  = Cvar_Get ("v_centermove",    "0.15",     0);
-    v_centerspeed = Cvar_Get ("v_centerspeed",   "500",      0);
-
     IN_StartupMouse();
     IN_StartupJoystick();
 }
@@ -79,19 +64,6 @@ void IN_Init (void)
 void IN_Shutdown (void)
 {
     IN_DeactivateMouse();
-}
-
-/**
- * \brief Is the application still active?
- * \pararm[in] active true if application is active, otherwise false.
- * \note Called when the main window gains or loses focus.
- *  The window may have been destroyed and recreated
- *  between a deactivate and an activate.
- */
-void IN_Activate (_boolean active)
-{
-    in_appactive = active;
-    // force a new window check or turn off
 }
 
 /**
@@ -117,7 +89,6 @@ void IN_Frame (void)
             return;
         }
     }
-
     IN_ActivateMouse();
 }
 
@@ -128,14 +99,4 @@ void IN_Frame (void)
 void IN_Move (usercmd_t *cmd)
 {
     IN_MouseMove (cmd);
-
-    /*  if( ActiveApp )
-            IN_JoyMove( cmd );*/
-}
-
-/**
- * \brief Clear input states.
- */
-void IN_ClearStates (void)
-{
 }

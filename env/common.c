@@ -45,7 +45,6 @@
 
 
 #define MAXPRINTMSG 4096
-
 #define MAX_NUM_ARGVS   50
 
 
@@ -55,37 +54,13 @@ colour3_t   colourGreen = {   0, 255,   0 };
 colour3_t   colourBlue  = {   0,   0, 255 };
 colour3_t   colourWhite = { 255, 255, 255 };
 
-#define BUILDSTRING "TEST"
-
-int     com_argc;
-char    *com_argv[ MAX_NUM_ARGVS + 1 ];
-
-
 jmp_buf abortframe;     // an ERR_DROP occured, exit the entire frame
 
-
-FILE    *log_stats_file;
-
-cvar_t  *host_speeds;
-cvar_t  *log_stats;
 cvar_t  *developer;
-cvar_t  *timescale;
-cvar_t  *fixedtime;
 cvar_t  *logfile_active;    // 1 = buffer log, 2 = flush after each print
-cvar_t  *showtrace;
 cvar_t  *dedicated;
 
 FILE    *logfile;
-
-int     server_state;
-
-// host_speeds times
-int     time_before_game;
-int     time_after_game;
-int     time_before_ref;
-int     time_after_ref;
-
-
 
 /*
 ============================================================================
@@ -111,22 +86,7 @@ PUBLIC void Com_Printf (const char *fmt, ...)
     va_end (argptr);
 
     msg[ sizeof (msg) - 1 ] = '\0';
-
-    /*if( rd_target )
-    {
-        if( (strlen( msg ) + strlen( rd_buffer ) ) > (rd_buffersize - 1) )
-        {
-            rd_flush( rd_target, rd_buffer );
-            *rd_buffer = '\0';
-        }
-        com_strlcat( rd_buffer, msg, rd_buffersize );
-        return;
-    }*/
-
     Con_Print (msg);
-
-    // also echo to debugging console
-//  Sys_ConsoleOutput( msg );
 
     // logfile
     if (logfile_active && logfile_active->value) {
@@ -207,13 +167,10 @@ PUBLIC void Com_Error (int code, const char *fmt, ...)
         recursive = false;
         longjmp (abortframe, -1);
     } else if (code == ERR_DROP) {
-        Com_Printf ("********************\nERROR: %s\n********************\n", msg);
-//      SV_Shutdown (va("Server crashed: %s\n", msg), false);
         Client_Drop();
         recursive = false;
         longjmp (abortframe, -1);
     } else {
-//      SV_Shutdown (va("Server fatal crashed: %s\n", msg), false);
         Client_Shutdown();
     }
 
@@ -221,7 +178,6 @@ PUBLIC void Com_Error (int code, const char *fmt, ...)
         fclose (logfile);
         logfile = NULL;
     }
-
     Sys_Error ("%s", msg);
 }
 
@@ -232,224 +188,13 @@ PUBLIC void Com_Error (int code, const char *fmt, ...)
  */
 PUBLIC void Com_Quit (void)
 {
-//  SV_Shutdown ("Server quit\n", false);
-
     Game_Shutdown();
 
     if (logfile) {
         fclose (logfile);
         logfile = NULL;
     }
-
-
-
     Sys_Quit();
-
-
-}
-
-/**
- * \brief Get server state
- * \return Returns server state.
- */
-PUBLIC int Com_ServerState (void)
-{
-    return server_state;
-}
-
-/**
- * \brief Set server state
- * \param[in] state Server state.
- */
-PUBLIC void Com_SetServerState (int state)
-{
-    server_state = state;
-}
-
-
-//===========================================================================
-
-
-/**
- * \brief Initialize script handler
- * \param[in\out] buf Valid pointer to sizebuf_t structure.
- * \param[in] data Data.
- * \param[in] length Length of data in bytes
- */
-PUBLIC void SZ_Init (sizebuf_t *buf, PW8 data, int length)
-{
-    memset (buf, 0, sizeof (*buf));
-    buf->data = data;
-    buf->maxsize = length;
-}
-
-/**
- * \brief Clear script handler flags
- * \param[in\out] buf Valid pointer to sizebuf_t structure.
- */
-PUBLIC void SZ_Clear (sizebuf_t *buf)
-{
-    buf->cursize = 0;
-    buf->overflowed = false;
-}
-
-/**
- * \brief Get space
- * \param[in\out] buf Valid pointer to sizebuf_t structure.
- * \param[in] length Length of data in bytes.
- * \return Pointer to data
- */
-PUBLIC void *SZ_GetSpace (sizebuf_t *buf, int length)
-{
-    void    *data;
-
-    if (buf->cursize + length > buf->maxsize) {
-        if (!buf->allowoverflow) {
-            Com_Error (ERR_FATAL, "SZ_GetSpace: overflow without allowoverflow set");
-        }
-
-        if (length > buf->maxsize) {
-            Com_Error (ERR_FATAL, "SZ_GetSpace: %i is > full buffer size", length);
-        }
-
-        Com_Printf ("SZ_GetSpace: overflow\n");
-        SZ_Clear (buf);
-        buf->overflowed = true;
-    }
-
-    data = buf->data + buf->cursize;
-    buf->cursize += length;
-
-    return data;
-}
-
-/**
- * \brief Get space
- * \param[in\out] buf Valid pointer to sizebuf_t structure.
- * \param[in] data Data.
- * \param[in] length Length of data in bytes.
- */
-PUBLIC void SZ_Write (sizebuf_t *buf, void *data, int length)
-{
-    memcpy (SZ_GetSpace (buf, length), data, length);
-}
-
-/**
- * \brief Print
- * \param[in\out] buf Valid pointer to sizebuf_t structure.
- * \param[in] data Data.
- */
-PUBLIC void SZ_Print (sizebuf_t *buf, W8 *data)
-{
-    int     len;
-
-    len = strlen ((char *)data) + 1;
-
-    if (buf->cursize) {
-        if (buf->data[ buf->cursize - 1 ]) {
-            memcpy ((PW8)SZ_GetSpace (buf, len), data, len);   // no trailing 0
-        } else {
-            memcpy ((PW8)SZ_GetSpace (buf, len - 1) - 1, data, len);   // write over trailing 0
-        }
-    } else {
-        memcpy ((PW8)SZ_GetSpace (buf, len), data, len);
-    }
-}
-
-
-//============================================================================
-
-/**
- * \brief Check param string
- * \param[in] parm Param string
- * \return The position (1 to argc-1) in the program's argument list where the given parameter apears, or 0 if not present
- */
-PUBLIC int COM_CheckParm (char *parm)
-{
-    int     i;
-
-    for (i = 1 ; i < com_argc ; ++i) {
-        if (!strcmp (parm, com_argv[ i ])) {
-            return i;
-        }
-    }
-
-    return 0;
-}
-
-/**
- * \brief Get common arguments
- * \return An integer that contains the count of arguments that are in argv
- */
-PUBLIC int COM_Argc (void)
-{
-    return com_argc;
-}
-
-/**
- * \brief Get command-line arguments based on index.
- * \param[in] arg Index
- * \return A null-terminated string
- * \note Argv is an array of null-terminated strings representing command-line arguments entered by the user of the program.
- */
-PUBLIC char *COM_Argv (int arg)
-{
-    if (arg < 0 || arg >= com_argc || !com_argv[arg]) {
-        return "";
-    }
-
-    return com_argv[ arg ];
-}
-
-/**
- * \brief Clear argument at index
- * \param[in] arg Index to clear from argv
- */
-PUBLIC void COM_ClearArgv (int arg)
-{
-    if (arg < 0 || arg >= com_argc || !com_argv[arg]) {
-        return;
-    }
-
-    com_argv[ arg ] = "";
-}
-
-/**
- * \brief Set global argv values with commadline argv values.
- * \param[in] argc An integer specifying how many arguments are in argv[].
- * \param[in] argv An array of null-terminated strings. The last pointer (argv[argc]) is NULL.
- */
-PUBLIC void COM_InitArgv (int argc, char *argv[])
-{
-    int i;
-
-    if (argc > MAX_NUM_ARGVS) {
-        argc = MAX_NUM_ARGVS;
-        Com_DPrintf ("argc > MAX_NUM_ARGVS\n");
-    }
-
-    com_argc = argc;
-
-    for (i = 0; i < argc; ++i) {
-        if (!argv[ i ] || strlen (argv[ i ]) >= MAX_TOKEN_CHARS) {
-            com_argv[ i ] = "";
-        } else {
-            com_argv[ i ] = argv[ i ];
-        }
-    }
-}
-
-/**
- * \brief Adds the given string at the end of the current argument list.
- * \param[in] parm Agrument to add to argv
- */
-PUBLIC void COM_AddParm (char *parm)
-{
-    if (com_argc == MAX_NUM_ARGVS) {
-        Com_Error (ERR_FATAL, "COM_AddParm: MAX_NUM_ARGS");
-    }
-
-    com_argv[ com_argc++ ] = parm;
 }
 
 PUBLIC char *Com_StringContains (char *str1, char *str2, int casesensitive)
@@ -580,37 +325,8 @@ quake3 set test blah + map test
 ============================================================================
 */
 
-#define MAX_CONSOLE_LINES   32
 int     com_numConsoleLines;
-/* Experiment */
-/* char *com_consoleLines[MAX_CONSOLE_LINES]; */
 char **com_consoleLines;
-
-/*
-===================
-Com_SafeMode
-
-Check for "safe" on the command line, which will
-skip loading of q3config.cfg
-===================
-*/
-_boolean Com_SafeMode (void)
-{
-    int     i;
-
-    for (i = 0 ; i < com_numConsoleLines ; i++) {
-        Cmd_TokenizeString (com_consoleLines[i]);
-
-        if (!com_stricmp (Cmd_Argv (0), "safe")
-                || !com_stricmp (Cmd_Argv (0), "cvar_restart")) {
-            com_consoleLines[i][0] = 0;
-            return true;
-        }
-    }
-
-    return false;
-}
-
 
 /*
 ===============
@@ -753,11 +469,8 @@ PUBLIC void common_Init (int argc, char *argv[])
 
     FS_InitFilesystem();
 
-
     Cbuf_AddText ("exec DEFAULT.CFG\n");
-
     Cbuf_AddText ("exec config.cfg\n");
-
     Cbuf_Execute();
 
     // override anything from the config files with command line args
@@ -769,41 +482,18 @@ PUBLIC void common_Init (int argc, char *argv[])
     Cmd_AddCommand ("z_stats", Z_Stats_f);
     Cmd_AddCommand ("error", Com_Error_f);
 
-//  host_speeds = Cvar_Get( "host_speeds", "0", CVAR_INIT );
-//  log_stats = Cvar_Get( "log_stats", "1", CVAR_INIT );
     developer = Cvar_Get ("developer", "1", CVAR_INIT);
-//  timescale = Cvar_Get( "timescale", "1", CVAR_INIT );
-//  fixedtime = Cvar_Get( "fixedtime", "0", CVAR_INIT );
     logfile_active = Cvar_Get ("logfile", "2", CVAR_INIT);
-//  showtrace = Cvar_Get( "showtrace", "1", CVAR_INIT );
-
-#ifdef DEDICATED_ONLY
-
-    dedicated = Cvar_Get ("dedicated", "1", CVAR_ROM);
-
-#else
 
     dedicated = Cvar_Get ("dedicated", "0", CVAR_ROM);
-
-#endif
-
-    //s = va( "%s %s %s %s %s %s", APP_VERSION, RELEASE_NAME, CPUSTRING, __DATE__, __TIME__, BUILDSTRING );
-    //Cvar_Get( "version", s, CVAR_SERVERINFO | CVAR_ROM );
 
     if (dedicated->value) {
         Cmd_AddCommand ("quit", Com_Quit);
     }
 
-
     Sys_OS_Init();
-
-
-
     Client_Init();
-
-
     Game_Init();    // game and player init
-
 
     // add + commands from command line
     if (!Com_AddStartupCommands()) {
@@ -813,7 +503,4 @@ PUBLIC void common_Init (int argc, char *argv[])
             Cbuf_Execute();
         }
     }
-
-    Com_Printf ("\n====== Application Initialized ======\n\n");
-
 }

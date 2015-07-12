@@ -705,14 +705,7 @@ PRIVATE void pixel_region_set_row (W8 *dest,
 }
 
 PRIVATE void
-get_premultiplied_double_row (W8 *in,
-                              int PRbytes,
-                              int         x,
-                              int         y,
-                              int         w,
-                              double     *row,
-                              W8      *tmp_src,
-                              int         n)
+get_premultiplied_double_row(W8 *in, int PRbytes, int x, int y, int w, double *row, W8 *tmp_src)
 {
     int b;
     int bytes = PRbytes;
@@ -788,8 +781,7 @@ get_scaled_row (double              **src,
     }
 
     if (y < old_height) {
-        get_premultiplied_double_row (srcPR, bytes, 0, y, old_width,
-                                      row, src_tmp, 1);
+        get_premultiplied_double_row(srcPR, bytes, 0, y, old_width, row, src_tmp);
 
         if (new_width > old_width) {
             expand_line (src[3], row, bytes, old_width, new_width);
