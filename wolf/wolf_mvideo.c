@@ -86,7 +86,6 @@ PRIVATE menuaction_s    s_driver_action;
 */
 PRIVATE void BrightnessCallback (void *s)
 {
-    menuslider_s *slider = (menuslider_s *) s;
 
 
     s_brightness_slider.curvalue = s_brightness_slider.curvalue;

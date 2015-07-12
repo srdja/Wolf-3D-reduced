@@ -34,12 +34,6 @@
 #include "vector.h"
 
 
-
-typedef int fixed4_t;
-typedef int fixed8_t;
-typedef int fixed16_t;
-
-
 #define PITCH   0   /* up / down */
 #define YAW     1   /* left / right */
 #define ROLL    2   /* fall over */

@@ -52,11 +52,6 @@
 #define ITEM_WEAPON_1       BIT( 3 )
 #define ITEM_WEAPON_2       BIT( 4 )
 #define ITEM_WEAPON_3       BIT( 5 )
-#define ITEM_WEAPON_4       BIT( 6 )
-#define ITEM_WEAPON_5       BIT( 7 )
-#define ITEM_WEAPON_6       BIT( 8 )
-#define ITEM_WEAPON_7       BIT( 9 )
-#define ITEM_WEAPON_8       BIT( 10 )
 #define ITEM_BACKPACK       BIT( 11 ) // doubles carrying capacity
 #define ITEM_AUGMENT        BIT( 12 ) // adds 50 to maximum health
 

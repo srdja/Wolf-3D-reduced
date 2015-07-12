@@ -191,7 +191,6 @@ PUBLIC void com_snprintf (char *dest, size_t size, const char *format, ...)
 {
     va_list argptr;
     char    bigbuffer[ 0x8000 ];
-    int writtenLength;
 
     va_start (argptr, format);
     vsnprintf (bigbuffer, sizeof (bigbuffer), format, argptr);

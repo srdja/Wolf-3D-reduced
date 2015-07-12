@@ -48,13 +48,10 @@
 #define TRACE_MARK_MAP      BIT( 1 )    // marks traced area in 'AM_AutoMap.vis' array
 // obstacle levels
 #define TRACE_SIGHT         BIT( 2 )    // player sight
-#define TRACE_SIGHT_AI      BIT( 3 )    // enemy sight
 #define TRACE_BULLET        BIT( 4 )    // bullet
-#define TRACE_OBJECT        BIT( 5 )    // object
 
 #define TRACE_HIT_VERT      BIT( 6 )    // vertical wall was hit
 #define TRACE_HIT_DOOR      BIT( 7 )    // door was hit
-#define TRACE_HIT_PWALL     BIT( 8 )    // pushwall was hit
 
 typedef struct r_trace_s {
     int x, y; // origin

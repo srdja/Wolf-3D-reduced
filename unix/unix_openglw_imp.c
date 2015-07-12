@@ -193,7 +193,6 @@ int GLimp_SetMode (int *pwidth, int *pheight, int mode, _boolean fullscreen)
     XSetWindowAttributes attr;
     W32 attribmask;
     int MajorVersion, MinorVersion;
-    int actualWidth, actualHeight;
     int i;
     XEvent report;
     XSizeHints size_hints;
@@ -216,8 +215,6 @@ int GLimp_SetMode (int *pwidth, int *pheight, int mode, _boolean fullscreen)
 
     // destroy the existing window
     GLimp_Shutdown();
-
-
 
     // get the default display name from the environment variable DISPLAY
     com_strlcpy (display_name, getenv ("DISPLAY"), sizeof (display_name));
@@ -280,8 +277,6 @@ int GLimp_SetMode (int *pwidth, int *pheight, int mode, _boolean fullscreen)
             }
 
             if (best_fit != -1) {
-                actualWidth = vidmodes[ best_fit ]->hdisplay;
-                actualHeight = vidmodes[ best_fit ]->vdisplay;
 
                 // change to the mode
                 XF86VidModeSwitchToMode (display, screen_num, vidmodes[ best_fit ]);
@@ -290,7 +285,6 @@ int GLimp_SetMode (int *pwidth, int *pheight, int mode, _boolean fullscreen)
                 // Move the viewport to top left
                 XF86VidModeSetViewPort (display, screen_num, 0, 0);
             } else {
-                fullscreen = 0;
             }
         }
     }
@@ -322,8 +316,6 @@ int GLimp_SetMode (int *pwidth, int *pheight, int mode, _boolean fullscreen)
     size_hints.max_height = height;
 
     XSetStandardProperties (display, mainwin, GAME_NAME, NULL, None, 0, 0, &size_hints);
-
-
 
     XSelectInput (display, mainwin, X_MASK);
 

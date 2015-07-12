@@ -30,10 +30,7 @@
 
 
 _boolean    mouseinitialized;
-int         mouse_oldbuttonstate;
-_boolean    mouseactive;    // false when not focus app
-int mx_accum;
-int my_accum;
+// false when not focus app
 
 _boolean    in_appactive;
 
@@ -94,7 +91,7 @@ void IN_Shutdown (void)
 void IN_Activate (_boolean active)
 {
     in_appactive = active;
-    mouseactive = ! active;     // force a new window check or turn off
+    // force a new window check or turn off
 }
 
 /**
@@ -141,7 +138,4 @@ void IN_Move (usercmd_t *cmd)
  */
 void IN_ClearStates (void)
 {
-    mx_accum = 0;
-    my_accum = 0;
-    mouse_oldbuttonstate = 0;
 }

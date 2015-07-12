@@ -30,7 +30,6 @@
 #define __SYSTEM_H__
 
 void Sys_OS_Init (void);
-void Sys_Information (void);
 
 
 #endif /* __SYSTEM_H__ */

@@ -171,7 +171,6 @@ LevelData_t levelData;
 void CacheTextures (W16 start, W16 end)
 {
     W16 i;
-    static char texname[ 64 ];
 
     if (end < start) {
         return;
@@ -1063,7 +1062,6 @@ PUBLIC LevelData_t *Level_LoadMap (const char *levelname)
             y = 63 - y0;
             layer1 = newMap->Plane1[ y0 * 64 + x ];
             layer2 = newMap->Plane2[ y0 * 64 + x ];
-            layer3 = newMap->Plane3[ y0 * 64 + x ];
 
 // if server, process obj layer!
             if (layer2) {

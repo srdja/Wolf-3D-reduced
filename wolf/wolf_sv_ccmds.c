@@ -41,7 +41,6 @@ extern void Client_PrepRefresh (const char *r_mapname);
 
 PRIVATE void SV_GameMap_f (void)
 {
-    char        *map;
     char r_mapname[ 32 ];
 
     if (Cmd_Argc() != 2) {

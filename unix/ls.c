@@ -151,7 +151,6 @@ int main (int argc, char **argv)
 
     do {
         for (file = first; file; file = file->next) {
-            char *cp;
 
             if (lstat (file->buffer, &buf)) {
                 char perhapsDir[MAX_PATH];

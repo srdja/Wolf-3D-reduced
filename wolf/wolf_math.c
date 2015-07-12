@@ -37,11 +37,6 @@
 #include "wolf_math.h"
 
 
-#define XRES            640
-#define YRES            480
-
-
-
 char dx4dir[5] = {1, 0, -1,  0, 0}; // dx & dy based on direction
 char dy4dir[5] = {0, 1,  0, -1, 0};
 char dx8dir[9] = {1, 1, 0, -1, -1, -1,  0,  1, 0}; // dx & dy based on direction

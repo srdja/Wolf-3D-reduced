@@ -94,7 +94,7 @@ PRIVATE void M_Credits_MenuDraw (void)
 //
     for (i = 0, y = 50; credits[ i ] ; y += Font_GetSize (FONT0), i++) {
         int stringoffset = 0;
-        int bold = false;
+        int bold;
 
         if (credits[ i ][ 0 ] == '+') {
             bold = true;

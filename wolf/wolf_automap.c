@@ -231,10 +231,8 @@ PUBLIC void Automap()
     float   scale;
 
     // gsh - double tap for center on player
-    static unsigned int timeTouchDown = 0;
-    static int numTaps = 0;
-    static unsigned int lastTapTime = 0;
-    static int tapX = 0;
+	static int numTaps = 0;
+	static int tapX = 0;
     static int tapY = 0;
     static int zoom = 0;
     static float TargetX = 0;

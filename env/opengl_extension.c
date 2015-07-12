@@ -94,9 +94,9 @@ PRIVATE W8 ConfigARBMultiTexture (const char *glext)
 
     if (! (pfglMultiTexCoord3iARB = (void *)pfwglGetProcAddress ("glMultiTexCoord3iARB"))) return 0;
 
-    if (! (pfglMultiTexCoord3fARB = (void *)pfwglGetProcAddress ("glMultiTexCoord3fARB"))) return 0;
+    if (! ((void *)pfwglGetProcAddress ("glMultiTexCoord3fARB"))) return 0;
 
-    if (! (pfglMultiTexCoord3dARB = (void *)pfwglGetProcAddress ("glMultiTexCoord3dARB"))) return 0;
+    if (! ((void *)pfwglGetProcAddress ("glMultiTexCoord3dARB"))) return 0;
 
     if (! (pfglMultiTexCoord4sARB = (void *)pfwglGetProcAddress ("glMultiTexCoord4sARB"))) return 0;
 
@@ -114,7 +114,7 @@ PRIVATE W8 ConfigARBMultiTexture (const char *glext)
 
     if (! (pfglMultiTexCoord1dvARB = (void *)pfwglGetProcAddress ("glMultiTexCoord1dvARB"))) return 0;
 
-    if (! (pfglMultiTexCoord2svARB = (void *)pfwglGetProcAddress ("glMultiTexCoord2svARB"))) return 0;
+    if (! ((void *)pfwglGetProcAddress ("glMultiTexCoord2svARB"))) return 0;
 
     if (! (pfglMultiTexCoord2ivARB = (void *)pfwglGetProcAddress ("glMultiTexCoord2ivARB"))) return 0;
 
@@ -128,7 +128,7 @@ PRIVATE W8 ConfigARBMultiTexture (const char *glext)
 
     if (! (pfglMultiTexCoord3fvARB = (void *)pfwglGetProcAddress ("glMultiTexCoord3fvARB"))) return 0;
 
-    if (! (pfglMultiTexCoord3dvARB = (void *)pfwglGetProcAddress ("glMultiTexCoord3dvARB"))) return 0;
+    if (! ((void *)pfwglGetProcAddress ("glMultiTexCoord3dvARB"))) return 0;
 
     if (! (pfglMultiTexCoord4svARB = (void *)pfwglGetProcAddress ("glMultiTexCoord4svARB"))) return 0;
 

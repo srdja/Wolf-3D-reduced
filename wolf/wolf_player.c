@@ -122,7 +122,6 @@ PRIVATE _boolean PL_Use (player_t *self, LevelData_t *lvl)
     }
 
     if (lvl->tilemap[ x ][ y ] & ELEVATOR_TILE) {
-        int newtex;
 
         switch (dir) {
         case dir4_east:

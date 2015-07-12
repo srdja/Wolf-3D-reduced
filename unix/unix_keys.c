@@ -62,8 +62,6 @@ static int XLateKey (XKeyEvent *ev)
     char buf[ 64 ];
     KeySym keysym;
 
-    key = 0;
-
     XLookupString (ev, buf, sizeof buf, &keysym, 0);
 
     switch (keysym) {

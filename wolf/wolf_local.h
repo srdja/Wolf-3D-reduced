@@ -42,13 +42,6 @@
 #define MAX_SKILLS      4
 #define MAX_MAPS        81 //60    changed by gsh to allow for SOD levels
 
-#define MF_TRIED        1
-#define MF_COMPLETED    2
-#define MF_KILLS        4
-#define MF_SECRETS      8
-#define MF_TREASURE     16
-#define MF_TIME         32
-
 typedef struct {
     int     episode;
     int     map;

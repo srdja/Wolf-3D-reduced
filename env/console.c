@@ -445,7 +445,6 @@ PUBLIC void Con_CenteredPrint (const char *text)
  */
 PRIVATE void Con_DrawInput (void)
 {
-    int     y;
     int     i;
     char    *text;
     W16 heightfont, charwidth;
@@ -476,7 +475,6 @@ PRIVATE void Con_DrawInput (void)
     }
 
 // draw it
-    y = con.vislines - heightfont;
 
     charwidth = 8;
 

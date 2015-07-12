@@ -182,10 +182,7 @@ void (APIENTRYP pfglMultiTexCoord2fvARB) (GLenum, const GLfloat *);
 void (APIENTRYP pfglMultiTexCoord2iARB) (GLenum, GLint, GLint);
 void (APIENTRYP pfglMultiTexCoord2ivARB) (GLenum, const GLint *);
 void (APIENTRYP pfglMultiTexCoord2sARB) (GLenum, GLshort, GLshort);
-void (APIENTRYP pfglMultiTexCoord2svARB) (GLenum, const GLshort *);
-void (APIENTRYP pfglMultiTexCoord3dARB) (GLenum, GLdouble, GLdouble, GLdouble);
-void (APIENTRYP pfglMultiTexCoord3dvARB) (GLenum, const GLdouble *);
-void (APIENTRYP pfglMultiTexCoord3fARB) (GLenum, GLfloat, GLfloat, GLfloat);
+
 void (APIENTRYP pfglMultiTexCoord3fvARB) (GLenum, const GLfloat *);
 void (APIENTRYP pfglMultiTexCoord3iARB) (GLenum, GLint, GLint, GLint);
 void (APIENTRYP pfglMultiTexCoord3ivARB) (GLenum, const GLint *);

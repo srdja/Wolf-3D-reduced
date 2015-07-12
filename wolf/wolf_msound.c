@@ -51,11 +51,6 @@ PRIVATE menuslider_s    s_sound_musicvolume_slider;
 PRIVATE menulist_s      s_sound_device_list;
 
 
-#define SOUNDMSG    "Restarting the sound system.\nThis could take up to a\nminute, so please be patient."
-
-
-
-
 PRIVATE void UpdateSoundDeviceFunc (void *unused)
 {
     Cvar_Set ("s_device", s_sound_device_list.itemnames[ s_sound_device_list.curvalue ]);

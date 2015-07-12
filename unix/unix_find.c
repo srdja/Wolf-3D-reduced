@@ -15,7 +15,6 @@
 #endif
 
 char        **findresults = NULL;
-int     findresults_amount = 0;
 static int  findcounter = 0;
 
 /**
@@ -52,7 +51,6 @@ char *FS_FindFirst (const char *path, int musthave, int canthave)
     struct glob_t *findhandle;
 
     if (glob (*path, 0, NULL, findhandle)) {
-        findresults_amount = & (&findhandle->gl_pathc);
         findresults = & (&findhandle->gl_pathv);
     }
 }

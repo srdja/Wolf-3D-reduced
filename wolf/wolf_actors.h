@@ -50,7 +50,6 @@
 #define SPDDOG      1500
 
 #define FL_SHOOTABLE        BIT( 1 )
-#define FL_BONUS            BIT( 2 )
 #define FL_NEVERMARK        BIT( 3 )
 #define FL_VISABLE          BIT( 4 )
 #define FL_ATTACKMODE       BIT( 5 )
