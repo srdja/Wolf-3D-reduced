@@ -1,21 +1,21 @@
 /*
 
-	Copyright (C) 2004-2005 Michael Liebscher <johnnycanuck@users.sourceforge.net>
-	Copyright (C) 1997-2001 Id Software, Inc.
+    Copyright (C) 2004-2005 Michael Liebscher <johnnycanuck@users.sourceforge.net>
+    Copyright (C) 1997-2001 Id Software, Inc.
 
-	This program is free software; you can redistribute it and/or
-	modify it under the terms of the GNU General Public License
-	as published by the Free Software Foundation; either version 2
-	of the License, or (at your option) any later version.
+    This program is free software; you can redistribute it and/or
+    modify it under the terms of the GNU General Public License
+    as published by the Free Software Foundation; either version 2
+    of the License, or (at your option) any later version.
 
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
 
-	You should have received a copy of the GNU General Public License
-	along with this program; if not, write to the Free Software
-	Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
@@ -64,22 +64,22 @@ extern const char *menu_in_sound;
 extern const char *menu_move_sound;
 extern const char *menu_out_sound;
 
-void M_PopMenu( void );
-void M_ForceMenuOff( void );
-void M_PushMenu( void (*draw) (void), const char *(*key) (int k) );
+void M_PopMenu (void);
+void M_ForceMenuOff (void);
+void M_PushMenu (void (*draw) (void), const char * (*key) (int k));
 
-void M_Intermission_f( void );
+void M_Intermission_f (void);
 
 
 
 #define NUM_CURSOR_FRAMES 2
-void M_DrawCursor( int x, int y );
-void M_BannerString( const char *string, W16 nYOffset );
-void M_Banner( const char *name, W16 nYOffest );
-void M_DrawWindow( int x, int y, int w, int h, colour3_t bg, colour3_t act, colour3_t deact );
-void M_DrawInfoBar( void );
+void M_DrawCursor (int x, int y);
+void M_BannerString (const char *string, W16 nYOffset);
+void M_Banner (const char *name, W16 nYOffest);
+void M_DrawWindow (int x, int y, int w, int h, colour3_t bg, colour3_t act, colour3_t deact);
+void M_DrawInfoBar (void);
 
-const char *Default_MenuKey( menuframework_s *m, int key );
+const char *Default_MenuKey (menuframework_s *m, int key);
 
 
 #endif /* __WOLF_MENU_H__ */

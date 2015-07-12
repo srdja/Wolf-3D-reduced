@@ -6,15 +6,15 @@ typedef struct _finddata_t
 
 {
 
-    char* name;
+    char *name;
 
-}_finddata_t;
+} _finddata_t;
 
-int* _findfirst(const char* dir, _finddata_t* fileinfo);
+int *_findfirst (const char *dir, _finddata_t *fileinfo);
 
-int _findnext(int* ihandle, _finddata_t* fileinfo);
+int _findnext (int *ihandle, _finddata_t *fileinfo);
 
-void _findclose(int* ihandle);
+void _findclose (int *ihandle);
 
 /* --> other things needed from M$ */
 

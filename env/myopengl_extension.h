@@ -1,36 +1,36 @@
 /*
 
-	Copyright (C) 2004 Michael Liebscher
+    Copyright (C) 2004 Michael Liebscher
 
-	This program is free software; you can redistribute it and/or
-	modify it under the terms of the GNU General Public License
-	as published by the Free Software Foundation; either version 2
-	of the License, or (at your option) any later version.
+    This program is free software; you can redistribute it and/or
+    modify it under the terms of the GNU General Public License
+    as published by the Free Software Foundation; either version 2
+    of the License, or (at your option) any later version.
 
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
 
-	You should have received a copy of the GNU General Public License
-	along with this program; if not, write to the Free Software
-	Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
 /*
- *	myopengl_extension.h:   Interface to OpenGL extensions.
- *	
- *	Author:	Michael Liebscher	<johnnycanuck@users.sourceforge.net>	    
- *	Date:	2004   
+ *  myopengl_extension.h:   Interface to OpenGL extensions.
+ *
+ *  Author: Michael Liebscher   <johnnycanuck@users.sourceforge.net>
+ *  Date:   2004
  *
  */
 
 /*
 
-	Notes:
+    Notes:
 
-	This module is implemented by opengl_extenstion.c
+    This module is implemented by opengl_extenstion.c
 
 */
 
@@ -39,22 +39,22 @@
 #define __MYOPENGL_EXTENSION_H__
 
 
-#include <GL/glext.h>	//	Download from http://www.opengl.org/registry/
+#include <GL/glext.h>   //  Download from http://www.opengl.org/registry/
 #include <GL/gl.h>
 
-							
+
 
 
 #ifndef APIENTRY
 
-	#define APIENTRY
-	
+#define APIENTRY
+
 #endif
 
 #ifndef APIENTRYP
 
-	#define APIENTRYP APIENTRY *
-	
+#define APIENTRYP APIENTRY *
+
 #endif
 
 
@@ -66,15 +66,15 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 
-#define GL_POINT_SIZE_MIN_EXT				0x8126
-#define GL_POINT_SIZE_MAX_EXT				0x8127
-#define GL_POINT_FADE_THRESHOLD_SIZE_EXT	0x8128
-#define GL_DISTANCE_ATTENUATION_EXT			0x8129
+#define GL_POINT_SIZE_MIN_EXT               0x8126
+#define GL_POINT_SIZE_MAX_EXT               0x8127
+#define GL_POINT_FADE_THRESHOLD_SIZE_EXT    0x8128
+#define GL_DISTANCE_ATTENUATION_EXT         0x8129
 
 #ifdef __sgi
-#define GL_SHARED_TEXTURE_PALETTE_EXT		GL_TEXTURE_COLOR_TABLE_SGI
+#define GL_SHARED_TEXTURE_PALETTE_EXT       GL_TEXTURE_COLOR_TABLE_SGI
 #else
-#define GL_SHARED_TEXTURE_PALETTE_EXT		0x81FB
+#define GL_SHARED_TEXTURE_PALETTE_EXT       0x81FB
 #endif
 
 
@@ -84,71 +84,71 @@
 #define GL_TEXTURE3_ARB                   0x84C3
 
 #ifndef WGL_ARB_pixel_format
-	#define WGL_ARB_pixel_format				1
-	#define WGL_NUMBER_PIXEL_FORMATS_ARB		0x2000
-	#define WGL_DRAW_TO_WINDOW_ARB				0x2001
-	#define WGL_DRAW_TO_BITMAP_ARB				0x2002
-	#define WGL_ACCELERATION_ARB				0x2003
-	#define WGL_NEED_PALETTE_ARB				0x2004
-	#define WGL_NEED_SYSTEM_PALETTE_ARB			0x2005
-	#define WGL_SWAP_LAYER_BUFFERS_ARB			0x2006
-	#define WGL_SWAP_METHOD_ARB					0x2007
-	#define WGL_NUMBER_OVERLAYS_ARB				0x2008
-	#define WGL_NUMBER_UNDERLAYS_ARB			0x2009
-	#define WGL_TRANSPARENT_ARB					0x200A
-	#define WGL_TRANSPARENT_RED_VALUE_ARB		0x2037
-	#define WGL_TRANSPARENT_GREEN_VALUE_ARB		0x2038
-	#define WGL_TRANSPARENT_BLUE_VALUE_ARB		0x2039
-	#define WGL_TRANSPARENT_ALPHA_VALUE_ARB		0x203A
-	#define WGL_TRANSPARENT_INDEX_VALUE_ARB		0x203B
-	#define WGL_SHARE_DEPTH_ARB					0x200C
-	#define WGL_SHARE_STENCIL_ARB				0x200D
-	#define WGL_SHARE_ACCUM_ARB					0x200E
-	#define WGL_SUPPORT_GDI_ARB					0x200F
-	#define WGL_SUPPORT_OPENGL_ARB				0x2010
-	#define WGL_DOUBLE_BUFFER_ARB				0x2011
-	#define WGL_STEREO_ARB						0x2012
-	#define WGL_PIXEL_TYPE_ARB					0x2013
-	#define WGL_COLOR_BITS_ARB					0x2014
-	#define WGL_RED_BITS_ARB					0x2015
-	#define WGL_RED_SHIFT_ARB					0x2016
-	#define WGL_GREEN_BITS_ARB					0x2017
-	#define WGL_GREEN_SHIFT_ARB					0x2018
-	#define WGL_BLUE_BITS_ARB					0x2019
-	#define WGL_BLUE_SHIFT_ARB					0x201A
-	#define WGL_ALPHA_BITS_ARB					0x201B
-	#define WGL_ALPHA_SHIFT_ARB					0x201C
-	#define WGL_ACCUM_BITS_ARB					0x201D
-	#define WGL_ACCUM_RED_BITS_ARB				0x201E
-	#define WGL_ACCUM_GREEN_BITS_ARB			0x201F
-	#define WGL_ACCUM_BLUE_BITS_ARB				0x2020
-	#define WGL_ACCUM_ALPHA_BITS_ARB			0x2021
-	#define WGL_DEPTH_BITS_ARB					0x2022
-	#define WGL_STENCIL_BITS_ARB				0x2023
-	#define WGL_AUX_BUFFERS_ARB					0x2024
+#define WGL_ARB_pixel_format                1
+#define WGL_NUMBER_PIXEL_FORMATS_ARB        0x2000
+#define WGL_DRAW_TO_WINDOW_ARB              0x2001
+#define WGL_DRAW_TO_BITMAP_ARB              0x2002
+#define WGL_ACCELERATION_ARB                0x2003
+#define WGL_NEED_PALETTE_ARB                0x2004
+#define WGL_NEED_SYSTEM_PALETTE_ARB         0x2005
+#define WGL_SWAP_LAYER_BUFFERS_ARB          0x2006
+#define WGL_SWAP_METHOD_ARB                 0x2007
+#define WGL_NUMBER_OVERLAYS_ARB             0x2008
+#define WGL_NUMBER_UNDERLAYS_ARB            0x2009
+#define WGL_TRANSPARENT_ARB                 0x200A
+#define WGL_TRANSPARENT_RED_VALUE_ARB       0x2037
+#define WGL_TRANSPARENT_GREEN_VALUE_ARB     0x2038
+#define WGL_TRANSPARENT_BLUE_VALUE_ARB      0x2039
+#define WGL_TRANSPARENT_ALPHA_VALUE_ARB     0x203A
+#define WGL_TRANSPARENT_INDEX_VALUE_ARB     0x203B
+#define WGL_SHARE_DEPTH_ARB                 0x200C
+#define WGL_SHARE_STENCIL_ARB               0x200D
+#define WGL_SHARE_ACCUM_ARB                 0x200E
+#define WGL_SUPPORT_GDI_ARB                 0x200F
+#define WGL_SUPPORT_OPENGL_ARB              0x2010
+#define WGL_DOUBLE_BUFFER_ARB               0x2011
+#define WGL_STEREO_ARB                      0x2012
+#define WGL_PIXEL_TYPE_ARB                  0x2013
+#define WGL_COLOR_BITS_ARB                  0x2014
+#define WGL_RED_BITS_ARB                    0x2015
+#define WGL_RED_SHIFT_ARB                   0x2016
+#define WGL_GREEN_BITS_ARB                  0x2017
+#define WGL_GREEN_SHIFT_ARB                 0x2018
+#define WGL_BLUE_BITS_ARB                   0x2019
+#define WGL_BLUE_SHIFT_ARB                  0x201A
+#define WGL_ALPHA_BITS_ARB                  0x201B
+#define WGL_ALPHA_SHIFT_ARB                 0x201C
+#define WGL_ACCUM_BITS_ARB                  0x201D
+#define WGL_ACCUM_RED_BITS_ARB              0x201E
+#define WGL_ACCUM_GREEN_BITS_ARB            0x201F
+#define WGL_ACCUM_BLUE_BITS_ARB             0x2020
+#define WGL_ACCUM_ALPHA_BITS_ARB            0x2021
+#define WGL_DEPTH_BITS_ARB                  0x2022
+#define WGL_STENCIL_BITS_ARB                0x2023
+#define WGL_AUX_BUFFERS_ARB                 0x2024
 
-	#define WGL_NO_ACCELERATION_ARB				0x2025
-	#define WGL_GENERIC_ACCELERATION_ARB		0x2026
-	#define WGL_FULL_ACCELERATION_ARB			0x2027
+#define WGL_NO_ACCELERATION_ARB             0x2025
+#define WGL_GENERIC_ACCELERATION_ARB        0x2026
+#define WGL_FULL_ACCELERATION_ARB           0x2027
 
-	#define WGL_SWAP_EXCHANGE_ARB				0x2028
-	#define WGL_SWAP_COPY_ARB					0x2029
-	#define WGL_SWAP_UNDEFINED_ARB				0x202A
+#define WGL_SWAP_EXCHANGE_ARB               0x2028
+#define WGL_SWAP_COPY_ARB                   0x2029
+#define WGL_SWAP_UNDEFINED_ARB              0x202A
 
-	#define WGL_TYPE_RGBA_ARB					0x202B
-	#define WGL_TYPE_COLORINDEX_ARB				0x202C
+#define WGL_TYPE_RGBA_ARB                   0x202B
+#define WGL_TYPE_COLORINDEX_ARB             0x202C
 #endif /* WGL_ARB_pixel_format */
 
 #ifndef WGL_ARB_pbuffer
-	#define WGL_ARB_pbuffer					1
-	#define WGL_DRAW_TO_PBUFFER_ARB			0x202D
-	#define WGL_MAX_PBUFFER_PIXELS_ARB		0x202E
-	#define WGL_MAX_PBUFFER_WIDTH_ARB		0x202F
-	#define WGL_MAX_PBUFFER_HEIGHT_ARB		0x2030
-	#define WGL_PBUFFER_LARGEST_ARB			0x2033
-	#define WGL_PBUFFER_WIDTH_ARB			0x2034
-	#define WGL_PBUFFER_HEIGHT_ARB			0x2035
-	#define WGL_PBUFFER_LOST_ARB			0x2036
+#define WGL_ARB_pbuffer                 1
+#define WGL_DRAW_TO_PBUFFER_ARB         0x202D
+#define WGL_MAX_PBUFFER_PIXELS_ARB      0x202E
+#define WGL_MAX_PBUFFER_WIDTH_ARB       0x202F
+#define WGL_MAX_PBUFFER_HEIGHT_ARB      0x2030
+#define WGL_PBUFFER_LARGEST_ARB         0x2033
+#define WGL_PBUFFER_WIDTH_ARB           0x2034
+#define WGL_PBUFFER_HEIGHT_ARB          0x2035
+#define WGL_PBUFFER_LOST_ARB            0x2036
 #endif
 
 
@@ -160,10 +160,10 @@
 
 
 
-/* 
-	-----------------------
-	ARB_MultiTexture
-	-----------------------
+/*
+    -----------------------
+    ARB_MultiTexture
+    -----------------------
 */
 void (APIENTRYP pfglActiveTextureARB) (GLenum);
 void (APIENTRYP pfglClientActiveTextureARB) (GLenum);
@@ -201,10 +201,10 @@ void (APIENTRYP pfglMultiTexCoord4sARB) (GLenum, GLshort, GLshort, GLshort, GLsh
 void (APIENTRYP pfglMultiTexCoord4svARB) (GLenum, const GLshort *);
 
 
-/* 
-	-----------------------
-	ARB_TransposeMatrix
-	-----------------------
+/*
+    -----------------------
+    ARB_TransposeMatrix
+    -----------------------
 */
 void (APIENTRYP pfglLoadTransposeMatrixfARB) (const GLfloat *);
 void (APIENTRYP pfglLoadTransposeMatrixdARB) (const GLdouble *);
@@ -212,18 +212,18 @@ void (APIENTRYP pfglMultTransposeMatrixfARB) (const GLfloat *);
 void (APIENTRYP pfglMultTransposeMatrixdARB) (const GLdouble *);
 
 
-/* 
-	-----------------------
-	ARB_MultiSample
-	-----------------------
+/*
+    -----------------------
+    ARB_MultiSample
+    -----------------------
 */
 void (APIENTRYP pfglSampleCoverageARB) (GLclampf, GLboolean);
 
 
-/* 
-	-----------------------
-	ARB_TextureCompression
-	-----------------------
+/*
+    -----------------------
+    ARB_TextureCompression
+    -----------------------
 */
 void (APIENTRYP pfglCompressedTexImage3DARB) (GLenum, GLint, GLenum, GLsizei, GLsizei, GLsizei, GLint, GLsizei, const GLvoid *);
 void (APIENTRYP pfglCompressedTexImage2DARB) (GLenum, GLint, GLenum, GLsizei, GLsizei, GLint, GLsizei, const GLvoid *);
@@ -234,19 +234,19 @@ void (APIENTRYP pfglCompressedTexSubImage1DARB) (GLenum, GLint, GLint, GLsizei, 
 void (APIENTRYP pfglGetCompressedTexImageARB) (GLenum, GLint, GLvoid *);
 
 
-/* 
-	-----------------------
-	ARB_PointParameters
-	-----------------------
+/*
+    -----------------------
+    ARB_PointParameters
+    -----------------------
 */
 void (APIENTRYP pfglPointParameterfARB) (GLenum, GLfloat);
 void (APIENTRYP pfglPointParameterfvARB) (GLenum, const GLfloat *);
 
 
-/* 
-	-----------------------
-	ARB_VertexBlend
-	-----------------------
+/*
+    -----------------------
+    ARB_VertexBlend
+    -----------------------
 */
 void (APIENTRYP pfglWeightbvARB) (GLint, const GLbyte *);
 void (APIENTRYP pfglWeightsvARB) (GLint, const GLshort *);
@@ -260,10 +260,10 @@ void (APIENTRYP pfglWeightPointerARB) (GLint, GLenum, GLsizei, const GLvoid *);
 void (APIENTRYP pfglVertexBlendARB) (GLint);
 
 
-/* 
-	-----------------------
-	ARB_MatrixPalette
-	-----------------------
+/*
+    -----------------------
+    ARB_MatrixPalette
+    -----------------------
 */
 void (APIENTRYP pfglCurrentPaletteMatrixARB) (GLint);
 void (APIENTRYP pfglMatrixIndexubvARB) (GLint, const GLubyte *);
@@ -272,10 +272,10 @@ void (APIENTRYP pfglMatrixIndexuivARB) (GLint, const GLuint *);
 void (APIENTRYP pfglMatrixIndexPointerARB) (GLint, GLenum, GLsizei, const GLvoid *);
 
 
-/* 
-	------------------------------
-	ARB_VertexProgram
-	------------------------------
+/*
+    ------------------------------
+    ARB_VertexProgram
+    ------------------------------
 */
 void (APIENTRYP pfglVertexAttrib1dARB) (GLuint, GLdouble);
 void (APIENTRYP pfglVertexAttrib1dvARB) (GLuint, const GLdouble *);
@@ -337,17 +337,17 @@ void (APIENTRYP pfglGetProgramStringARB) (GLenum, GLenum, GLvoid *);
 void (APIENTRYP pfglGetVertexAttribdvARB) (GLuint, GLenum, GLdouble *);
 void (APIENTRYP pfglGetVertexAttribfvARB) (GLuint, GLenum, GLfloat *);
 void (APIENTRYP pfglGetVertexAttribivARB) (GLuint, GLenum, GLint *);
-void (APIENTRYP pfglGetVertexAttribPointervARB) (GLuint, GLenum, GLvoid* *);
+void (APIENTRYP pfglGetVertexAttribPointervARB) (GLuint, GLenum, GLvoid * *);
 GLboolean (APIENTRYP pfglIsProgramARB) (GLuint);
 
 
 /* All ARB_fragment_program entry points are shared with ARB_vertex_program. */
 
 
-/* 
-	------------------------------
-	ARB_VertexBufferObject
-	------------------------------
+/*
+    ------------------------------
+    ARB_VertexBufferObject
+    ------------------------------
 */
 void (APIENTRYP pfglBindBufferARB) (GLenum, GLuint);
 void (APIENTRYP pfglDeleteBuffersARB) (GLsizei, const GLuint *);
@@ -356,16 +356,16 @@ GLboolean (APIENTRYP pfglIsBufferARB) (GLuint);
 void (APIENTRYP pfglBufferDataARB) (GLenum, GLsizeiptrARB, const GLvoid *, GLenum);
 void (APIENTRYP pfglBufferSubDataARB) (GLenum, GLintptrARB, GLsizeiptrARB, const GLvoid *);
 void (APIENTRYP pfglGetBufferSubDataARB) (GLenum, GLintptrARB, GLsizeiptrARB, GLvoid *);
-GLvoid* (APIENTRYP pfglMapBufferARB) (GLenum, GLenum);
+GLvoid * (APIENTRYP pfglMapBufferARB) (GLenum, GLenum);
 GLboolean (APIENTRYP pfglUnmapBufferARB) (GLenum);
 void (APIENTRYP pfglGetBufferParameterivARB) (GLenum, GLenum, GLint *);
-void (APIENTRYP pfglGetBufferPointervARB) (GLenum, GLenum, GLvoid* *);
+void (APIENTRYP pfglGetBufferPointervARB) (GLenum, GLenum, GLvoid * *);
 
 
-/* 
-	------------------------------
-	ARB_OcclusionQuery
-	------------------------------
+/*
+    ------------------------------
+    ARB_OcclusionQuery
+    ------------------------------
 */
 void (APIENTRYP pfglGenQueriesARB) (GLsizei, GLuint *);
 void (APIENTRYP pfglDeleteQueriesARB) (GLsizei, const GLuint *);
@@ -377,16 +377,16 @@ void (APIENTRYP pfglGetQueryObjectivARB) (GLuint, GLenum, GLint *);
 void (APIENTRYP pfglGetQueryObjectuivARB) (GLuint, GLenum, GLuint *);
 
 
-/* 
-	------------------------------
-	ARB_ShaderObjects
-	------------------------------
+/*
+    ------------------------------
+    ARB_ShaderObjects
+    ------------------------------
 */
 void (APIENTRYP pfglDeleteObjectARB) (GLhandleARB);
 GLhandleARB (APIENTRYP pfglGetHandleARB) (GLenum);
 void (APIENTRYP pfglDetachObjectARB) (GLhandleARB, GLhandleARB);
 GLhandleARB (APIENTRYP pfglCreateShaderObjectARB) (GLenum);
-void (APIENTRYP pfglShaderSourceARB) (GLhandleARB, GLsizei, const GLcharARB* *, const GLint *);
+void (APIENTRYP pfglShaderSourceARB) (GLhandleARB, GLsizei, const GLcharARB * *, const GLint *);
 void (APIENTRYP pfglCompileShaderARB) (GLhandleARB);
 GLhandleARB (APIENTRYP pfglCreateProgramObjectARB) (void);
 void (APIENTRYP pfglAttachObjectARB) (GLhandleARB, GLhandleARB);
@@ -423,37 +423,37 @@ void (APIENTRYP pfglGetUniformivARB) (GLhandleARB, GLint, GLint *);
 void (APIENTRYP pfglGetShaderSourceARB) (GLhandleARB, GLsizei, GLsizei *, GLcharARB *);
 
 
-/* 
-	------------------------------
-	ARB_VertexShader
-	------------------------------
+/*
+    ------------------------------
+    ARB_VertexShader
+    ------------------------------
 */
 void (APIENTRYP pfglBindAttribLocationARB) (GLhandleARB, GLuint, const GLcharARB *);
 void (APIENTRYP pfglGetActiveAttribARB) (GLhandleARB, GLuint, GLsizei, GLsizei *, GLint *, GLenum *, GLcharARB *);
 GLint (APIENTRYP pfglGetAttribLocationARB) (GLhandleARB, const GLcharARB *);
 
 
-/* 
-	-----------------------
-	EXT_BlendColor
-	-----------------------
+/*
+    -----------------------
+    EXT_BlendColor
+    -----------------------
 */
 void (APIENTRYP pfglBlendColorEXT) (GLclampf, GLclampf, GLclampf, GLclampf);
 
 
-/* 
-	-------------------------
-	EXT_CompiledVertexArray
-	-------------------------
+/*
+    -------------------------
+    EXT_CompiledVertexArray
+    -------------------------
 */
-void ( APIENTRYP pfglLockArraysEXT) ( GLint, GLsizei );
-void ( APIENTRYP pfglUnlockArraysEXT) ( void );
+void (APIENTRYP pfglLockArraysEXT) (GLint, GLsizei);
+void (APIENTRYP pfglUnlockArraysEXT) (void);
 
 
-/* 
-	-----------------------
-	EXT_SecondaryColor
-	-----------------------
+/*
+    -----------------------
+    EXT_SecondaryColor
+    -----------------------
 */
 void (APIENTRYP pfglSecondaryColor3bEXT) (GLbyte, GLbyte, GLbyte);
 void (APIENTRYP pfglSecondaryColor3bvEXT) (const GLbyte *);
@@ -474,10 +474,10 @@ void (APIENTRYP pfglSecondaryColor3usvEXT) (const GLushort *);
 void (APIENTRYP pfglSecondaryColorPointerEXT) (GLint, GLenum, GLsizei, const GLvoid *);
 
 
-/* 
-	-----------------------
-	EXT_VertexShader
-	-----------------------
+/*
+    -----------------------
+    EXT_VertexShader
+    -----------------------
 */
 void (APIENTRYP pfglBeginVertexShaderEXT) (void);
 void (APIENTRYP pfglEndVertexShaderEXT) (void);
@@ -514,7 +514,7 @@ GLboolean (APIENTRYP pfglIsVariantEnabledEXT) (GLuint, GLenum);
 void (APIENTRYP pfglGetVariantBooleanvEXT) (GLuint, GLenum, GLboolean *);
 void (APIENTRYP pfglGetVariantIntegervEXT) (GLuint, GLenum, GLint *);
 void (APIENTRYP pfglGetVariantFloatvEXT) (GLuint, GLenum, GLfloat *);
-void (APIENTRYP pfglGetVariantPointervEXT) (GLuint, GLenum, GLvoid* *);
+void (APIENTRYP pfglGetVariantPointervEXT) (GLuint, GLenum, GLvoid * *);
 void (APIENTRYP pfglGetInvariantBooleanvEXT) (GLuint, GLenum, GLboolean *);
 void (APIENTRYP pfglGetInvariantIntegervEXT) (GLuint, GLenum, GLint *);
 void (APIENTRYP pfglGetInvariantFloatvEXT) (GLuint, GLenum, GLfloat *);
@@ -523,10 +523,10 @@ void (APIENTRYP pfglGetLocalConstantIntegervEXT) (GLuint, GLenum, GLint *);
 void (APIENTRYP pfglGetLocalConstantFloatvEXT) (GLuint, GLenum, GLfloat *);
 
 
-/* 
-	-----------------------
-	EXT_VertexWeighting
-	-----------------------
+/*
+    -----------------------
+    EXT_VertexWeighting
+    -----------------------
 */
 void (APIENTRYP pfglVertexWeightfEXT) (GLfloat);
 void (APIENTRYP pfglVertexWeightfvEXT) (const GLfloat *);
@@ -536,16 +536,16 @@ void (APIENTRYP pfglVertexWeightPointerEXT) (GLsizei, GLenum, GLsizei, const GLv
 
 //////////////////////////////////
 //
-//	nVidia Extensions
+//  nVidia Extensions
 //
 //////////////////////////////////
 
 
 
-/* 
-	-----------------------
-	NV_Fence
-	-----------------------
+/*
+    -----------------------
+    NV_Fence
+    -----------------------
 */
 void (APIENTRYP pfglDeleteFencesNV) (GLsizei, const GLuint *);
 void (APIENTRYP pfglGenFencesNV) (GLsizei, GLuint *);
@@ -556,19 +556,19 @@ void (APIENTRYP pfglFinishFenceNV) (GLuint);
 void (APIENTRYP pfglSetFenceNV) (GLuint, GLenum);
 
 
-/* 
-	-----------------------
-	NV_VertexArrayRange
-	-----------------------
+/*
+    -----------------------
+    NV_VertexArrayRange
+    -----------------------
 */
 void (APIENTRYP pfglFlushVertexArrayRangeNV) (void);
 void (APIENTRYP pfglVertexArrayRangeNV) (GLsizei, const GLvoid *);
 
 
-/* 
-	-----------------------
-	NV_VertexProgram
-	-----------------------
+/*
+    -----------------------
+    NV_VertexProgram
+    -----------------------
 */
 GLboolean (APIENTRYP pfglAreProgramsResidentNV) (GLsizei, const GLuint *, GLboolean *);
 void (APIENTRYP pfglBindProgramNV) (GLenum, GLuint);
@@ -583,7 +583,7 @@ void (APIENTRYP pfglGetTrackMatrixivNV) (GLenum, GLuint, GLenum, GLint *);
 void (APIENTRYP pfglGetVertexAttribdvNV) (GLuint, GLenum, GLdouble *);
 void (APIENTRYP pfglGetVertexAttribfvNV) (GLuint, GLenum, GLfloat *);
 void (APIENTRYP pfglGetVertexAttribivNV) (GLuint, GLenum, GLint *);
-void (APIENTRYP pfglGetVertexAttribPointervNV) (GLuint, GLenum, GLvoid* *);
+void (APIENTRYP pfglGetVertexAttribPointervNV) (GLuint, GLenum, GLvoid * *);
 GLboolean (APIENTRYP pfglIsProgramNV) (GLuint);
 void (APIENTRYP pfglLoadProgramNV) (GLenum, GLuint, GLsizei, const GLubyte *);
 void (APIENTRYP pfglProgramParameter4dNV) (GLenum, GLuint, GLdouble, GLdouble, GLdouble, GLdouble);
@@ -638,14 +638,14 @@ void (APIENTRYP pfglVertexAttribs4ubvNV) (GLuint, GLsizei, const GLubyte *);
 
 //////////////////////////////////
 //
-//	ATI Extensions
+//  ATI Extensions
 //
 //////////////////////////////////
 
-/* 
-	------------------------------
-	ATI_EnvmapBumpmap
-	------------------------------
+/*
+    ------------------------------
+    ATI_EnvmapBumpmap
+    ------------------------------
 */
 void (APIENTRYP pfglTexBumpParameterivATI) (GLenum, const GLint *);
 void (APIENTRYP pfglTexBumpParameterfvATI) (GLenum, const GLfloat *);
@@ -653,10 +653,10 @@ void (APIENTRYP pfglGetTexBumpParameterivATI) (GLenum, GLint *);
 void (APIENTRYP pfglGetTexBumpParameterfvATI) (GLenum, GLfloat *);
 
 
-/* 
-	------------------------------
-	ATI_FragmentShader
-	------------------------------
+/*
+    ------------------------------
+    ATI_FragmentShader
+    ------------------------------
 */
 GLuint (APIENTRYP pfglGenFragmentShadersATI) (GLuint);
 void (APIENTRYP pfglBindFragmentShaderATI) (GLuint);
@@ -673,10 +673,10 @@ void (APIENTRYP pfglAlphaFragmentOp2ATI) (GLenum, GLuint, GLuint, GLuint, GLuint
 void (APIENTRYP pfglAlphaFragmentOp3ATI) (GLenum, GLuint, GLuint, GLuint, GLuint, GLuint, GLuint, GLuint, GLuint, GLuint, GLuint, GLuint);
 void (APIENTRYP pfglSetFragmentShaderConstantATI) (GLuint, const GLfloat *);
 
-/* 
-	------------------------------
-	ATI_VertexArrayObject
-	------------------------------
+/*
+    ------------------------------
+    ATI_VertexArrayObject
+    ------------------------------
 */
 GLuint (APIENTRYP pfglNewObjectBufferATI) (GLsizei, const GLvoid *, GLenum);
 GLboolean (APIENTRYP pfglIsObjectBufferATI) (GLuint);
@@ -694,12 +694,12 @@ void (APIENTRYP pfglGetVariantArrayObjectivATI) (GLuint, GLenum, GLint *);
 
 
 
-/* 
-	------------------------------
-	ATI_MapObjectBuffer
-	------------------------------
+/*
+    ------------------------------
+    ATI_MapObjectBuffer
+    ------------------------------
 */
-GLvoid* (APIENTRYP pfglMapObjectBufferATI) (GLuint);
+GLvoid * (APIENTRYP pfglMapObjectBufferATI) (GLuint);
 void (APIENTRYP pfglUnmapObjectBufferATI) (GLuint);
 
 

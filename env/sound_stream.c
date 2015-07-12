@@ -1,20 +1,20 @@
 /*
 
-	Copyright (C) 2005-2012 Michael Liebscher
+    Copyright (C) 2005-2012 Michael Liebscher
 
-	This program is free software; you can redistribute it and/or
-	modify it under the terms of the GNU General Public License
-	as published by the Free Software Foundation; either version 2
-	of the License, or (at your option) any later version.
+    This program is free software; you can redistribute it and/or
+    modify it under the terms of the GNU General Public License
+    as published by the Free Software Foundation; either version 2
+    of the License, or (at your option) any later version.
 
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
 
-	You should have received a copy of the GNU General Public License
-	along with this program; if not, write to the Free Software
-	Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
@@ -40,29 +40,28 @@
 
 
 
-typedef struct
-{
-	char		introName[ MAX_GAMEPATH ];
-	char		loopName[ MAX_GAMEPATH ];
-	_boolean	looping;
+typedef struct {
+    char        introName[ MAX_GAMEPATH ];
+    char        loopName[ MAX_GAMEPATH ];
+    _boolean    looping;
 
-	filehandle_t *hFile;
+    filehandle_t *hFile;
 
 
-	int			start;
-	int			rate;
-	unsigned	format;
-	void		*vorbisFile;
+    int         start;
+    int         rate;
+    unsigned    format;
+    void        *vorbisFile;
 
 } musicTrack_t;
 
 
 
-#define BUFFER_SIZE		16384
+#define BUFFER_SIZE     16384
 
-PRIVATE musicTrack_t	bgTrack;
+PRIVATE musicTrack_t    bgTrack;
 
-PRIVATE channel_t	*s_streamingChannel;
+PRIVATE channel_t   *s_streamingChannel;
 
 /**
  * \brief OGG read Callback. Reads data from a stream.
@@ -73,18 +72,17 @@ PRIVATE channel_t	*s_streamingChannel;
  * \return
  * \note
  */
-PRIVATE size_t ovc_read( void *ptr, size_t size, size_t nmemb, void *datasource )
+PRIVATE size_t ovc_read (void *ptr, size_t size, size_t nmemb, void *datasource)
 {
-	musicTrack_t	*track = (musicTrack_t *)datasource;
+    musicTrack_t    *track = (musicTrack_t *)datasource;
 
 
-	if( ! size || ! nmemb )
-	{
-		return 0;
-	}
+    if (! size || ! nmemb) {
+        return 0;
+    }
 
 
-	return FS_ReadFile( ptr, size, nmemb, track->hFile );
+    return FS_ReadFile (ptr, size, nmemb, track->hFile);
 }
 
 /**
@@ -95,11 +93,11 @@ PRIVATE size_t ovc_read( void *ptr, size_t size, size_t nmemb, void *datasource 
  * \return If successful, fseek returns 0. Otherwise, it returns a nonzero value.
  * \note
  */
-PRIVATE int ovc_seek( void *datasource, ogg_int64_t offset, int whence )
+PRIVATE int ovc_seek (void *datasource, ogg_int64_t offset, int whence)
 {
-	musicTrack_t	*track = (musicTrack_t *)datasource;
+    musicTrack_t    *track = (musicTrack_t *)datasource;
 
-	return FS_FileSeek( track->hFile, offset, whence );
+    return FS_FileSeek (track->hFile, offset, whence);
 }
 
 /**
@@ -108,9 +106,9 @@ PRIVATE int ovc_seek( void *datasource, ogg_int64_t offset, int whence )
  * \return 0 if the stream is successfully closed, otherwise nonzero.
  * \note
  */
-PRIVATE int ovc_close( void *datasource )
+PRIVATE int ovc_close (void *datasource)
 {
-	return 0;
+    return 0;
 }
 
 /**
@@ -119,11 +117,11 @@ PRIVATE int ovc_close( void *datasource )
  * \return The current file position.
  * \note
  */
-PRIVATE long ovc_tell( void *datasource )
+PRIVATE long ovc_tell (void *datasource)
 {
-	musicTrack_t	*track = (musicTrack_t *)datasource;
+    musicTrack_t    *track = (musicTrack_t *)datasource;
 
-	return FS_FileTell( track->hFile );
+    return FS_FileTell (track->hFile);
 }
 
 /**
@@ -133,61 +131,64 @@ PRIVATE long ovc_tell( void *datasource )
  * \return False on error, otherwise true.
  * \note
  */
-PRIVATE _boolean Sound_OpenBGTrack( const char *name, musicTrack_t *track )
+PRIVATE _boolean Sound_OpenBGTrack (const char *name, musicTrack_t *track)
 {
-	OggVorbis_File	*vorbisFile;
-	vorbis_info		*vorbisInfo;
-	ov_callbacks	vorbisCallbacks = {ovc_read, ovc_seek, ovc_close, ovc_tell};
-	int ret;
+    OggVorbis_File  *vorbisFile;
+    vorbis_info     *vorbisInfo;
+    ov_callbacks    vorbisCallbacks = {ovc_read, ovc_seek, ovc_close, ovc_tell};
+    int ret;
 
-	track->hFile = FS_OpenFile( name, 0 );
-	if( ! track->hFile )
-	{
-		return false;
-	}
+    track->hFile = FS_OpenFile (name, 0);
+
+    if (! track->hFile) {
+        return false;
+    }
 
 
-	track->vorbisFile = vorbisFile = Z_Malloc( sizeof( OggVorbis_File ) );
+    track->vorbisFile = vorbisFile = Z_Malloc (sizeof (OggVorbis_File));
 
-	if( (ret = ov_open_callbacks( track, vorbisFile, NULL, 0, vorbisCallbacks )) < 0 )
-	{
-		switch( ret )
-		{
-			case OV_EREAD:
-				Com_DPrintf( "A read from media returned an error.(%s)\n", name );
-				break;
-			case OV_ENOTVORBIS:
-				Com_DPrintf( "Bitstream is not Vorbis data.(%s)\n", name );
-				break;
-			case OV_EVERSION:
-				Com_DPrintf( "Vorbis version mismatch.(%s)\n", name );
-				break;
-			case OV_EBADHEADER:
-				Com_DPrintf( "Invalid Vorbis bitstream header.(%s)\n", name );
-				break;
-			case OV_EFAULT:
-				Com_DPrintf( "Internal logic fault; indicates a bug or heap/stack corruption.(%s)\n", name );
-				break;
+    if ((ret = ov_open_callbacks (track, vorbisFile, NULL, 0, vorbisCallbacks)) < 0) {
+        switch (ret) {
+        case OV_EREAD:
+            Com_DPrintf ("A read from media returned an error.(%s)\n", name);
+            break;
 
-		}
-		Com_DPrintf( "Could not open OGG stream (%s)\n", name );
+        case OV_ENOTVORBIS:
+            Com_DPrintf ("Bitstream is not Vorbis data.(%s)\n", name);
+            break;
 
-		return false;
-	}
+        case OV_EVERSION:
+            Com_DPrintf ("Vorbis version mismatch.(%s)\n", name);
+            break;
 
-	vorbisInfo = ov_info( vorbisFile, -1 );
-	if( vorbisInfo->channels != 1 && vorbisInfo->channels != 2 )
-	{
-		Com_DPrintf( "Only mono and stereo OGG files supported (%s)\n", name );
+        case OV_EBADHEADER:
+            Com_DPrintf ("Invalid Vorbis bitstream header.(%s)\n", name);
+            break;
 
-		return false;
-	}
+        case OV_EFAULT:
+            Com_DPrintf ("Internal logic fault; indicates a bug or heap/stack corruption.(%s)\n", name);
+            break;
 
-	track->start = ov_raw_tell( vorbisFile );
-	track->rate = vorbisInfo->rate;
-	track->format = (vorbisInfo->channels == 2) ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16;
+        }
 
-	return true;
+        Com_DPrintf ("Could not open OGG stream (%s)\n", name);
+
+        return false;
+    }
+
+    vorbisInfo = ov_info (vorbisFile, -1);
+
+    if (vorbisInfo->channels != 1 && vorbisInfo->channels != 2) {
+        Com_DPrintf ("Only mono and stereo OGG files supported (%s)\n", name);
+
+        return false;
+    }
+
+    track->start = ov_raw_tell (vorbisFile);
+    track->rate = vorbisInfo->rate;
+    track->format = (vorbisInfo->channels == 2) ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16;
+
+    return true;
 }
 
 /**
@@ -196,20 +197,18 @@ PRIVATE _boolean Sound_OpenBGTrack( const char *name, musicTrack_t *track )
  * \return
  * \note
  */
-PRIVATE void Sound_CloseBGTrack( musicTrack_t *track )
+PRIVATE void Sound_CloseBGTrack (musicTrack_t *track)
 {
-	if( track->vorbisFile )
-	{
-		ov_clear( track->vorbisFile );
+    if (track->vorbisFile) {
+        ov_clear (track->vorbisFile);
 
-		Z_Free( track->vorbisFile );
-		track->vorbisFile = NULL;
-	}
+        Z_Free (track->vorbisFile);
+        track->vorbisFile = NULL;
+    }
 
-	if( track->hFile )
-	{
-		FS_CloseFile( track->hFile );
-	}
+    if (track->hFile) {
+        FS_CloseFile (track->hFile);
+    }
 }
 
 /**
@@ -217,97 +216,90 @@ PRIVATE void Sound_CloseBGTrack( musicTrack_t *track )
  * \return
  * \note
  */
-PUBLIC void Sound_StreamBGTrack( void )
+PUBLIC void Sound_StreamBGTrack (void)
 {
 
-	W8		data[BUFFER_SIZE];
-	int			processed, queued, state;
-	int			size, read, dummy;
-	unsigned	buffer;
+    W8      data[BUFFER_SIZE];
+    int         processed, queued, state;
+    int         size, read, dummy;
+    unsigned    buffer;
 
-	if( ! s_musicVolume->value )
-	{
-		return;
-	}
+    if (! s_musicVolume->value) {
+        return;
+    }
 
-	if( ! s_streamingChannel )
-	{
-		return;
-	}
+    if (! s_streamingChannel) {
+        return;
+    }
 
-	// Unqueue and delete any processed buffers
-	pfalGetSourcei( s_streamingChannel->sourceName, AL_BUFFERS_PROCESSED, &processed );
-	if( processed > 0 )
-	{
-		while (processed--)
-		{
-			pfalSourceUnqueueBuffers( s_streamingChannel->sourceName, 1, &buffer );
-			pfalDeleteBuffers( 1, &buffer );
-		}
-	}
+    // Unqueue and delete any processed buffers
+    pfalGetSourcei (s_streamingChannel->sourceName, AL_BUFFERS_PROCESSED, &processed);
 
-	// Make sure we always have at least 4 buffers in the queue
-	pfalGetSourcei( s_streamingChannel->sourceName, AL_BUFFERS_QUEUED, &queued );
-	while( queued < 4 )
-	{
-		size = 0;
+    if (processed > 0) {
+        while (processed--) {
+            pfalSourceUnqueueBuffers (s_streamingChannel->sourceName, 1, &buffer);
+            pfalDeleteBuffers (1, &buffer);
+        }
+    }
 
-		// Stream from disk
-		while( size < BUFFER_SIZE )
-		{
-			read = ov_read( bgTrack.vorbisFile, data + size, BUFFER_SIZE - size, 0, 2, 1, &dummy );
-			if( read == 0 )
-			{
-				// End of file
-				if( ! bgTrack.looping)
-				{
-					// Close the intro track
-					Sound_CloseBGTrack( &bgTrack );
+    // Make sure we always have at least 4 buffers in the queue
+    pfalGetSourcei (s_streamingChannel->sourceName, AL_BUFFERS_QUEUED, &queued);
 
-					// Open the loop track
-					if( ! Sound_OpenBGTrack( bgTrack.loopName, &bgTrack ) )
-					{
-						Sound_StopBGTrack();
-						return;
-					}
+    while (queued < 4) {
+        size = 0;
 
-					bgTrack.looping = true;
-				}
+        // Stream from disk
+        while (size < BUFFER_SIZE) {
+            read = ov_read (bgTrack.vorbisFile, data + size, BUFFER_SIZE - size, 0, 2, 1, &dummy);
 
-				// Restart the track, skipping over the header
-				ov_raw_seek( bgTrack.vorbisFile, (ogg_int64_t)bgTrack.start );
+            if (read == 0) {
+                // End of file
+                if (! bgTrack.looping) {
+                    // Close the intro track
+                    Sound_CloseBGTrack (&bgTrack);
 
-				// Try streaming again
-				read = ov_read( bgTrack.vorbisFile, data + size, BUFFER_SIZE - size, 0, 2, 1, &dummy );
-			}
+                    // Open the loop track
+                    if (! Sound_OpenBGTrack (bgTrack.loopName, &bgTrack)) {
+                        Sound_StopBGTrack();
+                        return;
+                    }
 
-			if( read <= 0 )
-			{
-				// An error occurred
-				Sound_StopBGTrack();
-				return;
-			}
+                    bgTrack.looping = true;
+                }
 
-			size += read;
-		}
+                // Restart the track, skipping over the header
+                ov_raw_seek (bgTrack.vorbisFile, (ogg_int64_t)bgTrack.start);
 
-		// Upload and queue the new buffer
-		pfalGenBuffers( 1, &buffer );
-		pfalBufferData( buffer, bgTrack.format, data, size, bgTrack.rate );
-		pfalSourceQueueBuffers( s_streamingChannel->sourceName, 1, &buffer );
+                // Try streaming again
+                read = ov_read (bgTrack.vorbisFile, data + size, BUFFER_SIZE - size, 0, 2, 1, &dummy);
+            }
 
-		queued++;
-	}
+            if (read <= 0) {
+                // An error occurred
+                Sound_StopBGTrack();
+                return;
+            }
 
-	// Update volume
-	pfalSourcef( s_streamingChannel->sourceName, AL_GAIN, s_musicVolume->value );
+            size += read;
+        }
 
-	// If not playing, then do so
-	pfalGetSourcei( s_streamingChannel->sourceName, AL_SOURCE_STATE, &state );
-	if( state != AL_PLAYING )
-	{
-		pfalSourcePlay(s_streamingChannel->sourceName);
-	}
+        // Upload and queue the new buffer
+        pfalGenBuffers (1, &buffer);
+        pfalBufferData (buffer, bgTrack.format, data, size, bgTrack.rate);
+        pfalSourceQueueBuffers (s_streamingChannel->sourceName, 1, &buffer);
+
+        queued++;
+    }
+
+    // Update volume
+    pfalSourcef (s_streamingChannel->sourceName, AL_GAIN, s_musicVolume->value);
+
+    // If not playing, then do so
+    pfalGetSourcei (s_streamingChannel->sourceName, AL_SOURCE_STATE, &state);
+
+    if (state != AL_PLAYING) {
+        pfalSourcePlay (s_streamingChannel->sourceName);
+    }
 }
 
 /**
@@ -315,39 +307,37 @@ PUBLIC void Sound_StreamBGTrack( void )
  * \return
  * \note
  */
-PUBLIC void Sound_StartStreaming( void )
+PUBLIC void Sound_StartStreaming (void)
 {
-	if( ! sound_initialized )
-	{
-		return;
-	}
+    if (! sound_initialized) {
+        return;
+    }
 
-	if( s_streamingChannel )
-	{
-		return;
-	}
+    if (s_streamingChannel) {
+        return;
+    }
 
-	s_streamingChannel = Sound_PickChannel( 0, 0 );
-	if( ! s_streamingChannel )
-	{
-		return;
-	}
+    s_streamingChannel = Sound_PickChannel (0, 0);
 
-	s_streamingChannel->streaming = true;
+    if (! s_streamingChannel) {
+        return;
+    }
 
-	// hmmm...
-	pfalDeleteSources( 1, &s_streamingChannel->sourceName );
-	pfalGenSources( 1, &s_streamingChannel->sourceName );
+    s_streamingChannel->streaming = true;
 
-	// Set up the source
-	pfalSourcei( s_streamingChannel->sourceName, AL_BUFFER, 0 );
-	pfalSourcei( s_streamingChannel->sourceName, AL_LOOPING, AL_FALSE );
-	pfalSourcei( s_streamingChannel->sourceName, AL_SOURCE_RELATIVE, AL_TRUE );
-	pfalSourcefv( s_streamingChannel->sourceName, AL_POSITION, vec3_origin );
-	pfalSourcefv( s_streamingChannel->sourceName, AL_VELOCITY, vec3_origin );
-	pfalSourcef( s_streamingChannel->sourceName, AL_REFERENCE_DISTANCE, 1.0 );
-	pfalSourcef( s_streamingChannel->sourceName, AL_MAX_DISTANCE, 1.0 );
-	pfalSourcef( s_streamingChannel->sourceName, AL_ROLLOFF_FACTOR, 0.0 );
+    // hmmm...
+    pfalDeleteSources (1, &s_streamingChannel->sourceName);
+    pfalGenSources (1, &s_streamingChannel->sourceName);
+
+    // Set up the source
+    pfalSourcei (s_streamingChannel->sourceName, AL_BUFFER, 0);
+    pfalSourcei (s_streamingChannel->sourceName, AL_LOOPING, AL_FALSE);
+    pfalSourcei (s_streamingChannel->sourceName, AL_SOURCE_RELATIVE, AL_TRUE);
+    pfalSourcefv (s_streamingChannel->sourceName, AL_POSITION, vec3_origin);
+    pfalSourcefv (s_streamingChannel->sourceName, AL_VELOCITY, vec3_origin);
+    pfalSourcef (s_streamingChannel->sourceName, AL_REFERENCE_DISTANCE, 1.0);
+    pfalSourcef (s_streamingChannel->sourceName, AL_MAX_DISTANCE, 1.0);
+    pfalSourcef (s_streamingChannel->sourceName, AL_ROLLOFF_FACTOR, 0.0);
 }
 
 /**
@@ -355,43 +345,40 @@ PUBLIC void Sound_StartStreaming( void )
  * \return
  * \note
  */
-PUBLIC void Sound_StopStreaming( void )
+PUBLIC void Sound_StopStreaming (void)
 {
-	int			processed;
-	unsigned	buffer;
+    int         processed;
+    unsigned    buffer;
 
-	if( ! sound_initialized )
-	{
-		return;
-	}
+    if (! sound_initialized) {
+        return;
+    }
 
-	if( ! s_streamingChannel )
-	{
-		return;
-	}
+    if (! s_streamingChannel) {
+        return;
+    }
 
-	s_streamingChannel->streaming = false;
+    s_streamingChannel->streaming = false;
 
 
-	pfalSourceStop( s_streamingChannel->sourceName );
+    pfalSourceStop (s_streamingChannel->sourceName);
 
-	pfalGetSourcei( s_streamingChannel->sourceName, AL_BUFFERS_PROCESSED, &processed );
-	if( processed > 0 )
-	{
-		while( processed-- )
-		{
-			pfalSourceUnqueueBuffers( s_streamingChannel->sourceName, 1, &buffer );
-			pfalDeleteBuffers( 1, &buffer );
-		}
-	}
+    pfalGetSourcei (s_streamingChannel->sourceName, AL_BUFFERS_PROCESSED, &processed);
 
-	pfalSourcei( s_streamingChannel->sourceName, AL_BUFFER, 0 );
+    if (processed > 0) {
+        while (processed--) {
+            pfalSourceUnqueueBuffers (s_streamingChannel->sourceName, 1, &buffer);
+            pfalDeleteBuffers (1, &buffer);
+        }
+    }
 
-	// hmmm...
-	pfalDeleteSources( 1, &s_streamingChannel->sourceName );
-	pfalGenSources( 1, &s_streamingChannel->sourceName );
+    pfalSourcei (s_streamingChannel->sourceName, AL_BUFFER, 0);
 
-	s_streamingChannel = NULL;
+    // hmmm...
+    pfalDeleteSources (1, &s_streamingChannel->sourceName);
+    pfalGenSources (1, &s_streamingChannel->sourceName);
+
+    s_streamingChannel = NULL;
 }
 
 /**
@@ -401,28 +388,26 @@ PUBLIC void Sound_StopStreaming( void )
  * \return
  * \note
  */
-PUBLIC void Sound_StartBGTrack( const char *introTrack, const char *loopTrack )
+PUBLIC void Sound_StartBGTrack (const char *introTrack, const char *loopTrack)
 {
-	if( ! sound_initialized )
-	{
-		return;
-	}
+    if (! sound_initialized) {
+        return;
+    }
 
-	Sound_StopBGTrack();
+    Sound_StopBGTrack();
 
 
-	com_strlcpy( bgTrack.introName, introTrack, sizeof( bgTrack.introName ) );
-	com_strlcpy( bgTrack.loopName, loopTrack, sizeof( bgTrack.loopName) );
+    com_strlcpy (bgTrack.introName, introTrack, sizeof (bgTrack.introName));
+    com_strlcpy (bgTrack.loopName, loopTrack, sizeof (bgTrack.loopName));
 
-	Sound_StartStreaming();
+    Sound_StartStreaming();
 
-	if( ! Sound_OpenBGTrack( bgTrack.introName, &bgTrack ) )
-	{
-		Sound_StopBGTrack();
-		return;
-	}
+    if (! Sound_OpenBGTrack (bgTrack.introName, &bgTrack)) {
+        Sound_StopBGTrack();
+        return;
+    }
 
-	Sound_StreamBGTrack();
+    Sound_StreamBGTrack();
 }
 
 /**
@@ -430,16 +415,15 @@ PUBLIC void Sound_StartBGTrack( const char *introTrack, const char *loopTrack )
  * \return
  * \note
  */
-PUBLIC void Sound_StopBGTrack( void )
+PUBLIC void Sound_StopBGTrack (void)
 {
-	if( ! sound_initialized )
-	{
-		return;
-	}
+    if (! sound_initialized) {
+        return;
+    }
 
-	Sound_StopStreaming();
+    Sound_StopStreaming();
 
-	Sound_CloseBGTrack( &bgTrack );
+    Sound_CloseBGTrack (&bgTrack);
 
-	memset( &bgTrack, 0, sizeof( musicTrack_t ) );
+    memset (&bgTrack, 0, sizeof (musicTrack_t));
 }

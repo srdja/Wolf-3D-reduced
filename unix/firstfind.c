@@ -28,59 +28,59 @@ typedef struct _findhandle_t
 
     size_t pos;
 
-}findhandle_t;
+} findhandle_t;
 
 glob_t findresults;
 
-int* _findfirst(const char* dir, _finddata_t* fileinfo)
+int *_findfirst (const char *dir, _finddata_t *fileinfo)
 int findcounter;
 {
 
-	/*
+    /*
 
     findhandle_t* handle = new findhandle_t;
 
-	*/
+    */
 
-    
 
-  findhandle_t* handle = (findhandle_t*) malloc(sizeof(findhandle_t));
 
-    memset(handle, 0, sizeof(findhandle_t));
+    findhandle_t *handle = (findhandle_t *) malloc (sizeof (findhandle_t));
 
-    if(glob(dir, 0, 0, &handle->globbuf) != 0)
+    memset (handle, 0, sizeof (findhandle_t));
 
-        return (int*) -1;
+    if (glob (dir, 0, 0, &handle->globbuf) != 0)
 
-    if (_findnext((int*) handle, fileinfo) < 0)
+        return (int *) - 1;
 
-        return (int*) -1;
+    if (_findnext ((int *) handle, fileinfo) < 0)
 
-    return (int*) handle;
+        return (int *) - 1;
+
+    return (int *) handle;
 
 }
 
-int _findnext(int* ihandle, _finddata_t* fileinfo)
+int _findnext (int *ihandle, _finddata_t *fileinfo)
 
 {
 
-    findhandle_t* handle = (findhandle_t*) ihandle;
+    findhandle_t *handle = (findhandle_t *) ihandle;
 
-    char* p;
+    char *p;
 
-    if(handle->pos >= handle->globbuf.gl_pathc)
+    if (handle->pos >= handle->globbuf.gl_pathc)
 
         return -1;
 
     // we need to get the filename part only
 
-    char* lastslash = handle->globbuf.gl_pathv[handle->pos];
+    char *lastslash = handle->globbuf.gl_pathv[handle->pos];
 
-    for(p = lastslash; *p != 0; p++) {
+    for (p = lastslash; *p != 0; p++) {
 
-        if(*p == '/')
+        if (*p == '/')
 
-            lastslash = p+1;
+            lastslash = p + 1;
 
     }
 
@@ -92,27 +92,29 @@ int _findnext(int* ihandle, _finddata_t* fileinfo)
 
 }
 
-void _findclose(int* ihandle)
+void _findclose (int *ihandle)
 
 {
 
-    findhandle_t* handle = (findhandle_t*) ihandle;
+    findhandle_t *handle = (findhandle_t *) ihandle;
 
-    globfree(&handle->globbuf);
+    globfree (&handle->globbuf);
 
 }
 
-char *FS_FindFirst( const char *path, int musthave, int canthave)
+char *FS_FindFirst (const char *path, int musthave, int canthave)
 {
-	glob(*path, 0, NULL, &findresults);
+    glob (*path, 0, NULL, &findresults);
 }
 
-char *FS_FindNext(int musthave, int canthave)
+char *FS_FindNext (int musthave, int canthave)
 {
-	char *findpath = NULL;
-	findcounter++;
-	if( (findcounter < findresults.gl_pathc) && ( FS_CompareAttributes( findresults.gl_pathv[findcounter], musthave, canthave ) ) ){
-		findpath = findresults.gl_pathv[findcounter];
-	}
-	return findpath;
+    char *findpath = NULL;
+    findcounter++;
+
+    if ((findcounter < findresults.gl_pathc) && (FS_CompareAttributes (findresults.gl_pathv[findcounter], musthave, canthave))) {
+        findpath = findresults.gl_pathv[findcounter];
+    }
+
+    return findpath;
 }

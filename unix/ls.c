@@ -1,6 +1,6 @@
-********
-*  ls.c 
-********
+** ** ** **
+*ls.c
+** ** ** **
 /*
         Copyright (C) 2011 by Philippe.Vouters@laposte.net
 
@@ -47,39 +47,46 @@
 #if defined (__VMS)
 const char *path_add = "/*";
 #elif defined (__unix__) || defined (__unix)
-const char *path_add="/*";
+const char *path_add = "/*";
 #endif
 
-typedef struct filnam{
-        struct filnam *next;
-        char buffer[MAX_PATH];
-}filenam_t;
+typedef struct filnam {
+    struct filnam *next;
+    char buffer[MAX_PATH];
+} filenam_t;
 
-int errfunc(const char *path, int eerrno){
-    if (eerrno){
-        fprintf(stderr,"error accessing %s; eerrno = %d, errno=%d\n",
-                   path,eerrno,errno);
+int errfunc (const char *path, int eerrno)
+{
+    if (eerrno) {
+        fprintf (stderr, "error accessing %s; eerrno = %d, errno=%d\n",
+                 path, eerrno, errno);
         return eerrno;
-    }
-    else
-       return 0;
+    } else
+        return 0;
 }
 
-filenam_t *store_files(filenam_t **head,filenam_t **first,
-                       filenam_t **prev, glob_t *globbuf){
-  filenam_t *file;
-  size_t i;
+filenam_t *store_files (filenam_t **head, filenam_t **first,
+                        filenam_t **prev, glob_t *globbuf)
+{
+    filenam_t *file;
+    size_t i;
 
-  for (i = 0; i < globbuf->gl_pathc; i++){
-      file = calloc(1,sizeof(filenam_t));
-      file->next=NULL;
-      if (!i && first) *first = file;
-      if (head && !*head) *head = file;
-      strcpy(file->buffer,globbuf->gl_pathv[i]);
-      if (prev && *prev) (*prev)->next=file;
-      *prev = file;
-  }
-  return file;
+    for (i = 0; i < globbuf->gl_pathc; i++) {
+        file = calloc (1, sizeof (filenam_t));
+        file->next = NULL;
+
+        if (!i && first) *first = file;
+
+        if (head && !*head) *head = file;
+
+        strcpy (file->buffer, globbuf->gl_pathv[i]);
+
+        if (prev && *prev) (*prev)->next = file;
+
+        *prev = file;
+    }
+
+    return file;
 }
 
 #ifdef __VMS
@@ -98,23 +105,26 @@ decc$features_t decc$features[] = {
     {"DECC$FILENAME_UNIX_ONLY", 1}
 };
 
-void init_vms_crtl(void){
+void init_vms_crtl (void)
+{
     int i, index;
 
-    for (i=0; i < sizeof(decc$features)/sizeof(decc$features_t); i++){
-         if ((index=decc$feature_get_index(decc$features[i].name)) == -1){
-             perror("decc$feature_get_index");
-             exit(EXIT_FAILURE);
-         }
-         if (decc$feature_set_value(index,1,decc$features[i].value) == -1){
-             perror("decc$feature_set_value");
-             exit(EXIT_FAILURE);
-         }
+    for (i = 0; i < sizeof (decc$features) / sizeof (decc$features_t); i++) {
+        if ((index = decc$feature_get_index (decc$features[i].name)) == -1) {
+            perror ("decc$feature_get_index");
+            exit (EXIT_FAILURE);
+        }
+
+        if (decc$feature_set_value (index, 1, decc$features[i].value) == -1) {
+            perror ("decc$feature_set_value");
+            exit (EXIT_FAILURE);
+        }
     }
 }
 #endif
 
-int main(int argc, char **argv){
+int main (int argc, char **argv)
+{
     filenam_t *file;
     filenam_t *head = NULL;
     filenam_t *prev = NULL;
@@ -127,60 +137,76 @@ int main(int argc, char **argv){
 #ifdef __VMS
     init_vms_crtl();
 #endif
-    strcpy(pattern,argv[1]);
-    if (pattern[strlen(pattern)-1] == '/') strcat(pattern,"*");
-    memset(&globbuf,0,sizeof(glob_t));
-    status = glob(pattern,GLOB_ERR,errfunc,&globbuf);
-    if (status) exit(EXIT_FAILURE);
-    file = store_files(&head,&first,&prev,&globbuf);
-    globfree(&globbuf);
+    strcpy (pattern, argv[1]);
+
+    if (pattern[strlen (pattern) - 1] == '/') strcat (pattern, "*");
+
+    memset (&globbuf, 0, sizeof (glob_t));
+    status = glob (pattern, GLOB_ERR, errfunc, &globbuf);
+
+    if (status) exit (EXIT_FAILURE);
+
+    file = store_files (&head, &first, &prev, &globbuf);
+    globfree (&globbuf);
+
     do {
-       for (file = first; file; file=file->next){
+        for (file = first; file; file = file->next) {
             char *cp;
-            if (lstat(file->buffer,&buf)){
+
+            if (lstat (file->buffer, &buf)) {
                 char perhapsDir[MAX_PATH];
 
-                strcpy(perhapsDir,file->buffer);
-                strcat(perhapsDir,"/");
-                if (lstat(perhapsDir,&buf)){
-                    perror("lstat");
-                    exit(EXIT_FAILURE);
+                strcpy (perhapsDir, file->buffer);
+                strcat (perhapsDir, "/");
+
+                if (lstat (perhapsDir, &buf)) {
+                    perror ("lstat");
+                    exit (EXIT_FAILURE);
                 }
             }
-            printf ("%s",file->buffer);
-            if (S_ISLNK(buf.st_mode)){
+
+            printf ("%s", file->buffer);
+
+            if (S_ISLNK (buf.st_mode)) {
                 char realfile[MAX_PATH];
                 ssize_t size;
-                size=readlink(file->buffer,realfile,sizeof(realfile));
-                printf (" -> %.*s\n",size,realfile);
+                size = readlink (file->buffer, realfile, sizeof (realfile));
+                printf (" -> %.*s\n", size, realfile);
             }
-            if (S_ISREG(buf.st_mode))
+
+            if (S_ISREG (buf.st_mode))
                 printf ("\n");
-            if (S_ISDIR(buf.st_mode)){
+
+            if (S_ISDIR (buf.st_mode)) {
                 printf (":\n");
-                if (strcmp(file->buffer,"..") &&
-                    strcmp(file->buffer,".")){
+
+                if (strcmp (file->buffer, "..") &&
+                        strcmp (file->buffer, ".")) {
                     char dirname[MAX_PATH];
                     filenam_t *f;
 
-                    strcpy(dirname,file->buffer);
-                    strcat(dirname,path_add);
-                    memset(&globbuf,0,sizeof(glob_t));
-                    status = glob(dirname,0,NULL,&globbuf);
-                    f = store_files(NULL,NULL,&prev,&globbuf);
-                    globfree(&globbuf);
+                    strcpy (dirname, file->buffer);
+                    strcat (dirname, path_add);
+                    memset (&globbuf, 0, sizeof (glob_t));
+                    status = glob (dirname, 0, NULL, &globbuf);
+                    f = store_files (NULL, NULL, &prev, &globbuf);
+                    globfree (&globbuf);
                     break;
-               }
-           }
-       }
-       if (file && S_ISDIR(buf.st_mode))
-           first = file->next;
+                }
+            }
+        }
+
+        if (file && S_ISDIR (buf.st_mode))
+            first = file->next;
     } while (file);
+
     file = head;
-    while (file){
-       prev=file->next;
-       free(file);
-       file = prev;
-    }     
-    exit(EXIT_SUCCESS);
-}   
+
+    while (file) {
+        prev = file->next;
+        free (file);
+        file = prev;
+    }
+
+    exit (EXIT_SUCCESS);
+}

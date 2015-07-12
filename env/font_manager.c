@@ -1,20 +1,20 @@
 /*
 
-	Copyright (C) 2004-2012 Michael Liebscher <johnnycanuck@users.sourceforge.net>
+    Copyright (C) 2004-2012 Michael Liebscher <johnnycanuck@users.sourceforge.net>
 
-	This program is free software; you can redistribute it and/or
-	modify it under the terms of the GNU General Public License
-	as published by the Free Software Foundation; either version 2
-	of the License, or (at your option) any later version.
+    This program is free software; you can redistribute it and/or
+    modify it under the terms of the GNU General Public License
+    as published by the Free Software Foundation; either version 2
+    of the License, or (at your option) any later version.
 
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
 
-	You should have received a copy of the GNU General Public License
-	along with this program; if not, write to the Free Software
-	Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
@@ -54,9 +54,8 @@ PRIVATE font_t *myfonts[ MAX_FONTS ];
 PRIVATE W32 num_fonts = 0;
 
 
-typedef struct
-{
-	char *start, *end;
+typedef struct {
+    char *start, *end;
 
 } string_seg_t;
 
@@ -66,157 +65,150 @@ typedef struct
  * \param[in] filename File name to load details
  * \return Valid pointer to font_t
  */
-PUBLIC font_t *createFont( const char *filename )
+PUBLIC font_t *createFont (const char *filename)
 {
-	font_t *temp_font;
-	char *datname;
-	filehandle_t *fp;
-	W32 size;
-	W32 i;
+    font_t *temp_font;
+    char *datname;
+    filehandle_t *fp;
+    W32 size;
+    W32 i;
 
-	if( num_fonts == (MAX_FONTS - 1) )
-	{
-		Com_Printf( "[createFont]: No more font slots open\n" );
+    if (num_fonts == (MAX_FONTS - 1)) {
+        Com_Printf ("[createFont]: No more font slots open\n");
 
-		return NULL;
-	}
-
-
-	temp_font = (font_t *)Z_Malloc( sizeof( font_t ) );
-
-	temp_font->texfont = TM_FindTexture( filename, TT_Pic );
-	if( NULL == temp_font->texfont )
-	{
-		Com_Printf( "[createFont]: unable to open file (%s)\n", filename );
-
-		Z_Free( temp_font );
-
-		return NULL;
-	}
-
-	memset( temp_font->nCharWidth, 0, sizeof( temp_font->nCharWidth ) );
-
-	datname = (char *)MM_MALLOC( strlen( filename ) + 1 );
-
-	FS_RemoveExtension( filename, datname );
-
-	com_strlcat( datname, ".dat", strlen( filename ) + 1 );
-
-	fp = FS_OpenFile( datname, 0 );
-	if( NULL == fp )
-	{
-		Com_Printf( "[createFont]: unable to open file (%s)\n", datname );
-
-		MM_FREE( datname );
-		Z_Free( temp_font );
-
-		return NULL;
-	}
-
-	size = FS_GetFileSize( fp );
-
-	// check header size
-	if( size < 10 )
-	{
-		Com_Printf( "[createFont]: File (%s) has incorrect file length\n", datname );
-
-		MM_FREE( datname );
-		Z_Free( temp_font );
-
-		FS_CloseFile( fp );
-
-		return NULL;
-	}
+        return NULL;
+    }
 
 
-	// Check sig of font dat file
+    temp_font = (font_t *)Z_Malloc (sizeof (font_t));
 
-	FS_ReadFile( &size, 1, 4, fp );
+    temp_font->texfont = TM_FindTexture (filename, TT_Pic);
+
+    if (NULL == temp_font->texfont) {
+        Com_Printf ("[createFont]: unable to open file (%s)\n", filename);
+
+        Z_Free (temp_font);
+
+        return NULL;
+    }
+
+    memset (temp_font->nCharWidth, 0, sizeof (temp_font->nCharWidth));
+
+    datname = (char *)MM_MALLOC (strlen (filename) + 1);
+
+    FS_RemoveExtension (filename, datname);
+
+    com_strlcat (datname, ".dat", strlen (filename) + 1);
+
+    fp = FS_OpenFile (datname, 0);
+
+    if (NULL == fp) {
+        Com_Printf ("[createFont]: unable to open file (%s)\n", datname);
+
+        MM_FREE (datname);
+        Z_Free (temp_font);
+
+        return NULL;
+    }
+
+    size = FS_GetFileSize (fp);
+
+    // check header size
+    if (size < 10) {
+        Com_Printf ("[createFont]: File (%s) has incorrect file length\n", datname);
+
+        MM_FREE (datname);
+        Z_Free (temp_font);
+
+        FS_CloseFile (fp);
+
+        return NULL;
+    }
 
 
-	FS_ReadFile( &temp_font->nMaxWidth, 1, 1, fp );
-	FS_ReadFile( &temp_font->nMaxHeight, 1, 1, fp );
+    // Check sig of font dat file
+
+    FS_ReadFile (&size, 1, 4, fp);
 
 
-	FS_ReadFile( &size, 1, 4, fp );
-	size = LittleLong( size );
+    FS_ReadFile (&temp_font->nMaxWidth, 1, 1, fp);
+    FS_ReadFile (&temp_font->nMaxHeight, 1, 1, fp);
 
-	if( size > 127 )
-	{
-		Com_Printf( "[createFont]: File (%s) has incorrect Character Width array\n", datname );
 
-		MM_FREE( datname );
-		Z_Free( temp_font );
+    FS_ReadFile (&size, 1, 4, fp);
+    size = LittleLong (size);
 
-		FS_CloseFile( fp );
+    if (size > 127) {
+        Com_Printf ("[createFont]: File (%s) has incorrect Character Width array\n", datname);
 
-		return NULL;
-	}
+        MM_FREE (datname);
+        Z_Free (temp_font);
 
-	FS_ReadFile( &temp_font->nCharWidth, 1, size, fp );
+        FS_CloseFile (fp);
 
-	FS_CloseFile( fp );
+        return NULL;
+    }
+
+    FS_ReadFile (&temp_font->nCharWidth, 1, size, fp);
+
+    FS_CloseFile (fp);
 
 
 
 
-	temp_font->nSize = 2;
-	temp_font->colour[ 3 ] = 255;
+    temp_font->nSize = 2;
+    temp_font->colour[ 3 ] = 255;
 
-	temp_font->hFrac = (float)(temp_font->nMaxHeight / (float)temp_font->texfont->height);
-	temp_font->wFrac = (float)(temp_font->nMaxWidth / (float)temp_font->texfont->width);
-
-
-
-	for( i = 0 ; i < MAX_FONTS ; ++i )
-	{
-		if( ! myfonts[ i ] )
-		{
-			break;
-		}
-	}
-
-	if( i == (MAX_FONTS - 1) )
-	{
-		Com_Printf( "[createFont]: No more font slots open\n" );
-
-		MM_FREE( datname );
-		Z_Free( temp_font );
-
-		return NULL;
-	}
-
-	myfonts[ i ] = temp_font;
-
-	MM_FREE( datname );
+    temp_font->hFrac = (float) (temp_font->nMaxHeight / (float)temp_font->texfont->height);
+    temp_font->wFrac = (float) (temp_font->nMaxWidth / (float)temp_font->texfont->width);
 
 
-	return temp_font;
+
+    for (i = 0 ; i < MAX_FONTS ; ++i) {
+        if (! myfonts[ i ]) {
+            break;
+        }
+    }
+
+    if (i == (MAX_FONTS - 1)) {
+        Com_Printf ("[createFont]: No more font slots open\n");
+
+        MM_FREE (datname);
+        Z_Free (temp_font);
+
+        return NULL;
+    }
+
+    myfonts[ i ] = temp_font;
+
+    MM_FREE (datname);
+
+
+    return temp_font;
 }
 
 /**
  * \brief Initialize font handler
  */
-PUBLIC void Font_Init( void )
+PUBLIC void Font_Init (void)
 {
-	W32 i;
+    W32 i;
 
-	for( i = 0 ; i < MAX_FONTS ; ++i )
-	{
-		myfonts[ i ] = NULL;
-	}
+    for (i = 0 ; i < MAX_FONTS ; ++i) {
+        myfonts[ i ] = NULL;
+    }
 
-	(void)createFont( "pics/font1.tga" );
+    (void)createFont ("pics/font1.tga");
 
 
-	(void)createFont( "pics/font2.tga" );
+    (void)createFont ("pics/font2.tga");
 
 }
 
 /**
  * \brief Shutdown font handler
  */
-PUBLIC void Font_Shutdown( void )
+PUBLIC void Font_Shutdown (void)
 {
 
 }
@@ -228,51 +220,46 @@ PUBLIC void Font_Shutdown( void )
  * \param[out] w Width of text in pixels
  * \param[out] h Height of text in pixels
  */
-PUBLIC void Font_GetMsgDimensions( FONTSELECT fs, const char *string, int *w, int *h )
+PUBLIC void Font_GetMsgDimensions (FONTSELECT fs, const char *string, int *w, int *h)
 {
-	int width = 0;
-	int mx = 0;
-	W16 scale;
-	int	height;
+    int width = 0;
+    int mx = 0;
+    W16 scale;
+    int height;
 
-	if( ! myfonts[ fs ] )
-	{
-		*w = *h = 0;
+    if (! myfonts[ fs ]) {
+        *w = *h = 0;
 
-		return;
-	}
+        return;
+    }
 
-	scale = myfonts[ fs ]->nMaxHeight * myfonts[ fs ]->nSize;
-	height = scale;
+    scale = myfonts[ fs ]->nMaxHeight * myfonts[ fs ]->nSize;
+    height = scale;
 
-	while( *string )
-	{
-		if( *string == '\n' )
-		{
-			if( mx > width )
-			{
-				width = mx;
-			}
+    while (*string) {
+        if (*string == '\n') {
+            if (mx > width) {
+                width = mx;
+            }
 
-			mx = 0;
-			height += scale;
-			++string;
+            mx = 0;
+            height += scale;
+            ++string;
 
-			continue;
-		}
+            continue;
+        }
 
-		mx += myfonts[ fs ]->nCharWidth[ (*string)-32 ] * myfonts[ fs ]->nSize;
+        mx += myfonts[ fs ]->nCharWidth[ (*string) - 32 ] * myfonts[ fs ]->nSize;
 
-		++string;
-	}
+        ++string;
+    }
 
-	if( mx > width )
-	{
-		width = mx;
-	}
+    if (mx > width) {
+        width = mx;
+    }
 
-	*w = width;
-	*h = height;
+    *w = width;
+    *h = height;
 }
 
 /**
@@ -280,12 +267,11 @@ PUBLIC void Font_GetMsgDimensions( FONTSELECT fs, const char *string, int *w, in
  * \param[in] fs Font to use
  * \param[in] size Size of font
  */
-PUBLIC void Font_SetSize( FONTSELECT fs, W16 size )
+PUBLIC void Font_SetSize (FONTSELECT fs, W16 size)
 {
-	if( myfonts[ fs ] )
-	{
-		myfonts[ fs ]->nSize = size;
-	}
+    if (myfonts[ fs ]) {
+        myfonts[ fs ]->nSize = size;
+    }
 }
 
 /**
@@ -293,14 +279,13 @@ PUBLIC void Font_SetSize( FONTSELECT fs, W16 size )
  * \param[in] fs Font to use
  * \return Size of font, otherwise 0
  */
-PUBLIC W16 Font_GetSize( FONTSELECT fs )
+PUBLIC W16 Font_GetSize (FONTSELECT fs)
 {
-	if( myfonts[ fs ] )
-	{
-		return( myfonts[ fs ]->nMaxHeight * myfonts[ fs ]->nSize );
-	}
+    if (myfonts[ fs ]) {
+        return (myfonts[ fs ]->nMaxHeight * myfonts[ fs ]->nSize);
+    }
 
-	return 0;
+    return 0;
 }
 
 /**
@@ -308,14 +293,13 @@ PUBLIC W16 Font_GetSize( FONTSELECT fs )
  * \param[in] fs Font to use
  * \param[in] c Colour
  */
-PUBLIC void Font_SetColour( FONTSELECT fs, colour3_t c )
+PUBLIC void Font_SetColour (FONTSELECT fs, colour3_t c)
 {
-	if( myfonts[ fs ] )
-	{
-		myfonts[ fs ]->colour[ 0 ] = c[ 0 ];
-		myfonts[ fs ]->colour[ 1 ] = c[ 1 ];
-		myfonts[ fs ]->colour[ 2 ] = c[ 2 ];
-	}
+    if (myfonts[ fs ]) {
+        myfonts[ fs ]->colour[ 0 ] = c[ 0 ];
+        myfonts[ fs ]->colour[ 1 ] = c[ 1 ];
+        myfonts[ fs ]->colour[ 2 ] = c[ 2 ];
+    }
 }
 
 /**
@@ -325,32 +309,29 @@ PUBLIC void Font_SetColour( FONTSELECT fs, colour3_t c )
  * \param[in] y Y-Coordinate
  * \param[in] string Text to put on screen
  */
-PUBLIC void Font_put_line( FONTSELECT fs, int x, int y, const char *string )
+PUBLIC void Font_put_line (FONTSELECT fs, int x, int y, const char *string)
 {
-	int mx = x;
-	W16 scale;
+    int mx = x;
+    W16 scale;
 
-	if( ! myfonts[ fs ] )
-	{
-		return;
-	}
+    if (! myfonts[ fs ]) {
+        return;
+    }
 
-	scale = myfonts[ fs ]->nSize;
+    scale = myfonts[ fs ]->nSize;
 
-	while( *string )
-	{
-		if( *string == '\n' )
-		{
-			mx = x;
-			y += myfonts[ fs ]->nMaxHeight * scale;
-			++string;
-			continue;
-		}
+    while (*string) {
+        if (*string == '\n') {
+            mx = x;
+            y += myfonts[ fs ]->nMaxHeight * scale;
+            ++string;
+            continue;
+        }
 
-		R_Draw_Character( mx, y, *string, myfonts[ fs ] );
-		mx += myfonts[ fs ]->nCharWidth[ (*string)-32 ] * scale;
-		++string;
-	}
+        R_Draw_Character (mx, y, *string, myfonts[ fs ]);
+        mx += myfonts[ fs ]->nCharWidth[ (*string) - 32 ] * scale;
+        ++string;
+    }
 }
 
 /**
@@ -360,24 +341,22 @@ PUBLIC void Font_put_line( FONTSELECT fs, int x, int y, const char *string )
  * \param[in] y Y-Coordinate
  * \param[in] string Text to put on screen
  */
-void Font_put_lineR2L( FONTSELECT fs, int x, int y, const char *string )
+void Font_put_lineR2L (FONTSELECT fs, int x, int y, const char *string)
 {
-	int mx = x;
-	unsigned int charindex;
-	unsigned int i;
+    int mx = x;
+    unsigned int charindex;
+    unsigned int i;
 
-	if( ! myfonts[ fs ] )
-	{
-		return;
-	}
+    if (! myfonts[ fs ]) {
+        return;
+    }
 
-	for ( i = 0; i < strlen( string ); ++i )
-	{
-		charindex = strlen( string ) - i - 1;
-		mx -= myfonts[ fs ]->nCharWidth[ string[ charindex ]-32 ] * myfonts[ fs ]->nSize;
+    for (i = 0; i < strlen (string); ++i) {
+        charindex = strlen (string) - i - 1;
+        mx -= myfonts[ fs ]->nCharWidth[ string[ charindex ] - 32 ] * myfonts[ fs ]->nSize;
 
-		R_Draw_Character( mx, y, string[ charindex ], myfonts[ fs ] );
-	}
+        R_Draw_Character (mx, y, string[ charindex ], myfonts[ fs ]);
+    }
 }
 
 /**
@@ -387,16 +366,15 @@ void Font_put_lineR2L( FONTSELECT fs, int x, int y, const char *string )
  * \param[in] y Y-Coordinate
  * \param[in] num Character to put on screen
  */
-PUBLIC W16 Font_put_character( FONTSELECT fs, int x, int y, W16 num )
+PUBLIC W16 Font_put_character (FONTSELECT fs, int x, int y, W16 num)
 {
-	if( ! myfonts[ fs ] || num > 126 )
-	{
-		return 0;
-	}
+    if (! myfonts[ fs ] || num > 126) {
+        return 0;
+    }
 
-	R_Draw_Character( x, y, num, myfonts[ fs ] );
+    R_Draw_Character (x, y, num, myfonts[ fs ]);
 
-	return( myfonts[ fs ]->nCharWidth[ num - 32 ] * myfonts[ fs ]->nSize );
+    return (myfonts[ fs ]->nCharWidth[ num - 32 ] * myfonts[ fs ]->nSize);
 }
 
 /**
@@ -407,24 +385,22 @@ PUBLIC W16 Font_put_character( FONTSELECT fs, int x, int y, W16 num )
  * \param[in] start Start of string
  * \param[in] end End of string
  */
-PUBLIC void Font_put_line_size( FONTSELECT fs, int x, int y, const char *start, const char *end )
+PUBLIC void Font_put_line_size (FONTSELECT fs, int x, int y, const char *start, const char *end)
 {
-	int mx = x;
-	W16 scale;
+    int mx = x;
+    W16 scale;
 
-	if( ! myfonts[ fs ] )
-	{
-		return;
-	}
+    if (! myfonts[ fs ]) {
+        return;
+    }
 
-	scale = myfonts[ fs ]->nSize;
+    scale = myfonts[ fs ]->nSize;
 
-	while( start != end )
-	{
-		R_Draw_Character( mx, y, *start, myfonts[ fs ] );
-		mx += myfonts[ fs ]->nCharWidth[ (*start)-32 ] * scale;
-		++start;
-	}
+    while (start != end) {
+        R_Draw_Character (mx, y, *start, myfonts[ fs ]);
+        mx += myfonts[ fs ]->nCharWidth[ (*start) - 32 ] * scale;
+        ++start;
+    }
 
 }
 
@@ -436,91 +412,79 @@ PUBLIC void Font_put_line_size( FONTSELECT fs, int x, int y, const char *start, 
  * \param[in\out] sst String segment that fits
  * \return true if line fits, otherwise false.
  */
-PRIVATE W8 Font_get_line( FONTSELECT fs, int line_width, string_seg_t *sst )
+PRIVATE W8 Font_get_line (FONTSELECT fs, int line_width, string_seg_t *sst)
 {
-	int x = 0, last_word_width = 0, last_word_spaces = 0;
-	int in_a_word = 0;
-	int t_words = 0;
-	int t_spaces = 0;
-	int chars_width = 0;
-	W16 scale;
-	const char *word_start = sst->start;
+    int x = 0, last_word_width = 0, last_word_spaces = 0;
+    int in_a_word = 0;
+    int t_words = 0;
+    int t_spaces = 0;
+    int chars_width = 0;
+    W16 scale;
+    const char *word_start = sst->start;
 
 
-	if( ! myfonts[ fs ] )
-	{
-		return false;
-	}
+    if (! myfonts[ fs ]) {
+        return false;
+    }
 
 
-	scale = myfonts[ fs ]->nSize;
+    scale = myfonts[ fs ]->nSize;
 
 
-	if( line_width < 0 )
-	{
-		line_width = 1000000;
-	}
+    if (line_width < 0) {
+        line_width = 1000000;
+    }
 
 
-	while( *sst->end != '\0' && *sst->end != '\n' )
-	{
-		char c = *sst->end;
+    while (*sst->end != '\0' && *sst->end != '\n') {
+        char c = *sst->end;
 
-		int c_width = myfonts[ fs ]->nCharWidth[ c - 32 ] * scale; // FIX ME
+        int c_width = myfonts[ fs ]->nCharWidth[ c - 32 ] * scale; // FIX ME
 
-		// we exceeded the space available for this line
-		if( x + c_width > line_width )
-		{
-			if( in_a_word )
-			{
-				chars_width = last_word_width;
-				sst->end = (char *)word_start;
-				t_spaces = last_word_spaces;
-			}
+        // we exceeded the space available for this line
+        if (x + c_width > line_width) {
+            if (in_a_word) {
+                chars_width = last_word_width;
+                sst->end = (char *)word_start;
+                t_spaces = last_word_spaces;
+            }
 
-			return t_words ? true : false;
-		}
+            return t_words ? true : false;
+        }
 
 
-		x += c_width;
+        x += c_width;
 
-		if( c != ' ' )
-		{
-			if( ! in_a_word )
-			{
-				last_word_width = chars_width;
-				word_start = sst->end;
-			}
+        if (c != ' ') {
+            if (! in_a_word) {
+                last_word_width = chars_width;
+                word_start = sst->end;
+            }
 
-			in_a_word = 1;
-			chars_width += c_width;
-		}
-		else
-		{
-			if( in_a_word )
-			{
-				in_a_word = 0;
-				t_words++;
-				last_word_spaces = t_spaces;
-			}
+            in_a_word = 1;
+            chars_width += c_width;
+        } else {
+            if (in_a_word) {
+                in_a_word = 0;
+                t_words++;
+                last_word_spaces = t_spaces;
+            }
 
-			t_spaces++;
-		}
+            t_spaces++;
+        }
 
-		++sst->end;
-	}
+        ++sst->end;
+    }
 
-	if( in_a_word )
-	{
-		t_words++;
-	}
+    if (in_a_word) {
+        t_words++;
+    }
 
-	if( *sst->end != '\0' && *sst->end == '\n' )
-	{
-		++sst->end;
-	}
+    if (*sst->end != '\0' && *sst->end == '\n') {
+        ++sst->end;
+    }
 
-	return t_words ? true : false;
+    return t_words ? true : false;
 
 }
 
@@ -533,46 +497,38 @@ PRIVATE W8 Font_get_line( FONTSELECT fs, int line_width, string_seg_t *sst )
  * \param[in] space_between_lines Space between rows
  * \param[in] line_width_in_pixel Line width in pixels
  */
-PUBLIC void Font_put_paragraph(	FONTSELECT fs, short x, short y,
-					const char *string,
-					int space_between_lines,
-                    int line_width_in_pixel )
+PUBLIC void Font_put_paragraph (FONTSELECT fs, short x, short y,
+                                const char *string,
+                                int space_between_lines,
+                                int line_width_in_pixel)
 {
-	string_seg_t sst;
-	sst.start = sst.end = (char *)string;
+    string_seg_t sst;
+    sst.start = sst.end = (char *)string;
 
-	if( ! myfonts[ fs ] )
-	{
-		return;
-	}
+    if (! myfonts[ fs ]) {
+        return;
+    }
 
-	while( Font_get_line( fs, line_width_in_pixel, &sst ) )
-	{
-		Font_put_line_size( fs, x, y, sst.start, sst.end );
+    while (Font_get_line (fs, line_width_in_pixel, &sst)) {
+        Font_put_line_size (fs, x, y, sst.start, sst.end);
 
-		if( *sst.end != '\0' && *sst.end == ' ' )
-		{
-			sst.start = sst.end;
-			++sst.start;
-			sst.end = sst.start;
-		}
-		else if( *sst.end != '\0' && *sst.end == '\n' )
-		{
-			while( *sst.end == '\n' )
-			{
-				++sst.end;
-				y += Font_GetSize( fs ) + space_between_lines;
-			}
+        if (*sst.end != '\0' && *sst.end == ' ') {
+            sst.start = sst.end;
+            ++sst.start;
+            sst.end = sst.start;
+        } else if (*sst.end != '\0' && *sst.end == '\n') {
+            while (*sst.end == '\n') {
+                ++sst.end;
+                y += Font_GetSize (fs) + space_between_lines;
+            }
 
-			sst.start = sst.end;
-		}
-		else
-		{
-			sst.start = sst.end;
-		}
+            sst.start = sst.end;
+        } else {
+            sst.start = sst.end;
+        }
 
-		y += Font_GetSize( fs ) + space_between_lines;
-	}
+        y += Font_GetSize (fs) + space_between_lines;
+    }
 
 }
 

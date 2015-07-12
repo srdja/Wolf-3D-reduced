@@ -1,35 +1,35 @@
 /*
 
-	Copyright (C) 2004-2005 Michael Liebscher <johnnycanuck@users.sourceforge.net>
-	Copyright (C) 1997-2001 Id Software, Inc.
+    Copyright (C) 2004-2005 Michael Liebscher <johnnycanuck@users.sourceforge.net>
+    Copyright (C) 1997-2001 Id Software, Inc.
 
-	This program is free software; you can redistribute it and/or
-	modify it under the terms of the GNU General Public License
-	as published by the Free Software Foundation; either version 2
-	of the License, or (at your option) any later version.
+    This program is free software; you can redistribute it and/or
+    modify it under the terms of the GNU General Public License
+    as published by the Free Software Foundation; either version 2
+    of the License, or (at your option) any later version.
 
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-	See the GNU General Public License for more details.
+    See the GNU General Public License for more details.
 
-	You should have received a copy of the GNU General Public License
-	along with this program; if not, write to the Free Software
-	Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
 
 
 /*
- *	unix_main.c: UNIX interface to application.
+ *  unix_main.c: UNIX interface to application.
  *
- *	Author:	Michael Liebscher <johnnycanuck@users.sourceforge.net>
+ *  Author: Michael Liebscher <johnnycanuck@users.sourceforge.net>
  *
- *	Acknowledgement:
- *	This code was derived from Quake II, and was originally
- *	written by Id Software, Inc.
+ *  Acknowledgement:
+ *  This code was derived from Quake II, and was originally
+ *  written by Id Software, Inc.
  *
  */
 
@@ -45,7 +45,7 @@
 #include "../env/memory.h"
 #include "../env/timer.h"
 
-W32	sys_frame_time;
+W32 sys_frame_time;
 
 uid_t saved_euid;
 _boolean stdin_active = true;
@@ -54,7 +54,7 @@ _boolean stdin_active = true;
 cvar_t *nostdout;
 
 
-extern void KBD_Update( void );
+extern void KBD_Update (void);
 
 
 
@@ -66,33 +66,33 @@ extern void KBD_Update( void );
  * \return Returns strlen( source ) + MIN( nMaxLength, strlen( initial dest ) ). If retval >= nMaxLength, truncation occurred.
  * \note At most \c nMaxLength-1 characters will be copied. Always NUL-terminates (unless \c nMaxLength <= strlen( dest) ).
  */
-void Sys_Error( const char *format, ... )
+void Sys_Error (const char *format, ...)
 {
     va_list     argptr;
     char        string[ 1024 ];
 
 // change stdin to non blocking
-    fcntl( 0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY );
+    fcntl (0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
 
 
-	Client_Shutdown();
+    Client_Shutdown();
 
-    va_start( argptr, format );
-    (void)vsnprintf( string, sizeof( string ), format, argptr );
-    va_end( argptr );
+    va_start (argptr, format);
+    (void)vsnprintf (string, sizeof (string), format, argptr);
+    va_end (argptr);
 
-	fprintf( stderr, "Error: %s\n", string );
+    fprintf (stderr, "Error: %s\n", string);
 
-	_exit( 1 );
+    _exit (1);
 
 }
 
 void Sys_Quit (void)
 {
-	Client_Shutdown();
+    Client_Shutdown();
 
-    fcntl( 0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY );
-	_exit( 0 );
+    fcntl (0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
+    _exit (0);
 }
 
 /*
@@ -108,8 +108,8 @@ void Sys_Quit (void)
 */
 void Sys_SendKeyEvents (void)
 {
-	// grab frame time
-	sys_frame_time = Sys_Milliseconds();
+    // grab frame time
+    sys_frame_time = Sys_Milliseconds();
 }
 
 /*
@@ -124,63 +124,62 @@ void Sys_SendKeyEvents (void)
         Caller is responsible for freeing data.
 -----------------------------------------------------------------------------
 */
-char *Sys_GetClipboardData( void )
+char *Sys_GetClipboardData (void)
 {
-	return NULL;
+    return NULL;
 }
 
 
 /*
 -----------------------------------------------------------------------------
- Function: main	-Application entry point.
+ Function: main -Application entry point.
 
  Parameters:
 
  Returns: Nothing.
 
  Notes: This is the application entry point.
- 			1.  Check for mulitple instances.
-			2.  Init Sub-systems.
-			3.  Enter application loop.
+            1.  Check for mulitple instances.
+            2.  Init Sub-systems.
+            3.  Enter application loop.
 -----------------------------------------------------------------------------
 */
-int main( int argc, char *argv[] )
+int main (int argc, char *argv[])
 {
-	int 	time, oldtime, newtime;
+    int     time, oldtime, newtime;
 
-	// go back to real user for config loads
-	saved_euid = geteuid();
-	seteuid( getuid() );
+    // go back to real user for config loads
+    saved_euid = geteuid();
+    seteuid (getuid());
 
-	common_Init( argc, argv );
+    common_Init (argc, argv);
 
 
-	fcntl( 0, F_SETFL, fcntl (0, F_GETFL, 0) | FNDELAY );
+    fcntl (0, F_SETFL, fcntl (0, F_GETFL, 0) | FNDELAY);
 
-	nostdout = Cvar_Get( "nostdout", "0", CVAR_INIT );
-	if( ! nostdout->value )
-	{
-		fcntl( 0, F_SETFL, fcntl (0, F_GETFL, 0) | FNDELAY );
-	}
+    nostdout = Cvar_Get ("nostdout", "0", CVAR_INIT);
+
+    if (! nostdout->value) {
+        fcntl (0, F_SETFL, fcntl (0, F_GETFL, 0) | FNDELAY);
+    }
 
     oldtime = Sys_Milliseconds();
-    while( 1 )
-    {
-		KBD_Update();
 
-		// find time spent rendering last frame
-		do
-		{
-			newtime = Sys_Milliseconds();
-			time = newtime - oldtime;
+    while (1) {
+        KBD_Update();
 
-		} while( time < 1 );
+        // find time spent rendering last frame
+        do {
+            newtime = Sys_Milliseconds();
+            time = newtime - oldtime;
 
-        common_Frame( time );
-		oldtime = newtime;
+        } while (time < 1);
+
+        common_Frame (time);
+        oldtime = newtime;
     }
 
 // Should never get here!
-	return 0;
+    return 0;
 }
 
