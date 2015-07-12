@@ -31,7 +31,6 @@
 
 #include "wolf_local.h"
 
-#include "../env/client.h"
 #include "../env/renderer.h"
 
 /////////////////////////////////////////////////////////////////////

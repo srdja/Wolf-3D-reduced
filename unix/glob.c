@@ -19,8 +19,6 @@
 
 */
 
-#include <stdio.h>
-
 #include "glob.h"
 
 /* Like glob_match, but match PATTERN against any final segment of TEXT.  */

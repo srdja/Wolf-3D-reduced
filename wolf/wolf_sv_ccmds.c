@@ -32,7 +32,6 @@
 #include "../env/cmd.h"
 #include "../env/common.h"
 #include "../env/client.h"
-#include "../env/filesystem.h"
 #include "../env/com_string.h"
 
 
@@ -55,7 +54,7 @@ PRIVATE void SV_GameMap_f (void)
 //  FS_CreateDirectory( va( "%s/save/current/", FS_Gamedir() ) );
 
     // check for clearing the current savegame
-    map = Cmd_Argv (1);
+    Cmd_Argv (1);
 
     // start up the next map
     com_strlcpy (r_mapname, Cmd_Argv (1), sizeof (r_mapname));

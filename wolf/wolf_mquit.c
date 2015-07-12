@@ -36,7 +36,6 @@
 #include "wolf_local.h"
 
 #include "../env/client.h"
-#include "../env/com_math.h"
 #include "../env/keycodes.h"
 
 

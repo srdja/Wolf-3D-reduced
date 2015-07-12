@@ -29,7 +29,6 @@
  */
 
 #include <sys/types.h>
-#include <sys/sysctl.h>
 #include <string.h>
 
 #if __linux__
@@ -40,7 +39,6 @@
 
 
 #include "../env/memory.h"
-#include "../env/platform.h"
 #include "../env/common.h"
 
 // Calculate in mebibytes

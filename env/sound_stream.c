@@ -32,7 +32,6 @@
 
 
 #include "common.h"
-#include "client.h"
 #include "com_string.h"
 
 #include "sound_local.h"

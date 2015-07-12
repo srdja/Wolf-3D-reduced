@@ -33,13 +33,10 @@
 
 #include "wolf_level.h"
 #include "wolf_local.h"
-#include "wolf_sprites.h"
-#include "wolf_powerups.h"
 #include "wolf_renderer.h"
 
 #include "../env/com_string.h"
 #include "../env/texture_manager.h"
-#include "../env/memory.h"
 
 #include "wolf_actors.h"
 

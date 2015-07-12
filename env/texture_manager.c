@@ -42,9 +42,6 @@
 #include "tga.h"
 #include "com_string.h"
 #include "common.h"
-#include "platform.h"
-#include "memory.h"
-#include "com_math.h"
 #include "wolf_local.h"
 
 PRIVATE texture_t   _texSprites[ 768 ];  // Holds  sprites

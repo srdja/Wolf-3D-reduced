@@ -29,8 +29,6 @@
 
 #include <string.h>
 
-#include "../app_def.h"
-
 #include "common.h"
 #include "com_string.h"
 #include "wav.h"

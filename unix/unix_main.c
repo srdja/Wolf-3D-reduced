@@ -36,13 +36,10 @@
 #include <unistd.h>
 #include <stdarg.h>
 #include <stdio.h>
-#include <dlfcn.h>
-#include <unistd.h>
 #include <fcntl.h>
 
 #include "../env/platform.h"
 #include "../env/common.h"
-#include "../env/memory.h"
 #include "../env/timer.h"
 
 W32 sys_frame_time;

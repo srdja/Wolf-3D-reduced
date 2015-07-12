@@ -18,13 +18,9 @@
 
 */
 
-#include <stdio.h>
-#include <stdarg.h>
-
 
 #include "platform.h"
 #include "common_utils.h"
-#include "cmd.h"
 
 
 /*

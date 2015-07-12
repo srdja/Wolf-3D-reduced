@@ -26,7 +26,6 @@
  */
 
 #include <math.h>
-#include <string.h>
 
 
 #include "com_math.h"

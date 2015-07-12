@@ -32,19 +32,12 @@
  *
  */
 
-#include <assert.h>
-#include <sys/stat.h>
 #include <unistd.h>
-#include <errno.h>
 
 #include "../env/client.h"
-#include "../env/keys.h"
 #include "../env/console.h"
 #include "../env/renderer.h"
 #include "../env/video.h"
-#include "../env/common.h"
-#include "../env/common_utils.h"
-#include "../env/input.h"
 #include "../env/sound.h"
 
 

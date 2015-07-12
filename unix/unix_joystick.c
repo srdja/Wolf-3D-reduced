@@ -20,8 +20,6 @@
 
 */
 
-#include "../env/keys.h"
-#include "../env/keycodes.h"
 #include "../env/client.h"
 
 cvar_t  *in_joystick;

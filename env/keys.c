@@ -25,16 +25,13 @@
  */
 
 #include <stdlib.h>
-#include <ctype.h>
 #include <string.h>
 
 #include "keys.h"
 #include "keycodes.h"
 #include "client.h"
 
-#include "memory.h"
 #include "com_string.h"
-#include "zmem.h"
 #include "console.h"
 
 

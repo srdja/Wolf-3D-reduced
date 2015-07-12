@@ -27,7 +27,6 @@
  * \note This code was derived from NewWolf, and was originally written by DarkOne the Hacker.
  */
 
-#include <assert.h>
 #include <stdio.h>
 #include <string.h>
 

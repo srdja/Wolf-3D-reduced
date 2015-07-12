@@ -39,7 +39,6 @@
 #include <string.h>
 
 #include "zippak.h"
-#include "platform.h"
 #include "common.h"
 #include "com_string.h"
 

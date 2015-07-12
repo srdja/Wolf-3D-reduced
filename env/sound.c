@@ -33,10 +33,7 @@
 #include "client.h"
 #include "com_string.h"
 
-#include "com_math.h"
-
 #include "sound.h"
-#include "sound_local.h"
 
 
 #define MAX_PLAYSOUNDS      128

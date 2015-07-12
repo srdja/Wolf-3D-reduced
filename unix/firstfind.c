@@ -4,8 +4,6 @@
 
 */
 
-#include <glob.h>
-
 #include <stdio.h>
 
 #include <string.h>
@@ -14,11 +12,6 @@
 
 #include "findfirst.h"
 #include "../env/common.h"
-#include "../env/com_string.h"
-#include "../env/platform.h"
-#include "../env/common_utils.h"
-
-#include "../env/filesystem.h"
 
 typedef struct _findhandle_t
 

@@ -1,19 +1,10 @@
 #include <sys/types.h>
-#include <sys/stat.h>
-#include <errno.h>
-#include <stdio.h>
 #include <dirent.h>
-#include <unistd.h>
-#include <string.h>
 
 
 #include "glob.h"
 #include "../env/common.h"
 #include "../env/com_string.h"
-#include "../env/platform.h"
-#include "../env/common_utils.h"
-
-#include "../env/filesystem.h"
 
 
 PRIVATE char    findbase[ 128 ];

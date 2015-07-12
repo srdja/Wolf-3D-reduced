@@ -33,22 +33,12 @@
  */
 
 #include <X11/Xlib.h>
-#include <X11/Xutil.h>
-#include <X11/keysym.h>
-#include <X11/Xresource.h>
-
-#include <X11/keysym.h>
-#include <X11/cursorfont.h>
 
 #include <X11/extensions/Xxf86dga.h>
-#include <X11/extensions/xf86vmode.h>
 
 #include "../env/common_utils.h"
 #include "../env/video.h"
-#include "../env/com_string.h"
 #include "../env/client.h"
-#include "../env/keys.h"
-#include "../env/keycodes.h"
 
 extern Display *display;
 extern Window mainwin;

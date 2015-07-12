@@ -34,8 +34,6 @@
 
 //#include "vid.h"
 
-#include "texture_manager.h"
-#include "font_manager.h"
 #include "common.h"
 
 texture_t       *draw_chars;

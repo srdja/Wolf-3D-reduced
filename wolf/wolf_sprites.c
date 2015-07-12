@@ -31,7 +31,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <search.h>
 #include <string.h>
 
 #include "wolf_local.h"
@@ -39,7 +38,6 @@
 #include "wolf_math.h"
 #include "wolf_raycast.h"
 #include "wolf_player.h"
-#include "wolf_level.h"
 
 
 /**

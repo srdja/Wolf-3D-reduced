@@ -31,8 +31,6 @@
 #include "filesystem.h"
 #include "common.h"
 
-#include "platform.h"
-#include "common_utils.h"
 #include "com_string.h"
 
 

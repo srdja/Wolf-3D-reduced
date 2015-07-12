@@ -37,7 +37,6 @@
 #include "wolf_local.h"
 #include "wolf_player.h"
 
-#include "../env/client.h"
 #include "../env/com_string.h"
 #include "../env/renderer.h"
 #include "../env/sound.h"

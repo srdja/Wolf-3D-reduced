@@ -249,7 +249,7 @@ void Cmd_Exec_f (void)
 
     f = (char *)Z_Malloc (len);
 
-    len = FS_ReadFile (f, 1, len, scriptFileHandle);
+    FS_ReadFile (f, 1, len, scriptFileHandle);
 
     if (!f) {
         Com_Printf ("couldn't exec %s\n", Cmd_Argv (1));
@@ -585,24 +585,6 @@ void Cmd_ExecuteString (const char *text)
         return;
     }
 
-    // check client game commands
-    //if ( com_cl_running && com_cl_running->integer && CL_GameCommand() ) {
-    //  return;
-    //}
-
-    // check server game commands
-    //if ( com_sv_running && com_sv_running->integer && SV_GameCommand() ) {
-    //  return;
-    //}
-
-    // check ui commands
-    //if ( com_cl_running && com_cl_running->integer && UI_GameCommand() ) {
-    //  return;
-    //}
-
-    // send it as a server command if we are connected
-    // this will usually result in a chat message
-    //CL_ForwardCommandToServer ( text );
 }
 
 /*

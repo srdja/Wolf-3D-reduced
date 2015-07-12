@@ -37,11 +37,7 @@
 #include "wolf_actors.h"
 #include "wolf_act_stat.h"
 #include "wolf_player.h"
-#include "wolf_level.h"
-#include "wolf_sprites.h"
 #include "wolf_local.h"
-#include "../env/com_math.h"
-#include "../env/angle.h"
 
 entity_t Guards[ MAX_GUARDS + 1 ], *New;
 W16 NumGuards = 0;

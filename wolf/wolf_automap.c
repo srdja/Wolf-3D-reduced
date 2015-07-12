@@ -34,7 +34,6 @@
 #include "wolf_local.h"
 #include "wolf_level.h"
 #include "wolf_player.h"
-#include "com_string.h"
 
 #include "opengl_local.h"
 

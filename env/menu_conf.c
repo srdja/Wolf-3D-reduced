@@ -26,10 +26,8 @@
 #include "keycodes.h"
 #include "com_string.h"
 #include "timer.h"
-#include "font_manager.h"
 #include "renderer.h"
 #include "video.h"
-#include "memory.h"
 
 PRIVATE void Menu_DrawStatusBar (const char *string);
 PRIVATE void Menulist_DoEnter (menulist_s *l);

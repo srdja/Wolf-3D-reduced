@@ -33,7 +33,6 @@
 #include "num_type.h"
 #include "console.h"
 #include "client.h"
-#include "common.h"
 #include "font_manager.h"
 #include "com_string.h"
 #include "video.h"

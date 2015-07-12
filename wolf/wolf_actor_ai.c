@@ -30,21 +30,13 @@
  *       Portion of this code was derived from Wolfenstein 3-D, and was originally written by Id Software, Inc.
  */
 
-#include <assert.h>
-#include <stdio.h>
-
 #include "wolf_menu.h"
 
 #include "wolf_actor_ai.h"
-#include "wolf_actors.h"
 #include "wolf_player.h"
-#include "wolf_powerups.h"
-#include "wolf_sprites.h"
 #include "wolf_local.h"
-#include "wolf_level.h"
 #include "wolf_renderer.h"
 
-#include "../env/com_math.h"
 #include "../env/sound.h"
 #include "../env/client.h"
 #include "../env/opengl_local.h"

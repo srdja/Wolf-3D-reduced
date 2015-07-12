@@ -42,11 +42,9 @@
  *
  */
 
-#include <assert.h>
 #include <string.h>
 
 #include "wolf_math.h"
-#include "../env/angle.h"
 #include "../env/video.h"
 #include "../env/opengl_local.h"
 #include "../env/com_string.h"
@@ -55,7 +53,6 @@
 
 #include "wolf_level.h"
 #include "wolf_player.h"
-#include "wolf_sprites.h"
 #include "wolf_local.h"
 #include "wolf_raycast.h"
 

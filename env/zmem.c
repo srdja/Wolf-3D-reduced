@@ -32,11 +32,6 @@
 #include <string.h>
 
 #include "common.h"
-#include "platform.h"
-#include "common_utils.h"
-#include "memory.h"
-
-#include "zmem.h"
 
 
 

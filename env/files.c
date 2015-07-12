@@ -50,16 +50,10 @@
 */
 
 #include <string.h>
-#include <zlib.h>
 
 #include "common.h"
 #include "com_string.h"
-#include "zmem.h"
-#include "memory.h"
-#include "filesystem.h"
 #include "filelink.h"
-
-#include "zippak.h"
 
 PRIVATE char fs_gamedir[ MAX_OSPATH ];
 

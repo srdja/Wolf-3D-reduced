@@ -28,14 +28,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  * \note This code was derived from Quake III Arena, and was originally written by Id Software, Inc.
  */
 
-#include <math.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "common.h"
-#include "common_utils.h"
-#include "filesystem.h"
-#include "zmem.h"
 #include "com_string.h"
 
 #include "console.h"

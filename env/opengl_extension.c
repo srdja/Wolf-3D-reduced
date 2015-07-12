@@ -36,8 +36,6 @@
 #include <string.h>
 
 #include "opengl_local.h"
-#include "myopengl_extension.h"
-#include "common_utils.h"
 #include "common.h"
 
 

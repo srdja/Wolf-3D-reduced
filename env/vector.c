@@ -34,8 +34,6 @@
 #include <math.h>
 
 #include "com_math.h"
-#include "platform.h"
-#include "common.h"
 
 
 vec3_t vec3_origin = { 0, 0, 0 };
@@ -392,7 +390,7 @@ INLINECALL vec_t vectorLength (const vec3_t v)
         hand rule picks the one out of two possible perpendicular directions.
 
         Computing Cross Product from Column Matrices:
-           u × v  = ( uj vk - uk vj , uk vi - ui vk , ui vj - uj vi )T
+           u ï¿½ v  = ( uj vk - uk vj , uk vi - ui vk , ui vj - uj vi )T
 -----------------------------------------------------------------------------
 */
 PUBLIC void vectorCrossProduct (const vec3_t v1, const vec3_t v2, vec3_t cross)
@@ -416,7 +414,7 @@ PUBLIC void vectorCrossProduct (const vec3_t v1, const vec3_t v2, vec3_t cross)
         number as its output. Sometimes the dot product is called the inner
         product or the scalar product.
         The dot product is:
-            a · b = a1b1 + a2b2 + a3b3
+            a ï¿½ b = a1b1 + a2b2 + a3b3
 -----------------------------------------------------------------------------
 */
 PUBLIC vec_t _vectorDotProduct (const vec3_t v1, const vec3_t v2)

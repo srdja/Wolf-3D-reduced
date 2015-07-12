@@ -27,8 +27,6 @@
  * \note Portion of this code was derived from Quake II, and was originally written by Id Software, Inc.
  */
 
-#include <assert.h>
-#include <ctype.h>
 #include <string.h>
 #include <stdlib.h>
 
@@ -36,20 +34,10 @@
 
 #include "wolf_player.h"
 #include "wolf_local.h"
-#include "wolf_renderer.h"
 
 
-
-#include "../env/font_manager.h"
 #include "../env/client.h"
-#include "../env/console.h"
-#include "../env/menu_conf.h"
-#include "../env/keys.h"
 #include "../env/com_string.h"
-#include "../env/timer.h"
-#include "../env/filesystem.h"
-#include "../env/memory.h"
-#include "../env/video.h"
 #include "../env/renderer.h"
 #include "../env/sound.h"
 #include "../env/keycodes.h"

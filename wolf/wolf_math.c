@@ -35,8 +35,6 @@
 #include <stdlib.h>
 
 #include "wolf_math.h"
-#include "../env/com_math.h"
-#include "../env/common_utils.h"
 
 
 #define XRES            640

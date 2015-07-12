@@ -46,11 +46,7 @@
 #include <memory.h>
 #include <string.h>
 
-#include "../env/common_utils.h"
 #include "wolf_level.h"
-
-#include <assert.h>
-#include "../env/common.h"
 
 
 PUBLIC W8           areaconnect[ NUMAREAS ][ NUMAREAS ];    /* Is this area mated with another? */

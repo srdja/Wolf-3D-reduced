@@ -146,7 +146,7 @@ int main (int argc, char **argv)
 
     if (status) exit (EXIT_FAILURE);
 
-    file = store_files (&head, &first, &prev, &globbuf);
+    store_files (&head, &first, &prev, &globbuf);
     globfree (&globbuf);
 
     do {
@@ -188,8 +188,8 @@ int main (int argc, char **argv)
                     strcpy (dirname, file->buffer);
                     strcat (dirname, path_add);
                     memset (&globbuf, 0, sizeof (glob_t));
-                    status = glob (dirname, 0, NULL, &globbuf);
-                    f = store_files (NULL, NULL, &prev, &globbuf);
+                    glob (dirname, 0, NULL, &globbuf);
+                    store_files (NULL, NULL, &prev, &globbuf);
                     globfree (&globbuf);
                     break;
                 }

@@ -29,18 +29,10 @@
 
 #include "num_type.h"
 #include "opengl_local.h"
-#include "opengl_binding.h"
 #include "video.h"
 #include "com_string.h"
 #include "tga.h"
-#include "font_manager.h"
 #include "common.h"
-#include "filesystem.h"
-#include "w3d_opengl.h"
-
-#include "../app_def.h"
-
-
 
 
 float       gldepthmin, gldepthmax;

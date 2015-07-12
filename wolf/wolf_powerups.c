@@ -36,9 +36,7 @@
 
 #include "wolf_powerups.h"
 #include "wolf_player.h"
-#include "wolf_sprites.h"
 #include "wolf_local.h"
-#include "wolf_renderer.h"
 
 #include "../env/com_string.h"
 #include "../env/sound.h"

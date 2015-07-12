@@ -34,7 +34,6 @@
 
 #include "keys.h"
 #include "input.h"
-#include "client.h"
 #include "../wolf/wolf_math.h"
 
 cvar_t  *cl_nodelta;

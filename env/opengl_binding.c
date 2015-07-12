@@ -57,7 +57,6 @@ void *OpenGLLib;
 
 
 #include "opengl_local.h"
-#include "w3d_opengl.h"
 
 
 #include "common.h"

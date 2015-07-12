@@ -31,20 +31,12 @@
  *
  */
 
-#include <string.h>
-
 #include "keycodes.h"
 #include "wolf_menu.h"
 
 #include "wolf_local.h"
 
 #include "../env/renderer.h"
-#include "../env/video.h"
-
-#include "../env/client.h"
-#include "../env/menu_conf.h"
-
-#include "../env/font_manager.h"
 
 
 extern cvar_t *r_ref;

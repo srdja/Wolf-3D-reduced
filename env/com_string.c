@@ -40,7 +40,6 @@
 #include "cmd.h"
 #include "com_string.h"
 #include "zmem.h"
-#include "platform.h"
 #include "common_utils.h"
 
 
@@ -195,7 +194,7 @@ PUBLIC void com_snprintf (char *dest, size_t size, const char *format, ...)
     int writtenLength;
 
     va_start (argptr, format);
-    writtenLength = vsnprintf (bigbuffer, sizeof (bigbuffer), format, argptr);
+    vsnprintf (bigbuffer, sizeof (bigbuffer), format, argptr);
     va_end (argptr);
 
     bigbuffer[ sizeof (bigbuffer) - 1 ] = '\0';

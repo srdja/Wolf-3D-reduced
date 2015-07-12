@@ -30,17 +30,14 @@
  */
 
 
-#include <assert.h>
 #include <stdio.h>
 #include <string.h>
 
 
 #include "wolf_player.h"
-#include "wolf_powerups.h"
 #include "wolf_local.h"
 #include "wolf_renderer.h"
 #include "wolf_bj.h"
-#include "../env/com_math.h"
 #include "../env/client.h"
 #include "../env/com_string.h"
 
@@ -130,7 +127,7 @@ PRIVATE _boolean PL_Use (player_t *self, LevelData_t *lvl)
         switch (dir) {
         case dir4_east:
         case dir4_west:
-            newtex = lvl->wall_tex_x[ x ][ y ] += 2;
+            lvl->wall_tex_x[ x ][ y ] += 2;
             break;
 
         case dir4_north:

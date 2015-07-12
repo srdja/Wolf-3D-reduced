@@ -31,16 +31,11 @@
  */
 
 #include <assert.h>
-#include <stdio.h>
 
 #include "wolf_actors.h"
 #include "wolf_player.h"
 #include "wolf_actor_ai.h"
-#include "wolf_sprites.h"
 #include "wolf_local.h"
-#include "../env/com_math.h"
-#include "../env/angle.h"
-#include "../env/common.h"
 
 #include "../env/sound.h"
 

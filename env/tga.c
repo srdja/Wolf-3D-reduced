@@ -34,9 +34,6 @@
 #include "tga.h"
 #include "texture_manager.h"
 #include "common.h"
-#include "filesystem.h"
-#include "memory.h"
-
 
 
 #define TGA_HEADER_SIZE     18

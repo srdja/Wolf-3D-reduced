@@ -33,10 +33,7 @@
 
 #include "opengl_local.h"
 
-#include "memory.h"
 #include "zmem.h"
-#include "platform.h"
-#include "common_utils.h"
 
 
 // ***************************************************************************

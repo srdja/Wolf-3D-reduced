@@ -37,22 +37,11 @@
 #include "common.h"
 #include <setjmp.h>
 #include "console.h"
-#include "client.h"
 #include "com_string.h"
-#include "filesystem.h"
-#include "timer.h"
 #include "system.h"
-#include "renderer.h"
-#include "zmem.h"
 #include "keys.h"
-#include "input.h"
 
 #include "../wolf/wolf_local.h"
-
-#include "../app_def.h"
-
-
-
 
 
 #define MAXPRINTMSG 4096

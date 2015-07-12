@@ -33,15 +33,10 @@
 
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
-#include <X11/keysym.h>
-#include <X11/Xresource.h>
-
-#include <X11/cursorfont.h>
 
 #include "../env/timer.h"
 #include "../env/video.h"
 #include "../env/com_string.h"
-#include "../env/platform.h"
 #include "../env/keys.h"
 #include "../env/keycodes.h"
 

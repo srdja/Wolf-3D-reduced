@@ -25,7 +25,6 @@
  * \date 2004-2012
  */
 
-#include <assert.h>
 #include <string.h>
 
 #include "../env/client.h"

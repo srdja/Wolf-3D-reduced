@@ -38,14 +38,12 @@
 
 #include "wolf_local.h"
 
-#include "../env/cvar.h"
 #include "../env/client.h"
 #include "../env/com_string.h"
 #include "../env/timer.h"
 #include "../env/console.h"
 #include "../env/renderer.h"
 #include "../env/keycodes.h"
-#include "../env/cmd.h"
 
 
 
