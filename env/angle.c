@@ -26,9 +26,7 @@
  * @date 2005-2013
  */
 
-
 #include "com_math.h"
-#include "platform.h"
 
 
 /**

@@ -29,7 +29,6 @@
  */
 
 #include <stdio.h>
-#include <stdlib.h>
 
 #include "client.h"
 #include "console.h"
@@ -37,47 +36,10 @@
 #include "video.h"
 #include "timer.h"
 #include "input.h"
-#include "system.h"
 #include "com_string.h"
 #include "sound.h"
-#include "../app_def.h"
 
 cvar_t  *freelook;
-
-cvar_t  *adr0;
-cvar_t  *adr1;
-cvar_t  *adr2;
-cvar_t  *adr3;
-cvar_t  *adr4;
-cvar_t  *adr5;
-cvar_t  *adr6;
-cvar_t  *adr7;
-cvar_t  *adr8;
-
-
-cvar_t  *rcon_client_password;
-cvar_t  *rcon_address;
-
-cvar_t  *cl_noskins;
-cvar_t  *cl_autoskins;
-cvar_t  *cl_footsteps;
-cvar_t  *cl_timeout;
-cvar_t  *cl_predict;
-//cvar_t    *cl_minfps;
-cvar_t  *cl_maxfps;
-cvar_t  *cl_gun;
-
-cvar_t  *cl_add_particles;
-cvar_t  *cl_add_lights;
-cvar_t  *cl_add_entities;
-cvar_t  *cl_add_blend;
-
-cvar_t  *cl_shownet;
-cvar_t  *cl_showmiss;
-cvar_t  *cl_showclamp;
-
-cvar_t  *cl_paused;
-cvar_t  *cl_timedemo;
 
 cvar_t  *lookspring;
 cvar_t  *lookstrafe;
@@ -88,36 +50,10 @@ cvar_t  *m_yaw;
 cvar_t  *m_forward;
 cvar_t  *m_side;
 
-cvar_t  *cl_lightlevel;
 
-//
-// userinfo
-//
-cvar_t  *info_password;
-cvar_t  *info_spectator;
 cvar_t  *name;
-cvar_t  *skin;
-cvar_t  *rate;
-cvar_t  *fov;
-cvar_t  *msg;
-cvar_t  *hand;
-cvar_t  *gender;
-cvar_t  *gender_auto;
-
-cvar_t  *cl_vwep;
-
-cvar_t  *cl_drawfps;
-
 
 client_state_t  ClientState;
-
-
-
-cvar_t *cl_name, *cl_color;
-
-
-
-
 client_static_t ClientStatic;
 
 
@@ -147,7 +83,6 @@ PRIVATE void Client_InitLocal (void)
 
     Client_InitInput();
 
-    cl_upspeed      = Cvar_Get ("cl_upspeed", "200", CVAR_INIT);
     cl_forwardspeed = Cvar_Get ("cl_forwardspeed", "4000", CVAR_INIT);
     cl_sidespeed    = Cvar_Get ("cl_sidespeed", "4000", CVAR_INIT);
     cl_yawspeed     = Cvar_Get ("cl_yawspeed", "100", CVAR_INIT);
@@ -165,15 +100,10 @@ PRIVATE void Client_InitLocal (void)
     m_side  = Cvar_Get ("m_side", "1", CVAR_INIT);
     m_forward = Cvar_Get ("m_forward", "1", CVAR_INIT);
 
-    cl_name = Cvar_Get ("name", "player", CVAR_ARCHIVE);
-
-
 //
 // register our commands
 //
     Cmd_AddCommand ("quit", Client_Quit_f);
-
-
 }
 
 /**
@@ -182,11 +112,8 @@ PRIVATE void Client_InitLocal (void)
  */
 PUBLIC void Client_Init (void)
 {
-
     if (dedicated->value)
         return;     // nothing running on the client
-
-    // all archived variables will now be loaded
 
     Con_Init();
 
@@ -196,10 +123,8 @@ PUBLIC void Client_Init (void)
     Menu_Init();
 
     Client_Screen_Init();
-
     Client_InitLocal();
     IN_Init();
-
 }
 
 /**
@@ -241,11 +166,9 @@ PUBLIC void Client_Shutdown (void)
         Com_DPrintf ("recursive shutdown\n");
         return;
     }
-
     isdown = true;
 
     Client_WriteConfiguration();
-
 
     Sound_Shutdown();
     IN_Shutdown();

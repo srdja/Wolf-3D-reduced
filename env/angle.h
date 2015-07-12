@@ -28,21 +28,13 @@
 #ifndef __ANGLE_H__
 #define __ANGLE_H__
 
-
 #define DEG2RAD( a ) ( (a) * 0.01745329251994329576f ) // a * M_PI / 180.0f
 #define RAD2DEG( a ) ( (int)((a) * 57.2957795130823209071f) ) // a * 180.0f / M_PI 
 
 #define ANGLE2SHORT( x )    ( (int)((x) * 65536 / 360) & 65535 )
-#define SHORT2ANGLE( x )    ( (x) * (360.0 / 65536) )
-
-
 
 extern float angle_diff (float angle1, float angle2);
 extern float angle_wise (float angle1, float angle2);
-extern float angle_interpolate (float from, float to, float fraction);
 extern float angle_normalize (float angle);
-extern float angle_lerp (float from, float to, float frac);
-
-
 
 #endif /* __ANGLE_H__ */

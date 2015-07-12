@@ -30,10 +30,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include <string.h>
 
-
 #include "common.h"
 #include "com_string.h"
-
 
 #define MAX_CMD_BUFFER  16384
 #define MAX_CMD_LINE    1024
@@ -203,8 +201,6 @@ void Cbuf_Execute (void)
         if (i >= (MAX_CMD_LINE - 1)) {
             i = MAX_CMD_LINE - 1;
         }
-
-        //Com_Memcpy (line, text, i);
         memcpy (line, text, i);
         line[i] = 0;
 
@@ -219,9 +215,6 @@ void Cbuf_Execute (void)
             cmd_text.cursize -= i;
             memmove (text, text + i, cmd_text.cursize);
         }
-
-// execute the command line
-
         Cmd_ExecuteString (line);
     }
 }
@@ -343,99 +336,6 @@ char *Cmd_Argv (int arg)
     }
 
     return cmd_argv[arg];
-}
-
-/*
-============
-Cmd_ArgvBuffer
-
-The interpreted versions use this because
-they can't have pointers returned to them
-============
-*/
-void Cmd_ArgvBuffer (int arg, char *buffer, int bufferLength)
-{
-    com_strlcpy (buffer, Cmd_Argv (arg), bufferLength);
-}
-
-/*
-============
-Cmd_Args
-
-Returns a single string containing argv(1) to argv(argc()-1)
-============
-*/
-char *Cmd_Args (void)
-{
-    static char cmd_args[MAX_STRING_CHARS];
-    int     i;
-
-    cmd_args[0] = 0;
-
-    for (i = 1 ; i < cmd_argc ; i++) {
-        com_strlcat (cmd_args, cmd_argv[i], sizeof (cmd_args));
-
-        if (i != cmd_argc - 1) {
-            com_strlcat (cmd_args, " ", sizeof (cmd_args));
-        }
-    }
-
-    return cmd_args;
-}
-
-/*
-============
-Cmd_Args
-
-Returns a single string containing argv(arg) to argv(argc()-1)
-============
-*/
-char *Cmd_ArgsFrom (int arg)
-{
-    static char cmd_args[BIG_INFO_STRING];
-    int     i;
-
-    cmd_args[0] = 0;
-
-    if (arg < 0)
-        arg = 0;
-
-    for (i = arg ; i < cmd_argc ; i++) {
-        com_strlcat (cmd_args, cmd_argv[i], sizeof (cmd_args));
-
-        if (i != cmd_argc - 1) {
-            com_strlcat (cmd_args, " ", sizeof (cmd_args));
-        }
-    }
-
-    return cmd_args;
-}
-
-/*
-============
-Cmd_ArgsBuffer
-
-The interpreted versions use this because
-they can't have pointers returned to them
-============
-*/
-void Cmd_ArgsBuffer (char *buffer, int bufferLength)
-{
-    com_strlcpy (buffer, Cmd_Args(), bufferLength);
-}
-
-/*
-============
-Cmd_Cmd
-
-Retrieve the unmodified command string
-For rcon use when you want to transmit without altering quoting
-https://zerowing.idsoftware.com/bugzilla/show_bug.cgi?id=543
-============
-*/
-char *Cmd_Cmd()
-{
-    return cmd_cmd;
 }
 
 /*

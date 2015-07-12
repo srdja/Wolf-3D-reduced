@@ -352,24 +352,15 @@ PRIVATE float Client_KeyState (kbutton_t *key)
     return val;
 }
 
-
-
-
-//==========================================================================
-
-cvar_t  *cl_upspeed;
 cvar_t  *cl_forwardspeed;
 cvar_t  *cl_sidespeed;
 
 cvar_t  *cl_yawspeed;
 cvar_t  *cl_pitchspeed;
 
-cvar_t  *cl_rotatespeed;
-
 cvar_t  *cl_run;
 
 cvar_t  *cl_anglespeedkey;
-
 
 /**
  * Moves the local angle positions.
@@ -401,8 +392,6 @@ PRIVATE void Client_AdjustAngles (void)
  */
 PRIVATE void Client_BaseMove (usercmd_t *cmd)
 {
-    //ClientState.viewangles[ YAW ] = 0;
-
     Client_AdjustAngles();
 
     memset (cmd, 0, sizeof (usercmd_t));
@@ -435,12 +424,6 @@ PRIVATE void Client_BaseMove (usercmd_t *cmd)
  */
 void Client_ClampPitch (void)
 {
-    //float pitch;
-
-    //pitch = SHORT2ANGLE(cl.frame.playerstate.pmove.delta_angles[PITCH]);
-    //if (pitch > 180)
-    //  pitch -= 360;
-
     if (ClientState.viewangles[PITCH] < DEG2FINE (-360))
         ClientState.viewangles[PITCH] += DEG2FINE (360); // wrapped
 
@@ -463,9 +446,6 @@ PRIVATE void Client_FinishMove (usercmd_t *cmd)
     int     ms;
     int     i;
 
-//
-// figure button bits
-//
     if (in_attack.state & 3) {
         cmd->buttons |= BUTTON_ATTACK;
     }
@@ -490,8 +470,6 @@ PRIVATE void Client_FinishMove (usercmd_t *cmd)
     }
 
     cmd->msec = ms;
-
-    //Client_ClampPitch ();
 
     for (i = 0 ; i < 3 ; ++i) {
         cmd->angles[ i ] = ANGLE2SHORT (ClientState.viewangles[ i ]);
@@ -530,8 +508,6 @@ PRIVATE usercmd_t Client_CreateCmd (void)
 
     old_sys_frame_time = sys_frame_time;
 
-//cmd.impulse = ClientStatic.framecount;
-
     return cmd;
 }
 
@@ -540,7 +516,6 @@ PRIVATE usercmd_t Client_CreateCmd (void)
  */
 void IN_CenterView (void)
 {
-//  ClientState.viewangles[ PITCH ] = -SHORT2ANGLE( ClientState.frame.playerstate.pmove.delta_angles[ PITCH ] );
 }
 
 
@@ -549,8 +524,6 @@ void IN_CenterView (void)
  */
 PUBLIC void Client_InitInput (void)
 {
-//  Cmd_AddCommand( "centerview", IN_CenterView );
-
     Cmd_AddCommand ("+moveup", IN_UpDown);
     Cmd_AddCommand ("-moveup", IN_UpUp);
     Cmd_AddCommand ("+movedown", IN_DownDown);
@@ -599,7 +572,6 @@ PUBLIC void Client_SendCommand (void)
     *cmd = Client_CreateCmd();
 
     ClientState.cmd = *cmd;
-
 
     return;
 }

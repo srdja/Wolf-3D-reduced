@@ -37,17 +37,11 @@
 
 #include "wolf_level.h"
 
-
 void R_DrawWorld (void);
-
 
 float       scr_con_current;    // aproaches scr_conlines at scr_conspeed
 float       scr_conlines;       // 0.0 to 1.0 lines of console to display
-
-_boolean    scr_initialized;    // ready to draw?
-
 cvar_t      *scr_conspeed;
-
 
 
 /**
@@ -76,7 +70,6 @@ PUBLIC void Client_Screen_RunConsole (void)
             scr_con_current = scr_conlines;
         }
     }
-
 }
 
 /**
@@ -110,9 +103,6 @@ PUBLIC void Client_Screen_DrawConsole (void)
             Con_DrawNotify();   // only draw notify in game
         }
     }
-
-
-
 }
 
 /**
@@ -121,8 +111,5 @@ PUBLIC void Client_Screen_DrawConsole (void)
 PUBLIC void Client_Screen_Init (void)
 {
     scr_conspeed = Cvar_Get ("scr_conspeed", "3", CVAR_INIT);
-
-
-    scr_initialized = true;
 }
 
