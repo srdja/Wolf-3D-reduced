@@ -1,19 +1,14 @@
-project ( WOLF3D_REDUX ) 
+project ( WOLF3D_REDUX )
 
 
 # Required cmake version
 cmake_minimum_required ( VERSION 2.8 )
 
-set( EXE_NAME "wolf3dredux" )
-
-# search for libraries
-find_package(ZLIB)
-find_package(OGG)
+set( EXE_NAME "wolf" )
 
 # check subdirectories
 include_directories (env) 
 set( env_SOURCE 
-	 
 	${CMAKE_SOURCE_DIR}/env/angle.c
 	${CMAKE_SOURCE_DIR}/env/platform.c
 	${CMAKE_SOURCE_DIR}/env/client_input.c
@@ -98,8 +93,7 @@ set ( env_HEADER
 	${CMAKE_SOURCE_DIR}/env/zmem.h    
 )
 
-
-include_directories (wolf) 
+include_directories (wolf)
 set( wolf_SOURCE
 	${CMAKE_SOURCE_DIR}/wolf/wolf_actors.c
 	${CMAKE_SOURCE_DIR}/wolf/wolf_actor_ai.c
@@ -108,8 +102,8 @@ set( wolf_SOURCE
 	${CMAKE_SOURCE_DIR}/wolf/wolf_areas.c
 	${CMAKE_SOURCE_DIR}/wolf/wolf_automap.c
 	${CMAKE_SOURCE_DIR}/wolf/wolf_bj.c
+    ${CMAKE_SOURCE_DIR}/wolf/wolf_common.c
 	${CMAKE_SOURCE_DIR}/wolf/wolf_client_main.c
-	${CMAKE_SOURCE_DIR}/wolf/wolf_common.c
 	${CMAKE_SOURCE_DIR}/wolf/wolf_doors.c
 	${CMAKE_SOURCE_DIR}/wolf/wolf_level.c
 	${CMAKE_SOURCE_DIR}/wolf/wolf_main.c
@@ -152,38 +146,11 @@ set ( wolf_HEADER
 )
 
 
-if ( WIN32 )
-	if ( MINGW )
-		set( CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -mwindows -static -s" )
-		set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -g" )
-	endif ()
+set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -g -pg" )
+set ( CMAKE_EXEC_LINKER_FLAGS "${CMAKE_EXEC_LINKER_FLAGS} -pg -s" )
 
-	include_directories (win32)
-	set( platform_SOURCE 
-		${CMAKE_SOURCE_DIR}/win32/win_openglw_imp.c
-		${CMAKE_SOURCE_DIR}/win32/win_vid_sys.c
-		${CMAKE_SOURCE_DIR}/win32/win_file.c
-		${CMAKE_SOURCE_DIR}/win32/win_joystick.c
-		${CMAKE_SOURCE_DIR}/win32/win_keys.c
-		${CMAKE_SOURCE_DIR}/win32/win_main.c
-		${CMAKE_SOURCE_DIR}/win32/win_mouse.c
-		${CMAKE_SOURCE_DIR}/win32/win_system.c
-		${CMAKE_SOURCE_DIR}/win32/win_timer.c
-	)
-	
-	set( platform_HEADER
-		${CMAKE_SOURCE_DIR}/win32/win_def.h
-	)
-
-	set( LIBS ${LIBS} vorbis ogg opengl32 glu32 zlibstatic winmm vorbisfile vorbis )
-
-elseif ( UNIX )
-
-	set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -g -pg" )
-	set ( CMAKE_EXEC_LINKER_FLAGS "${CMAKE_EXEC_LINKER_FLAGS} -pg -s" )
-
-	include_directories (unix) 
-	set( platform_SOURCE 
+include_directories (unix)
+set( platform_SOURCE
 		${CMAKE_SOURCE_DIR}/unix/glob.c
 		${CMAKE_SOURCE_DIR}/unix/unix_openglw_imp.c
 		${CMAKE_SOURCE_DIR}/unix/unix_file.c
@@ -194,23 +161,73 @@ elseif ( UNIX )
 		${CMAKE_SOURCE_DIR}/unix/unix_system.c
 		${CMAKE_SOURCE_DIR}/unix/unix_timer.c
 		${CMAKE_SOURCE_DIR}/unix/unix_vid_sys.c
-	)
-	
-	set( LIBS ${LIBS} dl m X11 Xxf86dga Xxf86vm GL z vorbisfile )
-
-else ()
-
-  message (FATAL_ERROR "Unknown Platform")
-
-endif ()
+)
 
 # merge platforms
 set( SOURCE ${env_SOURCE} ${wolf_SOURCE} ${platform_SOURCE} )
 set( HEADER ${env_HEADER} ${wolf_HEADER} ${platform_HEADER} )
 
-#message(STATUS "wolf3d_SRCS: ${wolf3d_SRCS}")
-
-
 add_executable( ${EXE_NAME} ${SOURCE} ${HEADER} )
 
-target_link_libraries( ${EXE_NAME} ${LIBS} )
+
+SET(CMAKE_FIND_LIBRARY_PREFIXES "lib")
+SET(CMAKE_FIND_LIBRARY_SUFFIXES ".so" ".a")
+
+    include(FindPkgConfig)
+    
+    pkg_search_module(SDL2 REQUIRED sdl2)
+    include_directories(${SDL2_INCLUDE_DIRS})
+    
+    pkg_search_module(SDL_image REQUIRED SDL2_image>=2.0.0)
+    include_directories(${SDL_image_INCLUDE_DIRS})
+    
+    pkg_search_module(SDL_mixer REQUIRED SDL2_mixer>=2.0.0)
+    include_directories(${SDL_mixer_INCLUDE_DIRS})
+
+    pkg_search_module(VORBIS REQUIRED vorbis>=1.3.0)
+    include_directories(${VORBIS_INCLUDE_DIRS})
+
+    pkg_search_module(VORBISENC REQUIRED vorbisenc>=1.3.0)
+    include_directories(${VORBISENC_INCLUDE_DIRS})
+
+    pkg_search_module(OPENAL REQUIRED openal>=1.0.0)
+    include_directories(${OPENAL_INCLUDE_DIRS})
+
+    pkg_search_module(OGG REQUIRED ogg>=1.3.0)
+    include_directories(${OGG_INCLUDE_DIRS})
+
+    find_library(M_LIB m)
+    find_library(VOBRISFILE_LIB vorbisfile)
+    find_library(X11_LIB X11)
+    find_library(XF86_LIB Xxf86vm)
+    find_library(XF86_DGA_LIB Xxf86dga)
+    find_library(XEXT_LIB Xext)   
+    find_library(Z_LIB z)
+    
+    find_library(COLLECTIONS 
+                 NAME collectc
+                 PATHS ${PROJECT_SOURCE_DIR}/lib/lib)
+             
+    include_directories(${PROJECT_SOURCE_DIR}/lib/include) 
+
+
+
+set_target_properties(${EXE_NAME} PROPERTIES LINKER_LANGUAGE C)
+
+target_link_libraries( ${EXE_NAME} ${CMAKE_DL_LIBS}
+                                   ${M_LIB}
+                                   ${XF86_LIB}
+                                   ${XF86_DGA_LIB}
+                                   ${XEXT_LIB}
+                                   ${X11_LIB}
+                                   ${Z_LIB}
+                                   ${OGG_LIBRARIES}
+                                   ${VOBRISFILE_LIB}
+                                   ${VORBIS_LIBRARIES}
+                                   ${VORBISENC_LIBRARIES}
+                                   ${OPENAL_LIBRARIES}
+                                   ${SDL2_LIBRARIES} 
+                                   ${SDL_image_LIBRARIES}
+                                   ${SDL_mixer_LIBRARIES}
+                                   ${COLLECTIONS}
+                                   )
