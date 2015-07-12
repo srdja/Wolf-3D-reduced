@@ -36,8 +36,6 @@ set( env_SOURCE
 	${CMAKE_SOURCE_DIR}/env/opengl_extension.c
 	${CMAKE_SOURCE_DIR}/env/opengl_main.c
 	${CMAKE_SOURCE_DIR}/env/opengl_texture.c
-	${CMAKE_SOURCE_DIR}/env/script.c
-	${CMAKE_SOURCE_DIR}/env/share.c
 	${CMAKE_SOURCE_DIR}/env/sound.c
 	${CMAKE_SOURCE_DIR}/env/sound_sfx_id.c
 	${CMAKE_SOURCE_DIR}/env/sound_stream.c
@@ -77,7 +75,6 @@ set ( env_HEADER
 	${CMAKE_SOURCE_DIR}/env/myopengl_extension.h
 	${CMAKE_SOURCE_DIR}/env/opengl_local.h
 	${CMAKE_SOURCE_DIR}/env/renderer.h
-	${CMAKE_SOURCE_DIR}/env/script.h
 	${CMAKE_SOURCE_DIR}/env/sound.h
 	${CMAKE_SOURCE_DIR}/env/sound_local.h
 	${CMAKE_SOURCE_DIR}/env/system.h
