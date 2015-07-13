@@ -268,7 +268,6 @@ PUBLIC int R_Init (void *hinstance, void *hWnd)
 {
     char renderer_buffer[ 1000 ];
     char vendor_buffer[ 1000 ];
-    int     err;
     int     a, b;
 
     R_Register();
@@ -330,7 +329,7 @@ PUBLIC int R_Init (void *hinstance, void *hWnd)
     TM_Init();
     Font_Init();
 
-    err = pfglGetError();
+    pfglGetError();
     return 1;
 }
 

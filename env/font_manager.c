@@ -376,7 +376,7 @@ PUBLIC void Font_put_line_size (FONTSELECT fs, int x, int y, const char *start, 
  */
 PRIVATE W8 Font_get_line (FONTSELECT fs, int line_width, string_seg_t *sst)
 {
-    int x = 0, last_word_width = 0, last_word_spaces = 0;
+    int x = 0;
     int in_a_word = 0;
     int t_words = 0;
     int t_spaces = 0;
@@ -417,7 +417,6 @@ PRIVATE W8 Font_get_line (FONTSELECT fs, int line_width, string_seg_t *sst)
 
         if (c != ' ') {
             if (! in_a_word) {
-                last_word_width = chars_width;
                 word_start = sst->end;
             }
 
@@ -427,7 +426,6 @@ PRIVATE W8 Font_get_line (FONTSELECT fs, int line_width, string_seg_t *sst)
             if (in_a_word) {
                 in_a_word = 0;
                 t_words++;
-                last_word_spaces = t_spaces;
             }
 
             t_spaces++;

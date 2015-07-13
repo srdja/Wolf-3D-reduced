@@ -147,7 +147,6 @@ PUBLIC void Powerup_Reset (void)
 */
 PRIVATE int Pow_Give (pow_t type)
 {
-    static const char *keynames[] = { "gold", "silver", "?", "?" };
 
     switch (type) {
 //

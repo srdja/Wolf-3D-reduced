@@ -69,10 +69,7 @@ PUBLIC W8 FS_CreateDirectory (const char *dirname)
  * \param[in] path Pointer to a NUL-terminated string that specifies the path to the new directory.
  * \return On success nonzero, otherwise zero.
  */
-PUBLIC W8 FS_ChangeCurrentDirectory (const char *path)
-{
-    return ! chdir (path);
-}
+PUBLIC
 
 /**
  * \brief Compare directory and file attributes.
@@ -197,20 +194,14 @@ PUBLIC void FS_FindClose (void)
  * \param[in] filename Pointer to a NUL-terminated string that specifies the file to be deleted.
  * \return If successful the return value is nonzero, otherwise zero.
  */
-PUBLIC _boolean FS_DeleteFile (const char *filename)
-{
-    return (! unlink (filename));
-}
+PUBLIC
 
 /**
  * \brief Deletes an existing empty directory.
  * \param[in] pathname Pointer to a NUL-terminated string that specifies the directory to be deleted.
  * \return If successful the return value is nonzero, otherwise zero.
  */
-PUBLIC _boolean FS_RemoveDirectory (const char *pathname)
-{
-    return (! rmdir (pathname));
-}
+PUBLIC
 
 /**
  * \brief Retrieves current user directory.

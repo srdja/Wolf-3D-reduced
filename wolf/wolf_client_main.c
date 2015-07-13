@@ -58,7 +58,6 @@ PRIVATE void V_RenderView (void)
     if (ClientStatic.key_dest != key_game) {
         return;
     }
-
     R_DrawWorld();
 }
 
@@ -68,15 +67,9 @@ PRIVATE void V_RenderView (void)
 PUBLIC void Client_Screen_UpdateScreen (void)
 {
     R_BeginFrame();
-
-
     V_RenderView(); // Draw game world
-
     M_Draw(); // Draw menu
-
-
     R_EndFrame();
-
 }
 
 /**
@@ -132,9 +125,7 @@ PUBLIC void Client_PrepRefresh (const char *r_mapname)
     R_DrawPsyched (30);
     R_EndFrame();
 
-
     Level_ScanInfoPlane (r_world);  // Spawn items/guards
-
 
     PL_Spawn (r_world->pSpawn, r_world);  // Spawn Player
 
@@ -153,16 +144,13 @@ PUBLIC void Client_PrepRefresh (const char *r_mapname)
         Sound_StartBGTrack (r_world->musicName, r_world->musicName);
     }
 
-
     R_EndFrame();
-
 }
 
 
 int tics;
 
 extern void DrawMenus();
-
 
 /**
  * \brief Process client frame
@@ -173,7 +161,6 @@ PUBLIC void Client_Frame (int msec)
     static int extratime;
     extratime += msec;
 
-
     // let the mouse activate or deactivate
     IN_Frame();
 
@@ -183,36 +170,18 @@ PUBLIC void Client_Frame (int msec)
 
     extratime = 0;
 
-#if 0
-
-    if (ClientStatic.frametime > (1.0f / cl_minfps->value)) {
-        ClientStatic.frametime = (1.0f / cl_minfps->value);
-    }
-
-#else
-
     if (ClientStatic.frametime > (1.0f / 5)) {
         ClientStatic.frametime = (1.0f / 5);
     }
 
-#endif
-
     ClientState.time = (int)ClientStatic.frametime * 100;
-
 
     tics = 1;
 
-
-
     // allow rendering change
     Video_CheckChanges();
-//  if( ! ClientState.refresh_prepped && ClientStatic.state == ca_active )
-//      Client_PrepRefresh( levelstate. );
-
 
     Sound_Update (vnull, vnull, vnull, vnull);
-
-
 
     if (ClientStatic.menuState == IPM_AUTOMAP) {
         pfglDepthMask (GL_TRUE);
@@ -222,9 +191,7 @@ PUBLIC void Client_Frame (int msec)
         pfglLoadIdentity();
         pfglDisable (GL_DEPTH_TEST);
 
-
         pfglEnable (GL_BLEND);
-
 
         pfglColor4f (1, 1, 1, 1);
 
@@ -234,15 +201,10 @@ PUBLIC void Client_Frame (int msec)
         pfglOrtho (0, viddef.width, viddef.height, 0, -99999, 99999);
 
         DrawMenus();
-
-
         R_EndFrame();
 
         return;
     }
-
-
-
 
     if (ClientStatic.key_dest == key_game && ClientStatic.state == ca_active) {
         if (Player.playstate != ex_dead &&
@@ -255,8 +217,6 @@ PUBLIC void Client_Frame (int msec)
         } else {
             memset (&ClientState.cmd, 0, sizeof (ClientState.cmd));
         }
-
-
 
         if ((Player.playstate == ex_complete || Player.playstate == ex_secretlevel)) {
             if (ClientStatic.realtime >= elevatorSwitchTime + 1429) {
@@ -274,7 +234,6 @@ PUBLIC void Client_Frame (int msec)
     }
 
     Client_Screen_UpdateScreen();
-
 
     ClientStatic.framecount++;
 }

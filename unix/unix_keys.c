@@ -442,18 +442,9 @@ static void HandleEvents (void)
 }
 
 
-void KBD_Init (void)
-{
-    ;
-}
-
 void KBD_Update (void)
 {
 // get events from x server
     HandleEvents();
 }
 
-void KBD_Close (void)
-{
-    ;
-}

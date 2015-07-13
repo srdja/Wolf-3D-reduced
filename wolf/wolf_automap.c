@@ -224,8 +224,7 @@ PUBLIC void Automap()
     float   scale;
 
     // gsh - double tap for center on player
-	static int numTaps = 0;
-	static int tapX = 0;
+    static int tapX = 0;
     static int tapY = 0;
     static int zoom = 0;
     static float TargetX = 0;
@@ -284,7 +283,6 @@ PUBLIC void Automap()
     }
 
     if (Key_IsDown (Key_GetKey ("+use"))) {   // Centre on player
-        numTaps = 0;
         zoom = 1;
         TargetX = Player.position.origin[0] / (float)TILE_GLOBAL;
         TargetY = Player.position.origin[1] / (float)TILE_GLOBAL;

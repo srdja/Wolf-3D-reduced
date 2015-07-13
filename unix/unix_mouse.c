@@ -285,10 +285,7 @@ PUBLIC void IN_StartupMouse (void)
  Notes:
 -----------------------------------------------------------------------------
 */
-PUBLIC void RW_IN_Shutdown (void)
-{
-    mouse_avail = false;
-}
+PUBLIC
 
 /*
 -----------------------------------------------------------------------------
@@ -374,11 +371,3 @@ PUBLIC void IN_ActivateMouse (void)
 }
 
 
-void RW_IN_Activate (_boolean active)
-{
-    if (active || vidmode_active) {
-        IN_ActivateMouse();
-    } else {
-        IN_DeactivateMouse();
-    }
-}

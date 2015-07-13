@@ -118,7 +118,6 @@ PUBLIC void OpenAL_Shutdown (void)
     pfalGetBooleanv             = NULL;
     pfalGetDouble               = NULL;
     pfalGetDoublev              = NULL;
-    pfalGetFloat                = NULL;
     pfalGetFloatv               = NULL;
     pfalGetInteger              = NULL;
     pfalGetIntegerv             = NULL;
@@ -254,7 +253,7 @@ PUBLIC _boolean OpenAL_Init (const char *dllname)
 
     if (! (pfalGetDoublev                = (ALGETDOUBLEV)GPA ("alGetDoublev"))) return false;
 
-    if (! (pfalGetFloat              = (ALGETFLOAT)GPA ("alGetFloat"))) return false;
+    if (! ((ALGETFLOAT)GPA ("alGetFloat"))) return false;
 
     if (! (pfalGetFloatv             = (ALGETFLOATV)GPA ("alGetFloatv"))) return false;
 

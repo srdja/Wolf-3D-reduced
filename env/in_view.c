@@ -55,7 +55,6 @@ VIEW CENTERING
 void IN_Init (void)
 {
     IN_StartupMouse();
-    IN_StartupJoystick();
 }
 
 /**

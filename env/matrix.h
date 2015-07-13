@@ -31,7 +31,7 @@
 #include "vector.h"
 
 typedef float mat3_t[ 9 ];  // 3x3 matrix
-typedef float mat4_t[ 16 ]; // 4x4 matrix
+// 4x4 matrix
 
 void Matrix3x3Multiply (mat3_t in1, mat3_t in2, mat3_t out);
 

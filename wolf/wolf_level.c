@@ -891,7 +891,7 @@ PUBLIC LevelData_t *Level_LoadMap (const char *levelname)
     char *musicName;
     SW32 filesize;
 
-    int x, y0, y, layer1, layer2, layer3;
+    int x, y0, y, layer1, layer2;
 
 
 

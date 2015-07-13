@@ -54,30 +54,17 @@
 
 extern void M_Menu_Keys_f (void);
 
-extern cvar_t *in_joystick;
-
-PRIVATE cvar_t *win_noalttab;
-
-
 
 PRIVATE menuframework_s s_options_menu;
 PRIVATE menuaction_s    s_options_defaults_action;
 PRIVATE menuaction_s    s_options_customize_options_action;
 PRIVATE menuslider_s    s_options_sensitivity_slider;
 PRIVATE menulist_s      s_options_freelook_box;
-PRIVATE menulist_s      s_options_noalttab_box;
 PRIVATE menulist_s      s_options_alwaysrun_box;
 PRIVATE menulist_s      s_options_invertmouse_box;
 PRIVATE menulist_s      s_options_lookspring_box;
 PRIVATE menulist_s      s_options_lookstrafe_box;
-PRIVATE menulist_s      s_options_joystick_box;
 PRIVATE menulist_s      s_options_console_action;
-
-
-PRIVATE void JoystickFunc (void *unused)
-{
-    Cvar_SetValue ("in_joystick", (float)s_options_joystick_box.curvalue);
-}
 
 PRIVATE void CustomizeControlsFunc (void *unused)
 {
@@ -99,11 +86,6 @@ PRIVATE void MouseSpeedFunc (void *unused)
     Cvar_SetValue ("m_sensitivity", s_options_sensitivity_slider.curvalue * 100);
 }
 
-PRIVATE void NoAltTabFunc (void *unused)
-{
-    Cvar_SetValue ("win_noalttab", (float)s_options_noalttab_box.curvalue);
-}
-
 PRIVATE float ClampCvar (float min, float max, float value)
 {
     if (value < min) {
@@ -113,8 +95,6 @@ PRIVATE float ClampCvar (float min, float max, float value)
     if (value > max) {
         return max;
     }
-
-
     return value;
 }
 
@@ -135,12 +115,6 @@ PRIVATE void ControlsSetMenuItemValues (void)
 
     Cvar_SetValue ("freelook", ClampCvar (0, 1, freelook->value));
     s_options_freelook_box.curvalue         = (int)freelook->value;
-
-
-    Cvar_SetValue ("in_joystick", ClampCvar (0, 1, in_joystick->value));
-    s_options_joystick_box.curvalue     = (int)in_joystick->value;
-
-//  s_options_noalttab_box.curvalue         = win_noalttab->value;
 
 }
 
@@ -167,13 +141,6 @@ PRIVATE void LookstrafeFunc (void *unused)
     Cvar_SetValue ("lookstrafe", (float)!lookstrafe->value);
 }
 
-
-PRIVATE void ConsoleFunc (void *unused)
-{
-}
-
-
-
 PRIVATE void Options_MenuInit (void)
 {
     static const char *yesno_names[] = {
@@ -182,11 +149,8 @@ PRIVATE void Options_MenuInit (void)
         0
     };
 
-
     int nYOffset = 27;
     int y = 0;
-
-    win_noalttab = Cvar_Get ("win_noalttab", "0", CVAR_ARCHIVE);
 
     /*
     ** configure controls menu and menu items
@@ -256,16 +220,6 @@ PRIVATE void Options_MenuInit (void)
     s_options_freelook_box.generic.callback = FreeLookFunc;
     s_options_freelook_box.itemnames = yesno_names;
 
-    s_options_joystick_box.generic.type = MTYPE_SPINCONTROL;
-    s_options_joystick_box.generic.x    = 0;
-    s_options_joystick_box.generic.y    = y += nYOffset;
-    s_options_joystick_box.generic.fs       = FONT1;
-    s_options_joystick_box.generic.fontBaseColour = &textcolour;
-    s_options_joystick_box.generic.fontHighColour = &readcolour;
-    s_options_joystick_box.generic.name = "Use Joystick:";
-    s_options_joystick_box.generic.callback = JoystickFunc;
-    s_options_joystick_box.itemnames = yesno_names;
-
     s_options_customize_options_action.generic.type = MTYPE_ACTION;
     s_options_customize_options_action.generic.x    = 0;
     s_options_customize_options_action.generic.y    = y += nYOffset;
@@ -284,15 +238,6 @@ PRIVATE void Options_MenuInit (void)
     s_options_defaults_action.generic.name  = "Reset Defaults";
     s_options_defaults_action.generic.callback = ControlsResetDefaultsFunc;
 
-    s_options_console_action.generic.type   = MTYPE_ACTION;
-    s_options_console_action.generic.x      = 0;
-    s_options_console_action.generic.y      = y += nYOffset;
-    s_options_console_action.generic.fs     = FONT1;
-    s_options_console_action.generic.fontBaseColour = &textcolour;
-    s_options_console_action.generic.fontHighColour = &highlight;
-    s_options_console_action.generic.name   = "Go to Console";
-    s_options_console_action.generic.callback = ConsoleFunc;
-
     ControlsSetMenuItemValues();
 
 
@@ -302,7 +247,6 @@ PRIVATE void Options_MenuInit (void)
     Menu_AddItem (&s_options_menu, (void *) &s_options_lookspring_box);
     Menu_AddItem (&s_options_menu, (void *) &s_options_lookstrafe_box);
     Menu_AddItem (&s_options_menu, (void *) &s_options_freelook_box);
-    Menu_AddItem (&s_options_menu, (void *) &s_options_joystick_box);
     Menu_AddItem (&s_options_menu, (void *) &s_options_customize_options_action);
     Menu_AddItem (&s_options_menu, (void *) &s_options_defaults_action);
     Menu_AddItem (&s_options_menu, (void *) &s_options_console_action);

@@ -47,9 +47,7 @@
 
 extern viddef_t viddef;
 
-
 LevelData_t *r_world;
-
 
 
 PRIVATE const char weaponnames[ 4 ][ 32 ] = {
@@ -83,17 +81,12 @@ PUBLIC void R_DrawHUD (void)
         R_Draw_Pic (hud_x + 480, hud_y + 40, "pics/SILVERKEYPIC.tga");
     }
 
-
-
-
     R_Draw_Pic (hud_x + 512, hud_y + 15, weaponnames[ Player.weapon ]);
-
 
     // Clamp score
     if (score > 999999) {
         score = 999999;
     }
-
 
     R_DrawNumber (hud_x + 48, hud_y + 32, levelstate.floornum + 1);
     R_DrawNumber (hud_x + 180, hud_y + 32, score);
@@ -254,11 +247,6 @@ PUBLIC void R_DrawWorld (void)
 {
     placeonplane_t viewport;
 
-//  if( ClientStatic.key_dest != key_game )
-//  {
-//      return;
-//  }
-
 // initializing
     viewport = Player.position;
 
@@ -338,22 +326,9 @@ PUBLIC void R_BeginRegistration (const char *map)
     if (! map || ! *map) {
         return;
     }
-
     ++texture_registration_sequence;
 
-
     com_snprintf (fullname, sizeof (fullname), "maps/%s.map", map);
-
-    // explicitly free the old map if different
-//  if( r_world )
-//  {
-//      if( r_world->mapName )
-//          Z_Free( r_world->mapName );
-//      if( r_world->musicName )
-//          Z_Free( r_world->musicName );
-//
-//      Z_Free( r_world );
-//  }
 
 //  Door_Reset( &r_world->Doors );
     Powerup_Reset();

@@ -77,8 +77,6 @@
 
 void MathLib_Init (void);
 
-int my_log2 (int val);
-
 float (*pfSqrt) (float x);
 
 float CalcFov (float fov_x, float width, float height);

@@ -172,4 +172,3 @@ PUBLIC void M_Menu_Sound_f (void)
     Sound_MenuInit();
     M_PushMenu (Sound_MenuDraw, Sound_MenuKey);
 }
-

@@ -41,8 +41,6 @@
 #include "../env/platform.h"
 #include "../env/common.h"
 #include "../env/timer.h"
-#include "../env/cmd.h"
-#include "../env/common_utils.h"
 
 W32 sys_frame_time;
 

@@ -158,7 +158,6 @@ ALGETBOOLEAN            pfalGetBoolean;
 ALGETBOOLEANV           pfalGetBooleanv;
 ALGETDOUBLE         pfalGetDouble;
 ALGETDOUBLEV            pfalGetDoublev;
-ALGETFLOAT          pfalGetFloat;
 ALGETFLOATV         pfalGetFloatv;
 ALGETINTEGER            pfalGetInteger;
 ALGETINTEGERV           pfalGetIntegerv;
