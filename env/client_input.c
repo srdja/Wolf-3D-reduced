@@ -34,9 +34,6 @@
 
 #include "keys.h"
 #include "input.h"
-#include "../wolf/wolf_math.h"
-
-cvar_t  *cl_nodelta;
 
 extern  W32 sys_frame_time;
 PRIVATE W32 frame_msec;
@@ -352,36 +349,18 @@ PRIVATE float Client_KeyState (kbutton_t *key)
 
 cvar_t  *cl_forwardspeed;
 cvar_t  *cl_sidespeed;
-
 cvar_t  *cl_yawspeed;
-cvar_t  *cl_pitchspeed;
-
-cvar_t  *cl_run;
-
-cvar_t  *cl_anglespeedkey;
 
 /**
  * Moves the local angle positions.
  */
 PRIVATE void Client_AdjustAngles (void)
 {
-    float   speed;
-
-    if ((!cl_run->value && in_speed.state & 1) || (cl_run->value && ! (in_speed.state & 1))) {
-        speed = (float)ClientStatic.frametime * cl_anglespeedkey->value * 100.0f;
-    } else {
-        speed = (float)ClientStatic.frametime * 100.0f;
-    }
+    float speed = (float)ClientStatic.frametime * 100.0f;
 
     if (! (in_strafe.state & 1)) {
         ClientState.viewangles[ YAW ] += (int) (speed * cl_yawspeed->value * (Client_KeyState (&in_left) - Client_KeyState (&in_right)));
     }
-
-    if (in_klook.state & 1) {
-        ClientState.viewangles[ PITCH ] += speed * cl_pitchspeed->value * (Client_KeyState (&in_back) - Client_KeyState (&in_forward));
-    }
-
-    ClientState.viewangles[ PITCH ] += speed * cl_pitchspeed->value * (Client_KeyState (&in_lookdown) - Client_KeyState (&in_lookup));
 }
 
 /**
@@ -406,33 +385,6 @@ PRIVATE void Client_BaseMove (usercmd_t *cmd)
 
     cmd->forwardmove += (short) (cl_forwardspeed->value * Client_KeyState (&in_forward));
     cmd->forwardmove -= (short) (cl_forwardspeed->value * Client_KeyState (&in_back));
-
-//
-// adjust for speed key / running
-//
-    if ((in_speed.state & 1) ^ (int) (cl_run->value)) {
-        cmd->forwardmove *= 2;
-        cmd->sidemove *= 2;
-        cmd->upmove *= 2;
-    }
-}
-
-/**
- * Clamp pitch movement
- */
-void Client_ClampPitch (void)
-{
-    if (ClientState.viewangles[PITCH] < DEG2FINE (-360))
-        ClientState.viewangles[PITCH] += DEG2FINE (360); // wrapped
-
-    if (ClientState.viewangles[PITCH] > DEG2FINE (360))
-        ClientState.viewangles[PITCH] -= DEG2FINE (360); // wrapped
-
-    if (ClientState.viewangles[PITCH] > DEG2FINE (89))
-        ClientState.viewangles[PITCH] = DEG2FINE (89);
-
-    if (ClientState.viewangles[PITCH] < DEG2FINE (-89))
-        ClientState.viewangles[PITCH] = DEG2FINE (-89);
 }
 
 /**
@@ -510,14 +462,6 @@ PRIVATE usercmd_t Client_CreateCmd (void)
 }
 
 /**
- * Center view
- */
-void IN_CenterView (void)
-{
-}
-
-
-/**
  * Initialize input commands.
  */
 PUBLIC void Client_InitInput (void)
@@ -553,8 +497,6 @@ PUBLIC void Client_InitInput (void)
     Cmd_AddCommand ("impulse", IN_Impulse);
     Cmd_AddCommand ("+klook", IN_KLookDown);
     Cmd_AddCommand ("-klook", IN_KLookUp);
-
-    cl_nodelta = Cvar_Get ("cl_nodelta", "0", CVAR_INIT);
 }
 
 /**
@@ -562,14 +504,5 @@ PUBLIC void Client_InitInput (void)
  */
 PUBLIC void Client_SendCommand (void)
 {
-    usercmd_t   *cmd;
-
-    cmd = &ClientState.cmds[ 0 ];
-    ClientState.cmd_time[ 0 ] = ClientStatic.realtime;  // for netgraph ping calculation
-
-    *cmd = Client_CreateCmd();
-
-    ClientState.cmd = *cmd;
-
-    return;
+    ClientState.cmd = Client_CreateCmd();
 }

@@ -78,9 +78,7 @@ void IN_Frame (void)
         return;
     }
 
-    if (! ClientState.refresh_prepped
-            || ClientStatic.key_dest == key_console
-            || ClientStatic.key_dest == key_menu) {
+    if (ClientStatic.key_dest == key_menu) {
         // temporarily deactivate if in fullscreen
         if (Cvar_VariableValue ("r_fullscreen") == 0) {
             IN_DeactivateMouse();

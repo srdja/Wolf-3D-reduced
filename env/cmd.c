@@ -157,7 +157,7 @@ void Cbuf_ExecuteText (int exec_when, const char *text)
         break;
 
     default:
-        Com_Error (ERR_FATAL, "Cbuf_ExecuteText: bad exec_when");
+        break;
     }
 }
 
@@ -272,14 +272,6 @@ void Cmd_Vstr_f (void)
 
     v = Cvar_VariableString (Cmd_Argv (1));
     Cbuf_InsertText (va ("%s\n", v));
-}
-
-/**
- * Print the rest of the line to the console.
- * @ingroup SCRIPT COMMANDS
- */
-void Cmd_Echo_f (void)
-{
 }
 
 /**
@@ -504,20 +496,6 @@ void    Cmd_RemoveCommand (const char *cmd_name)
 
 /*
 ============
-Cmd_CommandCompletion
-============
-*/
-void Cmd_CommandCompletion (void (*callback) (const char *s))
-{
-    cmd_function_t  *cmd;
-
-    for (cmd = cmd_functions ; cmd ; cmd = cmd->next) {
-        callback (cmd->name);
-    }
-}
-
-/*
-============
 Cmd_ExecuteString
 
 A complete command line has been parsed, so try to execute it
@@ -566,41 +544,12 @@ void Cmd_ExecuteString (const char *text)
 
 /*
 ============
-Cmd_List_f
-============
-*/
-void Cmd_List_f (void)
-{
-    cmd_function_t  *cmd;
-    int     i;
-    char        *match;
-
-    if (Cmd_Argc() > 1) {
-        match = Cmd_Argv (1);
-    } else {
-        match = NULL;
-    }
-
-    i = 0;
-
-    for (cmd = cmd_functions ; cmd ; cmd = cmd->next) {
-        if (match && !Com_Filter (match, cmd->name, false))
-            continue;
-        i++;
-    }
-}
-
-/*
-============
 Cmd_Init
 ============
 */
 void Cmd_Init (void)
 {
-    Cmd_AddCommand ("cmdlist", Cmd_List_f);
     Cmd_AddCommand ("exec", Cmd_Exec_f);
     Cmd_AddCommand ("vstr", Cmd_Vstr_f);
-    Cmd_AddCommand ("echo", Cmd_Echo_f);
     Cmd_AddCommand ("wait", Cmd_Wait_f);
 }
-

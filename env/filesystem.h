@@ -88,14 +88,9 @@ void FS_CloseFile (filehandle_t *fhandle);
 
 SW32 FS_ReadFile (void *buffer, W32 size, W32 count, filehandle_t *fhandle);
 
-SW32 FS_FileTell (filehandle_t *fhandle);
-
 W32 FS_FileSeek (filehandle_t *fhandle, SW32 offset, W32 origin);
 
 SW32 FS_GetFileSize (filehandle_t *fhandle);
-
-void *FS_GetLoadedFilePointer (filehandle_t *fhandle, W32 origin);
-
 /////////////////////////////////////////////////////////////////////
 //
 //  NON-PORTABLE FILE SYSTEM SERVICES

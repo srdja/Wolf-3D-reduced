@@ -172,10 +172,9 @@ PUBLIC void Video_CheckChanges (void)
         // refresh has changed
         r_ref->modified = false;
         r_fullscreen->modified = true;
-        ClientState.refresh_prepped = false;
 
         if (! VID_LoadRefresh()) {
-            Com_Error (ERR_FATAL, "Could not start OpenGL module!");
+            break;
         }
     }
 }

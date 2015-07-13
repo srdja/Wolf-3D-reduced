@@ -42,6 +42,7 @@
  */
 PUBLIC void R_Draw_Character (int x, int y, int num, font_t *myfont)
 {
+
     int row, col;
     int scale, sh; // scaled width, height
     float frow, fcol;

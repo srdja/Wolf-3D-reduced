@@ -61,9 +61,6 @@ typedef enum {
     rserr_invalid_mode,
 } rserr_t;
 
-
-int             registration_sequence;
-
 int      R_Init (void *hinstance, void *hWnd);
 void     R_Shutdown (void);
 

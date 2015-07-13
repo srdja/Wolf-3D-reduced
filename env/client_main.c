@@ -37,17 +37,9 @@
 #include "input.h"
 #include "com_string.h"
 
-cvar_t  *freelook;
-
-cvar_t  *lookspring;
-cvar_t  *lookstrafe;
 cvar_t  *sensitivity;
-
-cvar_t  *m_pitch;
 cvar_t  *m_yaw;
 cvar_t  *m_forward;
-cvar_t  *m_side;
-
 cvar_t  *name;
 
 client_state_t  ClientState;
@@ -75,7 +67,7 @@ PUBLIC void Client_Quit_f (void)
  */
 PRIVATE void Client_InitLocal (void)
 {
-    ClientStatic.state = ca_disconnected;
+    //ClientStatic.state = ca_disconnected;
     ClientStatic.realtime = Sys_Milliseconds();
 
     Client_InitInput();
@@ -83,18 +75,10 @@ PRIVATE void Client_InitLocal (void)
     cl_forwardspeed = Cvar_Get ("cl_forwardspeed", "4000", CVAR_INIT);
     cl_sidespeed    = Cvar_Get ("cl_sidespeed", "4000", CVAR_INIT);
     cl_yawspeed     = Cvar_Get ("cl_yawspeed", "100", CVAR_INIT);
-    cl_pitchspeed   = Cvar_Get ("cl_pitchspeed", "100", CVAR_INIT);
-    cl_anglespeedkey = Cvar_Get ("cl_anglespeedkey", "2", CVAR_INIT);
 
-    cl_run      = Cvar_Get ("cl_run", "0", CVAR_ARCHIVE);
-    freelook    = Cvar_Get ("freelook", "0", CVAR_ARCHIVE);
-    lookspring  = Cvar_Get ("lookspring", "0", CVAR_ARCHIVE);
-    lookstrafe  = Cvar_Get ("lookstrafe", "0", CVAR_ARCHIVE);
-    sensitivity = Cvar_Get ("m_sensitivity", "300", CVAR_ARCHIVE);
+    sensitivity = Cvar_Get ("m_sensitivity", "50", CVAR_ARCHIVE);
 
-    m_pitch = Cvar_Get ("m_pitch", "0.022", CVAR_ARCHIVE);
     m_yaw   = Cvar_Get ("m_yaw", "1", CVAR_INIT);
-    m_side  = Cvar_Get ("m_side", "1", CVAR_INIT);
     m_forward = Cvar_Get ("m_forward", "1", CVAR_INIT);
 
 //
@@ -109,11 +93,8 @@ PRIVATE void Client_InitLocal (void)
  */
 PUBLIC void Client_Init (void)
 {
-    if (dedicated->value)
-        return;
-
     Video_Init();
-    //Sound_Init();   // sound must be initialized after window is created
+    //Sound_Init();
 
     Menu_Init();
 
@@ -128,10 +109,6 @@ PRIVATE void Client_WriteConfiguration (void)
 {
     FILE    *fp;
     char    path[ MAX_OSPATH];
-
-    if (ClientStatic.state == ca_uninitialized) {
-        return;
-    }
 
     com_snprintf (path, sizeof (path), "%s/config.cfg", FS_Gamedir());
     fp = fopen (path, "w");

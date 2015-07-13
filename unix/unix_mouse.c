@@ -160,7 +160,6 @@ PRIVATE void RW_IN_MLookDown (void)
 PRIVATE void RW_IN_MLookUp (void)
 {
     mlooking = false;
-    IN_CenterView();
 }
 
 PUBLIC void IN_StartupMouse (void)
@@ -169,9 +168,6 @@ PUBLIC void IN_StartupMouse (void)
     m_filter = Cvar_Get ("m_filter", "0", 0);
     in_mouse = Cvar_Get ("in_mouse", "1", CVAR_ARCHIVE);
     in_dgamouse = Cvar_Get ("in_dgamouse", "1", CVAR_ARCHIVE);
-    freelook = Cvar_Get ("freelook", "0", 0);
-    lookstrafe = Cvar_Get ("lookstrafe", "0", 0);
-    m_pitch = Cvar_Get ("m_pitch", "0.022", 0);
     m_forward = Cvar_Get ("m_forward", "1", 0);
 
     Cmd_AddCommand ("+mlook", RW_IN_MLookDown);
@@ -203,20 +199,10 @@ PUBLIC void IN_MouseMove (usercmd_t *cmd)
     my *= sensitivity->value;
 
 // add mouse X/Y movement to cmd
-    if ((in_strafe.state & 1) ||
-            (lookstrafe->value && mlooking)) {
-        cmd->sidemove += m_side->value * mx;
-    } else {
-        ClientState.viewangles[ YAW ] -= m_yaw->value * mx;
-    }
 
+    ClientState.viewangles[ YAW ] -= m_yaw->value * mx;
 
-    if ((mlooking || freelook->value) &&
-            ! (in_strafe.state & 1)) {
-        ClientState.viewangles[ PITCH ] += m_pitch->value * my;
-    } else {
-        cmd->forwardmove -= m_forward->value * my;
-    }
+    cmd->forwardmove -= m_forward->value * my;
 
     mx = my = 0;
 }

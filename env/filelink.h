@@ -60,13 +60,9 @@ typedef struct searchpath_s {
 
 } searchpath_t;
 
-
 filelink_t      *fs_links;
 
 searchpath_t    *fs_searchpaths;
 searchpath_t    *fs_base_searchpaths;   // without gamedirs
-
-
-
 
 #endif /* __FILELINK_H__ */

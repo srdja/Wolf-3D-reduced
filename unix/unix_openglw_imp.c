@@ -171,8 +171,6 @@ PRIVATE void InitSig (void)
     signal (SIGTERM, signal_handler);
 }
 
-
-
 int GLimp_SetMode (int *pwidth, int *pheight, int mode, _boolean fullscreen)
 {
     int width, height;

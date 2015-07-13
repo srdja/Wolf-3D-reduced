@@ -34,35 +34,26 @@
 #define __COM_STRING_H__
 
 #include <stdlib.h>
-
 #include "platform.h"
 
 
 #define ISUPPER( c )    ( ( c ) >= 'A' && ( c ) <= 'Z' )
 #define ISLOWER( c )    ( ( c ) >= 'a' && ( c ) <= 'z' )
-#define ISALPHA( c )    ( ISUPPER( c ) || ISLOWER( c ) )
 #define TOUPPER( c )    ( ISLOWER( c ) ? (c) - 'a' + 'A' : ( c ) )
 #define TOLOWER( c )    ( ISUPPER( c ) ? (c) - 'A' + 'a' : ( c ) )
 
 #define ISNUMERIC( c )  ( ( c ) >= '0' && ( c ) <= '9' )
 
 
-
 size_t com_strlcpy (char *dest, const char *source, size_t nMaxLength);
 size_t com_strlcat (char *dest, const char *source, size_t nMaxLength);
-
 
 int com_stricmp (const char *string1, const char *string2);
 int com_strnicmp (const char *string1, const char *string2, size_t count);
 
-
 void com_snprintf (char *dest, size_t size, const char *format, ...);
-
 char *com_strcopy (const char *in);
-
 W32 com_strhash (const char *string);
-
-char *com_strupr (char *string);
 char *com_strlwr (char *string);
 
 
@@ -71,13 +62,8 @@ char *com_strlwr (char *string);
 #define SCE_BUFFER_OVERFLOW (1 << 1)    /* Numberic overflowed */
 #define SCE_NULL_VALUE      (1 << 2)    /* NULL string was passed into function */
 
-
 SW32 StringToInteger (const char *string, W32 *error);
-double StringToFloat (const char *string, W32 *error);
 
 char *va (char *format, ...);
-
-char *com_parse (char **data_p);
-
 
 #endif /* __COM_STRING_H__ */

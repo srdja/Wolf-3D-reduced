@@ -29,12 +29,10 @@
 #include "renderer.h"
 #include "video.h"
 
-PRIVATE void Menu_DrawStatusBar (const char *string);
-PRIVATE void Menulist_DoEnter (menulist_s *l);
+
 PRIVATE void MenuList_Draw (menulist_s *l);
 PRIVATE void Slider_DoSlide (menuslider_s *s, int dir);
 PRIVATE void Slider_Draw (menuslider_s *s);
-PRIVATE void SpinControl_DoEnter (menulist_s *s);
 PRIVATE void SpinControl_Draw (menulist_s *s);
 PRIVATE void SpinControl_DoSlide (menulist_s *s, int dir);
 
@@ -44,7 +42,6 @@ PRIVATE void SpinControl_DoSlide (menulist_s *s, int dir);
 
 extern viddef_t viddef;
 
-#define VID_WIDTH viddef.width
 #define VID_HEIGHT viddef.height
 
 colour3_t colourLGray = { 192, 192, 192 };
@@ -122,11 +119,6 @@ _boolean Field_DoEnter (menufield_s *f)
     }
 
     return false;
-}
-
-void Field_Draw (menufield_s *f)
-{
-
 }
 
 _boolean Field_Key (menufield_s *f, int key)
@@ -369,7 +361,6 @@ void Menu_Draw (menuframework_s *menu)
     for (i = 0; i < menu->nitems; ++i) {
         switch (((menucommon_s *) menu->items[i])->type) {
         case MTYPE_FIELD:
-            Field_Draw ((menufield_s *) menu->items[i]);
             break;
 
         case MTYPE_SLIDER:
@@ -414,21 +405,6 @@ void Menu_Draw (menuframework_s *menu)
         }
     }
 
-}
-
-void Menu_DrawStatusBar (const char *string)
-{
-    if (string) {
-        int l = strlen (string);
-        //int maxrow = VID_HEIGHT / 8;
-        int maxcol = VID_WIDTH / 8;
-        int col = maxcol / 2 - l / 2;
-
-        R_Draw_Fill (0, VID_HEIGHT - 8, VID_WIDTH, 8, colourBlack);
-        Menu_DrawString (FONT1, col * 8, VID_HEIGHT - 8, string, colourBlack);
-    } else {
-        R_Draw_Fill (0, VID_HEIGHT - 8, VID_WIDTH, 8, colourBlack);
-    }
 }
 
 void Menu_DrawString (FONTSELECT fs, int x, int y, const char *string, colour3_t c)
@@ -528,24 +504,6 @@ int Menu_TallySlots (menuframework_s *menu)
 }
 
 
-/////////////////////////////////////////////////////////////////////
-//
-//  Menu List
-//
-/////////////////////////////////////////////////////////////////////
-
-void Menulist_DoEnter (menulist_s *l)
-{
-    int start;
-
-    start = l->generic.y / 10 + 1;
-
-    l->curvalue = l->generic.parent->cursor - start;
-
-    if (l->generic.callback)
-        l->generic.callback (l);
-}
-
 void MenuList_Draw (menulist_s *l)
 {
     const char **n;
@@ -616,26 +574,6 @@ void Slider_Draw (menuslider_s *s)
                 colourBlack, colourDGray, colourDGray);
 
 
-}
-
-
-/////////////////////////////////////////////////////////////////////
-//
-//  Spin
-//
-/////////////////////////////////////////////////////////////////////
-
-void SpinControl_DoEnter (menulist_s *s)
-{
-    s->curvalue++;
-
-    if (s->itemnames[ s->curvalue ] == 0) {
-        s->curvalue = 0;
-    }
-
-    if (s->generic.callback) {
-        s->generic.callback (s);
-    }
 }
 
 void SpinControl_DoSlide (menulist_s *s, int dir)

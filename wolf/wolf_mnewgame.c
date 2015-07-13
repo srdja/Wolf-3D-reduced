@@ -38,7 +38,6 @@
 #include "wolf_player.h"
 
 #include "../env/com_string.h"
-#include "../env/renderer.h"
 
 extern void M_Menu_Skill_f (void);
 extern void M_Menu_Mission_f (void);
@@ -140,8 +139,6 @@ PRIVATE void Game_MenuInit (void)
 
         Menu_AddItem (&s_game_menu, &s_episode_actions[ i ]);
     }
-
-    //Menu_Center( &s_game_menu );
 }
 
 PRIVATE void Game_MenuDraw (void)

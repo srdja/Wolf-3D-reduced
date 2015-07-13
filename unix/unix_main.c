@@ -124,8 +124,7 @@ int main (int argc, char *argv[])
     // go back to real user for config loads
     seteuid (getuid());
 
-    common_Init (argc, argv);
-
+    common_Init();
 
     fcntl (0, F_SETFL, fcntl (0, F_GETFL, 0) | FNDELAY);
 

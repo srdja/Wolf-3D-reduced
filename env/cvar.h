@@ -111,30 +111,14 @@ typedef struct cvar_s {
 
 typedef int cvarHandle_t;
 
-// the modules that run in the virtual machine can't access the cvar_t directly,
-// so they must ask for structured updates
-typedef struct {
-    cvarHandle_t    handle;
-    int         modificationCount;
-    float       value;
-    int         integer;
-    char        string[MAX_CVAR_VALUE_STRING];
-} vmCvar_t;
-
 cvar_t *Cvar_Get (const char *var_name, const char *value, int flags);
 // creates the variable if it doesn't exist, or returns the existing one
 // if it exists, the value will not be changed, but flags will be ORed in
 // that allows variables to be unarchived without needing bitflags
 // if value is "", the value will not override a previously set value.
 
-void    Cvar_Update (vmCvar_t *vmCvar);
-// updates an interpreted modules' version of a cvar
-
 void    Cvar_Set (const char *var_name, const char *value);
 // will create the variable with no flags if it doesn't exist
-
-void    Cvar_SetLatched (const char *var_name, const char *value);
-// don't set the cvar immediately
 
 void    Cvar_SetValue (const char *var_name, float value);
 // expands value to a string and calls Cvar_Set

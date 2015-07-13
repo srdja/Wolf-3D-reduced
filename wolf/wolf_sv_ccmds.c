@@ -81,19 +81,14 @@ PUBLIC void Map_f (void)
         com_snprintf (expanded, sizeof (expanded), "maps%c%s", PATH_SEP, map);
     }
 
-
-//sv.state = ss_dead;       // don't save current level when changing
-//  SV_WipeSavegame( "current" );
     SV_GameMap_f();
 
     if (r_world) {
         ClientStatic.menuState = IPM_GAME;
         ClientStatic.key_dest = key_game;
-        ClientStatic.state = ca_active;
     } else {
         ClientStatic.key_dest = key_console;
     }
-
 }
 
 extern int LoadTheGame (const char *name);

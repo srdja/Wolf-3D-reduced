@@ -135,11 +135,8 @@ typedef enum {
 
 typedef unsigned char       byte;
 
-#define Swap32( x )     ( ( ((W32) (x)) & 0xFF000000) >> 24 ) | ( ((( (W32) (x) ) & 0xFF0000) >> 8)  ) | ( ((( (W32) (x) ) & 0xFF00) << 8 ) ) | ( (( (W32) (x) ) & 0xFF) << 24 )
-
 #define LittleShort( x )        ( x )
 #define LittleLong( x )         ( x )
-
 
 #endif /* __PLATFORM_H__ */
 

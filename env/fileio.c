@@ -35,37 +35,6 @@
 #include "filelink.h"
 
 
-
-
-/**
- * \brief Get file pointer.
- * \param[in] fhandle Target file handle.
- * \param[in] origin Pointer position
- *            SEEK_SET -Beginning of file.
- *            SEEK_CUR -Current position of file pointer.
- *            SEEK_END -End of file.
- * \return File pointer on success, otherwise NULL.
- */
-PUBLIC void *FS_GetLoadedFilePointer (filehandle_t *fhandle, W32 origin)
-{
-    if (!fhandle->bLoaded) {
-        return NULL;
-    }
-
-    switch (origin) {
-    case SEEK_SET:
-        return ((void *)fhandle->ptrStart);
-
-    case SEEK_END:
-        return ((void *)fhandle->ptrEnd);
-
-    case SEEK_CUR:
-        return ((void *)fhandle->ptrCurrent);
-    }
-
-    return NULL;
-}
-
 /**
  * \brief Get the length of a file.
  * \param[in] Target file handle.
@@ -150,20 +119,6 @@ PUBLIC W32 FS_FileSeek (filehandle_t *fhandle, SW32 offset, W32 origin)
     }
 
     return fseek (fhandle->hFile, offset, origin);
-}
-
-/**
- * \brief Gets the current position of a file pointer.
- * \param[in] fhandle Pointer to filehandle_t structure.
- * \return If successful current file position, otherwise -1.
- */
-PUBLIC SW32 FS_FileTell (filehandle_t *fhandle)
-{
-    if (fhandle->bLoaded) {
-        return (fhandle->ptrCurrent - fhandle->ptrStart);
-    }
-
-    return ftell (fhandle->hFile);
 }
 
 /**
@@ -400,8 +355,6 @@ PUBLIC filehandle_t *FS_OpenFile (const char *filename, W32 FlagsAndAttributes)
 
                     if (hFile->hFile == NULL) {
                         FS_CloseFile (hFile);
-
-                        Com_Error (ERR_FATAL, "Could not reopen (%s)\n", pak->filename);
                     }
 
                     fseek (hFile->hFile, pakfiles->fileoffset, SEEK_SET);

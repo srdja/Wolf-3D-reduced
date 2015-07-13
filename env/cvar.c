@@ -135,25 +135,6 @@ float Cvar_VariableValue (const char *var_name)
     return var->value;
 }
 
-
-/*
-============
-Cvar_VariableIntegerValue
-============
-*/
-int Cvar_VariableIntegerValue (const char *var_name)
-{
-    cvar_t  *var;
-
-    var = Cvar_FindVar (var_name);
-
-    if (!var)
-        return 0;
-
-    return var->integer;
-}
-
-
 /*
 ============
 Cvar_VariableString
@@ -170,41 +151,6 @@ char *Cvar_VariableString (const char *var_name)
 
     return var->string;
 }
-
-
-/*
-============
-Cvar_VariableStringBuffer
-============
-*/
-void Cvar_VariableStringBuffer (const char *var_name, char *buffer, int bufsize)
-{
-    cvar_t *var;
-
-    var = Cvar_FindVar (var_name);
-
-    if (!var) {
-        *buffer = 0;
-    } else {
-        com_strlcpy (buffer, var->string, bufsize);
-    }
-}
-
-
-/*
-============
-Cvar_CommandCompletion
-============
-*/
-void    Cvar_CommandCompletion (void (*callback) (const char *s))
-{
-    cvar_t      *cvar;
-
-    for (cvar = cvar_vars ; cvar ; cvar = cvar->next) {
-        callback (cvar->name);
-    }
-}
-
 
 /*
 ============
@@ -262,13 +208,6 @@ cvar_t *Cvar_Get (const char *var_name, const char *var_value, int flags)
         }
 
         return var;
-    }
-
-    //
-    // allocate a new cvar
-    //
-    if (cvar_numIndexes >= MAX_CVARS) {
-        Com_Error (ERR_FATAL, "MAX_CVARS");
     }
 
     var = &cvar_indexes[cvar_numIndexes];
@@ -398,16 +337,6 @@ void Cvar_Set (const char *var_name, const char *value)
 
 /*
 ============
-Cvar_SetLatched
-============
-*/
-void Cvar_SetLatched (const char *var_name, const char *value)
-{
-    Cvar_Set2 (var_name, value, false);
-}
-
-/*
-============
 Cvar_SetValue
 ============
 */
@@ -433,35 +362,6 @@ Cvar_Reset
 void Cvar_Reset (const char *var_name)
 {
     Cvar_Set2 (var_name, NULL, false);
-}
-
-
-/*
-============
-Cvar_SetCheatState
-
-Any testing variables will be reset to the safe values
-============
-*/
-void Cvar_SetCheatState (void)
-{
-    cvar_t  *var;
-
-    // set all default vars to the safe value
-    for (var = cvar_vars ; var ; var = var->next) {
-        if (var->flags & CVAR_CHEAT) {
-            // the CVAR_LATCHED|CVAR_CHEAT vars might escape the reset here
-            // because of a different var->latchedString
-            if (var->latchedString) {
-                free (var->latchedString);
-                var->latchedString = NULL;
-            }
-
-            if (strcmp (var->resetString, var->string)) {
-                Cvar_Set (var->name, var->resetString);
-            }
-        }
-    }
 }
 
 /*
@@ -744,71 +644,6 @@ void Cvar_Restart_f (void)
 
         prev = &var->next;
     }
-}
-
-/*
-=====================
-Cvar_Register
-
-basically a slightly modified Cvar_Get for the interpreted modules
-=====================
-*/
-void Cvar_Register (vmCvar_t *vmCvar, const char *varName, const char *defaultValue, int flags)
-{
-    cvar_t  *cv;
-
-    cv = Cvar_Get (varName, defaultValue, flags);
-
-    if (!vmCvar) {
-        return;
-    }
-
-    vmCvar->handle = cv - cvar_indexes;
-    vmCvar->modificationCount = -1;
-    Cvar_Update (vmCvar);
-}
-
-
-/*
-=====================
-Cvar_Register
-
-updates an interpreted modules' version of a cvar
-=====================
-*/
-void    Cvar_Update (vmCvar_t *vmCvar)
-{
-    cvar_t  *cv = NULL; // bk001129
-
-    if ((unsigned)vmCvar->handle >= cvar_numIndexes) {
-        Com_Error (ERR_DROP, "Cvar_Update: handle out of range");
-    }
-
-    cv = cvar_indexes + vmCvar->handle;
-
-    if (cv->modificationCount == vmCvar->modificationCount) {
-        return;
-    }
-
-    if (!cv->string) {
-        return;     // variable might have been cleared by a cvar_restart
-    }
-
-    vmCvar->modificationCount = cv->modificationCount;
-
-    // bk001129 - mismatches.
-    if (strlen (cv->string) + 1 > MAX_CVAR_VALUE_STRING)
-        Com_Error (ERR_DROP, "Cvar_Update: src %s length %d exceeds MAX_CVAR_VALUE_STRING",
-                   cv->string,
-                   strlen (cv->string),
-                   sizeof (vmCvar->string));
-
-    // bk001129 - beware, sizeof(char*) is always 4 (for cv->string).
-    //            sizeof(vmCvar->string) always MAX_CVAR_VALUE_STRING
-    com_strlcpy (vmCvar->string, cv->string,  MAX_CVAR_VALUE_STRING);
-
-    vmCvar->value = cv->value;
-    vmCvar->integer = cv->integer;
 }
 
 

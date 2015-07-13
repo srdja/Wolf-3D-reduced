@@ -656,8 +656,6 @@ PUBLIC W8 WriteTGA (const char *filename, W16 bpp, W16 width, W16 height,
             scanline[ k++ ] = ptr[ (height - y - 1) * width * BytesPerPixel + i ];
         }
 
-
-
         if (bpp == 24 || bpp == 32) {
             // swap rgb to bgr
             for (x = 0; x < (width * BytesPerPixel); x += BytesPerPixel) {

@@ -1143,4 +1143,3 @@ PUBLIC void TM_Shutdown (void)
 
     Cmd_RemoveCommand ("listTextures");
 }
-

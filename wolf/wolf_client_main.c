@@ -203,7 +203,7 @@ PUBLIC void Client_Frame (int msec)
         return;
     }
 
-    if (ClientStatic.key_dest == key_game && ClientStatic.state == ca_active) {
+    if (ClientStatic.key_dest == key_game) {
         if (Player.playstate != ex_dead &&
                 Player.playstate != ex_watchingdeathcam &&
                 Player.playstate != ex_watchingbj) {

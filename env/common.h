@@ -68,8 +68,7 @@ void Com_Quit (void);
 extern  cvar_t  *developer;
 extern  cvar_t  *dedicated;
 
-void common_Init (int argc, char *argv[]);
-void common_Frame (int msec);
+void common_Init ();
 
 void    Sys_Error (const char *format, ...);
 void    Sys_Quit (void);

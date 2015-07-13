@@ -269,19 +269,12 @@ PUBLIC int R_Init (void *hinstance, void *hWnd)
     int     a, b;
 
     R_Register();
-/*
-    // Initialize our OpenGL dynamic bindings
-    if (! OpenGL_Init (gl_driver->string)) {
-        //OpenGL_Shutdown();
-        return -1;
-    }
-*/
+
     // Initialize OS-specific parts of OpenGL
     if (! GLimp_Init (hinstance, hWnd)) {
        // OpenGL_Shutdown();
         return -1;
     }
-
     // set our "safe" modes
     gl_state.prev_mode = 0;
 
@@ -332,16 +325,7 @@ PUBLIC int R_Init (void *hinstance, void *hWnd)
 PUBLIC void R_Shutdown (void)
 {
     TM_Shutdown();
-
-    /*
-    ** shut down OS specific OpenGL stuff like contexts, etc.
-    */
     GLimp_Shutdown();
-
-    /*
-    ** shutdown our OpenGL subsystem
-    */
-    //OpenGL_Shutdown();
 }
 
 
@@ -350,7 +334,6 @@ PUBLIC void R_Shutdown (void)
  */
 PUBLIC void R_BeginFrame (void)
 {
-
 //
 // Change modes if necessary.
 //
@@ -361,10 +344,6 @@ PUBLIC void R_BeginFrame (void)
         ref = Cvar_Get ("r_ref", "gl", CVAR_INIT);
         ref->modified = true;
     }
-//
-// Go into 2D mode.
-//
-
     R_SetGL2D();
 
 //

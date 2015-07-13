@@ -101,21 +101,6 @@ PRIVATE float ClampCvar (float min, float max, float value)
 PRIVATE void ControlsSetMenuItemValues (void)
 {
     s_options_sensitivity_slider.curvalue   = sensitivity->value / 100;
-
-    Cvar_SetValue ("cl_run", ClampCvar (0, 1, cl_run->value));
-    s_options_alwaysrun_box.curvalue        = (int)cl_run->value;
-
-    s_options_invertmouse_box.curvalue      = m_pitch->value < 0;
-
-    Cvar_SetValue ("lookspring", ClampCvar (0, 1, lookspring->value));
-    s_options_lookspring_box.curvalue       = (int)lookspring->value;
-
-    Cvar_SetValue ("lookstrafe", ClampCvar (0, 1, lookstrafe->value));
-    s_options_lookstrafe_box.curvalue       = (int)lookstrafe->value;
-
-    Cvar_SetValue ("freelook", ClampCvar (0, 1, freelook->value));
-    s_options_freelook_box.curvalue         = (int)freelook->value;
-
 }
 
 PRIVATE void ControlsResetDefaultsFunc (void *unused)
@@ -128,17 +113,7 @@ PRIVATE void ControlsResetDefaultsFunc (void *unused)
 
 PRIVATE void InvertMouseFunc (void *unused)
 {
-    Cvar_SetValue ("m_pitch", -m_pitch->value);
-}
 
-PRIVATE void LookspringFunc (void *unused)
-{
-    Cvar_SetValue ("lookspring", (float)!lookspring->value);
-}
-
-PRIVATE void LookstrafeFunc (void *unused)
-{
-    Cvar_SetValue ("lookstrafe", (float)!lookstrafe->value);
 }
 
 PRIVATE void Options_MenuInit (void)
@@ -179,46 +154,6 @@ PRIVATE void Options_MenuInit (void)
     s_options_alwaysrun_box.generic.name    = "Always Run:";
     s_options_alwaysrun_box.generic.callback = AlwaysRunFunc;
     s_options_alwaysrun_box.itemnames = yesno_names;
-
-    s_options_invertmouse_box.generic.type = MTYPE_SPINCONTROL;
-    s_options_invertmouse_box.generic.x = 0;
-    s_options_invertmouse_box.generic.y = y += nYOffset;
-    s_options_invertmouse_box.generic.fs        = FONT1;
-    s_options_invertmouse_box.generic.fontBaseColour = &textcolour;
-    s_options_invertmouse_box.generic.fontHighColour = &readcolour;
-    s_options_invertmouse_box.generic.name  = "Invert Mouse:";
-    s_options_invertmouse_box.generic.callback = InvertMouseFunc;
-    s_options_invertmouse_box.itemnames = yesno_names;
-
-    s_options_lookspring_box.generic.type = MTYPE_SPINCONTROL;
-    s_options_lookspring_box.generic.x  = 0;
-    s_options_lookspring_box.generic.y  = y += nYOffset;
-    s_options_lookspring_box.generic.fs     = FONT1;
-    s_options_lookspring_box.generic.fontBaseColour = &textcolour;
-    s_options_lookspring_box.generic.fontHighColour = &readcolour;
-    s_options_lookspring_box.generic.name   = "Lookspring:";
-    s_options_lookspring_box.generic.callback = LookspringFunc;
-    s_options_lookspring_box.itemnames = yesno_names;
-
-    s_options_lookstrafe_box.generic.type = MTYPE_SPINCONTROL;
-    s_options_lookstrafe_box.generic.x  = 0;
-    s_options_lookstrafe_box.generic.y  = y += nYOffset;
-    s_options_lookstrafe_box.generic.fs     = FONT1;
-    s_options_lookstrafe_box.generic.fontBaseColour = &textcolour;
-    s_options_lookstrafe_box.generic.fontHighColour = &readcolour;
-    s_options_lookstrafe_box.generic.name   = "Lookstrafe:";
-    s_options_lookstrafe_box.generic.callback = LookstrafeFunc;
-    s_options_lookstrafe_box.itemnames = yesno_names;
-
-    s_options_freelook_box.generic.type = MTYPE_SPINCONTROL;
-    s_options_freelook_box.generic.x    = 0;
-    s_options_freelook_box.generic.y    = y += nYOffset;
-    s_options_freelook_box.generic.fs       = FONT1;
-    s_options_freelook_box.generic.fontBaseColour = &textcolour;
-    s_options_freelook_box.generic.fontHighColour = &readcolour;
-    s_options_freelook_box.generic.name = "free look";
-    s_options_freelook_box.generic.callback = FreeLookFunc;
-    s_options_freelook_box.itemnames = yesno_names;
 
     s_options_customize_options_action.generic.type = MTYPE_ACTION;
     s_options_customize_options_action.generic.x    = 0;
@@ -311,7 +246,6 @@ char *bindnames[][2] = {
     { 0, 0 }
 };
 
-int             keys_cursor;
 PRIVATE int     bind_grab;
 
 PRIVATE menuframework_s s_keys_menu;

@@ -45,18 +45,10 @@
 
 /* Signatures for zip file information headers */
 #define SIG_LOCAL           0x04034b50L
-#define SIG_CENTRAL         0x02014b50L
-#define SIG_END             0x06054b50L
-#define SIG_EXTENDLOCAL     0x08074b50L
-#define SIG_EXTENDSPLOCAL   0x30304b50L
-
-
 
 
 /* Length of header (not counting the signature) */
 #define LOCALHEAD_SIZE      26
-#define CENTRALHEAD_SIZE    42
-#define ENDHEAD_SIZE        18
 
 
 typedef struct localzipheader_s {
@@ -232,26 +224,6 @@ PUBLIC pack_t *FS_LoadZipFile (const char *packfile)
         }
 
         tempfilename[ zlocalhead.filename_length ] = '\0'; // NUL-terminate string
-
-#if 0
-
-        if (! checkstring (tempfilename)) {
-            Com_DPrintf ("[FS_LoadZipFile]: Invalid file name\n");
-
-            // seek past extra field + file data
-            ret = fseek (packhandle,
-                         zlocalhead.extrafield_length + zlocalhead.compressed_size,
-                         SEEK_CUR);
-
-            if (ret != 0) {
-                Com_DPrintf ("[FS_LoadZipFile]: Seek error in file (%s)\n", packfile);
-                break;
-            }
-
-            continue;
-        }
-
-#endif
 
         com_strlcpy (pknewnode->name, tempfilename, sizeof (pknewnode->name));
 

@@ -164,10 +164,6 @@ PUBLIC void M_PushMenu (void (*draw) (void), const char * (*key) (int k))
 {
     int     i;
 
-//  if (Cvar_VariableValue ("maxclients") == 1
-//      && Com_ServerState ())
-//      Cvar_Set ("paused", "1");
-
     // if this menu is already present, drop back to that level
     // to avoid stacking menus by hotkeys
     for (i = 0; i < m_menudepth; ++i) {
@@ -179,7 +175,7 @@ PUBLIC void M_PushMenu (void (*draw) (void), const char * (*key) (int k))
 
     if (i == m_menudepth) {
         if (m_menudepth >= MAX_MENU_DEPTH)
-            Com_Error (ERR_FATAL, "M_PushMenu: MAX_MENU_DEPTH");
+            return;
 
         m_layers[ m_menudepth ].draw = m_drawfunc;
         m_layers[ m_menudepth ].key = m_keyfunc;
@@ -193,7 +189,6 @@ PUBLIC void M_PushMenu (void (*draw) (void), const char * (*key) (int k))
 
     ClientStatic.key_dest = key_menu;
     ClientStatic.menuState = IPM_MAIN;
-
 }
 
 /**
@@ -224,7 +219,7 @@ void M_PopMenu (void)
 {
 //  Sound_StartLocalSound( menu_out_sound );
     if (m_menudepth < 1) {
-        Com_Error (ERR_FATAL, "M_PopMenu: depth < 1");
+        return;
     }
 
     m_menudepth--;

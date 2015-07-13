@@ -264,7 +264,6 @@ PUBLIC void R_DrawWorld (void)
 
             if (! PL_Reborn (&Player)) {
                 M_Menu_Main_f();
-                ClientStatic.state = ca_disconnected;
             } else {
                 PL_Spawn (r_world->pSpawn, r_world);  // Spawn Player
             }

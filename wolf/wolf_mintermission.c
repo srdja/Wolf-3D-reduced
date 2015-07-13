@@ -569,8 +569,6 @@ PRIVATE const char *M_Victory_Key (int key)
         M_PushMenu (M_Victory_Text_Draw, M_Victory_Key);
         nvictory = 0;
         page = 0;
-        ClientStatic.state = ca_disconnected;
-
         return NULL;
     }
 

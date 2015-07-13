@@ -69,11 +69,7 @@ int dir4angle[5] = {ANG_0, ANG_90, ANG_180, ANG_270, ANG_0};
  */
 PUBLIC int WM_BuildTables (void)
 {
-
-
     srand ((unsigned int)time (NULL));
-
-
     return 1;
 }
 
