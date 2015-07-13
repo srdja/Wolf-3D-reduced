@@ -342,11 +342,6 @@ void Cmd_TokenizeString (const char *text_in)
     const char  *text;
     char        *textOut;
 
-#ifdef TKN_DBG
-    /** @FIXME TTimo blunt hook to try to find the tokenization of userinfo */
-    Com_DPrintf ("Cmd_TokenizeString: %s\n", text_in);
-#endif
-
     // clear previous args
     cmd_argc = 0;
 

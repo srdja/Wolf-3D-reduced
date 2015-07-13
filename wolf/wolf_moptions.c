@@ -41,7 +41,6 @@
 #include "../env/client.h"
 #include "../env/com_string.h"
 #include "../env/timer.h"
-#include "../env/console.h"
 #include "../env/renderer.h"
 #include "../env/keycodes.h"
 
@@ -171,22 +170,6 @@ PRIVATE void LookstrafeFunc (void *unused)
 
 PRIVATE void ConsoleFunc (void *unused)
 {
-    /*
-    ** the proper way to do this is probably to have ToggleConsole_f accept a parameter
-    */
-    extern void Key_ClearTyping (void);
-
-//  if ( cl.attractloop )
-//  {
-//      Cbuf_AddText ("killserver\n");
-//      return;
-//  }
-
-    Key_ClearTyping();
-    Con_ClearNotify();
-
-    M_ForceMenuOff();
-    ClientStatic.key_dest = key_console;
 }
 
 
@@ -273,14 +256,6 @@ PRIVATE void Options_MenuInit (void)
     s_options_freelook_box.generic.callback = FreeLookFunc;
     s_options_freelook_box.itemnames = yesno_names;
 
-    /*
-        s_options_noalttab_box.generic.type = MTYPE_SPINCONTROL;
-        s_options_noalttab_box.generic.x    = 0;
-        s_options_noalttab_box.generic.y    = y += nYOffset;
-        s_options_noalttab_box.generic.name = "disable alt-tab";
-        s_options_noalttab_box.generic.callback = NoAltTabFunc;
-        s_options_noalttab_box.itemnames = yesno_names;
-    */
     s_options_joystick_box.generic.type = MTYPE_SPINCONTROL;
     s_options_joystick_box.generic.x    = 0;
     s_options_joystick_box.generic.y    = y += nYOffset;

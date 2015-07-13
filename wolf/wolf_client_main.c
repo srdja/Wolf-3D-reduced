@@ -32,7 +32,6 @@
 #include "../env/renderer.h"
 #include "../env/timer.h"
 #include "../env/com_string.h"
-#include "../env/console.h"
 #include "../env/input.h"
 #include "../env/sound.h"
 
@@ -72,8 +71,6 @@ PUBLIC void Client_Screen_UpdateScreen (void)
 
 
     V_RenderView(); // Draw game world
-
-    Client_Screen_DrawConsole(); // Draw console
 
     M_Draw(); // Draw menu
 
@@ -151,10 +148,6 @@ PUBLIC void Client_PrepRefresh (const char *r_mapname)
 
     R_DrawPsyched (100);
     R_EndFrame();
-
-    // clear any lines of console text
-    Con_ClearNotify();
-
 
     if (r_world->musicName) {
         Sound_StartBGTrack (r_world->musicName, r_world->musicName);
@@ -280,7 +273,6 @@ PUBLIC void Client_Frame (int msec)
         }
     }
 
-    Client_Screen_RunConsole();
     Client_Screen_UpdateScreen();
 
 

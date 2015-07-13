@@ -197,13 +197,6 @@ PUBLIC void OpenAutomap()
         mt->texnum = MAPTILE_SPRITE_FLAG | sprt->tex[0];
         mt++;
 
-        /*if ( !spriteTextures[ sprt->tex[0] ] )
-        {
-            char    name[1024];
-            com_snprintf( name, sizeof( name ), "sprites/%.3d.tga", sprt->tex[0] );
-            spriteTextures[sprt->tex[0]] = TM_FindTexture( name, TT_Sprite );
-        }*/
-
         if (mt == &mapTiles[ MAX_MAP_TILES ]) {
             break;  // list is full, some items won't show (shouldn't happen)
         }

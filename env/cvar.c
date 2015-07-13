@@ -34,8 +34,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "common.h"
 #include "com_string.h"
 
-#include "console.h"
-
 cvar_t      *cvar_vars;
 cvar_t      *cvar_cheats;
 int         cvar_modifiedFlags;

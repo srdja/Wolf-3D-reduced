@@ -17,7 +17,6 @@ set( env_SOURCE
 	${CMAKE_SOURCE_DIR}/env/cmd.c
 	${CMAKE_SOURCE_DIR}/env/common.c
 	${CMAKE_SOURCE_DIR}/env/com_string.c
-	${CMAKE_SOURCE_DIR}/env/console.c
 	${CMAKE_SOURCE_DIR}/env/cvar.c
 	${CMAKE_SOURCE_DIR}/env/fileio.c
 	${CMAKE_SOURCE_DIR}/env/files.c
@@ -58,7 +57,6 @@ set ( env_HEADER
 	${CMAKE_SOURCE_DIR}/env/common_utils.h
 	${CMAKE_SOURCE_DIR}/env/com_math.h
 	${CMAKE_SOURCE_DIR}/env/com_string.h
-	${CMAKE_SOURCE_DIR}/env/console.h
 	${CMAKE_SOURCE_DIR}/env/cvar.h
 	${CMAKE_SOURCE_DIR}/env/filelink.h
 	${CMAKE_SOURCE_DIR}/env/filestring.h
@@ -98,7 +96,6 @@ set( wolf_SOURCE
 	${CMAKE_SOURCE_DIR}/wolf/wolf_areas.c
 	${CMAKE_SOURCE_DIR}/wolf/wolf_automap.c
 	${CMAKE_SOURCE_DIR}/wolf/wolf_bj.c
-    ${CMAKE_SOURCE_DIR}/wolf/wolf_common.c
 	${CMAKE_SOURCE_DIR}/wolf/wolf_client_main.c
 	${CMAKE_SOURCE_DIR}/wolf/wolf_doors.c
 	${CMAKE_SOURCE_DIR}/wolf/wolf_level.c

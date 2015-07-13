@@ -31,7 +31,6 @@
 #include <stdio.h>
 
 #include "client.h"
-#include "console.h"
 #include "keys.h"
 #include "video.h"
 #include "timer.h"
@@ -113,16 +112,13 @@ PRIVATE void Client_InitLocal (void)
 PUBLIC void Client_Init (void)
 {
     if (dedicated->value)
-        return;     // nothing running on the client
-
-    Con_Init();
+        return;
 
     Video_Init();
     Sound_Init();   // sound must be initialized after window is created
 
     Menu_Init();
 
-    Client_Screen_Init();
     Client_InitLocal();
     IN_Init();
 }

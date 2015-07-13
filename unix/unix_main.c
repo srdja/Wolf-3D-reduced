@@ -41,18 +41,15 @@
 #include "../env/platform.h"
 #include "../env/common.h"
 #include "../env/timer.h"
+#include "../env/cmd.h"
+#include "../env/common_utils.h"
 
 W32 sys_frame_time;
-
-uid_t saved_euid;
-_boolean stdin_active = true;
-
 
 cvar_t *nostdout;
 
 
 extern void KBD_Update (void);
-
 
 
 /**
@@ -71,7 +68,6 @@ void Sys_Error (const char *format, ...)
 // change stdin to non blocking
     fcntl (0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
 
-
     Client_Shutdown();
 
     va_start (argptr, format);
@@ -81,7 +77,6 @@ void Sys_Error (const char *format, ...)
     fprintf (stderr, "Error: %s\n", string);
 
     _exit (1);
-
 }
 
 void Sys_Quit (void)
@@ -90,23 +85,6 @@ void Sys_Quit (void)
 
     fcntl (0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
     _exit (0);
-}
-
-/*
------------------------------------------------------------------------------
- Function: Sys_SendKeyEvents
-
- Parameters: Nothing.
-
- Returns: Nothing.
-
- Notes: Send Key_Event calls.
------------------------------------------------------------------------------
-*/
-void Sys_SendKeyEvents (void)
-{
-    // grab frame time
-    sys_frame_time = Sys_Milliseconds();
 }
 
 /*
@@ -146,7 +124,6 @@ int main (int argc, char *argv[])
     int     time, oldtime, newtime;
 
     // go back to real user for config loads
-    saved_euid = geteuid();
     seteuid (getuid());
 
     common_Init (argc, argv);
@@ -172,7 +149,9 @@ int main (int argc, char *argv[])
 
         } while (time < 1);
 
-        common_Frame (time);
+        Cbuf_Execute();
+        Client_Frame (time);
+
         oldtime = newtime;
     }
 

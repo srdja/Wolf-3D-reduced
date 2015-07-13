@@ -35,7 +35,6 @@
 #include <unistd.h>
 
 #include "../env/client.h"
-#include "../env/console.h"
 #include "../env/renderer.h"
 #include "../env/video.h"
 #include "../env/sound.h"
@@ -55,9 +54,6 @@ viddef_t    viddef; // global video state; used by other modules
 
 #define VID_NUM_MODES ( sizeof( vid_modes ) / sizeof( vid_modes[ 0 ] ) )
 
-
-
-extern void RW_IN_Shutdown (void);
 
 //==========================================================================
 
@@ -193,20 +189,11 @@ PUBLIC void Video_CheckChanges (void)
         r_ref->modified = false;
         r_fullscreen->modified = true;
         ClientState.refresh_prepped = false;
-//      ClientStatic.disable_screen = true;
 
         if (! VID_LoadRefresh()) {
             Com_Error (ERR_FATAL, "Could not start OpenGL module!");
-
-            // drop the console if we fail to load a refresh
-            if (ClientStatic.key_dest != key_console) {
-                Con_ToggleConsole_f();
-            }
         }
-
-//      ClientStatic.disable_screen = false;
     }
-
 }
 
 

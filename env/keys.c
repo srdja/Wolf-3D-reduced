@@ -32,8 +32,6 @@
 #include "client.h"
 
 #include "com_string.h"
-#include "console.h"
-
 
 /*
 
@@ -41,16 +39,10 @@ key up events are sent even if in console mode
 
 */
 
+#define MAXCMDLINE 256
 
-#define         MAXCMDLINE      256
-
-char    key_lines[ 32 ][ MAXCMDLINE ];
-int     key_linepos;
 int     shift_down = false;
 int     anykeydown;
-
-int     edit_line = 0;
-int     history_line = 0;
 
 int         key_waiting;
 char        *keybindings[ 256 ];
@@ -204,40 +196,6 @@ keyname_t keynames[] = {
 ==============================================================================
 */
 
-/**
- * \brief Complete console command or cvar.
- */
-PRIVATE void CompleteCommand (void)
-{
-    char    *cmd, *s;
-
-    s = key_lines[edit_line] + 1;
-
-    if (*s == '\\' || *s == '/') {
-        s++;
-    }
-
-    completionString = s;
-    Cmd_CommandCompletion (FindMatches);
-    cmd = shortestMatch;
-
-    if (! cmd) {
-        // TODO: For now
-        Cvar_CommandCompletion (FindMatches);
-        cmd = shortestMatch;
-    }
-
-    if (cmd) {
-        key_lines[ edit_line ][ 1 ] = '/';
-        com_strlcpy (key_lines[ edit_line ] + 2, cmd, sizeof (key_lines[ edit_line ]) - 2);
-        key_linepos = strlen (cmd) + 2;
-        key_lines[ edit_line ][ key_linepos ] = ' ';
-        key_linepos++;
-        key_lines[ edit_line ][ key_linepos ] = 0;
-        return;
-    }
-}
-
 PUBLIC _boolean Key_IsDown (int keynum)
 {
     if (keynum == -1) {
@@ -245,237 +203,6 @@ PUBLIC _boolean Key_IsDown (int keynum)
     }
 
     return keydown[ keynum ];
-}
-
-/**
- * \brief Interactive line editing and console scrollback.
- * \param[in] key Key that has been pressed.
- */
-PRIVATE void Key_Console (int key)
-{
-    switch (key) {
-    case K_KP_SLASH:
-        key = '/';
-        break;
-
-    case K_KP_MINUS:
-        key = '-';
-        break;
-
-    case K_KP_PLUS:
-        key = '+';
-        break;
-
-    case K_KP_HOME:
-        key = '7';
-        break;
-
-    case K_KP_UPARROW:
-        key = '8';
-        break;
-
-    case K_KP_PGUP:
-        key = '9';
-        break;
-
-    case K_KP_LEFTARROW:
-        key = '4';
-        break;
-
-    case K_KP_5:
-        key = '5';
-        break;
-
-    case K_KP_RIGHTARROW:
-        key = '6';
-        break;
-
-    case K_KP_END:
-        key = '1';
-        break;
-
-    case K_KP_DOWNARROW:
-        key = '2';
-        break;
-
-    case K_KP_PGDN:
-        key = '3';
-        break;
-
-    case K_KP_INS:
-        key = '0';
-        break;
-
-    case K_KP_DEL:
-        key = '.';
-        break;
-    }
-
-    if ((TOUPPER (key) == 'V' && keydown[K_CTRL]) ||
-            (((key == K_INS) || (key == K_KP_INS)) && keydown[K_SHIFT])) {
-        char *cbd;
-
-        if ((cbd = Sys_GetClipboardData()) != 0) {
-            int iStringLength;
-
-            strtok (cbd, "\n\r\b");
-
-            iStringLength = strlen (cbd);
-
-            if (iStringLength + key_linepos >= MAXCMDLINE) {
-                iStringLength = MAXCMDLINE - key_linepos;
-            }
-
-            if (iStringLength > 0) {
-                cbd[ iStringLength ] = '\0';
-                com_strlcat (key_lines[ edit_line ], cbd, sizeof (key_lines[ edit_line ]));
-                key_linepos += iStringLength;
-            }
-
-            MM_FREE (cbd);
-        }
-
-        return;
-    }
-
-    // ctrl-L clears screen
-    if (key == 'l' && keydown[ K_CTRL ]) {
-        Cbuf_AddText ("clear\n");
-        return;
-    }
-
-    // enter finishes the line
-    if (key == K_ENTER || key == K_KP_ENTER) {
-        // backslash text are commands, else chat
-        if (key_lines[ edit_line ][ 1 ] == '\\' || key_lines[ edit_line ][ 1 ] == '/') {
-            Cbuf_AddText (key_lines[ edit_line ] + 2);   // skip the >
-        } else {
-            Cbuf_AddText (key_lines[ edit_line ] + 1);   // valid command
-        }
-
-        Cbuf_AddText ("\n");
-        edit_line = (edit_line + 1) & 31;
-        history_line = edit_line;
-        key_lines[ edit_line ][ 0 ] = ']';
-        key_linepos = 1;
-
-        if (ClientStatic.state == ca_disconnected) {
-            Client_Screen_UpdateScreen();   // force an update, because the command
-            // may take some time
-        }
-
-        return;
-    }
-
-    if (key == K_TAB) {
-        // command completion
-        CompleteCommand();
-        return;
-    }
-
-    if ((key == K_BACKSPACE) || (key == K_LEFTARROW) || (key == K_KP_LEFTARROW) || ((key == 'h') && (keydown[ K_CTRL ]))) {
-        if (key_linepos > 1) {
-            key_linepos--;
-        }
-
-        return;
-    }
-
-    if ((key == K_UPARROW) || (key == K_KP_UPARROW) ||
-            ((key == 'p') && keydown[K_CTRL])) {
-        do {
-            history_line = (history_line - 1) & 31;
-
-        } while (history_line != edit_line
-                 && ! key_lines[ history_line ][ 1 ]);
-
-        if (history_line == edit_line) {
-            history_line = (edit_line + 1) & 31;
-        }
-
-        com_strlcpy (key_lines[ edit_line ], key_lines[ history_line ], sizeof (key_lines[ edit_line ]));
-        key_linepos = strlen (key_lines[edit_line]);
-        return;
-    }
-
-    if ((key == K_DOWNARROW) || (key == K_KP_DOWNARROW) ||
-            ((key == 'n') && keydown[K_CTRL])) {
-        if (history_line == edit_line) {
-            return;
-        }
-
-        do {
-            history_line = (history_line + 1) & 31;
-        } while (history_line != edit_line
-                 && !key_lines[history_line][1]);
-
-        if (history_line == edit_line) {
-            key_lines[edit_line][0] = ']';
-            key_linepos = 1;
-        } else {
-            com_strlcpy (key_lines[ edit_line ], key_lines[ history_line ], sizeof (key_lines[ edit_line ]));
-            key_linepos = strlen (key_lines[edit_line]);
-        }
-
-        return;
-    }
-
-
-    // console scrolling
-    if (key == K_PGUP || key == K_KP_PGUP) {
-        Con_PageUp();
-        return;
-    }
-
-    if (key == K_PGDN || key == K_KP_PGDN) {
-        Con_PageDown();
-        return;
-    }
-
-    if (key == K_MWHEELUP) {
-        Con_PageUp();
-
-        if (keys[K_CTRL].down) { // hold <ctrl> to accelerate scrolling
-            Con_PageUp();
-            Con_PageUp();
-        }
-
-        return;
-    }
-
-    if (key == K_MWHEELDOWN) {
-        Con_PageDown();
-
-        if (keys[K_CTRL].down) { // hold <ctrl> to accelerate scrolling
-            Con_PageDown();
-            Con_PageDown();
-        }
-
-        return;
-    }
-
-    // ctrl-home = top of console
-    if (key == K_HOME || key == K_KP_HOME) {
-        Con_Top();
-        return;
-    }
-
-    // ctrl-end = bottom of console
-    if (key == K_END || key == K_KP_END) {
-        Con_Bottom();
-        return;
-    }
-
-    if (key < 32 || key > 127) {
-        return; // non printable
-    }
-
-    if (key_linepos < MAXCMDLINE - 1) {
-        key_lines[ edit_line ][ key_linepos ] = key;
-        key_linepos++;
-        key_lines[ edit_line ][ key_linepos ] = 0;
-    }
-
 }
 
 //============================================================================
@@ -738,26 +465,11 @@ PUBLIC void Key_WriteBindings (FILE *f)
 }
 
 /**
- * \brief Console callback method to print bindlist
- */
-PRIVATE void Key_Bindlist_f (void)
-{
-}
-
-/**
  * \brief Initialize key mapping module.
  */
 PUBLIC void Key_Init (void)
 {
     int i;
-
-    for (i = 0; i < 32; ++i) {
-        key_lines[ i ][ 0 ] = ']';
-        key_lines[ i ][ 1 ] = 0;
-    }
-
-    key_linepos = 1;
-
 //
 // init ASCII characters in console mode
 //
@@ -839,7 +551,6 @@ PUBLIC void Key_Init (void)
     Cmd_AddCommand ("bind",          Key_Bind_f);
     Cmd_AddCommand ("unbind",       Key_Unbind_f);
     Cmd_AddCommand ("unbindall", Key_Unbindall_f);
-    Cmd_AddCommand ("listBinds",     Key_Bindlist_f);
 }
 
 /**
@@ -882,16 +593,6 @@ PUBLIC void Key_Event (int key, _boolean down, unsigned time)
 
     if (key == K_SHIFT) {
         shift_down = down;
-    }
-
-    // console key is hardcoded, so the user can never unbind it
-    if (key == '`' || key == '~') {
-        if (! down) {
-            return;
-        }
-
-        Con_ToggleConsole_f();
-        return;
     }
 
     // menu key is hardcoded, so the user can never unbind it
@@ -1012,11 +713,10 @@ PUBLIC void Key_Event (int key, _boolean down, unsigned time)
 
     case key_game:
     case key_console:
-        Key_Console (key);
         break;
 
     default:
-        Com_DPrintf ("Bad ClientStatic.key_dest\n");
+        break;
     }
 }
 
