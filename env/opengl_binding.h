@@ -31,17 +31,5 @@
 #define __OPENGL_BINDING_H__
 
 
-
-#ifdef _WIN32
-
-#define WIN32_LEAN_AND_MEAN 1
-#include <windows.h>
-
-#endif /* _WIN32 */
-
-
-void GL_ConfigExtensions (const char *glext);
-
-
 #endif /* __OPENGL_BINDING_H__ */
 

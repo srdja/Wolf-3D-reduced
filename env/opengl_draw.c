@@ -130,7 +130,6 @@ PUBLIC void R_Draw_Pic (int x, int y, const char *pic)
     pfglVertex2i (x, y + tex->height);
 
     pfglEnd();
-
 }
 
 /**
@@ -153,7 +152,6 @@ PUBLIC void R_Draw_Tile (int x, int y, int w, int h, const char *pic)
         return;
     }
 
-
     R_Bind (image->texnum);
 
     pfglBegin (GL_QUADS);
@@ -171,9 +169,7 @@ PUBLIC void R_Draw_Tile (int x, int y, int w, int h, const char *pic)
     pfglTexCoord2i (x / image->upload_width, (y + h) / image->upload_height);
     pfglVertex2i (x, y + h);
 
-
     pfglEnd();
-
 }
 
 /**
@@ -192,20 +188,15 @@ PUBLIC void R_Draw_Fill (int x, int y, int w, int h, colour3_t c)
 
     pfglColor3ubv (c);
 
-
     pfglBegin (GL_QUADS);
-
-    pfglVertex2i (x, y);
-    pfglVertex2i (x + w, y);
-    pfglVertex2i (x + w, y + h);
-    pfglVertex2i (x, y + h);
-
+        pfglVertex2i (x, y);
+        pfglVertex2i (x + w, y);
+        pfglVertex2i (x + w, y + h);
+        pfglVertex2i (x, y + h);
     pfglEnd();
-
 
     pfglColor3f (1, 1, 1);
     pfglEnable (GL_TEXTURE_2D);
-
 }
 
 /**
@@ -222,19 +213,15 @@ PUBLIC void R_Draw_Line (int nXStart, int nYStart, int nXEnd, int nYEnd, int wid
 {
     pfglDisable (GL_TEXTURE_2D);
 
-
     pfglColor3ubv (c);
-
-
     pfglLineWidth ((float)width);
 
     pfglBegin (GL_LINES);
-
-    pfglVertex2i (nXStart, nYStart);
-    pfglVertex2i (nXEnd, nYEnd);
-
+        pfglVertex2i (nXStart, nYStart);
+        pfglVertex2i (nXEnd, nYEnd);
     pfglEnd();
 
     pfglColor3f (1, 1, 1);
+
     pfglEnable (GL_TEXTURE_2D);
 }

@@ -87,5 +87,4 @@ _boolean    GLimp_Init (void *hinstance, void *hWnd);
 void        GLimp_Shutdown (void);
 int         GLimp_SetMode (int *pwidth, int *pheight, int mode, _boolean fullscreen);
 
-
 #endif /* __OPENGL_LOCAL_H__ */

@@ -183,22 +183,6 @@ PRIVATE void Sound_SpatializeChannel (channel_t *ch)
             pfalSource3f (ch->sourceName, AL_POSITION, ch->position[1], ch->position[2], -ch->position[0]);
             pfalSource3f (ch->sourceName, AL_VELOCITY, 0, 0, 0);
         }
-
-        /*      else
-                {
-                    if( ch->loopSound )
-                    {
-                        Client_GetEntitySoundSpatialization( ch->loopNum, position, velocity );
-                    }
-                    else
-                    {
-                        Client_GetEntitySoundSpatialization( ch->entNum, position, velocity );
-                    }
-
-                    pfalSource3f( ch->sourceName, AL_POSITION, position[1], position[2], -position[0] );
-                    pfalSource3f( ch->sourceName, AL_VELOCITY, velocity[1], velocity[2], -velocity[0] );
-                }
-        */
     }
 
     // Update min/max distance

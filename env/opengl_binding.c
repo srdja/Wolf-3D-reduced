@@ -36,29 +36,11 @@
 
 */
 
-#ifdef _WIN32
-
-#include <float.h>
-
-#include <windows.h>
-
-HINSTANCE hinstOpenGL;
-
-#endif
-
-
-#ifdef __unix__
-
 #include <dlfcn.h>
 
 void *OpenGLLib;
 
-#endif
-
-
 #include "opengl_local.h"
-
-
 #include "common.h"
 
 
@@ -68,30 +50,12 @@ void *OpenGLLib;
  */
 PUBLIC void OpenGL_Shutdown (void)
 {
-
-#ifdef _WIN32
-
-    if (hinstOpenGL) {
-        FreeLibrary (hinstOpenGL);
-        hinstOpenGL = NULL;
-    }
-
-    hinstOpenGL = NULL;
-
-#elif __unix__
-
     if (OpenGLLib) {
         dlclose (OpenGLLib);
         OpenGLLib = NULL;
     }
 
     OpenGLLib = NULL;
-
-#else
-
-#error "Please define interface to OpenGL library!"
-
-#endif
 
     pfglAccum                     = NULL;
     pfglAlphaFunc                 = NULL;
@@ -435,16 +399,6 @@ PUBLIC void OpenGL_Shutdown (void)
     pfglXSwapBuffers              = NULL;
 }
 
-
-
-
-
-#ifdef _WIN32
-
-#define GPA( a ) GetProcAddress( hinstOpenGL, a )
-
-#elif __unix__
-
 #define GPA( a ) dlsym( OpenGLLib, a )
 
 
@@ -456,15 +410,6 @@ void *pfwglGetProcAddress (const char *symbol)
 
     return NULL;
 }
-
-#else
-
-#error "Please define interface to OpenGL library!"
-
-#endif
-
-
-
 
 /**
  * \brief Initialize OpenGL interface.
