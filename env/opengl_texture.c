@@ -30,13 +30,8 @@
  */
 
 #include <string.h>
-
 #include "opengl_local.h"
-
 #include "zmem.h"
-
-
-// ***************************************************************************
 
 PRIVATE INLINECALL GLenum WrapToGL (TWrapMode mode)
 {
@@ -66,8 +61,6 @@ PRIVATE INLINECALL GLenum MagFilterToGL (TMagFilter MagFilter)
 
     return GL_LINEAR;
 }
-
-
 
 PRIVATE INLINECALL GLenum MinFilterToGL (_boolean MipMap, TMinFilter MinFilter)
 {
@@ -114,9 +107,6 @@ PRIVATE INLINECALL GLenum MinFilterToGL (_boolean MipMap, TMinFilter MinFilter)
     return GL_LINEAR;
 }
 
-// ***************************************************************************
-
-
 
 /**
  * \brief Finds the difference between two angles.
@@ -134,9 +124,6 @@ PUBLIC _boolean R_UploadTexture (texture_t *tex, PW8 data)
     pfglBindTexture (GL_TEXTURE_2D, tex->texnum);
 
 
-
-
-
     for (scaled_width = 1 ; scaled_width < tex->width ; scaled_width <<= 1) {
         ;
     }
@@ -144,8 +131,6 @@ PUBLIC _boolean R_UploadTexture (texture_t *tex, PW8 data)
     if (gl_round_down->value && scaled_width > tex->width && tex->MipMap) {
         scaled_width >>= 1;
     }
-
-
 
     for (scaled_height = 1 ; scaled_height < tex->height ; scaled_height <<= 1) {
         ;
@@ -155,15 +140,11 @@ PUBLIC _boolean R_UploadTexture (texture_t *tex, PW8 data)
         scaled_height >>= 1;
     }
 
-
-
     // let people sample down the world textures for speed
     if (tex->MipMap) {
         scaled_width >>= (int)gl_picmip->value;
         scaled_height >>= (int)gl_picmip->value;
     }
-
-
 
     // don't ever bother with > glMaxTexSize textures
     if (scaled_width > glMaxTexSize) {
@@ -182,22 +163,16 @@ PUBLIC _boolean R_UploadTexture (texture_t *tex, PW8 data)
         scaled_height = 1;
     }
 
-
     tex->upload_width = scaled_width;
     tex->upload_height = scaled_height;
 
-
-
     scaled = (PW8)Z_Malloc (scaled_width * scaled_height * tex->bytes);
-
-
 
     if (scaled_width == tex->width && scaled_height == tex->height) {
         memcpy (scaled, data, tex->width * tex->height * tex->bytes);
     } else {
         TM_ResampleTexture (data, tex->width, tex->height, scaled, scaled_width, scaled_height, tex->bytes, INTERPOLATION_NONE);
     }
-
 
 // upload base image
     pfglTexImage2D (GL_TEXTURE_2D, 0, comp, scaled_width, scaled_height, 0, tex->bytes == 4 ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, scaled);
@@ -211,12 +186,7 @@ PUBLIC _boolean R_UploadTexture (texture_t *tex, PW8 data)
             pfglTexImage2D (GL_TEXTURE_2D, miplevel++, tex->bytes, scaled_width, scaled_height, 0, tex->bytes == 4 ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, scaled);
         }
     }
-
-
     Z_Free (scaled);
-
-
-
 
     if (tex->isTextureCube) {
         pfglTexParameteri (GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_S, WrapToGL (tex->WrapS));
@@ -230,110 +200,16 @@ PUBLIC _boolean R_UploadTexture (texture_t *tex, PW8 data)
         pfglTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, MinFilterToGL (tex->MipMap, tex->MinFilter));
         pfglTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, MagFilterToGL (tex->MagFilter));
     }
-
-    if (gl_ext.EXTTextureFilterAnisotropic) {
-        pfglTexParameterf (GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, gl_ext.nMaxAnisotropy);
-    }
-
-
     return true;
 }
 
 
-/*
------------------------------------------------------------------------------
- Function:
-
- Parameters:
-
- Returns:
-
- Notes:
-
------------------------------------------------------------------------------
-*/
 PUBLIC void R_DeleteTexture (unsigned int texnum)
 {
     pfglDeleteTextures (1, &texnum);
 }
 
-/*
------------------------------------------------------------------------------
- Function:
 
- Parameters:
-
- Returns:
-
- Notes:
-
------------------------------------------------------------------------------
-*/
-PUBLIC void R_TexEnv (GLenum mode)
-{
-    static int lastmodes[ 4 ] = { -1, -1, -1, -1 };
-
-    if (mode != lastmodes[ gl_state.currenttmu ]) {
-        pfglTexEnvi (GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode);
-        lastmodes[ gl_state.currenttmu ] = mode;
-    }
-}
-
-/*
------------------------------------------------------------------------------
- Function:
-
- Parameters:
-
- Returns:
-
- Notes:
-
------------------------------------------------------------------------------
-*/
-PUBLIC void R_SelectTexture (GLenum texture)
-{
-    int tmu;
-
-    if (! pfglActiveTextureARB) {
-        return;
-    }
-
-    if (texture == GL_TEXTURE0) {
-        tmu = 0;
-    } else if (texture == GL_TEXTURE1) {
-        tmu = 1;
-    } else if (texture == GL_TEXTURE2) {
-        tmu = 2;
-    } else {
-        tmu = 3;
-    }
-
-    if (tmu == gl_state.currenttmu) {
-        return;
-    }
-
-
-    gl_state.currenttmu = tmu;
-
-    pfglActiveTextureARB (texture);
-    pfglClientActiveTextureARB (texture);
-
-}
-
-
-/*
------------------------------------------------------------------------------
- Function:
-
- Parameters:
-
- Returns:
-
- Notes:
-
------------------------------------------------------------------------------
-*/
 PUBLIC void R_Bind (int texnum)
 {
     // Is this texture already bound

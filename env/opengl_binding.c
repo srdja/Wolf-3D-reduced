@@ -427,53 +427,12 @@ PUBLIC void OpenGL_Shutdown (void)
     pfglVertex4sv                 = NULL;
     pfglVertexPointer             = NULL;
     pfglViewport                  = NULL;
-
-#ifdef _WIN32
-
-    pfwglCopyContext              = NULL;
-    pfwglCreateContext            = NULL;
-    pfwglCreateLayerContext       = NULL;
-    pfwglDeleteContext            = NULL;
-    pfwglDescribeLayerPlane       = NULL;
-    pfwglGetCurrentContext        = NULL;
-    pfwglGetCurrentDC             = NULL;
-    pfwglGetLayerPaletteEntries   = NULL;
-    pfwglGetProcAddress           = NULL;
-    pfwglMakeCurrent              = NULL;
-    pfwglRealizeLayerPalette      = NULL;
-    pfwglSetLayerPaletteEntries   = NULL;
-    pfwglShareLists               = NULL;
-    pfwglSwapLayerBuffers         = NULL;
-    pfwglUseFontBitmaps           = NULL;
-    pfwglUseFontOutlines          = NULL;
-
-    pfwglChoosePixelFormat        = NULL;
-    pfwglDescribePixelFormat      = NULL;
-    pfwglGetPixelFormat           = NULL;
-    pfwglSetPixelFormat           = NULL;
-    pfwglSwapBuffers              = NULL;
-
-#elif __unix__
-
     pfglXChooseVisual             = NULL;
     pfglXCreateContext            = NULL;
     pfglXDestroyContext           = NULL;
     pfglXMakeCurrent              = NULL;
     pfglXCopyContext              = NULL;
     pfglXSwapBuffers              = NULL;
-
-#else
-
-#error "Please define interface to OpenGL library!"
-
-#endif
-
-
-//
-//  Extensions
-//
-    pfglMultiTexCoord2fARB        = NULL;
-
 }
 
 

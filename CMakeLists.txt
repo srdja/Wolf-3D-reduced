@@ -31,7 +31,6 @@ set( env_SOURCE
 	${CMAKE_SOURCE_DIR}/env/openal_main.c
 	${CMAKE_SOURCE_DIR}/env/opengl_binding.c
 	${CMAKE_SOURCE_DIR}/env/opengl_draw.c
-	${CMAKE_SOURCE_DIR}/env/opengl_extension.c
 	${CMAKE_SOURCE_DIR}/env/opengl_main.c
 	${CMAKE_SOURCE_DIR}/env/opengl_texture.c
 	${CMAKE_SOURCE_DIR}/env/sound.c
@@ -69,7 +68,6 @@ set ( env_HEADER
 	${CMAKE_SOURCE_DIR}/env/num_type.h
 	${CMAKE_SOURCE_DIR}/env/openal_binding.h
 	${CMAKE_SOURCE_DIR}/env/opengl_binding.h
-	${CMAKE_SOURCE_DIR}/env/myopengl_extension.h
 	${CMAKE_SOURCE_DIR}/env/opengl_local.h
 	${CMAKE_SOURCE_DIR}/env/renderer.h
 	${CMAKE_SOURCE_DIR}/env/sound.h
@@ -146,7 +144,6 @@ set( platform_SOURCE
 		${CMAKE_SOURCE_DIR}/unix/glob.c
 		${CMAKE_SOURCE_DIR}/unix/unix_openglw_imp.c
 		${CMAKE_SOURCE_DIR}/unix/unix_file.c
-		${CMAKE_SOURCE_DIR}/unix/unix_joystick.c
 		${CMAKE_SOURCE_DIR}/unix/unix_keys.c
 		${CMAKE_SOURCE_DIR}/unix/unix_main.c
 		${CMAKE_SOURCE_DIR}/unix/unix_mouse.c

@@ -373,11 +373,6 @@ _boolean GLimp_Init (void *hinstance, void *wndproc)
     return true;
 }
 
-void GLimp_BeginFrame (void)
-{
-    ;
-}
-
 void GLimp_EndFrame (void)
 {
     pfglFlush();

@@ -22,36 +22,25 @@
 #define __OPENGL_LOCAL_H__
 
 #include <stdio.h>
-
-
 #include <GL/gl.h>
 #include <GL/glu.h>
-
 #include <GL/glext.h>
 
 #include "w3d_opengl.h"
 #include "opengl_binding.h"
-#include "myopengl_extension.h"
-
-
 #include "com_math.h"
 #include "filesystem.h"
 #include "cvar.h"
-
 #include "renderer.h"
 
-
 int glMaxTexSize; // maximum texture size
-
 
 void GL_SetDefaultState (void);
 void GL_UpdateSwapInterval (void);
 
 extern  float   gldepthmin, gldepthmax;
 
-
-extern cvar_t   *gl_ext_palettedtexture;
-
+extern  cvar_t  *gl_ext_palettedtexture;
 extern  cvar_t  *gl_mode;
 extern  cvar_t  *gl_round_down;
 extern  cvar_t  *gl_picmip;
@@ -61,16 +50,12 @@ extern  cvar_t  *gl_clear;
 extern  cvar_t  *gl_drawbuffer;
 extern  cvar_t  *gl_driver;
 extern  cvar_t  *gl_swapinterval;
-
 extern  cvar_t  *r_fullscreen;
 extern  cvar_t  *vid_gamma;
-
-extern  cvar_t      *intensity;
+extern  cvar_t  *intensity;
 
 
 void R_Bind (int texnum);
-void R_TexEnv (GLenum value);
-void R_SelectTexture (GLenum);
 
 
 typedef struct {
@@ -79,7 +64,6 @@ typedef struct {
     const char *version_string;
     const char *extensions_string;
     _boolean Version_1_2;
-
 } glconfig_t;
 
 typedef struct {
@@ -96,68 +80,12 @@ extern glconfig_t  gl_config;
 extern glstate_t   gl_state;
 
 
-typedef struct {
-    _boolean    ARBMultiTexture;
-    int     nTextureStages; // Number of texture stages supported
-    _boolean    EXTTextureEnvCombine;
-
-    _boolean EXTTextureFilterAnisotropic;
-    float       nMaxAnisotropy;
-    // NB: Fence extension is not here, because NVVertexArrayRange is false if GL_NV_fence is not here.
-    _boolean    NVVertexArrayRange;
-    int     NVVertexArrayRangeMaxVertex;
-    _boolean    EXTTextureCompressionS3TC;
-    _boolean    EXTVertexWeighting;
-    _boolean    EXTSeparateSpecularColor;
-    _boolean    NVTextureEnvCombine4;
-    _boolean    ARBTextureCubeMap;
-    _boolean    NVVertexProgram;
-    _boolean    EXTVertexShader;
-    _boolean    NVTextureShader;
-    // true if NVVertexProgram and if we know that VP is emulated
-    _boolean    NVVertexProgramEmulated;
-    _boolean    EXTSecondaryColor;
-    _boolean    EXTBlendColor;
-    // NVVertexArrayRange2.
-    _boolean    NVVertexArrayRange2;
-    // equal to GL_VERTEX_ARRAY_RANGE_WITHOUT_FLUSH_NV if possible, or GL_VERTEX_ARRAY_RANGE_NV
-    int NVStateVARWithoutFlush;
-
-    /* WGL ARB Extensions */
-    _boolean    WGLARBPBuffer;
-    _boolean    WGLARBPixelFormat;
-    _boolean    WGLEXTSwapControl;
-
-    /* ATI Extensions */
-    _boolean    ATIVertexArrayObject;
-    _boolean    ATIMapObjectBuffer;
-    _boolean    ATITextureEnvCombine3;
-    _boolean    ATIEnvMapBumpMap;
-    _boolean    ATIFragmentShader;
-    _boolean    ATIXTextureEnvRoute;
-
-    /* ARB Extensions */
-    _boolean    ARBTextureCompression;
-    _boolean    ARBFragmentProgram;
-    _boolean    ARBVertexBufferObject;
-    _boolean    ARBVertexProgram;
-
-    /* Disable Hardware feature */
-    _boolean    DisableHardwareVertexProgram;
-    _boolean    DisableHardwareTextureShader;
-
-} GL_Extensions;
-
-extern GL_Extensions gl_ext;
-
 void MYgluPerspective (GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble zFar);
 
-void        GLimp_BeginFrame();
 void        GLimp_EndFrame (void);
 _boolean    GLimp_Init (void *hinstance, void *hWnd);
 void        GLimp_Shutdown (void);
 int         GLimp_SetMode (int *pwidth, int *pheight, int mode, _boolean fullscreen);
-void        GLimp_AppActivate (_boolean active);
 
 
 #endif /* __OPENGL_LOCAL_H__ */

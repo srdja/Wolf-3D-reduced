@@ -251,9 +251,7 @@ PRIVATE _boolean R_SetMode (void)
             return false;
         }
     }
-
     return true;
-
 }
 
 
@@ -320,8 +318,6 @@ PUBLIC int R_Init (void *hinstance, void *hWnd)
 
     //FIXME: A lot of these aren't required
 
-    GL_ConfigExtensions (gl_config.extensions_string);
-
     pfglGetIntegerv (GL_MAX_TEXTURE_SIZE, &glMaxTexSize);
 
     GL_SetDefaultState();
@@ -368,10 +364,6 @@ PUBLIC void R_BeginFrame (void)
         ref = Cvar_Get ("r_ref", "gl", CVAR_INIT);
         ref->modified = true;
     }
-
-
-    GLimp_BeginFrame();
-
 //
 // Go into 2D mode.
 //

@@ -104,16 +104,6 @@ PUBLIC void GL_SetDefaultState (void)
  */
 PRIVATE void R_CheckFOV (void)
 {
-    /*
-        if(!vid_fov->modified) return;
-        vid_fov->modified=false;
-
-        if( vid_fov->value<1 || vid_fov->value>179)
-        {
-            Com_Printf("Wrong FOV: %f\n", vid_fov->value);
-            Cvar_SetValue(vid_fov->name, (cur_x_fov>=1 && cur_x_fov<=179)?cur_x_fov:DEFAULT_FOV);
-        }
-    */
     ratio = (float) viddef.width / (float)viddef.height; // FIXME: move somewhere
     cur_y_fov = g_fov->value;
     cur_x_fov = CalcFov (g_fov->value, (float)viddef.height, (float)viddef.width);
@@ -441,7 +431,8 @@ PUBLIC void R_DrawWeapon (void)
         tex = TM_FindTexture_Sprite (SPR_DEATHCAM);
     } else {
         y = (int) (viddef.height - (h * scale) - 79);
-        tex = TM_FindTexture_Sprite (Player.weapon * 5 + Player.weaponframe + SPR_KNIFEREADY);
+        //tex = TM_FindTexture_Sprite (Player.weapon * 5 + Player.weaponframe + SPR_KNIFEREADY);
+        tex = TM_FindTexture_Sprite (422);
     }
 
     R_Bind (tex->texnum);
