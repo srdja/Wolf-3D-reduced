@@ -29,8 +29,6 @@
 #ifndef __PLATFORM_H__
 #define __PLATFORM_H__
 
-
-#define PLATFORM_NAME "Linux"
 #define PATH_SEP '/'
 
 
@@ -50,10 +48,6 @@
 
 #define CPUSTRING       "Alpha"
 
-#elif defined(__powerpc__)
-
-#define CPUSTRING   "PowerPC"
-
 #elif defined(__sparc__)
 
 #define CPUSTRING   "Sparc"
@@ -64,27 +58,8 @@
 
 #endif
 
-
-
-#if defined(WINDOWS) || defined(_WINDOWS)  || defined(_WIN32) || defined(_WIN64)
-
-#define OS_WINDOWS  1
-
-#else
-
 #define OS_UNIX     1
 
-#endif
-
-
-/*
-    correct numeric types:  W8, SW8, W16, SW16, W32, SW32, W64, SW64
-    correct char types: char
-    correct misc types: void, float, wtwtBoolean
-
-    s       -signed
-    XX      -Number of bits
-*/
 #if defined(_MSC_VER)
 
 typedef unsigned    __int8      W8, *PW8;
@@ -131,7 +106,6 @@ typedef intptr_t            INT_PTR;
 #endif /* NULL */
 
 
-
 /* Define INLINECALL keyword */
 #ifndef INLINECALL
 
@@ -152,7 +126,6 @@ typedef intptr_t            INT_PTR;
 #endif /* INLINECALL */
 
 
-
 typedef enum {
     false = 0,
     true  = 1
@@ -160,21 +133,10 @@ typedef enum {
 
 typedef unsigned char       byte;
 
-#define Swap16( x )     ( ( (((W16) (x)) & 0x00FF) << 8 ) | ( (((W16) (x))& 0xFF00) >> 8) )
 #define Swap32( x )     ( ( ((W32) (x)) & 0xFF000000) >> 24 ) | ( ((( (W32) (x) ) & 0xFF0000) >> 8)  ) | ( ((( (W32) (x) ) & 0xFF00) << 8 ) ) | ( (( (W32) (x) ) & 0xFF) << 24 )
-#define Swap64( x )     ( ( Swap32( (x) & 0xFFFFFFFF ) << 32 ) | Swap32( (x) >> 32 ) )
 
-#define BigShort( x )           Swap16( x )
 #define LittleShort( x )        ( x )
-
-#define BigLong( x )            Swap32( x )
 #define LittleLong( x )         ( x )
-
-#define BigFloat( x )           SwapFloat( x )
-#define LittleFloat( x )        ( x )
-
-#define Big64( x )              Swap64( x )
-#define Little64( x )           ( x )
 
 
 #endif /* __PLATFORM_H__ */

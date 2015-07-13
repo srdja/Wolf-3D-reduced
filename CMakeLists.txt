@@ -10,7 +10,6 @@ set( EXE_NAME "wolf" )
 include_directories (env) 
 set( env_SOURCE 
 	${CMAKE_SOURCE_DIR}/env/angle.c
-	${CMAKE_SOURCE_DIR}/env/platform.c
 	${CMAKE_SOURCE_DIR}/env/client_input.c
 	${CMAKE_SOURCE_DIR}/env/client_main.c
 	${CMAKE_SOURCE_DIR}/env/cmd.c
@@ -33,8 +32,6 @@ set( env_SOURCE
 	${CMAKE_SOURCE_DIR}/env/opengl_texture.c
 	${CMAKE_SOURCE_DIR}/env/texture_manager.c
 	${CMAKE_SOURCE_DIR}/env/tga.c
-	${CMAKE_SOURCE_DIR}/env/vector.c
-	${CMAKE_SOURCE_DIR}/env/wav.c
 	${CMAKE_SOURCE_DIR}/env/zippak.c
 	${CMAKE_SOURCE_DIR}/env/zmem.c				
 )
@@ -71,7 +68,6 @@ set ( env_HEADER
 	${CMAKE_SOURCE_DIR}/env/vector.h
 	${CMAKE_SOURCE_DIR}/env/video.h
 	${CMAKE_SOURCE_DIR}/env/w3d_opengl.h
-	${CMAKE_SOURCE_DIR}/env/wav.h
 	${CMAKE_SOURCE_DIR}/env/zippak.h
 	${CMAKE_SOURCE_DIR}/env/zmem.h    
 )

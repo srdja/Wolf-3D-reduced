@@ -41,9 +41,6 @@
 typedef float vec_t;
 typedef vec_t vec3_t[ 3 ];
 
-extern vec3_t vec3_origin;
-
-#define vectorSet( v, x, y, z ) ( (v)[ 0 ] = ( x ), (v)[ 1 ] = ( y ), (v)[ 2 ] = ( z ) )
-#define vectorCopy( a, b )          ( (b)[ 0 ] = (a)[ 0 ], (b)[ 1 ] = (a)[ 1 ], (b)[ 2 ] = (a)[ 2 ] )
+#define vectorCopy( a, b )  ( (b)[ 0 ] = (a)[ 0 ], (b)[ 1 ] = (a)[ 1 ], (b)[ 2 ] = (a)[ 2 ] )
 
 #endif /* __VECTOR_H__ */
