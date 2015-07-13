@@ -58,29 +58,7 @@ PRIVATE _boolean    mlooking;
 _boolean mouse_active = false;
 _boolean dgamouse = false;
 
-/*
-PRIVATE cvar_t *sensitivity;
-PRIVATE cvar_t *lookstrafe;
-PRIVATE cvar_t *m_side;
-PRIVATE cvar_t *m_yaw;
-PRIVATE cvar_t *m_pitch;
-PRIVATE cvar_t *m_forward;
-PRIVATE cvar_t *freelook;
-*/
 
-
-/*
------------------------------------------------------------------------------
- Function: CreateNullCursor -Creates a null cursor.
-
- Parameters: display -[in] Specifies the connection to the X server.
-             root -[in]  Specifies the screen.
-
- Returns: cursor ID associated with the null cursor.
-
- Notes:
------------------------------------------------------------------------------
-*/
 PRIVATE Cursor CreateNullCursor (Display *display, Window root)
 {
     Pixmap cursormask;
@@ -104,17 +82,7 @@ PRIVATE Cursor CreateNullCursor (Display *display, Window root)
     return cursor;
 }
 
-/*
------------------------------------------------------------------------------
- Function:
 
- Parameters:
-
- Returns:
-
- Notes:
------------------------------------------------------------------------------
-*/
 PUBLIC void install_grabs (void)
 {
 
@@ -152,22 +120,9 @@ PUBLIC void install_grabs (void)
                    CurrentTime);
 
     mouse_active = true;
-
-//  XSync(display, True);
 }
 
 
-/*
------------------------------------------------------------------------------
- Function:
-
- Parameters:
-
- Returns:
-
- Notes:
------------------------------------------------------------------------------
-*/
 PUBLIC void uninstall_grabs (void)
 {
     if (! display || ! mainwin) {
@@ -189,66 +144,25 @@ PUBLIC void uninstall_grabs (void)
 }
 
 
-/*
------------------------------------------------------------------------------
- Function:
-
- Parameters:
-
- Returns:
-
- Notes:
------------------------------------------------------------------------------
-*/
 PRIVATE void Force_CenterView_f (void)
 {
     ClientState.viewangles[ PITCH ] = 0;
 }
 
-/*
------------------------------------------------------------------------------
- Function:
 
- Parameters:
-
- Returns:
-
- Notes:
------------------------------------------------------------------------------
-*/
 PRIVATE void RW_IN_MLookDown (void)
 {
     mlooking = true;
 }
 
-/*
------------------------------------------------------------------------------
- Function:
 
- Parameters:
 
- Returns:
-
- Notes:
------------------------------------------------------------------------------
-*/
 PRIVATE void RW_IN_MLookUp (void)
 {
     mlooking = false;
     IN_CenterView();
 }
 
-/*
------------------------------------------------------------------------------
- Function:
-
- Parameters:
-
- Returns:
-
- Notes:
------------------------------------------------------------------------------
-*/
 PUBLIC void IN_StartupMouse (void)
 {
     // mouse variables
@@ -257,11 +171,8 @@ PUBLIC void IN_StartupMouse (void)
     in_dgamouse = Cvar_Get ("in_dgamouse", "1", CVAR_ARCHIVE);
     freelook = Cvar_Get ("freelook", "0", 0);
     lookstrafe = Cvar_Get ("lookstrafe", "0", 0);
-//  sensitivity = Cvar_Get( "m_sensitivity", "3", 0 );
     m_pitch = Cvar_Get ("m_pitch", "0.022", 0);
-//  m_yaw = Cvar_Get( "m_yaw", "0.022", 0 );
     m_forward = Cvar_Get ("m_forward", "1", 0);
-//  m_side = Cvar_Get( "m_side", "0.8", 0 );
 
     Cmd_AddCommand ("+mlook", RW_IN_MLookDown);
     Cmd_AddCommand ("-mlook", RW_IN_MLookUp);
@@ -274,30 +185,6 @@ PUBLIC void IN_StartupMouse (void)
     install_grabs();
 }
 
-/*
------------------------------------------------------------------------------
- Function:
-
- Parameters:
-
- Returns:
-
- Notes:
------------------------------------------------------------------------------
-*/
-PUBLIC
-
-/*
------------------------------------------------------------------------------
- Function:
-
- Parameters:
-
- Returns:
-
- Notes:
------------------------------------------------------------------------------
-*/
 PUBLIC void IN_MouseMove (usercmd_t *cmd)
 {
     if (! mouse_avail) {
@@ -334,17 +221,6 @@ PUBLIC void IN_MouseMove (usercmd_t *cmd)
     mx = my = 0;
 }
 
-/*
------------------------------------------------------------------------------
- Function:
-
- Parameters:
-
- Returns:
-
- Notes:
------------------------------------------------------------------------------
-*/
 PUBLIC void IN_DeactivateMouse (void)
 {
     if (! mouse_avail || ! display || ! mainwin) {
@@ -357,17 +233,14 @@ PUBLIC void IN_DeactivateMouse (void)
     }
 }
 
-PUBLIC void IN_ActivateMouse (void)
-{
-    if (! mouse_avail || ! display || ! mainwin) {
+PUBLIC void IN_ActivateMouse (void) {
+    if (!mouse_avail || !display || !mainwin) {
         return;
     }
 
-    if (! mouse_active) {
+    if (!mouse_active) {
         mx = my = 0; // don't spazz
         install_grabs();
         mouse_active = true;
     }
 }
-
-

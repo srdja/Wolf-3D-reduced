@@ -150,7 +150,6 @@ PRIVATE char *signal_ErrorString (int sig)
 }
 
 
-
 PRIVATE void signal_handler (int sig)
 {
     printf ("Received signal (%s), exiting...\n", signal_ErrorString (sig));
@@ -383,9 +382,4 @@ void GLimp_EndFrame (void)
 {
     pfglFlush();
     pfglXSwapBuffers (display, mainwin);
-}
-
-void GLimp_AppActivate (_boolean active)
-{
-    ;
 }

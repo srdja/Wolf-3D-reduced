@@ -40,12 +40,9 @@
 #include "../env/sound.h"
 
 
-
 // Console variables that we need to access from this module
 cvar_t      *vid_gamma;
 cvar_t      *r_ref;         // Name of Refresh DLL loaded
-cvar_t      *vid_xpos;          // X coordinate of window position
-cvar_t      *vid_ypos;          // Y coordinate of window position
 cvar_t      *r_fullscreen;
 
 // Global variables used internally by this module
@@ -53,9 +50,6 @@ viddef_t    viddef; // global video state; used by other modules
 
 
 #define VID_NUM_MODES ( sizeof( vid_modes ) / sizeof( vid_modes[ 0 ] ) )
-
-
-//==========================================================================
 
 
 /**
@@ -68,10 +62,6 @@ PRIVATE void VID_Restart_f (void)
 }
 
 
-
-/*
-    VID_GetModeInfo
-*/
 typedef struct vidmode_s {
     const char *description;
     int         width, height;
@@ -217,31 +207,17 @@ PUBLIC void Video_Init (void)
     } else {
         r_ref = Cvar_Get ("r_ref", "soft", CVAR_ARCHIVE);
     }
-
-    vid_xpos = Cvar_Get ("win_xpos", "3", CVAR_ARCHIVE);
-    vid_ypos = Cvar_Get ("win_ypos", "22", CVAR_ARCHIVE);
     r_fullscreen = Cvar_Get ("r_fullscreen", "0", CVAR_ARCHIVE);
     vid_gamma = Cvar_Get ("vid_gamma", "1", CVAR_ARCHIVE);
 
     /* Add some console commands that we want to handle */
     Cmd_AddCommand ("vid_restart", VID_Restart_f);
 
-
     /* Start the graphics mode and load refresh DLL */
     Video_CheckChanges();
 }
 
-/*
------------------------------------------------------------------------------
- Function: Video_Shutdown -Shutdown video sub-system.
 
- Parameters: Nothing
-
- Returns:   Nothing
-
- Notes:
------------------------------------------------------------------------------
-*/
 PUBLIC void Video_Shutdown (void)
 {
     R_Shutdown();

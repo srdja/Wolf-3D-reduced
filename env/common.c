@@ -44,7 +44,6 @@
 #define MAXPRINTMSG 4096
 
 colour3_t   colourBlack = {   0,   0,   0 };
-colour3_t   colourGreen = {   0, 255,   0 };
 colour3_t   colourWhite = { 255, 255, 255 };
 
 jmp_buf abortframe;     // an ERR_DROP occured, exit the entire frame
@@ -53,8 +52,6 @@ cvar_t  *developer;
 cvar_t  *dedicated;
 
 FILE    *logfile;
-
-
 
 /**
  * \brief Print formatted output to the development output stream.
@@ -341,35 +338,9 @@ _boolean Com_AddStartupCommands (void)
     return added;
 }
 
-
-
 const char *completionString;
 char shortestMatch[MAX_TOKEN_CHARS];
 static int  matchCount;
-
-void FindMatches (const char *s)
-{
-    int     i;
-
-    if (com_strnicmp (s, completionString, strlen (completionString))) {
-        return;
-    }
-
-    matchCount++;
-
-    if (matchCount == 1) {
-        com_strlcpy (shortestMatch, s, sizeof (shortestMatch));
-        return;
-    }
-
-    // cut shortestMatch to the amount common with s
-    for (i = 0 ; s[i] ; i++) {
-        if (TOUPPER (shortestMatch[i]) != TOUPPER (s[i])) {
-            shortestMatch[i] = 0;
-        }
-    }
-}
-
 
 /**
  * \brief Just throw a fatal error to test error shutdown procedures.
