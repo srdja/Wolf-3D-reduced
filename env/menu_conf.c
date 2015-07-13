@@ -218,7 +218,7 @@ _boolean Field_Key (menufield_s *f, int key)
                 f->visible_offset = 0;
             }
 
-            MM_FREE (cbd);
+            free (cbd);
         }
 
         return true;

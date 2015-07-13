@@ -274,11 +274,7 @@ PRIVATE char **FS_ListFiles (char *findname, int *numfiles, unsigned musthave, u
     nfiles++; // add space for a guard
     *numfiles = nfiles;
 
-    list = (char **)MM_MALLOC (sizeof (char *) * nfiles);
-
-    if (list == NULL) {
-        MM_OUTOFMEM ("list");
-    }
+    list = (char **)malloc (sizeof (char *) * nfiles);
 
     memset (list, 0, sizeof (char *) * nfiles);
 
@@ -333,10 +329,10 @@ PRIVATE void FS_Dir_f (void)
             int i;
 
             for (i = 0; i < ndirs - 1; i++) {
-                MM_FREE (dirnames[i]);
+                free (dirnames[i]);
             }
 
-            MM_FREE (dirnames);
+            free (dirnames);
         }
     };
 }

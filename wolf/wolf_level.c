@@ -977,77 +977,61 @@ PUBLIC LevelData_t *Level_LoadMap (const char *levelname)
 //
 // Plane1  -Walls
 //
-    data = (PW8)MM_MALLOC (length[ 0 ]);
+    data = (PW8)malloc (length[ 0 ]);
 
     FS_FileSeek (fhandle, offset[ 0 ], SEEK_SET);
     FS_ReadFile (data, 1, length[ 0 ], fhandle);
 
 
     expanded = * ((unsigned short *)data);
-    buffer = (PW16)MM_MALLOC (expanded);
+    buffer = (PW16)malloc (expanded);
 
     Lvl_CarmackExpand ((unsigned short *)data + 1, buffer, expanded);
     Lvl_RLEWexpand (buffer + 1, newMap->Plane1, 64 * 64 * 2, rle);
 
-    MM_FREE (buffer);
-    MM_FREE (data);
+    free (buffer);
+    free (data);
 
 //
 // Plane2 -Objects
 //
-    data = (PW8)MM_MALLOC (length[ 1 ]);
+    data = (PW8)malloc (length[ 1 ]);
 
     FS_FileSeek (fhandle, offset[ 1 ], SEEK_SET);
     FS_ReadFile (data, 1, length[ 1 ], fhandle);
 
 
     expanded = * ((PW16)data);
-    buffer = (PW16)MM_MALLOC (expanded);
+    buffer = (PW16)malloc (expanded);
 
     Lvl_CarmackExpand ((PW16)data + 1, buffer, expanded);
     Lvl_RLEWexpand (buffer + 1, newMap->Plane2, 64 * 64 * 2, rle);
 
-    MM_FREE (buffer);
-    MM_FREE (data);
+    free (buffer);
+    free (data);
 
 //
 // Plane3 -Other
 //
-    data = (PW8)MM_MALLOC (length[ 2 ]);
+    data = (PW8)malloc (length[ 2 ]);
 
     FS_FileSeek (fhandle, offset[ 2 ], SEEK_SET);
     FS_ReadFile (data, 1, length[ 2 ], fhandle);
 
 
     expanded = * ((PW16)data);
-    buffer = (PW16)MM_MALLOC (expanded);
+    buffer = (PW16)malloc (expanded);
 
     Lvl_CarmackExpand ((PW16)data + 1, buffer, expanded);
     Lvl_RLEWexpand (buffer + 1, newMap->Plane3, 64 * 64 * 2, rle);
 
-    MM_FREE (buffer);
-    MM_FREE (data);
+    free (buffer);
+    free (data);
 
 
     FS_CloseFile (fhandle);
 
 // FIXME: Check if this is necessary with non-iphone controls, remove if so
-#if 0
-
-    // HUGE HACK to take out the pushwall maze that occasionally
-    // gets players stuck in level E4M2 without actually touching
-    // a map editor...
-    if (!strcmp (levelname, "maps/w31.map")) {
-        for (x = 22 ; x <= 32 ; x++) {
-            for (y0 = 30 ; y0 <= 32 ; y0++) {
-                newMap->Plane1[ y0 * 64 + x ] = newMap->Plane1[ 30 * 64 + 21 ];
-                newMap->Plane2[ y0 * 64 + x ] = newMap->Plane2[ 30 * 64 + 21 ];
-                newMap->Plane3[ y0 * 64 + x ] = newMap->Plane3[ 30 * 64 + 21 ];
-            }
-        }
-    }
-
-#endif
 
     for (y0 = 0 ; y0 < 64 ; ++y0)
         for (x = 0 ; x < 64 ; ++x) {

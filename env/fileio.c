@@ -230,7 +230,7 @@ PRIVATE _boolean LoadCompressedFile (filehandle_t *hFile, packfile_t *pakfiles)
     err = inflateInit (&d_stream);
 
     if (err != Z_OK) {
-        MM_FREE (uncompr);
+        free (uncompr);
         free (buf);
         FS_CloseFile (hFile);
 

@@ -118,12 +118,12 @@ PRIVATE void R_ScreenShot_f (void)
         return;
     }
 
-    buffer = (PW8)MM_MALLOC (viddef.width * viddef.height * 3);
+    buffer = (PW8)malloc (viddef.width * viddef.height * 3);
     pfglReadPixels (0, 0, viddef.width, viddef.height, GL_RGB, GL_UNSIGNED_BYTE, buffer);
 
     WriteTGA (checkname, 24, viddef.width, viddef.height, buffer, 1, 1);
 
-    MM_FREE (buffer);
+    free (buffer);
 }
 
 /**

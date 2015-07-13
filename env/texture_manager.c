@@ -259,7 +259,7 @@ PUBLIC void TM_FindTexture_DB (const char *name, texture_t *tex, texturetype_t t
     }
 
 
-    MM_FREE (data);
+    free (data);
 
 
 //  return tex;
@@ -448,7 +448,7 @@ PUBLIC texture_t *TM_FindTexture (const char *name, texturetype_t type)
     }
 
 
-    MM_FREE (data);
+    free (data);
 
 
     return tex;
@@ -770,10 +770,10 @@ scale_region_no_resample (W8 *in, int inwidth, int inheight,
 
 
     /*  the data pointers...  */
-    x_src_offsets = (int *) MM_MALLOC (sizeof (int) * width * bytes);
-    y_src_offsets = (int *) MM_MALLOC (sizeof (int) * height);
-    src  = (unsigned char *) MM_MALLOC (orig_width * bytes);
-    dest = (unsigned char *) MM_MALLOC (width * bytes);
+    x_src_offsets = (int *) malloc (sizeof (int) * width * bytes);
+    y_src_offsets = (int *) malloc (sizeof (int) * height);
+    src  = (unsigned char *) malloc (orig_width * bytes);
+    dest = (unsigned char *) malloc (width * bytes);
 
     /*  pre-calc the scale tables  */
     for (b = 0; b < bytes; b++) {
@@ -809,10 +809,10 @@ scale_region_no_resample (W8 *in, int inwidth, int inheight,
         pixel_region_set_row (out, bytes, y, width, dest);
     }
 
-    MM_FREE (x_src_offsets);
-    MM_FREE (y_src_offsets);
-    MM_FREE (src);
-    MM_FREE (dest);
+    free (x_src_offsets);
+    free (y_src_offsets);
+    free (src);
+    free (dest);
 }
 
 /**
@@ -854,12 +854,6 @@ PUBLIC void TM_ResampleTexture (W8 *in, int inwidth, int inheight, W8 *out, int 
     width = outwidth;
     height = outheight;
 
-#if 0
-
-    Com_DPrintf ("scale_region: (%d x %d) -> (%d x %d)\n",
-                 orig_width, orig_height, width, height);
-
-#endif
 
     /*  find the ratios of old y to new y  */
     y_rat = (double) orig_height / (double) height;
@@ -867,19 +861,19 @@ PUBLIC void TM_ResampleTexture (W8 *in, int inwidth, int inheight, W8 *out, int 
 
     /*  the data pointers...  */
     for (i = 0 ; i < 4 ; ++i) {
-        src[ i ] = (double *) MM_MALLOC (sizeof (double) * width * bytes);
+        src[ i ] = (double *) malloc (sizeof (double) * width * bytes);
     }
 
-    dest = (PW8) MM_MALLOC (width * bytes);
+    dest = (PW8) malloc (width * bytes);
 
-    src_tmp = (PW8) MM_MALLOC (orig_width * bytes);
+    src_tmp = (PW8) malloc (orig_width * bytes);
 
     /* offset the row pointer by 2*bytes so the range of the array
         is [-2*bytes] to [(orig_width + 2)*bytes] */
-    row = (double *) MM_MALLOC (sizeof (double) * (orig_width + 2 * 2) * bytes);
+    row = (double *) malloc (sizeof (double) * (orig_width + 2 * 2) * bytes);
     row += bytes * 2;
 
-    accum = (double *) MM_MALLOC (sizeof (double) * width * bytes);
+    accum = (double *) malloc (sizeof (double) * width * bytes);
 
 
     /*  Scale the selected region  */
@@ -1010,17 +1004,17 @@ PUBLIC void TM_ResampleTexture (W8 *in, int inwidth, int inheight, W8 *out, int 
     }
 
     /*  free up temporary arrays  */
-    MM_FREE (accum);
+    free (accum);
 
     for (i = 0 ; i < 4 ; ++i) {
-        MM_FREE (src[ i ]);
+        free (src[ i ]);
     }
 
-    MM_FREE (src_tmp);
-    MM_FREE (dest);
+    free (src_tmp);
+    free (dest);
 
     row -= 2 * bytes;
-    MM_FREE (row);
+    free (row);
 }
 
 /**
@@ -1076,7 +1070,7 @@ PUBLIC void TM_Init (void)
     texture_registration_sequence = 1;
 
 // create a checkerboard texture
-    data = (PW8)MM_MALLOC (16 * 16 * 4);
+    data = (PW8)malloc (16 * 16 * 4);
 
     for (y = 0; y < 16; ++y) {
         for (x = 0; x < 16; ++x) {
@@ -1094,7 +1088,7 @@ PUBLIC void TM_Init (void)
 
     r_notexture = TM_LoadTexture ("***r_notexture***", data, 16, 16, TT_Pic, 4);
 
-    MM_FREE (data);
+    free (data);
 
 
     Cmd_AddCommand ("listTextures", TM_TextureList_f);

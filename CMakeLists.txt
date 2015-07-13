@@ -23,7 +23,6 @@ set( env_SOURCE
 	${CMAKE_SOURCE_DIR}/env/in_view.c
 	${CMAKE_SOURCE_DIR}/env/keys.c
 	${CMAKE_SOURCE_DIR}/env/math.c
-	${CMAKE_SOURCE_DIR}/env/memory.c
 	${CMAKE_SOURCE_DIR}/env/menu_conf.c
 	${CMAKE_SOURCE_DIR}/env/opengl_binding.c
 	${CMAKE_SOURCE_DIR}/env/opengl_draw.c
@@ -52,7 +51,6 @@ set ( env_HEADER
 	${CMAKE_SOURCE_DIR}/env/font_manager.h
 	${CMAKE_SOURCE_DIR}/env/input.h
 	${CMAKE_SOURCE_DIR}/env/keys.h
-	${CMAKE_SOURCE_DIR}/env/memory.h
 	${CMAKE_SOURCE_DIR}/env/menu_conf.h	
 	${CMAKE_SOURCE_DIR}/env/num_type.h
 	${CMAKE_SOURCE_DIR}/env/opengl_binding.h

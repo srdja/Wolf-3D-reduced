@@ -463,17 +463,12 @@ PUBLIC void LoadTGA (const char *filename, W8 **pic, W16 *width, W16 *height, W1
 
 
     /* Allocate the data. */
-    data = (PW8)MM_MALLOC (targa_header.width * targa_header.height * targa_header.bytes);
+    data = (PW8)malloc (targa_header.width * targa_header.height * targa_header.bytes);
 
-    if (data == NULL) {
-        MM_OUTOFMEM ("data");
-    }
-
-    buffer = (PW8) MM_MALLOC (targa_header.width * targa_header.bytes);
+    buffer = (PW8) malloc (targa_header.width * targa_header.bytes);
 
     if (buffer == NULL) {
-        MM_FREE (data);
-        MM_OUTOFMEM ("buffer");
+        free (data);
     }
 
     if (targa_header.flipVert) {
@@ -489,7 +484,7 @@ PUBLIC void LoadTGA (const char *filename, W8 **pic, W16 *width, W16 *height, W1
     }
 
 
-    MM_FREE (buffer);
+    free (buffer);
 
     FS_CloseFile (hFile);
 
@@ -646,7 +641,7 @@ PUBLIC W8 WriteTGA (const char *filename, W16 bpp, W16 width, W16 height,
 
 
 
-    scanline = (PW8) MM_MALLOC (width * BytesPerPixel);
+    scanline = (PW8) malloc (width * BytesPerPixel);
 
     if (scanline == NULL) {
         fclose (filestream);
@@ -680,7 +675,7 @@ PUBLIC W8 WriteTGA (const char *filename, W16 bpp, W16 width, W16 height,
         }
     }
 
-    MM_FREE (scanline);
+    free (scanline);
 
     fclose (filestream);
 

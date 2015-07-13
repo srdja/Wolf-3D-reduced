@@ -86,7 +86,7 @@ PUBLIC font_t *createFont (const char *filename)
 
     memset (temp_font->nCharWidth, 0, sizeof (temp_font->nCharWidth));
 
-    datname = (char *)MM_MALLOC (strlen (filename) + 1);
+    datname = (char *)malloc (strlen (filename) + 1);
 
     FS_RemoveExtension (filename, datname);
 
@@ -95,7 +95,7 @@ PUBLIC font_t *createFont (const char *filename)
     fp = FS_OpenFile (datname, 0);
 
     if (NULL == fp) {
-        MM_FREE (datname);
+        free (datname);
         free (temp_font);
         return NULL;
     }
@@ -104,7 +104,7 @@ PUBLIC font_t *createFont (const char *filename)
 
     // check header size
     if (size < 10) {
-        MM_FREE (datname);
+        free (datname);
         free (temp_font);
 
         FS_CloseFile (fp);
@@ -124,7 +124,7 @@ PUBLIC font_t *createFont (const char *filename)
     size = LittleLong (size);
 
     if (size > 127) {
-        MM_FREE (datname);
+        free (datname);
         free (temp_font);
 
         FS_CloseFile (fp);
@@ -148,14 +148,14 @@ PUBLIC font_t *createFont (const char *filename)
     }
 
     if (i == (MAX_FONTS - 1)) {
-        MM_FREE (datname);
+        free (datname);
         free (temp_font);
         return NULL;
     }
 
     myfonts[ i ] = temp_font;
 
-    MM_FREE (datname);
+    free (datname);
 
     return temp_font;
 }
