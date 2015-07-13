@@ -27,15 +27,10 @@ set( env_SOURCE
 	${CMAKE_SOURCE_DIR}/env/matrix.c
 	${CMAKE_SOURCE_DIR}/env/memory.c
 	${CMAKE_SOURCE_DIR}/env/menu_conf.c
-	${CMAKE_SOURCE_DIR}/env/openal_binding.c
-	${CMAKE_SOURCE_DIR}/env/openal_main.c
 	${CMAKE_SOURCE_DIR}/env/opengl_binding.c
 	${CMAKE_SOURCE_DIR}/env/opengl_draw.c
 	${CMAKE_SOURCE_DIR}/env/opengl_main.c
 	${CMAKE_SOURCE_DIR}/env/opengl_texture.c
-	${CMAKE_SOURCE_DIR}/env/sound.c
-	${CMAKE_SOURCE_DIR}/env/sound_sfx_id.c
-	${CMAKE_SOURCE_DIR}/env/sound_stream.c
 	${CMAKE_SOURCE_DIR}/env/texture_manager.c
 	${CMAKE_SOURCE_DIR}/env/tga.c
 	${CMAKE_SOURCE_DIR}/env/vector.c
@@ -66,12 +61,9 @@ set ( env_HEADER
 	${CMAKE_SOURCE_DIR}/env/memory.h
 	${CMAKE_SOURCE_DIR}/env/menu_conf.h	
 	${CMAKE_SOURCE_DIR}/env/num_type.h
-	${CMAKE_SOURCE_DIR}/env/openal_binding.h
 	${CMAKE_SOURCE_DIR}/env/opengl_binding.h
 	${CMAKE_SOURCE_DIR}/env/opengl_local.h
 	${CMAKE_SOURCE_DIR}/env/renderer.h
-	${CMAKE_SOURCE_DIR}/env/sound.h
-	${CMAKE_SOURCE_DIR}/env/sound_local.h
 	${CMAKE_SOURCE_DIR}/env/texture_manager.h
 	${CMAKE_SOURCE_DIR}/env/tga.h
 	${CMAKE_SOURCE_DIR}/env/tgaconfig.h

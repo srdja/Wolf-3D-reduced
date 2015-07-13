@@ -41,7 +41,6 @@
 #include "../env/client.h"
 #include "../env/com_string.h"
 
-#include "../env/sound.h"
 
 player_t Player; // player struct (pos, health etc...)
 
@@ -140,7 +139,7 @@ PRIVATE _boolean PL_Use (player_t *self, LevelData_t *lvl)
             elevatorSwitchTime = ClientStatic.realtime;
         }
 
-        Sound_StartSound (NULL, 0, CHAN_BODY, Sound_RegisterSound ("lsfx/040.wav"), 1, ATTN_NORM, 0);
+        //Sound_StartSound (NULL, 0, CHAN_BODY, Sound_RegisterSound ("lsfx/040.wav"), 1, ATTN_NORM, 0);
 
         return true;
     }
@@ -583,7 +582,7 @@ PUBLIC void PL_Damage (player_t *self, entity_t *attacker, int points)
         self->health = 0;
         self->playstate = ex_dead;
 
-        Sound_StartSound (NULL, 0, CHAN_BODY, Sound_RegisterSound ("lsfx/009.wav"), 1, ATTN_NORM, 0);
+        //Sound_StartSound (NULL, 0, CHAN_BODY, Sound_RegisterSound ("lsfx/009.wav"), 1, ATTN_NORM, 0);
     }
 
     R_DamageFlash (points);
@@ -693,7 +692,7 @@ PUBLIC void PL_GiveLife (player_t *self)
         self->lives++;
     }
 
-    Sound_StartSound (NULL, 0, CHAN_ITEM, Sound_RegisterSound ("lsfx/044.wav"), 1, ATTN_NORM, 0);
+    //Sound_StartSound (NULL, 0, CHAN_ITEM, Sound_RegisterSound ("lsfx/044.wav"), 1, ATTN_NORM, 0);
 }
 
 /**

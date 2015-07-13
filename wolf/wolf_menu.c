@@ -39,16 +39,7 @@
 #include "../env/client.h"
 #include "../env/com_string.h"
 #include "../env/renderer.h"
-#include "../env/sound.h"
 #include "../env/keycodes.h"
-
-
-
-
-
-
-
-
 
 
 colour3_t bgcolour      = { 136, 0, 0 };
@@ -644,8 +635,8 @@ void M_SMain_Draw (void)
  */
 void M_Menu_Main_f (void)
 {
-    Sound_StopBGTrack();
-    Sound_StartBGTrack ("music/WONDERIN.ogg", "music/WONDERIN.ogg");
+    //Sound_StopBGTrack();
+    //Sound_StartBGTrack ("music/WONDERIN.ogg", "music/WONDERIN.ogg");
 
     if (g_version->value == SPEAROFDESTINY) {
         M_PushMenu (M_SMain_Draw, M_Main_Key);
@@ -909,14 +900,10 @@ const char *SaveGame_MenuKey (int key)
 
 void M_Menu_SaveGame_f (void)
 {
-//  if( ! Com_ServerState() )
-//      return;     // not playing a game
-
     SaveGame_MenuInit();
     M_PushMenu (SaveGame_MenuDraw, SaveGame_MenuKey);
     Create_Savestrings();
 }
-
 
 
 //=============================================================================
@@ -940,19 +927,11 @@ void Menu_Init (void)
     Cmd_AddCommand ("menu_quit", M_Menu_Quit_f);
 }
 
-
-
 void M_Draw (void)
 {
     if (ClientStatic.key_dest != key_menu) {
         return;
     }
-
-    // dim everything behind it down
-//  if( cl.cinematictime > 0 )
-//      R_Draw_Fill( 0, 0, viddef.width, viddef.height, bgcolour );
-//  else
-//      Draw_FadeScreen();
 
     m_drawfunc();
 
@@ -960,12 +939,10 @@ void M_Draw (void)
     // menu has been drawn, to avoid delay while
     // caching images
     if (m_entersound) {
-        Sound_StartLocalSound (menu_in_sound);
+        //Sound_StartLocalSound (menu_in_sound);
         m_entersound = false;
     }
 }
-
-
 
 void M_Keydown (int key)
 {
@@ -973,7 +950,7 @@ void M_Keydown (int key)
 
     if (m_keyfunc) {
         if ((s = m_keyfunc (key)) != 0) {
-            Sound_StartLocalSound ((char *) s);
+            //Sound_StartLocalSound ((char *) s);
         }
     }
 }

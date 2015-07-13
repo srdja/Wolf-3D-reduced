@@ -39,7 +39,6 @@
 #include "wolf_local.h"
 
 #include "../env/com_string.h"
-#include "../env/sound.h"
 
 int Pow_Texture[ pow_last ] = {
     SPR_STAT_34,    // pow_gibs
@@ -63,9 +62,6 @@ int Pow_Texture[ pow_last ] = {
     SPR_STAT_49,    // pow_25clip
     SPR_STAT_51,    // pow_spear
 };
-
-
-
 
 
 /*
@@ -156,7 +152,7 @@ PRIVATE int Pow_Give (pow_t type)
     case pow_key2:
         type -= pow_key1;
         PL_GiveKey (&Player, type);
-        Sound_StartSound (NULL, 0, CHAN_ITEM, Sound_RegisterSound ("lsfx/012.wav"), 1, ATTN_NORM, 0);
+        //Sound_StartSound (NULL, 0, CHAN_ITEM, Sound_RegisterSound ("lsfx/012.wav"), 1, ATTN_NORM, 0);
         break;
 
 //
@@ -164,7 +160,7 @@ PRIVATE int Pow_Give (pow_t type)
 //
     case pow_cross:
         PL_GivePoints (&Player, 100);
-        Sound_StartSound (NULL, 0, CHAN_ITEM, Sound_RegisterSound ("lsfx/035.wav"), 1, ATTN_NORM, 0);
+       // Sound_StartSound (NULL, 0, CHAN_ITEM, Sound_RegisterSound ("lsfx/035.wav"), 1, ATTN_NORM, 0);
 
         if (++levelstate.found_treasure == levelstate.total_treasure) {
         }
@@ -173,7 +169,7 @@ PRIVATE int Pow_Give (pow_t type)
 
     case pow_chalice:
         PL_GivePoints (&Player, 500);
-        Sound_StartSound (NULL, 0, CHAN_ITEM, Sound_RegisterSound ("lsfx/036.wav"), 1, ATTN_NORM, 0);
+       // Sound_StartSound (NULL, 0, CHAN_ITEM, Sound_RegisterSound ("lsfx/036.wav"), 1, ATTN_NORM, 0);
 
         if (++levelstate.found_treasure == levelstate.total_treasure) {
         }
@@ -182,7 +178,7 @@ PRIVATE int Pow_Give (pow_t type)
 
     case pow_bible:
         PL_GivePoints (&Player, 1000);
-        Sound_StartSound (NULL, 0, CHAN_ITEM, Sound_RegisterSound ("lsfx/037.wav"), 1, ATTN_NORM, 0);
+       // Sound_StartSound (NULL, 0, CHAN_ITEM, Sound_RegisterSound ("lsfx/037.wav"), 1, ATTN_NORM, 0);
 
         if (++levelstate.found_treasure == levelstate.total_treasure) {
         }
@@ -191,7 +187,7 @@ PRIVATE int Pow_Give (pow_t type)
 
     case pow_crown:
         PL_GivePoints (&Player, 5000);
-        Sound_StartSound (NULL, 0, CHAN_ITEM, Sound_RegisterSound ("lsfx/045.wav"), 1, ATTN_NORM, 0);
+        //Sound_StartSound (NULL, 0, CHAN_ITEM, Sound_RegisterSound ("lsfx/045.wav"), 1, ATTN_NORM, 0);
 
         if (++levelstate.found_treasure == levelstate.total_treasure) {
         }
@@ -206,7 +202,7 @@ PRIVATE int Pow_Give (pow_t type)
             return 0;
         }
 
-        Sound_StartSound (NULL, 0, CHAN_ITEM, Sound_RegisterSound ("lsfx/061.wav"), 1, ATTN_NORM, 0);
+        //Sound_StartSound (NULL, 0, CHAN_ITEM, Sound_RegisterSound ("lsfx/061.wav"), 1, ATTN_NORM, 0);
         break;
 
     case pow_alpo:
@@ -214,7 +210,7 @@ PRIVATE int Pow_Give (pow_t type)
             return 0;
         }
 
-        Sound_StartSound (NULL, 0, CHAN_ITEM, Sound_RegisterSound ("lsfx/033.wav"), 1, ATTN_NORM, 0);
+        //Sound_StartSound (NULL, 0, CHAN_ITEM, Sound_RegisterSound ("lsfx/033.wav"), 1, ATTN_NORM, 0);
         break;
 
     case pow_food:
@@ -222,7 +218,7 @@ PRIVATE int Pow_Give (pow_t type)
             return 0;
         }
 
-        Sound_StartSound (NULL, 0, CHAN_ITEM, Sound_RegisterSound ("lsfx/033.wav"), 1, ATTN_NORM, 0);
+       // Sound_StartSound (NULL, 0, CHAN_ITEM, Sound_RegisterSound ("lsfx/033.wav"), 1, ATTN_NORM, 0);
         break;
 
     case pow_firstaid:
@@ -230,7 +226,7 @@ PRIVATE int Pow_Give (pow_t type)
             return 0;
         }
 
-        Sound_StartSound (NULL, 0, CHAN_ITEM, Sound_RegisterSound ("lsfx/034.wav"), 1, ATTN_NORM, 0);
+        //Sound_StartSound (NULL, 0, CHAN_ITEM, Sound_RegisterSound ("lsfx/034.wav"), 1, ATTN_NORM, 0);
         break;
 
 //
@@ -241,7 +237,7 @@ PRIVATE int Pow_Give (pow_t type)
             return 0;
         }
 
-        Sound_StartSound (NULL, 0, CHAN_ITEM, Sound_RegisterSound ("lsfx/031.wav"), 1, ATTN_NORM, 0);
+        //Sound_StartSound (NULL, 0, CHAN_ITEM, Sound_RegisterSound ("lsfx/031.wav"), 1, ATTN_NORM, 0);
         break;
 
     case pow_clip2:
@@ -249,7 +245,7 @@ PRIVATE int Pow_Give (pow_t type)
             return 0;
         }
 
-        Sound_StartSound (NULL, 0, CHAN_ITEM, Sound_RegisterSound ("lsfx/031.wav"), 1, ATTN_NORM, 0);
+        //Sound_StartSound (NULL, 0, CHAN_ITEM, Sound_RegisterSound ("lsfx/031.wav"), 1, ATTN_NORM, 0);
         break;
 
     case pow_25clip:
@@ -258,18 +254,18 @@ PRIVATE int Pow_Give (pow_t type)
         }
 
 //          Sound_StartSound( NULL, 0, CHAN_ITEM, Sound_RegisterSound( "lsfx/064.wav" ), 1, ATTN_NORM, 0 ); //gsh, I don't like this sound
-        Sound_StartSound (NULL, 0, CHAN_ITEM, Sound_RegisterSound ("lsfx/031.wav"), 1, ATTN_NORM, 0);   //gsh, I like this sound
+       // Sound_StartSound (NULL, 0, CHAN_ITEM, Sound_RegisterSound ("lsfx/031.wav"), 1, ATTN_NORM, 0);   //gsh, I like this sound
         break;
 
     case pow_machinegun:
         PL_GiveWeapon (&Player, WEAPON_MACHINEGUN);
-        Sound_StartSound (NULL, 0, CHAN_ITEM, Sound_RegisterSound ("lsfx/030.wav"), 1, ATTN_NORM, 0);
+        //Sound_StartSound (NULL, 0, CHAN_ITEM, Sound_RegisterSound ("lsfx/030.wav"), 1, ATTN_NORM, 0);
 
         break;
 
     case pow_gatlinggun:
         PL_GiveWeapon (&Player, WEAPON_GATLINGGUN);
-        Sound_StartSound (NULL, 0, CHAN_ITEM, Sound_RegisterSound ("lsfx/038.wav"), 1, ATTN_NORM, 0);
+        //Sound_StartSound (NULL, 0, CHAN_ITEM, Sound_RegisterSound ("lsfx/038.wav"), 1, ATTN_NORM, 0);
 
 
         Player.facecount = -100;
@@ -287,13 +283,13 @@ PRIVATE int Pow_Give (pow_t type)
         } else {
         }
 
-        Sound_StartSound (NULL, 0, CHAN_ITEM, Sound_RegisterSound ("lsfx/034.wav"), 1, ATTN_NORM, 0);
+       // Sound_StartSound (NULL, 0, CHAN_ITEM, Sound_RegisterSound ("lsfx/034.wav"), 1, ATTN_NORM, 0);
         break;
 
     case pow_spear: {
         char szTextMsg[ 256 ];
 
-        Sound_StartSound (NULL, 0, CHAN_ITEM, Sound_RegisterSound ("sodsfx/109.wav"), 1, ATTN_NORM, 0);
+        //Sound_StartSound (NULL, 0, CHAN_ITEM, Sound_RegisterSound ("sodsfx/109.wav"), 1, ATTN_NORM, 0);
 
         com_snprintf (szTextMsg, sizeof (szTextMsg), "loading ; map s%.2d.map\n", 20);
         Cbuf_AddText (szTextMsg);

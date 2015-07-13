@@ -47,18 +47,3 @@ PUBLIC float CalcFov (float fov_x, float width, float height)
 
     return (float)RAD2DEG (atan (height / (width / tan (fov_x / 360 * M_PI)))) * 2;
 }
-
-
-
-/**
- * \brief Initialize optimized math routines.
- */
-PUBLIC void MathLib_Init (void)
-{
-
-}
-
-
-
-
-

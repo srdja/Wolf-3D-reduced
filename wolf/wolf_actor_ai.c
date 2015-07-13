@@ -37,7 +37,6 @@
 #include "wolf_local.h"
 #include "wolf_renderer.h"
 
-#include "../env/sound.h"
 #include "../env/client.h"
 #include "../env/opengl_local.h"
 
@@ -71,103 +70,103 @@ PUBLIC void A_DeathScream (entity_t *entity)
     switch (entity->type) {
     case en_mutant:
         if (g_version->value == SPEAROFDESTINY) {
-            Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/033.wav"), 1, ATTN_NORM, 0);
+            //Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/033.wav"), 1, ATTN_NORM, 0);
         } else {
-            Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/037.wav"), 1, ATTN_NORM, 0);
+          //  Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/037.wav"), 1, ATTN_NORM, 0);
         }
 
         break;
 
     case en_guard:
         if (g_version->value == SPEAROFDESTINY) {
-            Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound (dsodsounds[ US_RndT() % 6 ]), 1, ATTN_NORM, 0);
+         //   Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound (dsodsounds[ US_RndT() % 6 ]), 1, ATTN_NORM, 0);
         } else {
-            Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound (dsounds[ US_RndT() % 6 ]), 1, ATTN_NORM, 0);
+         //   Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound (dsounds[ US_RndT() % 6 ]), 1, ATTN_NORM, 0);
         }
 
         break;
 
     case en_officer:
         if (g_version->value == SPEAROFDESTINY) {
-            Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/046.wav"), 1, ATTN_NORM, 0);
+         //   Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/046.wav"), 1, ATTN_NORM, 0);
         } else {
-            Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/074.wav"), 1, ATTN_NORM, 0);
+          //  Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/074.wav"), 1, ATTN_NORM, 0);
         }
 
         break;
 
     case en_ss:
         if (g_version->value == SPEAROFDESTINY) {
-            Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/035.wav"), 1, ATTN_NORM, 0);
+          //  Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/035.wav"), 1, ATTN_NORM, 0);
         } else {
-            Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/046.wav"), 1, ATTN_NORM, 0);
+          //  Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/046.wav"), 1, ATTN_NORM, 0);
         }
 
         break;
 
     case en_dog:
         if (g_version->value == SPEAROFDESTINY) {
-            Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/031.wav"), 1, ATTN_NORM, 0);
+          //  Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/031.wav"), 1, ATTN_NORM, 0);
         } else {
-            Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/035.wav"), 1, ATTN_NORM, 0);
+           // Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/035.wav"), 1, ATTN_NORM, 0);
         }
 
         break;
 
     case en_boss:
-        Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/019.wav"), 1, ATTN_NORM, 0);
+       // Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/019.wav"), 1, ATTN_NORM, 0);
         break;
 
     case en_schabbs:
-        Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/061.wav"), 1, ATTN_NORM, 0);
+        //Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/061.wav"), 1, ATTN_NORM, 0);
         break;
 
     case en_fake:
-        Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/069.wav"), 1, ATTN_NORM, 0);
+       // Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/069.wav"), 1, ATTN_NORM, 0);
         break;
 
     case en_mecha:
-        Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/084.wav"), 1, ATTN_NORM, 0);
+       // Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/084.wav"), 1, ATTN_NORM, 0);
         break;
 
     case en_hitler:
-        Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/044.wav"), 1, ATTN_NORM, 0);
+       // Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/044.wav"), 1, ATTN_NORM, 0);
         break;
 
     case en_gretel:
-        Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/115.wav"), 1, ATTN_NORM, 0);
+        //Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/115.wav"), 1, ATTN_NORM, 0);
         break;
 
     case en_gift:
-        Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/091.wav"), 1, ATTN_NORM, 0);
+        //Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/091.wav"), 1, ATTN_NORM, 0);
         break;
 
     case en_fat:
-        Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/119.wav"), 1, ATTN_NORM, 0);
+        //Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/119.wav"), 1, ATTN_NORM, 0);
         break;
 
     case en_spectre:
-        Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("lsfx/062.wav"), 1, ATTN_NORM, 0);
+        //Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("lsfx/062.wav"), 1, ATTN_NORM, 0);
         break;
 
     case en_angel:
-        Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/098.wav"), 1, ATTN_NORM, 0);
+        //Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/098.wav"), 1, ATTN_NORM, 0);
         break;
 
     case en_trans:
-        Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/070.wav"), 1, ATTN_NORM, 0);
+        //Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/070.wav"), 1, ATTN_NORM, 0);
         break;
 
     case en_uber:
-        Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/082.wav"), 1, ATTN_NORM, 0);
+        //Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/082.wav"), 1, ATTN_NORM, 0);
         break;
 
     case en_will:
-        Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/072.wav"), 1, ATTN_NORM, 0);
+        //Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/072.wav"), 1, ATTN_NORM, 0);
         break;
 
     case en_death:
-        Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/090.wav"), 1, ATTN_NORM, 0);
+        //Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/090.wav"), 1, ATTN_NORM, 0);
         break;
     }
 }
@@ -180,15 +179,15 @@ PUBLIC void A_FirstSighting (entity_t *self)
 {
     switch (self->type) {
     case en_guard:
-        Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/001.wav"), 1, ATTN_NORM, 0);
+        //Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/001.wav"), 1, ATTN_NORM, 0);
         self->speed *= 3;   // go faster when chasing player
         break;
 
     case en_officer:
         if (g_version->value == SPEAROFDESTINY) {
-            Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/043.wav"), 1, ATTN_NORM, 0);
+         //   Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/043.wav"), 1, ATTN_NORM, 0);
         } else {
-            Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/071.wav"), 1, ATTN_NORM, 0);
+          //  Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/071.wav"), 1, ATTN_NORM, 0);
         }
 
         self->speed *= 5;   // go faster when chasing player
@@ -199,52 +198,52 @@ PUBLIC void A_FirstSighting (entity_t *self)
         break;
 
     case en_ss:
-        Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/015.wav"), 1, ATTN_NORM, 0);
+       // Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/015.wav"), 1, ATTN_NORM, 0);
         self->speed *= 4;           // go faster when chasing player
         break;
 
     case en_dog:
-        Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/002.wav"), 1, ATTN_NORM, 0);
+       // Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/002.wav"), 1, ATTN_NORM, 0);
         self->speed *= 2;           // go faster when chasing player
         break;
 
     case en_boss:
-        Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/017.wav"), 1, ATTN_NORM, 0);
+       // Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/017.wav"), 1, ATTN_NORM, 0);
         self->speed = SPDPATROL * 3;    // go faster when chasing player
         break;
 
     case en_gretel:
-        Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/112.wav"), 1, ATTN_NORM, 0);
+       // Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/112.wav"), 1, ATTN_NORM, 0);
         self->speed *= 3;           // go faster when chasing player
         break;
 
     case en_gift:
-        Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/096.wav"), 1, ATTN_NORM, 0);
+       // Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/096.wav"), 1, ATTN_NORM, 0);
         self->speed *= 3;           // go faster when chasing player
         break;
 
     case en_fat:
-        Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/102.wav"), 1, ATTN_NORM, 0);
+        //Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/102.wav"), 1, ATTN_NORM, 0);
         self->speed *= 3;           // go faster when chasing player
         break;
 
     case en_schabbs:
-        Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/065.wav"), 1, ATTN_NORM, 0);
+      //  Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/065.wav"), 1, ATTN_NORM, 0);
         self->speed *= 3;           // go faster when chasing player
         break;
 
     case en_fake:
-        Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/054.wav"), 1, ATTN_NORM, 0);
+        //Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/054.wav"), 1, ATTN_NORM, 0);
         self->speed *= 3;           // go faster when chasing player
         break;
 
     case en_mecha:
-        Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/040.wav"), 1, ATTN_NORM, 0);
+       // Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/040.wav"), 1, ATTN_NORM, 0);
         self->speed *= 3;           // go faster when chasing player
         break;
 
     case en_hitler:
-        Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/040.wav"), 1, ATTN_NORM, 0);
+       // Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/040.wav"), 1, ATTN_NORM, 0);
         self->speed *= 5;           // go faster when chasing player
         break;
 
@@ -259,17 +258,17 @@ PUBLIC void A_FirstSighting (entity_t *self)
 // Spear of Destiny
 //
     case en_spectre:
-        Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("lsfx/003.wav"), 1, ATTN_NORM, 0);
+       // Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("lsfx/003.wav"), 1, ATTN_NORM, 0);
         self->speed = 800;          // go faster when chasing player
         break;
 
     case en_angel:
-        Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/095.wav"), 1, ATTN_NORM, 0);
+        //Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/095.wav"), 1, ATTN_NORM, 0);
         self->speed = 1536;         // go faster when chasing player
         break;
 
     case en_trans:
-        Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/066.wav"), 1, ATTN_NORM, 0);
+       // Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/066.wav"), 1, ATTN_NORM, 0);
         self->speed = 1536;         // go faster when chasing player
         break;
 
@@ -278,12 +277,12 @@ PUBLIC void A_FirstSighting (entity_t *self)
         break;
 
     case en_will:
-        Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/073.wav"), 1, ATTN_NORM, 0);
+       // Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/073.wav"), 1, ATTN_NORM, 0);
         self->speed = 2048;         // go faster when chasing player
         break;
 
     case en_death:
-        Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/085.wav"), 1, ATTN_NORM, 0);
+        //Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/085.wav"), 1, ATTN_NORM, 0);
         self->speed = 2048;         // go faster when chasing player
         break;
 
@@ -460,7 +459,7 @@ PUBLIC void A_DamageActor (entity_t *self, int damage)
 PUBLIC void A_MechaSound (entity_t *self)
 {
     if (areabyplayer[ self->areanumber ]) {
-        Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/080.wav"), 1, ATTN_NORM, 0);
+        //Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/080.wav"), 1, ATTN_NORM, 0);
     }
 }
 
@@ -470,7 +469,7 @@ PUBLIC void A_MechaSound (entity_t *self)
  */
 PUBLIC void A_Slurpie (entity_t *self)
 {
-    Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("lsfx/061.wav"), 1, ATTN_NORM, 0);
+   // Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("lsfx/061.wav"), 1, ATTN_NORM, 0);
 }
 
 /**
@@ -526,7 +525,7 @@ PRIVATE int angel_temp = 0;
  */
 PUBLIC void A_Breathing (entity_t *self)
 {
-    Sound_StartSound (NULL, 0, CHAN_VOICE, Sound_RegisterSound ("lsfx/080.wav"), 1, ATTN_NORM, 0);
+   // Sound_StartSound (NULL, 0, CHAN_VOICE, Sound_RegisterSound ("lsfx/080.wav"), 1, ATTN_NORM, 0);
 }
 
 /**
@@ -816,9 +815,9 @@ PUBLIC void T_Projectile (entity_t *self)
         if (self->type == en_rocket || self->type == en_hrocket) {
             // rocket ran into obstacle, draw explosion!
             if (g_version->value == SPEAROFDESTINY) {
-                Sound_StartSound (NULL, 1, CHAN_WEAPON, Sound_RegisterSound ("lsfx/001.wav"), 1, ATTN_NORM, 0);
+                //Sound_StartSound (NULL, 1, CHAN_WEAPON, Sound_RegisterSound ("lsfx/001.wav"), 1, ATTN_NORM, 0);
             } else {
-                Sound_StartSound (NULL, 1, CHAN_WEAPON, Sound_RegisterSound ("lsfx/086.wav"), 1, ATTN_NORM, 0);
+               // Sound_StartSound (NULL, 1, CHAN_WEAPON, Sound_RegisterSound ("lsfx/086.wav"), 1, ATTN_NORM, 0);
             }
 
             A_StateChange (self, st_die1);

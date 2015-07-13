@@ -43,7 +43,6 @@
 #include "../env/client.h"
 #include "../env/com_string.h"
 #include "../env/renderer.h"
-#include "../env/sound.h"
 #include "../env/keycodes.h"
 
 
@@ -750,9 +749,9 @@ PRIVATE void M_SODVictory_Draw (void)
             ++victory_slide;
 
             if (victory_slide == 1) {
-                Sound_StopBGTrack();
+                //Sound_StopBGTrack();
 
-                Sound_StartBGTrack ("music/ENDLEVEL.ogg", "music/ENDLEVEL.ogg");
+               // Sound_StartBGTrack ("music/ENDLEVEL.ogg", "music/ENDLEVEL.ogg");
             }
         }
     }
@@ -764,9 +763,9 @@ PRIVATE const char *M_SODVictory_Key (int key)
     ++victory_slide;
 
     if (victory_slide == 1) {
-        Sound_StopBGTrack();
+        //Sound_StopBGTrack();
 
-        Sound_StartBGTrack ("music/ENDLEVEL.ogg", "music/ENDLEVEL.ogg");
+        ///Sound_StartBGTrack ("music/ENDLEVEL.ogg", "music/ENDLEVEL.ogg");
     }
 
     if (victory_slide > NUM_VICTORY_SLIDES) {
@@ -781,15 +780,12 @@ PRIVATE const char *M_SODVictory_Key (int key)
 //  End of Spear Victory
 //
 
-
-
-
 PUBLIC void M_Intermission_f (void)
 {
-    Sound_StopAllSounds();
-    Sound_StopBGTrack();
+    //Sound_StopAllSounds();
+   // Sound_StopBGTrack();
 
-    Sound_StartBGTrack ("music/ENDLEVEL.ogg", "music/ENDLEVEL.ogg");
+    //Sound_StartBGTrack ("music/ENDLEVEL.ogg", "music/ENDLEVEL.ogg");
 
     bgive_bonus = false;
 
@@ -854,7 +850,7 @@ PUBLIC void M_Intermission_f (void)
 
             collapse_basetime = victory_basetime = ClientStatic.realtime;
 
-            Sound_StartBGTrack ("music/XTHEEND.ogg", "music/XTHEEND.ogg");
+            //Sound_StartBGTrack ("music/XTHEEND.ogg", "music/XTHEEND.ogg");
 
             M_PushMenu (M_SODVictory_Draw, M_SODVictory_Key);
             return;
@@ -873,7 +869,7 @@ PUBLIC void M_Intermission_f (void)
     }
 
     if (strstr (levelstate.level_name, "Boss") != NULL && g_version->value == WOLFENSTEINWL6) {
-        Sound_StartBGTrack ("music/URAHERO.ogg", "music/URAHERO.ogg");
+        //Sound_StartBGTrack ("music/URAHERO.ogg", "music/URAHERO.ogg");
 
         M_PushMenu (M_Victory_Draw, M_Victory_Key);
     } else if (currentMap.map == 9 && g_version->value == WOLFENSTEINWL6) {

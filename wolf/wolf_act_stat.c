@@ -1635,6 +1635,7 @@ extern _boolean sound_initialized;
 
 void CorrectBossDeathTimeouts()
 {
+    /*
     if (sound_initialized) {
         objstate[en_trans][st_die2].timeout = 105;
         objstate[en_uber][st_die2].timeout = 70;
@@ -1645,7 +1646,7 @@ void CorrectBossDeathTimeouts()
         objstate[en_gift][st_die2].timeout = 140;
         objstate[en_fat][st_die2].timeout = 140;
         objstate[en_hitler][st_die2].timeout = 140;
-    } else {
+    } else */{
         objstate[en_schabbs][st_die2].timeout = 5;
         objstate[en_gift][st_die2].timeout = 5;
         objstate[en_fat][st_die2].timeout = 5;

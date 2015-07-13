@@ -33,7 +33,6 @@
 #include "../env/timer.h"
 #include "../env/com_string.h"
 #include "../env/input.h"
-#include "../env/sound.h"
 
 #include "wolf_local.h"
 #include "wolf_level.h"
@@ -141,7 +140,7 @@ PUBLIC void Client_PrepRefresh (const char *r_mapname)
     R_EndFrame();
 
     if (r_world->musicName) {
-        Sound_StartBGTrack (r_world->musicName, r_world->musicName);
+        //Sound_StartBGTrack (r_world->musicName, r_world->musicName);
     }
 
     R_EndFrame();
@@ -180,8 +179,6 @@ PUBLIC void Client_Frame (int msec)
 
     // allow rendering change
     Video_CheckChanges();
-
-    Sound_Update (vnull, vnull, vnull, vnull);
 
     if (ClientStatic.menuState == IPM_AUTOMAP) {
         pfglDepthMask (GL_TRUE);
@@ -232,14 +229,7 @@ PUBLIC void Client_Frame (int msec)
             levelstate.time += tics;
         }
     }
-
     Client_Screen_UpdateScreen();
 
     ClientStatic.framecount++;
 }
-
-
-
-
-
-

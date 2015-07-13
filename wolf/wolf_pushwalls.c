@@ -35,8 +35,6 @@
 #include "wolf_local.h"
 #include "wolf_level.h"
 
-#include "../env/sound.h"
-
 Pwall_t PWall;
 
 /**
@@ -81,9 +79,9 @@ PUBLIC _boolean PushWall_Push (int x, int y, dir4type dir)
     levelstate.found_secrets++;
 
     if (g_version->value == SPEAROFDESTINY) {
-        Sound_StartSound (NULL, 1, CHAN_AUTO, Sound_RegisterSound ("sfx/030.wav"), 1, ATTN_STATIC, 0);
+        //Sound_StartSound (NULL, 1, CHAN_AUTO, Sound_RegisterSound ("sfx/030.wav"), 1, ATTN_STATIC, 0);
     } else {
-        Sound_StartSound (NULL, 1, CHAN_AUTO, Sound_RegisterSound ("sfx/034.wav"), 1, ATTN_STATIC, 0);
+        //Sound_StartSound (NULL, 1, CHAN_AUTO, Sound_RegisterSound ("sfx/034.wav"), 1, ATTN_STATIC, 0);
     }
 
 // good way to avoid stuckness; [un]comment one more down!

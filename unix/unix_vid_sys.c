@@ -37,8 +37,6 @@
 #include "../env/client.h"
 #include "../env/renderer.h"
 #include "../env/video.h"
-#include "../env/sound.h"
-
 
 // Console variables that we need to access from this module
 cvar_t      *vid_gamma;
@@ -170,10 +168,6 @@ PRIVATE _boolean VID_LoadRefresh (void)
 */
 PUBLIC void Video_CheckChanges (void)
 {
-    if (r_ref->modified) {
-        Sound_StopAllSounds();
-    }
-
     while (r_ref->modified) {
         // refresh has changed
         r_ref->modified = false;

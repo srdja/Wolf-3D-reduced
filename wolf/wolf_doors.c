@@ -36,7 +36,6 @@
 #include "wolf_level.h"
 #include "wolf_player.h"
 #include "wolf_local.h"
-#include "../env/sound.h"
 
 #define CLOSEWALL   MINDIST // Space between wall & player
 #define MAXDOORS    64      // max number of sliding doors
@@ -287,7 +286,7 @@ PUBLIC void Door_Process (LevelDoors_t *lvldoors, int t_tk)
                     Areas_Connect (Player.areanumber);
 
                     if (areabyplayer[ lvldoors->Doors[ n ]->area1 ]) { // Door Opening sound!
-                        Sound_StartSound (NULL, 1, CHAN_AUTO, Sound_RegisterSound ("sfx/010.wav"), 1, ATTN_STATIC, 0);
+                        //Sound_StartSound (NULL, 1, CHAN_AUTO, Sound_RegisterSound ("sfx/010.wav"), 1, ATTN_STATIC, 0);
                     }
                 }
 
@@ -309,7 +308,7 @@ PUBLIC void Door_Process (LevelDoors_t *lvldoors, int t_tk)
             } else { // closing!
                 if (lvldoors->Doors[ n ]->ticcount == DOOR_FULLOPEN) {
                     if (areabyplayer[ lvldoors->Doors[ n ]->area1 ]) { // Door Closing sound!
-                        Sound_StartSound (NULL, 1, CHAN_AUTO, Sound_RegisterSound ("sfx/007.wav"), 1, ATTN_STATIC, 0);
+                        //Sound_StartSound (NULL, 1, CHAN_AUTO, Sound_RegisterSound ("sfx/007.wav"), 1, ATTN_STATIC, 0);
                     }
                 }
 

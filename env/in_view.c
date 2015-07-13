@@ -39,7 +39,6 @@ extern void IN_StartupMouse (void);
 extern void IN_ActivateMouse (void);
 extern void IN_DeactivateMouse (void);
 extern void IN_MouseMove (usercmd_t *cmd);
-extern void IN_StartupJoystick (void);
 
 /*
 =========================================================================

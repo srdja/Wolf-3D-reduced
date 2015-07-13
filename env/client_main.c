@@ -36,7 +36,6 @@
 #include "timer.h"
 #include "input.h"
 #include "com_string.h"
-#include "sound.h"
 
 cvar_t  *freelook;
 
@@ -114,7 +113,7 @@ PUBLIC void Client_Init (void)
         return;
 
     Video_Init();
-    Sound_Init();   // sound must be initialized after window is created
+    //Sound_Init();   // sound must be initialized after window is created
 
     Menu_Init();
 
@@ -163,7 +162,6 @@ PUBLIC void Client_Shutdown (void)
 
     Client_WriteConfiguration();
 
-    Sound_Shutdown();
     IN_Shutdown();
     Video_Shutdown();
 }

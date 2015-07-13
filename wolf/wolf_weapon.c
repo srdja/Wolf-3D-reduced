@@ -25,8 +25,6 @@
 #include "wolf_raycast.h"
 #include "wolf_actor_ai.h"
 
-#include "../env/sound.h"
-
 
 /**
  * \brief User is using a weapon, find out who it hit and calculate damage
@@ -41,19 +39,19 @@ PUBLIC void weapon_attack (player_t *self)
 
     switch (self->weapon) {
     case WEAPON_KNIFE:
-        Sound_StartSound (NULL, 0, CHAN_WEAPON, Sound_RegisterSound ("lsfx/023.wav"), 1, ATTN_NORM, 0);
+        //Sound_StartSound (NULL, 0, CHAN_WEAPON, Sound_RegisterSound ("lsfx/023.wav"), 1, ATTN_NORM, 0);
         break;
 
     case WEAPON_PISTOL:
-        Sound_StartSound (NULL, 0, CHAN_WEAPON, Sound_RegisterSound ("sfx/012.wav"), 1, ATTN_NORM, 0);
+        //Sound_StartSound (NULL, 0, CHAN_WEAPON, Sound_RegisterSound ("sfx/012.wav"), 1, ATTN_NORM, 0);
         break;
 
     case WEAPON_MACHINEGUN:
-        Sound_StartSound (NULL, 0, CHAN_WEAPON, Sound_RegisterSound ("sfx/011.wav"), 1, ATTN_NORM, 0);
+        //Sound_StartSound (NULL, 0, CHAN_WEAPON, Sound_RegisterSound ("sfx/011.wav"), 1, ATTN_NORM, 0);
         break;
 
     case WEAPON_GATLINGGUN:
-        Sound_StartSound (NULL, 0, CHAN_WEAPON, Sound_RegisterSound ("sfx/013.wav"), 1, ATTN_NORM, 0);
+        //Sound_StartSound (NULL, 0, CHAN_WEAPON, Sound_RegisterSound ("sfx/013.wav"), 1, ATTN_NORM, 0);
         break;
     }
 
@@ -123,7 +121,7 @@ PUBLIC void weapon_attack (player_t *self)
         R_Trace (&trace, r_world);
 
         if (trace.flags & TRACE_HIT_DOOR) {
-            Sound_StartSound (NULL, 0, CHAN_AUTO, Sound_RegisterSound ("lsfx/028.wav"), 1, ATTN_NORM, 0);
+            //Sound_StartSound (NULL, 0, CHAN_AUTO, Sound_RegisterSound ("lsfx/028.wav"), 1, ATTN_NORM, 0);
         }
 
         return;

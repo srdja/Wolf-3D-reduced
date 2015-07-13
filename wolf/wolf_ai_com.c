@@ -37,9 +37,6 @@
 #include "wolf_actor_ai.h"
 #include "wolf_local.h"
 
-#include "../env/sound.h"
-
-
 #define RUNSPEED    6000
 
 
@@ -734,7 +731,7 @@ PUBLIC void T_Bite (entity_t *self)
     long dx, dy;
 
 //  Sound_StartSound( NULL, 1, CHAN_VOICE, Sound_RegisterSound( "lsfx/076.wav" ), 1, ATTN_NORM, 0 );  //gsh this was the original code
-    Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/002.wav"), 1, ATTN_NORM, 0);    //gsh changed to this... the original code wasn't the correct sound file
+    //Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/002.wav"), 1, ATTN_NORM, 0);    //gsh changed to this... the original code wasn't the correct sound file
 
     dx = ABS (Player.position.origin[ 0 ] - self->x) - TILE_GLOBAL;
 
@@ -910,9 +907,9 @@ PUBLIC void T_Shoot (entity_t *self)
     switch (self->type) {
     case en_ss:
         if (g_version->value == SPEAROFDESTINY) {
-            Sound_StartSound (NULL, 1, CHAN_WEAPON, Sound_RegisterSound ("sfx/020.wav"), 1, ATTN_NORM, 0);
+            //Sound_StartSound (NULL, 1, CHAN_WEAPON, Sound_RegisterSound ("sfx/020.wav"), 1, ATTN_NORM, 0);
         } else {
-            Sound_StartSound (NULL, 1, CHAN_WEAPON, Sound_RegisterSound ("sfx/024.wav"), 1, ATTN_NORM, 0);
+           // Sound_StartSound (NULL, 1, CHAN_WEAPON, Sound_RegisterSound ("sfx/024.wav"), 1, ATTN_NORM, 0);
         }
 
         break;
@@ -922,14 +919,14 @@ PUBLIC void T_Shoot (entity_t *self)
     case en_mecha:
     case en_hitler:
     case en_boss:
-        Sound_StartSound (NULL, 1, CHAN_WEAPON, Sound_RegisterSound ("sfx/022.wav"), 1, ATTN_NORM, 0);
+       // Sound_StartSound (NULL, 1, CHAN_WEAPON, Sound_RegisterSound ("sfx/022.wav"), 1, ATTN_NORM, 0);
         break;
 
     default:
         if (g_version->value == SPEAROFDESTINY) {
-            Sound_StartSound (NULL, 1, CHAN_WEAPON, Sound_RegisterSound ("sfx/038.wav"), 1, ATTN_NORM, 0);
+          //  Sound_StartSound (NULL, 1, CHAN_WEAPON, Sound_RegisterSound ("sfx/038.wav"), 1, ATTN_NORM, 0);
         } else {
-            Sound_StartSound (NULL, 1, CHAN_WEAPON, Sound_RegisterSound ("sfx/049.wav"), 1, ATTN_NORM, 0);
+           // Sound_StartSound (NULL, 1, CHAN_WEAPON, Sound_RegisterSound ("sfx/049.wav"), 1, ATTN_NORM, 0);
         }
 
         break;
@@ -1005,13 +1002,13 @@ PUBLIC void T_Launch (entity_t *self)
     switch (self->type) {
     case en_death:
         proj->type = en_hrocket;
-        Sound_StartSound (NULL, 1, CHAN_WEAPON, Sound_RegisterSound ("lsfx/078.wav"), 1, ATTN_NORM, 0);
+        //Sound_StartSound (NULL, 1, CHAN_WEAPON, Sound_RegisterSound ("lsfx/078.wav"), 1, ATTN_NORM, 0);
         break;
 
     case en_angel:
         proj->type = en_spark;
         proj->state = st_path1;
-        Sound_StartSound (NULL, 1, CHAN_WEAPON, Sound_RegisterSound ("lsfx/069.wav"), 1, ATTN_NORM, 0);
+        //Sound_StartSound (NULL, 1, CHAN_WEAPON, Sound_RegisterSound ("lsfx/069.wav"), 1, ATTN_NORM, 0);
         break;
 
     case en_fake:
@@ -1019,22 +1016,22 @@ PUBLIC void T_Launch (entity_t *self)
         proj->state = st_path1;
         proj->flags = FL_NEVERMARK;
         proj->speed = 0x1600;
-        Sound_StartSound (NULL, 1, CHAN_WEAPON, Sound_RegisterSound ("lsfx/069.wav"), 1, ATTN_NORM, 0);
+       // Sound_StartSound (NULL, 1, CHAN_WEAPON, Sound_RegisterSound ("lsfx/069.wav"), 1, ATTN_NORM, 0);
         break;
 
     case en_schabbs:
         proj->type = en_needle;
         proj->state = st_path1;
-        Sound_StartSound (NULL, 1, CHAN_WEAPON, Sound_RegisterSound ("lsfx/008.wav"), 1, ATTN_NORM, 0);
+       // Sound_StartSound (NULL, 1, CHAN_WEAPON, Sound_RegisterSound ("lsfx/008.wav"), 1, ATTN_NORM, 0);
         break;
 
     default:
         proj->type = en_rocket;
 
         if (g_version->value == SPEAROFDESTINY) {
-            Sound_StartSound (NULL, 1, CHAN_WEAPON, Sound_RegisterSound ("lsfx/008.wav"), 1, ATTN_NORM, 0);
+          //  Sound_StartSound (NULL, 1, CHAN_WEAPON, Sound_RegisterSound ("lsfx/008.wav"), 1, ATTN_NORM, 0);
         } else {
-            Sound_StartSound (NULL, 1, CHAN_WEAPON, Sound_RegisterSound ("lsfx/085.wav"), 1, ATTN_NORM, 0);
+          //  Sound_StartSound (NULL, 1, CHAN_WEAPON, Sound_RegisterSound ("lsfx/085.wav"), 1, ATTN_NORM, 0);
         }
     }
 

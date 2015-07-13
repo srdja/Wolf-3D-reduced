@@ -35,7 +35,6 @@
 
 #include "wolf_local.h"
 
-#include "../env/sound.h"
 #include "../env/client.h"
 #include "../env/renderer.h"
 #include "../env/com_string.h"
@@ -232,7 +231,7 @@ PRIVATE void Intro_SHighScore_Draw (void)
 PRIVATE void M_Intro_Draw (void)
 {
     if (intro_slide > 3) {
-        Sound_StopBGTrack();
+        //Sound_StopBGTrack();
         intro_slide = 1;
         M_Menu_Main_f();
         return;
@@ -268,12 +267,12 @@ PUBLIC void M_Intro_f (void)
 
     s = Cmd_Argv (1);
 
-    Sound_StopBGTrack();
+    //Sound_StopBGTrack();
 
     if (g_version->value == SPEAROFDESTINY) {
-        Sound_StartBGTrack ("music/XTOWER2.ogg", "music/XTOWER2.ogg");
+       // Sound_StartBGTrack ("music/XTOWER2.ogg", "music/XTOWER2.ogg");
     } else {
-        Sound_StartBGTrack ("music/INTROCW3.ogg", "music/INTROCW3.ogg");
+       // Sound_StartBGTrack ("music/INTROCW3.ogg", "music/INTROCW3.ogg");
     }
 
     sIntroLayer[ 0 ].draw = Intro_PC13_Draw;

@@ -31,13 +31,8 @@
 #include "wolf_local.h"
 #include "wolf_menu.h"
 
-#include "../env/sound.h"
-
-
-
 #define BJRUNSPEED  2048
 #define BJJUMPSPEED 680
-
 
 
 /**
@@ -100,7 +95,7 @@ void T_BJJump (entity_t *bj)
  */
 void T_BJYell (entity_t *bj)
 {
-    Sound_StartSound (NULL, 0, CHAN_VOICE, Sound_RegisterSound ("sfx/082.wav"), 1, ATTN_NORM, 0);
+    //Sound_StartSound (NULL, 0, CHAN_VOICE, Sound_RegisterSound ("sfx/082.wav"), 1, ATTN_NORM, 0);
 }
 
 /**

@@ -39,7 +39,6 @@
 
 #include "../env/com_string.h"
 #include "../env/renderer.h"
-#include "../env/sound.h"
 
 extern void M_Menu_Skill_f (void);
 extern void M_Menu_Mission_f (void);
@@ -198,15 +197,10 @@ PUBLIC void StartGame (int episode, int mission, int skill)
 
     PL_NewGame (&Player);
 
-    Sound_StopBGTrack();
+    //Sound_StopBGTrack();
 
     // disable updates and start the cinematic going
-//  cl.servercount = -1;
     M_ForceMenuOff();
-//  Cvar_SetValue( "deathmatch", 0 );
-//  Cvar_SetValue( "coop", 0 );
-
-//  Cvar_SetValue( "gamerules", 0 );        //PGM
 
     if (g_version->value == SPEAROFDESTINY) {
         com_snprintf (szTextMsg, sizeof (szTextMsg),

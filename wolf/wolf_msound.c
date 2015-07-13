@@ -35,7 +35,6 @@
 
 #include "wolf_local.h"
 
-#include "../env/sound.h"
 #include "../env/renderer.h"
 
 /////////////////////////////////////////////////////////////////////
@@ -50,11 +49,6 @@ PRIVATE menuslider_s    s_sound_sfxvolume_slider;
 PRIVATE menuslider_s    s_sound_musicvolume_slider;
 PRIVATE menulist_s      s_sound_device_list;
 
-
-PRIVATE void UpdateSoundDeviceFunc (void *unused)
-{
-    Cvar_Set ("s_device", s_sound_device_list.itemnames[ s_sound_device_list.curvalue ]);
-}
 
 PRIVATE void UpdateMasterVolumeFunc (void *unused)
 {
@@ -113,8 +107,8 @@ PRIVATE void Sound_MenuInit (void)
     s_sound_musicvolume_slider.maxvalue     = 10;
     s_sound_musicvolume_slider.curvalue     = Cvar_VariableValue ("s_musicVolume") * 10;
 
-
-    if (sound_initialized) {
+/*
+    if (0) { // sound_initialized
         s_sound_device_list.generic.type    = MTYPE_SPINCONTROL;
         s_sound_device_list.generic.x       = 0;
         s_sound_device_list.generic.y       = 90;
@@ -126,15 +120,16 @@ PRIVATE void Sound_MenuInit (void)
         s_sound_device_list.itemnames   = sound_devices;
         s_sound_device_list.curvalue    = numDefaultSoundDevice;
     }
-
+*/
     Menu_AddItem (&s_sound_menu, (void *) &s_sound_mastervolume_slider);
     Menu_AddItem (&s_sound_menu, (void *) &s_sound_sfxvolume_slider);
     Menu_AddItem (&s_sound_menu, (void *) &s_sound_musicvolume_slider);
 
+    /*
     if (sound_initialized) {
         Menu_AddItem (&s_sound_menu, (void *) &s_sound_device_list);
     }
-
+*/
 }
 
 
