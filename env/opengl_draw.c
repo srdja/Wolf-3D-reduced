@@ -66,35 +66,30 @@ PUBLIC void R_Draw_Character (int x, int y, int num, font_t *myfont)
     fcol = col * myfont->wFrac;
 
 
-    pfglColor4ubv (myfont->colour);
+    glColor4ubv (myfont->colour);
 
-    pfglEnable (GL_BLEND);
+    glEnable (GL_BLEND);
 
 
     R_Bind (myfont->texfont->texnum);
 
 
-    pfglBegin (GL_QUADS);
+    glBegin (GL_QUADS);
+        glTexCoord2f (fcol, frow);
+        glVertex2i (x, y);
 
+        glTexCoord2f (fcol + myfont->wFrac, frow);
+        glVertex2i (x + myfont->nMaxWidth * scale, y);
 
-    pfglTexCoord2f (fcol, frow);
-    pfglVertex2i (x, y);
+        glTexCoord2f (fcol + myfont->wFrac, frow + myfont->hFrac);
+        glVertex2i (x + myfont->nMaxWidth * scale, (y + sh * scale));
 
-    pfglTexCoord2f (fcol + myfont->wFrac, frow);
-    pfglVertex2i (x + myfont->nMaxWidth * scale, y);
+        glTexCoord2f (fcol, frow + myfont->hFrac);
+        glVertex2i (x, (y + sh * scale));
+    glEnd();
 
-    pfglTexCoord2f (fcol + myfont->wFrac, frow + myfont->hFrac);
-    pfglVertex2i (x + myfont->nMaxWidth * scale, (y + sh * scale));
-
-    pfglTexCoord2f (fcol, frow + myfont->hFrac);
-    pfglVertex2i (x, (y + sh * scale));
-
-
-
-    pfglEnd();
-
-    pfglDisable (GL_BLEND);
-    pfglColor3f (1, 1, 1);
+    glDisable (GL_BLEND);
+    glColor3f (1, 1, 1);
 }
 
 
@@ -118,18 +113,18 @@ PUBLIC void R_Draw_Pic (int x, int y, const char *pic)
 
     R_Bind (tex->texnum);
 
-    pfglBegin (GL_QUADS);
+    glBegin (GL_QUADS);
 
-    pfglTexCoord2f (0.0, 0.0);
-    pfglVertex2i (x, y);
-    pfglTexCoord2f (1.0, 0.0);
-    pfglVertex2i (x + tex->width, y);
-    pfglTexCoord2f (1.0, 1.0);
-    pfglVertex2i (x + tex->width, y + tex->height);
-    pfglTexCoord2f (0.0, 1.0);
-    pfglVertex2i (x, y + tex->height);
+    glTexCoord2f (0.0, 0.0);
+    glVertex2i (x, y);
+    glTexCoord2f (1.0, 0.0);
+    glVertex2i (x + tex->width, y);
+    glTexCoord2f (1.0, 1.0);
+    glVertex2i (x + tex->width, y + tex->height);
+    glTexCoord2f (0.0, 1.0);
+    glVertex2i (x, y + tex->height);
 
-    pfglEnd();
+    glEnd();
 }
 
 /**
@@ -154,22 +149,19 @@ PUBLIC void R_Draw_Tile (int x, int y, int w, int h, const char *pic)
 
     R_Bind (image->texnum);
 
-    pfglBegin (GL_QUADS);
+    glBegin (GL_QUADS);
+        glTexCoord2i (x / image->upload_width, y / image->upload_height);
+        glVertex2i (x, y);
 
+        glTexCoord2i ((x + w) / image->upload_width, y / image->upload_height);
+        glVertex2i (x + w, y);
 
-    pfglTexCoord2i (x / image->upload_width, y / image->upload_height);
-    pfglVertex2i (x, y);
+        glTexCoord2i ((x + w) / image->upload_width, (y + h) / image->upload_height);
+        glVertex2i (x + w, y + h);
 
-    pfglTexCoord2i ((x + w) / image->upload_width, y / image->upload_height);
-    pfglVertex2i (x + w, y);
-
-    pfglTexCoord2i ((x + w) / image->upload_width, (y + h) / image->upload_height);
-    pfglVertex2i (x + w, y + h);
-
-    pfglTexCoord2i (x / image->upload_width, (y + h) / image->upload_height);
-    pfglVertex2i (x, y + h);
-
-    pfglEnd();
+        glTexCoord2i (x / image->upload_width, (y + h) / image->upload_height);
+        glVertex2i (x, y + h);
+    glEnd();
 }
 
 /**
@@ -184,19 +176,19 @@ PUBLIC void R_Draw_Tile (int x, int y, int w, int h, const char *pic)
  */
 PUBLIC void R_Draw_Fill (int x, int y, int w, int h, colour3_t c)
 {
-    pfglDisable (GL_TEXTURE_2D);
+    glDisable (GL_TEXTURE_2D);
 
-    pfglColor3ubv (c);
+    glColor3ubv (c);
 
-    pfglBegin (GL_QUADS);
-        pfglVertex2i (x, y);
-        pfglVertex2i (x + w, y);
-        pfglVertex2i (x + w, y + h);
-        pfglVertex2i (x, y + h);
-    pfglEnd();
+    glBegin (GL_QUADS);
+        glVertex2i (x, y);
+        glVertex2i (x + w, y);
+        glVertex2i (x + w, y + h);
+        glVertex2i (x, y + h);
+    glEnd();
 
-    pfglColor3f (1, 1, 1);
-    pfglEnable (GL_TEXTURE_2D);
+    glColor3f (1, 1, 1);
+    glEnable (GL_TEXTURE_2D);
 }
 
 /**
@@ -211,17 +203,17 @@ PUBLIC void R_Draw_Fill (int x, int y, int w, int h, colour3_t c)
  */
 PUBLIC void R_Draw_Line (int nXStart, int nYStart, int nXEnd, int nYEnd, int width, colour3_t c)
 {
-    pfglDisable (GL_TEXTURE_2D);
+    glDisable (GL_TEXTURE_2D);
 
-    pfglColor3ubv (c);
-    pfglLineWidth ((float)width);
+    glColor3ubv (c);
+    glLineWidth ((float)width);
 
-    pfglBegin (GL_LINES);
-        pfglVertex2i (nXStart, nYStart);
-        pfglVertex2i (nXEnd, nYEnd);
-    pfglEnd();
+    glBegin (GL_LINES);
+        glVertex2i (nXStart, nYStart);
+        glVertex2i (nXEnd, nYEnd);
+    glEnd();
 
-    pfglColor3f (1, 1, 1);
+    glColor3f (1, 1, 1);
 
-    pfglEnable (GL_TEXTURE_2D);
+    glEnable (GL_TEXTURE_2D);
 }

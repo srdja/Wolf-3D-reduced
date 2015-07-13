@@ -73,30 +73,25 @@ float ratio; // viewport width/height
  */
 PUBLIC void GL_SetDefaultState (void)
 {
+    glClearColor (1, 0, 0.5 , 0.5);
+    glCullFace (GL_FRONT);
+    glEnable (GL_TEXTURE_2D);
 
-    pfglClearColor (1, 0, 0.5 , 0.5);
-    pfglCullFace (GL_FRONT);
-    pfglEnable (GL_TEXTURE_2D);
+    glEnable (GL_ALPHA_TEST);
+    glAlphaFunc (GL_GREATER, 0.666f);
 
-    pfglEnable (GL_ALPHA_TEST);
-    pfglAlphaFunc (GL_GREATER, 0.666f);
+    glDisable (GL_DEPTH_TEST);
+    glDisable (GL_CULL_FACE);
+    glDisable (GL_BLEND);
 
-    pfglDisable (GL_DEPTH_TEST);
-    pfglDisable (GL_CULL_FACE);
-    pfglDisable (GL_BLEND);
+    glColor4f (1, 1, 1, 1);
 
-    pfglColor4f (1, 1, 1, 1);
+    glPolygonMode (GL_FRONT_AND_BACK, GL_FILL);
+    glShadeModel (GL_FLAT);
 
-    pfglPolygonMode (GL_FRONT_AND_BACK, GL_FILL);
-    pfglShadeModel (GL_FLAT);
-
-
-    pfglBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-
+    glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     GL_UpdateSwapInterval();
-
 }
 
 /**
@@ -116,26 +111,23 @@ PRIVATE void R_CheckFOV (void)
  */
 PUBLIC void R_SetGL3D (placeonplane_t viewport)
 {
-
     R_CheckFOV();
 
-
-    pfglMatrixMode (GL_PROJECTION);
-    pfglLoadIdentity();
+    glMatrixMode (GL_PROJECTION);
+    glLoadIdentity();
     MYgluPerspective (cur_y_fov - 2.0f, ratio, 0.2f, 64.0f);
-    pfglMatrixMode (GL_MODELVIEW);
-    pfglLoadIdentity();
+    glMatrixMode (GL_MODELVIEW);
+    glLoadIdentity();
 
-    pfglRotatef ((GLfloat) (RAD2DEG (viewport.pitch)), 1, 0, 0);
-    pfglRotatef ((GLfloat) (90 - RAD2DEG (viewport.angle)), 0, 1, 0);
-    pfglTranslatef (-viewport.origin[ 0 ] / FLOATTILE, 0, viewport.origin[ 1 ] / FLOATTILE);
+    glRotatef ((GLfloat) (RAD2DEG (viewport.pitch)), 1, 0, 0);
+    glRotatef ((GLfloat) (90 - RAD2DEG (viewport.angle)), 0, 1, 0);
+    glTranslatef (-viewport.origin[ 0 ] / FLOATTILE, 0, viewport.origin[ 1 ] / FLOATTILE);
 
-    pfglCullFace (GL_BACK);
+    glCullFace (GL_BACK);
 
-    pfglEnable (GL_DEPTH_TEST);
-    pfglEnable (GL_CULL_FACE);
-    pfglEnable (GL_BLEND);
-
+    glEnable (GL_DEPTH_TEST);
+    glEnable (GL_CULL_FACE);
+    glEnable (GL_BLEND);
 }
 
 /**
@@ -148,27 +140,24 @@ PUBLIC void R_SetGL3D (placeonplane_t viewport)
  */
 PUBLIC void R_DrawBox (int x, int y, int w, int h, W32 color)
 {
-    pfglDisable (GL_TEXTURE_2D);
+    glDisable (GL_TEXTURE_2D);
 
-    pfglEnable (GL_BLEND);
-    pfglBlendFunc (GL_SRC_COLOR, GL_DST_COLOR);
+    glEnable (GL_BLEND);
+    glBlendFunc (GL_SRC_COLOR, GL_DST_COLOR);
 
-    pfglColor4ubv ((GLubyte *) & color);
+    glColor4ubv ((GLubyte *) & color);
 
-    pfglBegin (GL_QUADS);
+    glBegin (GL_QUADS);
+        glVertex2i (x, y);
+        glVertex2i (x, y + h);
+        glVertex2i (x + w, y + h);
+        glVertex2i (x + w, y);
+    glEnd();
 
-
-    pfglVertex2i (x, y);
-    pfglVertex2i (x, y + h);
-    pfglVertex2i (x + w, y + h);
-    pfglVertex2i (x + w, y);
-
-    pfglEnd();
-
-    pfglColor3f (1, 1, 1);
-    pfglBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    pfglDisable (GL_BLEND);
-    pfglEnable (GL_TEXTURE_2D);
+    glColor3f (1, 1, 1);
+    glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glDisable (GL_BLEND);
+    glEnable (GL_TEXTURE_2D);
 }
 
 /**
@@ -259,24 +248,22 @@ PUBLIC void R_Draw_Wall (float x, float y, float z1, float z2, int type, int tex
     LoadWallTexture (tex, &isDark);
 
     if (isDark) {
-        pfglColor3f (0.7f, 0.7f, 0.7f);
+        glColor3f (0.7f, 0.7f, 0.7f);
     }
 
-    pfglBegin (GL_QUADS);
-
-    pfglTexCoord2f (1.0, 0.0);
-    pfglVertex3f (x1, z2, y1);
-    pfglTexCoord2f (0.0, 0.0);
-    pfglVertex3f (x2, z2, y2);
-    pfglTexCoord2f (0.0, 1.0);
-    pfglVertex3f (x2, z1, y2);
-    pfglTexCoord2f (1.0, 1.0);
-    pfglVertex3f (x1, z1, y1);
-
-    pfglEnd();
+    glBegin (GL_QUADS);
+        glTexCoord2f (1.0, 0.0);
+        glVertex3f (x1, z2, y1);
+        glTexCoord2f (0.0, 0.0);
+        glVertex3f (x2, z2, y2);
+        glTexCoord2f (0.0, 1.0);
+        glVertex3f (x2, z1, y2);
+        glTexCoord2f (1.0, 1.0);
+        glVertex3f (x1, z1, y1);
+    glEnd();
 
     if (isDark) {
-        pfglColor3f (1.0f, 1.0f, 1.0f);
+        glColor3f (1.0f, 1.0f, 1.0f);
     }
 
 }
@@ -299,9 +286,7 @@ PUBLIC void R_Draw_Door (int x, int y, float z1, float z2, _boolean vertical, _b
     if (amount == DOOR_FULLOPEN) {
         return;
     }
-
     amt = (float)amount / DOOR_FULLOPEN;
-
 
     if (vertical) {
         x1 = x2 = (float)x + 0.5f;
@@ -328,26 +313,23 @@ PUBLIC void R_Draw_Door (int x, int y, float z1, float z2, _boolean vertical, _b
     LoadWallTexture (tex, &isDark);
 
     if (isDark) {
-        pfglColor3f (0.7f, 0.7f, 0.7f);
+        glColor3f (0.7f, 0.7f, 0.7f);
     }
 
-    pfglBegin (GL_QUADS);
-
-    pfglTexCoord2f (backside ? 0.0f : 1.0f, 0.0);
-    pfglVertex3f (x1, z2, y1);
-    pfglTexCoord2f (backside ? 1.0f : 0.0f, 0.0);
-    pfglVertex3f (x2, z2, y2);
-    pfglTexCoord2f (backside ? 1.0f : 0.0f, 1.0);
-    pfglVertex3f (x2, z1, y2);
-    pfglTexCoord2f (backside ? 0.0f : 1.0f, 1.0);
-    pfglVertex3f (x1, z1, y1);
-
-    pfglEnd();
+    glBegin (GL_QUADS);
+        glTexCoord2f (backside ? 0.0f : 1.0f, 0.0);
+        glVertex3f (x1, z2, y1);
+        glTexCoord2f (backside ? 1.0f : 0.0f, 0.0);
+        glVertex3f (x2, z2, y2);
+        glTexCoord2f (backside ? 1.0f : 0.0f, 1.0);
+        glVertex3f (x2, z1, y2);
+        glTexCoord2f (backside ? 0.0f : 1.0f, 1.0);
+        glVertex3f (x1, z1, y1);
+    glEnd();
 
     if (isDark) {
-        pfglColor3f (1.0f, 1.0f, 1.0f);
+        glColor3f (1.0f, 1.0f, 1.0f);
     }
-
 }
 
 /**
@@ -360,7 +342,6 @@ PUBLIC void R_DrawSprites (void)
     int n_sprt, n;
     float ang;
     texture_t *twall;
-
 
 // build visible sprites list
 
@@ -385,25 +366,23 @@ PUBLIC void R_DrawSprites (void)
 
         R_Bind (twall->texnum);
 
-        pfglBegin (GL_QUADS);
+        glBegin (GL_QUADS);
+            Ex = Dx = vislist[ n ].x / FLOATTILE;
+            Ey = Dy = vislist[ n ].y / FLOATTILE;
+            Ex += cosa;
+            Ey += sina;
+            Dx -= cosa;
+            Dy -= sina;
 
-        Ex = Dx = vislist[ n ].x / FLOATTILE;
-        Ey = Dy = vislist[ n ].y / FLOATTILE;
-        Ex += cosa;
-        Ey += sina;
-        Dx -= cosa;
-        Dy -= sina;
-
-        pfglTexCoord2f (0.0, 0.0);
-        pfglVertex3f (Ex, UPPERZCOORD, -Ey);
-        pfglTexCoord2f (0.0, 1.0);
-        pfglVertex3f (Ex, LOWERZCOORD, -Ey);
-        pfglTexCoord2f (1.0, 1.0);
-        pfglVertex3f (Dx, LOWERZCOORD, -Dy);
-        pfglTexCoord2f (1.0, 0.0);
-        pfglVertex3f (Dx, UPPERZCOORD, -Dy);
-
-        pfglEnd();
+            glTexCoord2f (0.0, 0.0);
+            glVertex3f (Ex, UPPERZCOORD, -Ey);
+            glTexCoord2f (0.0, 1.0);
+            glVertex3f (Ex, LOWERZCOORD, -Ey);
+            glTexCoord2f (1.0, 1.0);
+            glVertex3f (Dx, LOWERZCOORD, -Dy);
+            glTexCoord2f (1.0, 0.0);
+            glVertex3f (Dx, UPPERZCOORD, -Dy);
+        glEnd();
     }
 
 }
@@ -426,7 +405,6 @@ PUBLIC void R_DrawWeapon (void)
         if (ClientStatic.realtime & 512) {
             return;
         }
-
         y = 7 * viddef.height / 200;
         tex = TM_FindTexture_Sprite (SPR_DEATHCAM);
     } else {
@@ -434,32 +412,26 @@ PUBLIC void R_DrawWeapon (void)
         //tex = TM_FindTexture_Sprite (Player.weapon * 5 + Player.weaponframe + SPR_KNIFEREADY);
         tex = TM_FindTexture_Sprite (422);
     }
-
     R_Bind (tex->texnum);
 
+    glAlphaFunc (GL_GREATER, 0.3f);
 
+    glEnable (GL_BLEND);
 
-    pfglAlphaFunc (GL_GREATER, 0.3f);
+    glBegin (GL_QUADS);
+        glTexCoord2f (0.0f, 0.0f);
+        glVertex2i (x, y);
+        glTexCoord2f (1.0f, 0.0f);
+        glVertex2i (x + w * scale, y);
+        glTexCoord2f (1.0f, 1.0f);
+        glVertex2i (x + w * scale, y + h * scale);
+        glTexCoord2f (0.0f, 1.0f);
+        glVertex2i (x, y + h * scale);
+    glEnd();
 
-    pfglEnable (GL_BLEND);
+    glDisable (GL_BLEND);
 
-    pfglBegin (GL_QUADS);
-
-    pfglTexCoord2f (0.0f, 0.0f);
-    pfglVertex2i (x, y);
-    pfglTexCoord2f (1.0f, 0.0f);
-    pfglVertex2i (x + w * scale, y);
-    pfglTexCoord2f (1.0f, 1.0f);
-    pfglVertex2i (x + w * scale, y + h * scale);
-    pfglTexCoord2f (0.0f, 1.0f);
-    pfglVertex2i (x, y + h * scale);
-
-    pfglEnd();
-
-    pfglDisable (GL_BLEND);
-
-    pfglAlphaFunc (GL_GREATER, 0.666f);
-
+    glAlphaFunc (GL_GREATER, 0.666f);
 }
 
 /**
@@ -478,40 +450,34 @@ PUBLIC void R_DrawNumber (int x, int y, int number)
     char string[ 20 ];
     W32 length;
 
-
     com_snprintf (string, sizeof (string), "%d", number);
     length = strlen (string);
 
     tex = TM_FindTexture ("pics/N_NUMPIC.tga", TT_Pic);
 
-
-    pfglEnable (GL_TEXTURE_2D);
+    glEnable (GL_TEXTURE_2D);
 
     R_Bind (tex->texnum);
 
-    pfglBegin (GL_QUADS);
+    glBegin (GL_QUADS);
+        for (i = length - 1 ; i >= 0 ; --i) {
+            col = string[ i ] - 48;
 
-    for (i = length - 1 ; i >= 0 ; --i) {
-        col = string[ i ] - 48;
+            fcol = col * w;
 
-        fcol = col * w;
+            glTexCoord2f (fcol,    0);
+            glVertex2i (x, y);
+            glTexCoord2f (fcol + w, 0);
+            glVertex2i (x + 18, y);
+            glTexCoord2f (fcol + w, 1);
+            glVertex2i (x + 18, y + 32);
+            glTexCoord2f (fcol,    1);
+            glVertex2i (x, y + 32);
 
-        pfglTexCoord2f (fcol,    0);
-        pfglVertex2i (x, y);
-        pfglTexCoord2f (fcol + w, 0);
-        pfglVertex2i (x + 18, y);
-        pfglTexCoord2f (fcol + w, 1);
-        pfglVertex2i (x + 18, y + 32);
-        pfglTexCoord2f (fcol,    1);
-        pfglVertex2i (x, y + 32);
-
-        x -= 18;
-    }
-
-    pfglEnd();
-
+            x -= 18;
+        }
+    glEnd();
 }
-
 
 W8 wfont[ ] = {
     32, 15, 32, 32, 32, 32, 32, 12, 32, 32, 32, 32, 32, 32, 32, 32,
@@ -519,7 +485,6 @@ W8 wfont[ ] = {
     32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32,
     32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32
 };
-
 
 /**
  * \brief Draws a line of text
@@ -536,52 +501,41 @@ PUBLIC void R_put_line (int x, int y, const char *string)
     static float    h = 0.25f;  // (32 / 128.0f);
     static float    w = 0.0625f; // (32 / 512.0f);
 
-
     tex = TM_FindTexture ("pics/L_FONTPIC.tga", TT_Pic);
-
 
     R_Bind (tex->texnum);
 
-    pfglBegin (GL_QUADS);
+    glBegin (GL_QUADS);
+        while (*string) {
+            if (*string == '\n') {
+                mx = x;
+                y += 32;
+                ++string;
+                continue;
+            }
+            num = *string;
+            num &= 255;
 
-    while (*string) {
-        if (*string == '\n') {
-            mx = x;
-            y += 32;
+            if ((num & 127) == 32) {
+                mx += 32;
+                ++string;
+                continue;       // space
+            }
+
+            frow = ((num >> 4) - 2) * h;
+            fcol = (num & 15) * w;
+
+            glTexCoord2f (fcol, frow);
+            glVertex2i (mx, y);
+            glTexCoord2f (fcol + w, frow);
+            glVertex2i (mx + 32, y);
+            glTexCoord2f (fcol + w, frow + h);
+            glVertex2i (mx + 32, y + 32);
+            glTexCoord2f (fcol, frow + h);
+            glVertex2i (mx, y + 32);
+
+            mx += wfont[ (num & 127) - 32 ];
             ++string;
-            continue;
         }
-
-        num = *string;
-
-        num &= 255;
-
-        if ((num & 127) == 32) {
-            mx += 32;
-            ++string;
-            continue;       // space
-        }
-
-
-        frow = ((num >> 4) - 2) * h;
-        fcol = (num & 15) * w;
-
-
-        pfglTexCoord2f (fcol, frow);
-        pfglVertex2i (mx, y);
-        pfglTexCoord2f (fcol + w, frow);
-        pfglVertex2i (mx + 32, y);
-        pfglTexCoord2f (fcol + w, frow + h);
-        pfglVertex2i (mx + 32, y + 32);
-        pfglTexCoord2f (fcol, frow + h);
-        pfglVertex2i (mx, y + 32);
-
-
-
-        mx += wfont[ (num & 127) - 32 ];
-        ++string;
-    }
-
-    pfglEnd();
+    glEnd();
 }
-

@@ -230,7 +230,7 @@ int GLimp_SetMode (int *pwidth, int *pheight, int mode, _boolean fullscreen)
         vidmode_ext = true;
     }
 
-    visinfo = pfglXChooseVisual (display, screen_num, attrib);
+    visinfo = glXChooseVisual (display, screen_num, attrib);
 
     if (! visinfo) {
         fprintf (stderr, "Error could not get an RGB, Double-buffered, Depth visual\n");
@@ -324,9 +324,9 @@ int GLimp_SetMode (int *pwidth, int *pheight, int mode, _boolean fullscreen)
 
     XFlush (display);
 
-    ctx = pfglXCreateContext (display, visinfo, NULL, True);
+    ctx = glXCreateContext (display, visinfo, NULL, True);
 
-    pfglXMakeCurrent (display, mainwin, ctx);
+    glXMakeCurrent (display, mainwin, ctx);
 
     *pwidth = width;
     *pheight = height;
@@ -334,7 +334,7 @@ int GLimp_SetMode (int *pwidth, int *pheight, int mode, _boolean fullscreen)
     // let the sound and input subsystems know about the new window
     VID_NewWindow (width, height);
 
-    pfglXMakeCurrent (display, mainwin, ctx);
+    glXMakeCurrent (display, mainwin, ctx);
 
     return rserr_ok;
 }
@@ -347,7 +347,7 @@ void GLimp_Shutdown (void)
 
     if (display) {
         if (ctx) {
-            pfglXDestroyContext (display, ctx);
+            glXDestroyContext (display, ctx);
         }
 
         if (mainwin) {
@@ -375,6 +375,6 @@ _boolean GLimp_Init (void *hinstance, void *wndproc)
 
 void GLimp_EndFrame (void)
 {
-    pfglFlush();
-    pfglXSwapBuffers (display, mainwin);
+    glFlush();
+    glXSwapBuffers (display, mainwin);
 }

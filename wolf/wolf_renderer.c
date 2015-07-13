@@ -93,7 +93,6 @@ PUBLIC void R_DrawHUD (void)
     R_DrawNumber (hud_x + 224, hud_y + 32, Player.lives);
     R_DrawNumber (hud_x + 368, hud_y + 32, Player.health);
     R_DrawNumber (hud_x + 444, hud_y + 32, Player.ammo[AMMO_BULLETS]); // FIXME!
-
 }
 
 PRIVATE const char mugshotnames[ 24 ][ 32 ] = {
@@ -192,8 +191,6 @@ PUBLIC void R_DrawFace (void)
 }
 
 
-
-
 SW32 r_damageflash = 0;
 
 /**
@@ -257,7 +254,6 @@ PUBLIC void R_DrawWorld (void)
     R_RayCast (viewport, r_world);
     R_DrawSprites();
 
-
     R_SetGL2D();    // restore 2D back
 
     if (Player.playstate == ex_dead) {
@@ -278,7 +274,6 @@ PUBLIC void R_DrawWorld (void)
         R_DrawWeapon();
         R_DrawFlash();
     }
-
     R_DrawHUD();
     R_DrawFace();
 }

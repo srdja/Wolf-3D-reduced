@@ -33,7 +33,7 @@
 #include <string.h>
 
 #include "wolf_menu.h"
-
+#include "../env/opengl_local.h"
 #include "wolf_local.h"
 #include "wolf_player.h"
 
@@ -77,7 +77,6 @@ PRIVATE void MenuCursorDrawFunc (menuframework_s *menu)
     M_DrawCursor (((viddef.width - 616) >> 1) + 5, 70 + menu->cursor * 60);
 }
 
-#include "w3d_opengl.h"
 
 PRIVATE void MenuDrawNewGameImages (void)
 {
@@ -87,11 +86,11 @@ PRIVATE void MenuDrawNewGameImages (void)
     for (i = 0; i < 6; ++i) {
         com_snprintf (buffer, sizeof (buffer),  "pics/C_EPISODE%dPIC.tga",  i + 1);
 
-        pfglColor3f (2.0f, 2.0f, 2.0f);
+        glColor3f (2.0f, 2.0f, 2.0f);
 
         R_Draw_Pic (((viddef.width - 616) >> 1) + 69, 70 + i * 60, buffer);
 
-        pfglColor3f (1.0f, 1.0f, 1.0f);
+        glColor3f (1.0f, 1.0f, 1.0f);
     }
 }
 

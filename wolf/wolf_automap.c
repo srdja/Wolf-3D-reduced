@@ -306,15 +306,14 @@ PUBLIC void Automap()
             scale = TargetZoom;
             zoom = 0;
         }
-
         Cvar_SetValue (mapScale->name, scale);
     }
 
     // set up matrix for drawing in tile units
-    pfglMatrixMode (GL_PROJECTION);
-    pfglLoadIdentity();
+    glMatrixMode (GL_PROJECTION);
+    glLoadIdentity();
 
-    pfglOrtho (mapOrigin[0] - halfWidth / scale, mapOrigin[0] + halfWidth / scale,
+    glOrtho (mapOrigin[0] - halfWidth / scale, mapOrigin[0] + halfWidth / scale,
                mapOrigin[1] - halfHeight / scale, mapOrigin[1] + halfHeight / scale, -99999, 99999);
 
     mt = mapTiles;
@@ -323,46 +322,41 @@ PUBLIC void Automap()
     for (i = 0 ; i < numMapTiles ; i++, mt++) {
         if (texnum != mt->texnum) {
             texnum = mt->texnum;
-
             if (i != 0) {
-                pfglEnd();
+                glEnd();
             }
-
             if (mt->texnum == -1) {
-                pfglDisable (GL_TEXTURE_2D);
-                pfglColor3f (r_world->floorColour[0] / 255.0, r_world->floorColour[1] / 255.0, r_world->floorColour[2] / 255.0);
+                glDisable (GL_TEXTURE_2D);
+                glColor3f (r_world->floorColour[0] / 255.0, r_world->floorColour[1] / 255.0, r_world->floorColour[2] / 255.0);
             } else if (mt->texnum & MAPTILE_SPRITE_FLAG) {
-                pfglEnable (GL_TEXTURE_2D);
-                pfglColor3f (1, 1, 1);
+                glEnable (GL_TEXTURE_2D);
+                glColor3f (1, 1, 1);
                 R_Bind (TM_getSpriteTextureId (mt->texnum & ~MAPTILE_SPRITE_FLAG));
             } else {
-                pfglEnable (GL_TEXTURE_2D);
-                pfglColor3f (1, 1, 1);
+                glEnable (GL_TEXTURE_2D);
+                glColor3f (1, 1, 1);
                 R_Bind (TM_getWallTextureId (mt->texnum));
             }
-
-            pfglBegin (GL_QUADS);
+            glBegin (GL_QUADS);
         }
-
-        pfglTexCoord2f (0, 1);
-        pfglVertex2i (mt->x, mt->y);
-        pfglTexCoord2f (1, 1);
-        pfglVertex2i (mt->x + 1, mt->y);
-        pfglTexCoord2f (1, 0);
-        pfglVertex2i (mt->x + 1, mt->y + 1);
-        pfglTexCoord2f (0, 0);
-        pfglVertex2i (mt->x, mt->y + 1);
+        glTexCoord2f (0, 1);
+        glVertex2i (mt->x, mt->y);
+        glTexCoord2f (1, 1);
+        glVertex2i (mt->x + 1, mt->y);
+        glTexCoord2f (1, 0);
+        glVertex2i (mt->x + 1, mt->y + 1);
+        glTexCoord2f (0, 0);
+        glVertex2i (mt->x, mt->y + 1);
     }
-
-    pfglEnd();
+    glEnd();
 
     // draw the yellow player triangle
-    pfglDisable (GL_TEXTURE_2D);
+    glDisable (GL_TEXTURE_2D);
 
-    if ((int) (ClientStatic.realtime / 500) % 2) { // blink it
-        pfglColor3f (1, 1, 0);
+    if ((ClientStatic.realtime / 500) % 2) { // blink it
+        glColor3f (1, 1, 0);
     } else {
-        pfglColor3f (0.5, 0.5, 0);
+        glColor3f (0.5, 0.5, 0);
     }
 
     angle = Player.position.angle;
@@ -370,11 +364,12 @@ PUBLIC void Automap()
     s = sin (angle);
     px = Player.position.origin[0] / (float)TILE_GLOBAL;
     py = Player.position.origin[1] / (float)TILE_GLOBAL;
-    pfglBegin (GL_TRIANGLES);
-    pfglVertex3f (px + c * 0.5, py + s * 0.5, 0);
-    pfglVertex3f (px - c * 0.5 - s * 0.3, py - s * 0.5 + c * 0.3, 0);
-    pfglVertex3f (px - c * 0.5 + s * 0.3, py - s * 0.5 - c * 0.3, 0);
-    pfglEnd();
+
+    glBegin (GL_TRIANGLES);
+        glVertex3f (px + c * 0.5, py + s * 0.5, 0);
+        glVertex3f (px - c * 0.5 - s * 0.3, py - s * 0.5 + c * 0.3, 0);
+        glVertex3f (px - c * 0.5 + s * 0.3, py - s * 0.5 - c * 0.3, 0);
+    glEnd();
 
 }
 
@@ -383,12 +378,10 @@ PUBLIC void Automap()
  */
 PUBLIC void automap_keydown (int key)
 {
-
     if (Key_IsDown (Key_GetKey ("toggleautomap"))) {
         ClientStatic.key_dest = key_game;
         ClientStatic.menuState = IPM_GAME;
     }
-
 }
 
 /**

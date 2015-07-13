@@ -144,11 +144,6 @@ int Cvar_VariableIntegerValue (const char *var_name);
 // returns 0 if not defined or non numeric
 
 char    *Cvar_VariableString (const char *var_name);
-void    Cvar_VariableStringBuffer (const char *var_name, char *buffer, int bufsize);
-// returns an empty string if not defined
-
-void    Cvar_CommandCompletion (void (*callback) (const char *s));
-// callback with each valid string
 
 void    Cvar_Reset (const char *var_name);
 

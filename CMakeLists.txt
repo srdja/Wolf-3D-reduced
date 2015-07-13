@@ -24,7 +24,6 @@ set( env_SOURCE
 	${CMAKE_SOURCE_DIR}/env/keys.c
 	${CMAKE_SOURCE_DIR}/env/math.c
 	${CMAKE_SOURCE_DIR}/env/menu_conf.c
-	${CMAKE_SOURCE_DIR}/env/opengl_binding.c
 	${CMAKE_SOURCE_DIR}/env/opengl_draw.c
 	${CMAKE_SOURCE_DIR}/env/opengl_main.c
 	${CMAKE_SOURCE_DIR}/env/opengl_texture.c
@@ -53,7 +52,6 @@ set ( env_HEADER
 	${CMAKE_SOURCE_DIR}/env/keys.h
 	${CMAKE_SOURCE_DIR}/env/menu_conf.h	
 	${CMAKE_SOURCE_DIR}/env/num_type.h
-	${CMAKE_SOURCE_DIR}/env/opengl_binding.h
 	${CMAKE_SOURCE_DIR}/env/opengl_local.h
 	${CMAKE_SOURCE_DIR}/env/renderer.h
 	${CMAKE_SOURCE_DIR}/env/texture_manager.h
@@ -62,7 +60,6 @@ set ( env_HEADER
 	${CMAKE_SOURCE_DIR}/env/timer.h
 	${CMAKE_SOURCE_DIR}/env/vector.h
 	${CMAKE_SOURCE_DIR}/env/video.h
-	${CMAKE_SOURCE_DIR}/env/w3d_opengl.h
 	${CMAKE_SOURCE_DIR}/env/zippak.h
 )
 
@@ -180,12 +177,14 @@ SET(CMAKE_FIND_LIBRARY_SUFFIXES ".so" ".a")
              
     include_directories(${PROJECT_SOURCE_DIR}/lib/include) 
 
-
+find_package(OpenGL REQUIRED)
+include_directories(${OPENGL_INCLUDE_DIRS})
 
 set_target_properties(${EXE_NAME} PROPERTIES LINKER_LANGUAGE C)
 
 target_link_libraries( ${EXE_NAME} ${CMAKE_DL_LIBS}
                                    ${M_LIB}
+                                   ${OPENGL_LIBRARIES}
                                    ${XF86_LIB}
                                    ${XF86_DGA_LIB}
                                    ${XEXT_LIB}

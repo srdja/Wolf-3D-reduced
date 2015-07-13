@@ -26,8 +26,6 @@
 #include <GL/glu.h>
 #include <GL/glext.h>
 
-#include "w3d_opengl.h"
-#include "opengl_binding.h"
 #include "com_math.h"
 #include "filesystem.h"
 #include "cvar.h"

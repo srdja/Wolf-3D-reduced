@@ -181,21 +181,21 @@ PUBLIC void Client_Frame (int msec)
     Video_CheckChanges();
 
     if (ClientStatic.menuState == IPM_AUTOMAP) {
-        pfglDepthMask (GL_TRUE);
-        pfglClear (GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
+        glDepthMask (GL_TRUE);
+        glClear (GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 
-        pfglMatrixMode (GL_MODELVIEW);
-        pfglLoadIdentity();
-        pfglDisable (GL_DEPTH_TEST);
+        glMatrixMode (GL_MODELVIEW);
+        glLoadIdentity();
+        glDisable (GL_DEPTH_TEST);
 
-        pfglEnable (GL_BLEND);
+        glEnable (GL_BLEND);
 
-        pfglColor4f (1, 1, 1, 1);
+        glColor4f (1, 1, 1, 1);
 
-        pfglMatrixMode (GL_PROJECTION);
-        pfglLoadIdentity();
+        glMatrixMode (GL_PROJECTION);
+        glLoadIdentity();
 
-        pfglOrtho (0, viddef.width, viddef.height, 0, -99999, 99999);
+        glOrtho (0, viddef.width, viddef.height, 0, -99999, 99999);
 
         DrawMenus();
         R_EndFrame();

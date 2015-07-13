@@ -119,8 +119,8 @@ PUBLIC _boolean R_UploadTexture (texture_t *tex, PW8 data)
     W16 scaled_width, scaled_height;
     int comp = tex->bytes;
 
-    pfglGenTextures (1, &tex->texnum);
-    pfglBindTexture (GL_TEXTURE_2D, tex->texnum);
+    glGenTextures (1, &tex->texnum);
+    glBindTexture (GL_TEXTURE_2D, tex->texnum);
 
 
     for (scaled_width = 1 ; scaled_width < tex->width ; scaled_width <<= 1) {
@@ -174,7 +174,7 @@ PUBLIC _boolean R_UploadTexture (texture_t *tex, PW8 data)
     }
 
 // upload base image
-    pfglTexImage2D (GL_TEXTURE_2D, 0, comp, scaled_width, scaled_height, 0, tex->bytes == 4 ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, scaled);
+    glTexImage2D (GL_TEXTURE_2D, 0, comp, scaled_width, scaled_height, 0, tex->bytes == 4 ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, scaled);
 
 
 // upload mipmaps if required
@@ -182,22 +182,22 @@ PUBLIC _boolean R_UploadTexture (texture_t *tex, PW8 data)
         int miplevel = 1;
 
         while (TM_MipMap (scaled, &scaled_width, &scaled_height, tex->bytes)) {
-            pfglTexImage2D (GL_TEXTURE_2D, miplevel++, tex->bytes, scaled_width, scaled_height, 0, tex->bytes == 4 ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, scaled);
+            glTexImage2D (GL_TEXTURE_2D, miplevel++, tex->bytes, scaled_width, scaled_height, 0, tex->bytes == 4 ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, scaled);
         }
     }
     free (scaled);
 
     if (tex->isTextureCube) {
-        pfglTexParameteri (GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_S, WrapToGL (tex->WrapS));
-        pfglTexParameteri (GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_T, WrapToGL (tex->WrapT));
-        pfglTexParameteri (GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_R, WrapToGL (tex->WrapR));
-        pfglTexParameteri (GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_MIN_FILTER, MinFilterToGL (tex->MipMap, tex->MinFilter));
-        pfglTexParameteri (GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_MAG_FILTER, MagFilterToGL (tex->MagFilter));
+        glTexParameteri (GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_S, WrapToGL (tex->WrapS));
+        glTexParameteri (GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_T, WrapToGL (tex->WrapT));
+        glTexParameteri (GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_R, WrapToGL (tex->WrapR));
+        glTexParameteri (GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_MIN_FILTER, MinFilterToGL (tex->MipMap, tex->MinFilter));
+        glTexParameteri (GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_MAG_FILTER, MagFilterToGL (tex->MagFilter));
     } else {
-        pfglTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, WrapToGL (tex->WrapS));
-        pfglTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, WrapToGL (tex->WrapT));
-        pfglTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, MinFilterToGL (tex->MipMap, tex->MinFilter));
-        pfglTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, MagFilterToGL (tex->MagFilter));
+        glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, WrapToGL (tex->WrapS));
+        glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, WrapToGL (tex->WrapT));
+        glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, MinFilterToGL (tex->MipMap, tex->MinFilter));
+        glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, MagFilterToGL (tex->MagFilter));
     }
     return true;
 }
@@ -205,7 +205,7 @@ PUBLIC _boolean R_UploadTexture (texture_t *tex, PW8 data)
 
 PUBLIC void R_DeleteTexture (unsigned int texnum)
 {
-    pfglDeleteTextures (1, &texnum);
+    glDeleteTextures (1, &texnum);
 }
 
 
@@ -218,5 +218,5 @@ PUBLIC void R_Bind (int texnum)
 
     gl_state.currenttextures[ gl_state.currenttmu ] = texnum;
 
-    pfglBindTexture (GL_TEXTURE_2D, texnum);
+    glBindTexture (GL_TEXTURE_2D, texnum);
 }

@@ -78,7 +78,7 @@ PUBLIC void MYgluPerspective (GLdouble fovy, GLdouble aspect,
     xmin += - (2 * 0) / zNear;
     xmax += - (2 * 0) / zNear;
 
-    pfglFrustum (xmin, xmax, ymin, ymax, zNear, zFar);
+    glFrustum (xmin, xmax, ymin, ymax, zNear, zFar);
 }
 
 /**
@@ -119,7 +119,7 @@ PRIVATE void R_ScreenShot_f (void)
     }
 
     buffer = (PW8)malloc (viddef.width * viddef.height * 3);
-    pfglReadPixels (0, 0, viddef.width, viddef.height, GL_RGB, GL_UNSIGNED_BYTE, buffer);
+    glReadPixels (0, 0, viddef.width, viddef.height, GL_RGB, GL_UNSIGNED_BYTE, buffer);
 
     WriteTGA (checkname, 24, viddef.width, viddef.height, buffer, 1, 1);
 
@@ -143,31 +143,31 @@ PRIVATE void R_Clear (void)
         static int trickframe;
 
         if (gl_clear->value) {
-            pfglClear (GL_COLOR_BUFFER_BIT);
+            glClear (GL_COLOR_BUFFER_BIT);
         }
         trickframe++;
 
         if (trickframe & 1) {
             gldepthmin = 0;
             gldepthmax = 0.49999f;
-            pfglDepthFunc (GL_LEQUAL);
+            glDepthFunc (GL_LEQUAL);
         } else {
             gldepthmin = 1;
             gldepthmax = 0.5;
-            pfglDepthFunc (GL_GEQUAL);
+            glDepthFunc (GL_GEQUAL);
         }
     } else {
         if (gl_clear->value) {
-            pfglClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         } else {
-            pfglClear (GL_DEPTH_BUFFER_BIT);
+            glClear (GL_DEPTH_BUFFER_BIT);
         }
 
         gldepthmin = 0;
         gldepthmax = 1;
-        pfglDepthFunc (GL_LEQUAL);
+        glDepthFunc (GL_LEQUAL);
     }
-    pfglDepthRange (gldepthmin, gldepthmax);
+    glDepthRange (gldepthmin, gldepthmax);
 }
 
 
@@ -177,17 +177,17 @@ PRIVATE void R_Clear (void)
 PUBLIC void R_SetGL2D (void)
 {
     // set 2D virtual screen size
-    pfglViewport (0, 0, viddef.width, viddef.height);
-    pfglMatrixMode (GL_PROJECTION);
-    pfglLoadIdentity();
-    pfglOrtho (0, viddef.width, viddef.height, 0, -99999, 99999);
-    pfglMatrixMode (GL_MODELVIEW);
-    pfglLoadIdentity();
-    pfglDisable (GL_DEPTH_TEST);
-    pfglDisable (GL_CULL_FACE);
-    pfglDisable (GL_BLEND);
-    pfglEnable (GL_ALPHA_TEST);
-    pfglColor4f (1, 1, 1, 1);
+    glViewport (0, 0, viddef.width, viddef.height);
+    glMatrixMode (GL_PROJECTION);
+    glLoadIdentity();
+    glOrtho (0, viddef.width, viddef.height, 0, -99999, 99999);
+    glMatrixMode (GL_MODELVIEW);
+    glLoadIdentity();
+    glDisable (GL_DEPTH_TEST);
+    glDisable (GL_CULL_FACE);
+    glDisable (GL_BLEND);
+    glEnable (GL_ALPHA_TEST);
+    glColor4f (1, 1, 1, 1);
 }
 
 
@@ -269,16 +269,16 @@ PUBLIC int R_Init (void *hinstance, void *hWnd)
     int     a, b;
 
     R_Register();
-
+/*
     // Initialize our OpenGL dynamic bindings
     if (! OpenGL_Init (gl_driver->string)) {
-        OpenGL_Shutdown();
+        //OpenGL_Shutdown();
         return -1;
     }
-
+*/
     // Initialize OS-specific parts of OpenGL
     if (! GLimp_Init (hinstance, hWnd)) {
-        OpenGL_Shutdown();
+       // OpenGL_Shutdown();
         return -1;
     }
 
@@ -287,26 +287,23 @@ PUBLIC int R_Init (void *hinstance, void *hWnd)
 
     // create the window and set up the context
     if (! R_SetMode()) {
-        OpenGL_Shutdown();
+       // OpenGL_Shutdown();
         return -1;
     }
 
     Video_MenuInit();
 
     //  get various GL strings
-    gl_config.vendor_string = pfglGetString (GL_VENDOR);
-
-    gl_config.renderer_string = pfglGetString (GL_RENDERER);
-
-    gl_config.version_string = pfglGetString (GL_VERSION);
-    gl_config.extensions_string = pfglGetString (GL_EXTENSIONS);
+    gl_config.vendor_string = glGetString (GL_VENDOR);
+    gl_config.renderer_string = glGetString (GL_RENDERER);
+    gl_config.version_string = glGetString (GL_VERSION);
+    gl_config.extensions_string = glGetString (GL_EXTENSIONS);
 
     com_strlcpy (renderer_buffer, gl_config.renderer_string, sizeof (renderer_buffer));
     (void)com_strlwr (renderer_buffer);
 
     com_strlcpy (vendor_buffer, gl_config.vendor_string, sizeof (vendor_buffer));
     (void)com_strlwr (vendor_buffer);
-
 
     sscanf (gl_config.version_string, "%d.%d", &a, &b);
 
@@ -318,14 +315,14 @@ PUBLIC int R_Init (void *hinstance, void *hWnd)
 
     //FIXME: A lot of these aren't required
 
-    pfglGetIntegerv (GL_MAX_TEXTURE_SIZE, &glMaxTexSize);
+    glGetIntegerv (GL_MAX_TEXTURE_SIZE, &glMaxTexSize);
 
     GL_SetDefaultState();
 
     TM_Init();
     Font_Init();
 
-    pfglGetError();
+    glGetError();
     return 1;
 }
 
@@ -344,7 +341,7 @@ PUBLIC void R_Shutdown (void)
     /*
     ** shutdown our OpenGL subsystem
     */
-    OpenGL_Shutdown();
+    //OpenGL_Shutdown();
 }
 
 
@@ -377,9 +374,9 @@ PUBLIC void R_BeginFrame (void)
         gl_drawbuffer->modified = false;
 
         if (com_stricmp (gl_drawbuffer->string, "GL_FRONT") == 0) {
-            pfglDrawBuffer (GL_FRONT);
+            glDrawBuffer (GL_FRONT);
         } else {
-            pfglDrawBuffer (GL_BACK);
+            glDrawBuffer (GL_BACK);
         }
 
     }
