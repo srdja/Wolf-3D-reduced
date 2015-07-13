@@ -45,28 +45,16 @@
 
 #define BIG_INFO_STRING  8192  // used for system info key only
 
-
-char *Com_StringContains (char *str1, char *str2, int casesensitive);
-int Com_Filter (char *filter, char *name, int casesensitive);
-
 extern colour3_t    colourBlack;
-extern colour3_t    colourGreen;
 extern colour3_t    colourWhite;
 
-#define ERR_FATAL       0       // exit the entire game with a popup window
-#define ERR_DROP        1       // print to console and disconnect from game
-#define ERR_DISCONNECT  4       // don't kill server
 
 #define EXEC_NOW    0       // don't return until completed
 #define EXEC_INSERT 1       // insert at current position, but don't run yet
 #define EXEC_APPEND 2       // add to end of the command buffer
 
 void Com_DPrintf (const char *fmt, ...);
-void Com_Error (int code, const char *fmt, ...);
 void Com_Quit (void);
-
-extern  cvar_t  *developer;
-extern  cvar_t  *dedicated;
 
 void common_Init ();
 
@@ -75,7 +63,6 @@ void    Sys_Quit (void);
 char    *Sys_GetClipboardData (void);
 
 void Client_Init (void);
-void Client_Drop (void);
 void Client_Shutdown (void);
 void Client_Frame (int msec);
 
@@ -97,12 +84,6 @@ typedef struct usercmd_s {
     W8  lightlevel;     // light level the player is standing on
 
 } usercmd_t;
-
-
-extern const char *completionString;
-extern char shortestMatch[MAX_TOKEN_CHARS];
-void FindMatches (const char *s);
-
 
 #endif /* __COMMON_H__ */
 
