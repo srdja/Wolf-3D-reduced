@@ -78,7 +78,7 @@ PRIVATE void FS_AddGameDirectory (const char *dir)
     //
     // add the directory to the search path
     //
-    search = (searchpath_t *) Z_Malloc (sizeof (searchpath_t));
+    search = (searchpath_t *) malloc (sizeof (searchpath_t));
     com_strlcpy (search->filename, dir, sizeof (search->filename));
     search->next = fs_searchpaths;
     fs_searchpaths = search;
@@ -94,7 +94,7 @@ PRIVATE void FS_AddGameDirectory (const char *dir)
         pak = FS_LoadZipFile (pakfile);
 
         if (pak) {
-            search = (searchpath_t *) Z_Malloc (sizeof (searchpath_t));
+            search = (searchpath_t *) malloc (sizeof (searchpath_t));
             search->pack = pak;
             search->next = fs_searchpaths;
             fs_searchpaths = search;
@@ -107,7 +107,7 @@ PRIVATE void FS_AddGameDirectory (const char *dir)
                 continue;
             }
 
-            search = Z_Malloc (sizeof (searchpath_t));
+            search = malloc (sizeof (searchpath_t));
             search->pack = pak;
             search->next = fs_searchpaths;
             fs_searchpaths = search;
@@ -170,12 +170,12 @@ PUBLIC void FS_SetGamedir (char *dir)
     while (fs_searchpaths != fs_base_searchpaths) {
         if (fs_searchpaths->pack) {
             fclose (fs_searchpaths->pack->handle);
-            Z_Free (fs_searchpaths->pack->files);
-            Z_Free (fs_searchpaths->pack);
+            free (fs_searchpaths->pack->files);
+            free (fs_searchpaths->pack);
         }
 
         next = fs_searchpaths->next;
-        Z_Free (fs_searchpaths);
+        free (fs_searchpaths);
         fs_searchpaths = next;
     }
 
@@ -217,13 +217,13 @@ PRIVATE void FS_Link_f (void)
 
     for (flink = fs_links ; flink ; flink = flink->next) {
         if (! strcmp (flink->from, Cmd_Argv (1))) {
-            Z_Free (flink->to);
+            free (flink->to);
 
             if (! strlen (Cmd_Argv (2))) {
                 // delete it
                 *prev = flink->next;
-                Z_Free (flink->from);
-                Z_Free (flink);
+                free (flink->from);
+                free (flink);
                 return;
             }
 
@@ -235,7 +235,7 @@ PRIVATE void FS_Link_f (void)
     }
 
     // create a new link
-    flink = Z_Malloc (sizeof (*flink));
+    flink = malloc (sizeof (*flink));
     flink->next = fs_links;
     fs_links = flink;
     flink->from = com_strcopy (Cmd_Argv (1));

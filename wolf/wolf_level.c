@@ -958,8 +958,8 @@ PUBLIC LevelData_t *Level_LoadMap (const char *levelname)
         return NULL;
     }
 
-    mapName = (char *)Z_Malloc (mapNameLength + 1);
-    musicName = (char *)Z_Malloc (musicNameLength + 1);
+    mapName = (char *)malloc (mapNameLength + 1);
+    musicName = (char *)malloc (musicNameLength + 1);
 
 
     FS_ReadFile (mapName, 1, mapNameLength, fhandle);
@@ -1209,8 +1209,8 @@ PUBLIC int Level_VerifyMap (const char *levelname)
         goto cleanup;
     }
 
-    mapName = (char *)Z_Malloc (mapNameLength + 1);
-    musicName = (char *)Z_Malloc (musicNameLength + 1);
+    mapName = (char *)malloc (mapNameLength + 1);
+    musicName = (char *)malloc (musicNameLength + 1);
 
 
     FS_ReadFile (mapName, 1, mapNameLength, fhandle);
@@ -1233,11 +1233,11 @@ cleanup:
     }
 
     if (mapName) {
-        Z_Free (mapName);
+        free (mapName);
     }
 
     if (musicName) {
-        Z_Free (musicName);
+        free (musicName);
     }
 
     return value;

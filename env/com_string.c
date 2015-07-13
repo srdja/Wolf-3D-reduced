@@ -39,7 +39,6 @@
 
 #include "cmd.h"
 #include "com_string.h"
-#include "zmem.h"
 #include "common_utils.h"
 
 
@@ -267,7 +266,7 @@ PUBLIC char *com_strcopy (const char *source)
     W32 length;
 
     length = strlen (source) + 1;
-    dest = Z_Malloc (length);
+    dest = malloc (length);
 
     if (dest == NULL) {
         return NULL;

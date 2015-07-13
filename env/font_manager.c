@@ -75,11 +75,11 @@ PUBLIC font_t *createFont (const char *filename)
         return NULL;
     }
 
-    temp_font = (font_t *)Z_Malloc (sizeof (font_t));
+    temp_font = (font_t *)malloc (sizeof (font_t));
     temp_font->texfont = TM_FindTexture (filename, TT_Pic);
 
     if (NULL == temp_font->texfont) {
-        Z_Free (temp_font);
+        free (temp_font);
 
         return NULL;
     }
@@ -96,7 +96,7 @@ PUBLIC font_t *createFont (const char *filename)
 
     if (NULL == fp) {
         MM_FREE (datname);
-        Z_Free (temp_font);
+        free (temp_font);
         return NULL;
     }
 
@@ -105,7 +105,7 @@ PUBLIC font_t *createFont (const char *filename)
     // check header size
     if (size < 10) {
         MM_FREE (datname);
-        Z_Free (temp_font);
+        free (temp_font);
 
         FS_CloseFile (fp);
 
@@ -125,7 +125,7 @@ PUBLIC font_t *createFont (const char *filename)
 
     if (size > 127) {
         MM_FREE (datname);
-        Z_Free (temp_font);
+        free (temp_font);
 
         FS_CloseFile (fp);
 
@@ -149,7 +149,7 @@ PUBLIC font_t *createFont (const char *filename)
 
     if (i == (MAX_FONTS - 1)) {
         MM_FREE (datname);
-        Z_Free (temp_font);
+        free (temp_font);
         return NULL;
     }
 

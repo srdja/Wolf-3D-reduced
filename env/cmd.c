@@ -244,7 +244,7 @@ void Cmd_Exec_f (void)
     scriptFileHandle = FS_OpenFile (filename, DA_GENERIC_READ);
     len = FS_GetFileSize (scriptFileHandle);
 
-    f = (char *)Z_Malloc (len);
+    f = (char *)malloc (len);
 
     FS_ReadFile (f, 1, len, scriptFileHandle);
 
@@ -254,7 +254,7 @@ void Cmd_Exec_f (void)
 
     Cbuf_InsertText (f);
 
-    Z_Free (f);
+    free(f);
     FS_CloseFile (scriptFileHandle);
 }
 
@@ -461,7 +461,7 @@ void Cmd_AddCommand (const char *cmd_name, xcommand_t function)
 
     // use a small malloc to avoid zone fragmentation
     //cmd = S_Malloc (sizeof(cmd_function_t));
-    cmd = Z_Malloc (sizeof (cmd_function_t));
+    cmd = malloc (sizeof (cmd_function_t));
     cmd->name = com_strcopy (cmd_name);
     cmd->function = function;
     cmd->next = cmd_functions;
@@ -491,10 +491,10 @@ void    Cmd_RemoveCommand (const char *cmd_name)
             *back = cmd->next;
 
             if (cmd->name) {
-                Z_Free (cmd->name);
+                free(cmd->name);
             }
 
-            Z_Free (cmd);
+            free(cmd);
             return;
         }
 

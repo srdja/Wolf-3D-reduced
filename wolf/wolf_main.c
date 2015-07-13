@@ -104,8 +104,8 @@ PUBLIC void Game_Init (void)
  */
 PUBLIC void Game_Shutdown (void)
 {
-    Z_FreeTags (TAG_LEVEL);
-    Z_FreeTags (TAG_GAME);
+   // Z_FreeTags (TAG_LEVEL);
+    //Z_FreeTags (TAG_GAME);
 }
 
 //FIXME: put this in the right place

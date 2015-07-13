@@ -26,6 +26,8 @@
  * \date 2005-2007
  */
 
+#include <stdlib.h>
+
 #ifndef __PLATFORM_H__
 #define __PLATFORM_H__
 

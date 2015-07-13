@@ -31,7 +31,6 @@
 
 #include <string.h>
 #include "opengl_local.h"
-#include "zmem.h"
 
 PRIVATE INLINECALL GLenum WrapToGL (TWrapMode mode)
 {
@@ -166,7 +165,7 @@ PUBLIC _boolean R_UploadTexture (texture_t *tex, PW8 data)
     tex->upload_width = scaled_width;
     tex->upload_height = scaled_height;
 
-    scaled = (PW8)Z_Malloc (scaled_width * scaled_height * tex->bytes);
+    scaled = (PW8)malloc (scaled_width * scaled_height * tex->bytes);
 
     if (scaled_width == tex->width && scaled_height == tex->height) {
         memcpy (scaled, data, tex->width * tex->height * tex->bytes);
@@ -186,7 +185,7 @@ PUBLIC _boolean R_UploadTexture (texture_t *tex, PW8 data)
             pfglTexImage2D (GL_TEXTURE_2D, miplevel++, tex->bytes, scaled_width, scaled_height, 0, tex->bytes == 4 ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, scaled);
         }
     }
-    Z_Free (scaled);
+    free (scaled);
 
     if (tex->isTextureCube) {
         pfglTexParameteri (GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_S, WrapToGL (tex->WrapS));

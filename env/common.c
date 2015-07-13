@@ -362,8 +362,6 @@ PUBLIC void common_Init (int argc, char *argv[])
         Sys_Error ("Error during initialization");
     }
 
-    z_chain.next = z_chain.prev = &z_chain;
-
     Cvar_Init();
 
     // prepare enough of the subsystems to handle
@@ -392,7 +390,6 @@ PUBLIC void common_Init (int argc, char *argv[])
     //
     // init commands and vars
     //
-    Cmd_AddCommand ("z_stats", Z_Stats_f);
     Cmd_AddCommand ("error", Com_Error_f);
 
     developer = Cvar_Get ("developer", "1", CVAR_INIT);

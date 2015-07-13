@@ -221,7 +221,7 @@ PUBLIC pack_t *FS_LoadZipFile (const char *packfile)
         }
 
         // Allocate new packfile node
-        pknewnode = (packfile_t *)Z_Malloc (sizeof (packfile_t));
+        pknewnode = (packfile_t *)malloc (sizeof (packfile_t));
 
         // Read in file name
         ret = fread (&tempfilename, 1, zlocalhead.filename_length, packhandle);
@@ -295,7 +295,7 @@ PUBLIC pack_t *FS_LoadZipFile (const char *packfile)
     }
 
 
-    pack = (pack_t *)Z_Malloc (sizeof (pack_t));
+    pack = (pack_t *)malloc (sizeof (pack_t));
     com_strlcpy (pack->filename, packfile, sizeof (pack->filename));
     pack->handle = packhandle;
     pack->numfiles = numberofpackedfiles;

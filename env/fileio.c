@@ -178,10 +178,10 @@ PUBLIC void FS_CloseFile (filehandle_t *fhandle)
     }
 
     if (fhandle->filedata) {
-        Z_Free (fhandle->filedata);
+        free (fhandle->filedata);
     }
 
-    Z_Free (fhandle);
+    free (fhandle);
 }
 
 /**
@@ -198,7 +198,7 @@ PRIVATE _boolean LoadCompressedFile (filehandle_t *hFile, packfile_t *pakfiles)
     W8 *buf;
     z_stream d_stream; /* decompression stream */
 
-    buf = Z_Malloc (pakfiles->filelength + 2);
+    buf = malloc (pakfiles->filelength + 2);
 
     // Zlib expects the 2 byte head that the inflate method adds.
     buf[ 0 ] = 120;
@@ -207,7 +207,7 @@ PRIVATE _boolean LoadCompressedFile (filehandle_t *hFile, packfile_t *pakfiles)
 
     if (read != pakfiles->filelength) {
         fclose (hFile->hFile);
-        Z_Free (buf);
+        free (buf);
 
         return false;
     }
@@ -215,7 +215,7 @@ PRIVATE _boolean LoadCompressedFile (filehandle_t *hFile, packfile_t *pakfiles)
     fclose (hFile->hFile);
     hFile->hFile = NULL;
 
-    uncompr = Z_Malloc (pakfiles->uncompressed_length);
+    uncompr = malloc (pakfiles->uncompressed_length);
 
     d_stream.zalloc = (alloc_func)0;
     d_stream.zfree = (free_func)0;
@@ -231,7 +231,7 @@ PRIVATE _boolean LoadCompressedFile (filehandle_t *hFile, packfile_t *pakfiles)
 
     if (err != Z_OK) {
         MM_FREE (uncompr);
-        Z_Free (buf);
+        free (buf);
         FS_CloseFile (hFile);
 
         return false;
@@ -240,8 +240,8 @@ PRIVATE _boolean LoadCompressedFile (filehandle_t *hFile, packfile_t *pakfiles)
     err = inflate (&d_stream, Z_NO_FLUSH);
 
     if (err != Z_OK) {
-        Z_Free (uncompr);
-        Z_Free (buf);
+        free (uncompr);
+        free (buf);
         FS_CloseFile (hFile);
 
         return false;
@@ -250,14 +250,14 @@ PRIVATE _boolean LoadCompressedFile (filehandle_t *hFile, packfile_t *pakfiles)
     err = inflateEnd (&d_stream);
 
     if (err != Z_OK) {
-        Z_Free (uncompr);
-        Z_Free (buf);
+        free (uncompr);
+        free (buf);
         FS_CloseFile (hFile);
 
         return false;
     }
 
-    Z_Free (buf);
+    free (buf);
 
     hFile->filedata = uncompr;
     hFile->filesize = d_stream.total_out;
@@ -281,7 +281,7 @@ PRIVATE _boolean LoadFile (filehandle_t *hFile)
     W32 read;
 
     hFile->filesize = FS_GetFileSize (hFile);
-    hFile->filedata = Z_Malloc (hFile->filesize);
+    hFile->filedata = malloc (hFile->filesize);
 
     read = fread (hFile->filedata, 1, hFile->filesize, hFile->hFile);
 
@@ -325,7 +325,7 @@ PUBLIC filehandle_t *FS_OpenFile (const char *filename, W32 FlagsAndAttributes)
     filehandle_t    *hFile;
 
 
-    hFile = (filehandle_t *)Z_Malloc (sizeof (filehandle_t));
+    hFile = (filehandle_t *)malloc (sizeof (filehandle_t));
     memset (hFile, 0, sizeof (filehandle_t));
 
     // check for links first

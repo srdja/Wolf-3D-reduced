@@ -23,7 +23,6 @@ set( env_SOURCE
 	${CMAKE_SOURCE_DIR}/env/in_view.c
 	${CMAKE_SOURCE_DIR}/env/keys.c
 	${CMAKE_SOURCE_DIR}/env/math.c
-	${CMAKE_SOURCE_DIR}/env/matrix.c
 	${CMAKE_SOURCE_DIR}/env/memory.c
 	${CMAKE_SOURCE_DIR}/env/menu_conf.c
 	${CMAKE_SOURCE_DIR}/env/opengl_binding.c
@@ -33,7 +32,6 @@ set( env_SOURCE
 	${CMAKE_SOURCE_DIR}/env/texture_manager.c
 	${CMAKE_SOURCE_DIR}/env/tga.c
 	${CMAKE_SOURCE_DIR}/env/zippak.c
-	${CMAKE_SOURCE_DIR}/env/zmem.c				
 )
 
 set ( env_HEADER
@@ -54,7 +52,6 @@ set ( env_HEADER
 	${CMAKE_SOURCE_DIR}/env/font_manager.h
 	${CMAKE_SOURCE_DIR}/env/input.h
 	${CMAKE_SOURCE_DIR}/env/keys.h
-	${CMAKE_SOURCE_DIR}/env/matrix.h
 	${CMAKE_SOURCE_DIR}/env/memory.h
 	${CMAKE_SOURCE_DIR}/env/menu_conf.h	
 	${CMAKE_SOURCE_DIR}/env/num_type.h
@@ -69,7 +66,6 @@ set ( env_HEADER
 	${CMAKE_SOURCE_DIR}/env/video.h
 	${CMAKE_SOURCE_DIR}/env/w3d_opengl.h
 	${CMAKE_SOURCE_DIR}/env/zippak.h
-	${CMAKE_SOURCE_DIR}/env/zmem.h    
 )
 
 include_directories (wolf)

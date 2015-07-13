@@ -338,13 +338,13 @@ PUBLIC void Key_SetBinding (int keynum, char *binding)
 
 // free old bindings
     if (keybindings[ keynum ]) {
-        Z_Free (keybindings[ keynum ]);
+        free (keybindings[ keynum ]);
         keybindings[ keynum ] = NULL;
     }
 
 // allocate memory for new binding
     length = strlen (binding);
-    newbinding = (char *)Z_Malloc (length + 1);
+    newbinding = (char *)malloc (length + 1);
     com_strlcpy (newbinding, binding, length + 1);
     newbinding[ length ] = 0;
     keybindings[ keynum ] = newbinding;

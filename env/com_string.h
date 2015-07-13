@@ -38,7 +38,6 @@
 #include "platform.h"
 
 
-#define ISSPACE( c )    ( ( c ) == ' ' || ( c ) == '\f' || ( c ) == '\n' || ( c ) == '\r' || ( c ) == '\t' || ( c ) == '\v' )
 #define ISUPPER( c )    ( ( c ) >= 'A' && ( c ) <= 'Z' )
 #define ISLOWER( c )    ( ( c ) >= 'a' && ( c ) <= 'z' )
 #define ISALPHA( c )    ( ISUPPER( c ) || ISLOWER( c ) )
@@ -46,8 +45,6 @@
 #define TOLOWER( c )    ( ISUPPER( c ) ? (c) - 'A' + 'a' : ( c ) )
 
 #define ISNUMERIC( c )  ( ( c ) >= '0' && ( c ) <= '9' )
-#define ISALPHANUMERIC( c ) ( ISALPHA( c ) || ISNUMERIC( c ) )
-
 
 
 

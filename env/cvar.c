@@ -231,7 +231,7 @@ cvar_t *Cvar_Get (const char *var_name, const char *var_value, int flags)
         if ((var->flags & CVAR_USER_CREATED) && ! (flags & CVAR_USER_CREATED)
                 && var_value[0]) {
             var->flags &= ~CVAR_USER_CREATED;
-            Z_Free (var->resetString);
+            free(var->resetString);
             var->resetString = com_strcopy (var_value);
 
             // ZOID--needs to be set so that cvars the game sets as
@@ -244,7 +244,7 @@ cvar_t *Cvar_Get (const char *var_name, const char *var_value, int flags)
         // only allow one non-empty reset string without a warning
         if (!var->resetString[0]) {
             // we don't have a reset string yet
-            Z_Free (var->resetString);
+            free(var->resetString);
             var->resetString = com_strcopy (var_value);
         } else if (var_value[0] && strcmp (var->resetString, var_value)) {
             Com_DPrintf ("Warning: cvar \"%s\" given initial values: \"%s\" and \"%s\"\n",
@@ -258,7 +258,7 @@ cvar_t *Cvar_Get (const char *var_name, const char *var_value, int flags)
             s = var->latchedString;
             var->latchedString = NULL;  // otherwise cvar_set2 would free it
             Cvar_Set2 (var_name, s, true);
-            Z_Free (s);
+            free (s);
         }
 
         return var;
@@ -349,7 +349,7 @@ cvar_t *Cvar_Set2 (const char *var_name, const char *value, _boolean force)
                 if (strcmp (value, var->latchedString) == 0)
                     return var;
 
-                Z_Free (var->latchedString);
+                free (var->latchedString);
             } else {
                 if (strcmp (value, var->string) == 0)
                     return var;
@@ -366,7 +366,7 @@ cvar_t *Cvar_Set2 (const char *var_name, const char *value, _boolean force)
 
     } else {
         if (var->latchedString) {
-            Z_Free (var->latchedString);
+            free (var->latchedString);
             var->latchedString = NULL;
         }
     }
@@ -377,7 +377,7 @@ cvar_t *Cvar_Set2 (const char *var_name, const char *value, _boolean force)
     var->modified = true;
     var->modificationCount++;
 
-    Z_Free (var->string);   // free the old value string
+    free (var->string);   // free the old value string
 
     var->string = com_strcopy (value);
     var->value = (float) atof (var->string);
@@ -453,7 +453,7 @@ void Cvar_SetCheatState (void)
             // the CVAR_LATCHED|CVAR_CHEAT vars might escape the reset here
             // because of a different var->latchedString
             if (var->latchedString) {
-                Z_Free (var->latchedString);
+                free (var->latchedString);
                 var->latchedString = NULL;
             }
 
@@ -718,19 +718,19 @@ void Cvar_Restart_f (void)
             *prev = var->next;
 
             if (var->name) {
-                Z_Free (var->name);
+                free(var->name);
             }
 
             if (var->string) {
-                Z_Free (var->string);
+               free(var->string);
             }
 
             if (var->latchedString) {
-                Z_Free (var->latchedString);
+                free (var->latchedString);
             }
 
             if (var->resetString) {
-                Z_Free (var->resetString);
+                free (var->resetString);
             }
 
             // clear the var completely, since we
