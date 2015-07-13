@@ -49,7 +49,6 @@ cvar_t  *m_yaw;
 cvar_t  *m_forward;
 cvar_t  *m_side;
 
-
 cvar_t  *name;
 
 client_state_t  ClientState;

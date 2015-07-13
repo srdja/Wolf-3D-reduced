@@ -13,7 +13,6 @@ set( env_SOURCE
 	${CMAKE_SOURCE_DIR}/env/platform.c
 	${CMAKE_SOURCE_DIR}/env/client_input.c
 	${CMAKE_SOURCE_DIR}/env/client_main.c
-	${CMAKE_SOURCE_DIR}/env/client_screen.c
 	${CMAKE_SOURCE_DIR}/env/cmd.c
 	${CMAKE_SOURCE_DIR}/env/common.c
 	${CMAKE_SOURCE_DIR}/env/com_string.c
