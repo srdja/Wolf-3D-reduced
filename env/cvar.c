@@ -221,23 +221,9 @@ cvar_t *Cvar_Get (const char *var_name, const char *var_value, int flags)
     cvar_t  *var;
     long    hash;
 
-    if (!var_name || !var_value) {
-        Com_Error (ERR_FATAL, "Cvar_Get: NULL parameter");
-    }
-
     if (!Cvar_ValidateString (var_name)) {
-        Com_Printf ("invalid cvar name string: %s\n", var_name);
         var_name = "BADNAME";
     }
-
-#if 0       // FIXME: values with backslash happen
-
-    if (!Cvar_ValidateString (var_value)) {
-        Com_Printf ("invalid cvar value string: %s\n", var_value);
-        var_value = "BADVALUE";
-    }
-
-#endif
 
     var = Cvar_FindVar (var_name);
 
@@ -322,7 +308,6 @@ cvar_t *Cvar_Set2 (const char *var_name, const char *value, _boolean force)
     Com_DPrintf ("Cvar_Set2: %s %s\n", var_name, value);
 
     if (!Cvar_ValidateString (var_name)) {
-        Com_Printf ("invalid cvar name string: %s\n", var_name);
         var_name = "BADNAME";
     }
 
@@ -354,12 +339,10 @@ cvar_t *Cvar_Set2 (const char *var_name, const char *value, _boolean force)
 
     if (!force) {
         if (var->flags & CVAR_ROM) {
-            Com_Printf ("%s is read only.\n", var_name);
             return var;
         }
 
         if (var->flags & CVAR_INIT) {
-            Com_Printf ("%s is write protected.\n", var_name);
             return var;
         }
 
@@ -373,8 +356,6 @@ cvar_t *Cvar_Set2 (const char *var_name, const char *value, _boolean force)
                 if (strcmp (value, var->string) == 0)
                     return var;
             }
-
-            Com_Printf ("%s will be changed upon restarting.\n", var_name);
             var->latchedString = com_strcopy (value);
             var->modified = true;
             var->modificationCount++;
@@ -382,7 +363,6 @@ cvar_t *Cvar_Set2 (const char *var_name, const char *value, _boolean force)
         }
 
         if ((var->flags & CVAR_CHEAT) && !cvar_cheats->integer) {
-            Com_Printf ("%s is cheat protected.\n", var_name);
             return var;
         }
 
@@ -506,12 +486,6 @@ _boolean Cvar_Command (void)
 
     // perform a variable print or set
     if (Cmd_Argc() == 1) {
-        Com_Printf ("\"%s\" is:\"%s" S_COLOR_WHITE "\" default:\"%s" S_COLOR_WHITE "\"\n", v->name, v->string, v->resetString);
-
-        if (v->latchedString) {
-            Com_Printf ("latched: \"%s\"\n", v->latchedString);
-        }
-
         return true;
     }
 
@@ -533,7 +507,6 @@ void Cvar_Toggle_f (void)
     int     v;
 
     if (Cmd_Argc() != 2) {
-        Com_Printf ("usage: toggle <variable>\n");
         return;
     }
 
@@ -559,7 +532,6 @@ void Cvar_Set_f (void)
     c = Cmd_Argc();
 
     if (c < 3) {
-        Com_Printf ("usage: set <variable> <value>\n");
         return;
     }
 
@@ -597,7 +569,6 @@ void Cvar_SetU_f (void)
     cvar_t  *v;
 
     if (Cmd_Argc() != 3) {
-        Com_Printf ("usage: setu <variable> <value>\n");
         return;
     }
 
@@ -623,7 +594,6 @@ void Cvar_SetS_f (void)
     cvar_t  *v;
 
     if (Cmd_Argc() != 3) {
-        Com_Printf ("usage: sets <variable> <value>\n");
         return;
     }
 
@@ -649,7 +619,6 @@ void Cvar_SetA_f (void)
     cvar_t  *v;
 
     if (Cmd_Argc() != 3) {
-        Com_Printf ("usage: seta <variable> <value>\n");
         return;
     }
 
@@ -671,7 +640,6 @@ Cvar_Reset_f
 void Cvar_Reset_f (void)
 {
     if (Cmd_Argc() != 2) {
-        Com_Printf ("usage: reset <variable>\n");
         return;
     }
 
@@ -717,68 +685,6 @@ Cvar_List_f
 */
 void Cvar_List_f (void)
 {
-    cvar_t  *var;
-    int     i;
-    char    *match;
-
-    if (Cmd_Argc() > 1) {
-        match = Cmd_Argv (1);
-    } else {
-        match = NULL;
-    }
-
-    i = 0;
-
-    for (var = cvar_vars ; var ; var = var->next, i++) {
-        if (match && !Com_Filter (match, var->name, false)) continue;
-
-        if (var->flags & CVAR_SERVERINFO) {
-            Com_Printf ("S");
-        } else {
-            Com_Printf (" ");
-        }
-
-        if (var->flags & CVAR_USERINFO) {
-            Com_Printf ("U");
-        } else {
-            Com_Printf (" ");
-        }
-
-        if (var->flags & CVAR_ROM) {
-            Com_Printf ("R");
-        } else {
-            Com_Printf (" ");
-        }
-
-        if (var->flags & CVAR_INIT) {
-            Com_Printf ("I");
-        } else {
-            Com_Printf (" ");
-        }
-
-        if (var->flags & CVAR_ARCHIVE) {
-            Com_Printf ("A");
-        } else {
-            Com_Printf (" ");
-        }
-
-        if (var->flags & CVAR_LATCH) {
-            Com_Printf ("L");
-        } else {
-            Com_Printf (" ");
-        }
-
-        if (var->flags & CVAR_CHEAT) {
-            Com_Printf ("C");
-        } else {
-            Com_Printf (" ");
-        }
-
-        Com_Printf (" %s \"%s\"\n", var->name, var->string);
-    }
-
-    Com_Printf ("\n%i total cvars\n", i);
-    Com_Printf ("%i cvar indexes\n", cvar_numIndexes);
 }
 
 /*
@@ -842,59 +748,6 @@ void Cvar_Restart_f (void)
     }
 }
 
-
-
-/*
-=====================
-Cvar_InfoString
-=====================
-*/
-//char  *Cvar_InfoString( int bit ) {
-//  static char info[MAX_INFO_STRING];
-//  cvar_t  *var;
-//
-//  info[0] = 0;
-//
-//  for (var = cvar_vars ; var ; var = var->next) {
-//      if (var->flags & bit) {
-//          Info_SetValueForKey (info, var->name, var->string);
-//      }
-//  }
-//  return info;
-//}
-
-/*
-=====================
-Cvar_InfoString_Big
-
-  handles large info strings ( CS_SYSTEMINFO )
-=====================
-*/
-//char  *Cvar_InfoString_Big( int bit ) {
-//  static char info[BIG_INFO_STRING];
-//  cvar_t  *var;
-//
-//  info[0] = 0;
-//
-//  for (var = cvar_vars ; var ; var = var->next) {
-//      if (var->flags & bit) {
-//          Info_SetValueForKey_Big (info, var->name, var->string);
-//      }
-//  }
-//  return info;
-//}
-
-
-
-/*
-=====================
-Cvar_InfoStringBuffer
-=====================
-*/
-//void Cvar_InfoStringBuffer( int bit, char* buff, int buffsize ) {
-//  com_strlcpy(buff,Cvar_InfoString(bit),buffsize);
-//}
-
 /*
 =====================
 Cvar_Register
@@ -902,7 +755,7 @@ Cvar_Register
 basically a slightly modified Cvar_Get for the interpreted modules
 =====================
 */
-void    Cvar_Register (vmCvar_t *vmCvar, const char *varName, const char *defaultValue, int flags)
+void Cvar_Register (vmCvar_t *vmCvar, const char *varName, const char *defaultValue, int flags)
 {
     cvar_t  *cv;
 

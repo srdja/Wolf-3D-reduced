@@ -78,8 +78,6 @@ PUBLIC _boolean PushWall_Push (int x, int y, dir4type dir)
     r_world->tilemap[ x ][ y ] &= (~WALL_TILE);
     r_world->tilemap[ x ][ y ] |= PUSHWALL_TILE;
 
-    Com_Printf ("You have found a secret!\n");
-
     levelstate.found_secrets++;
 
     if (g_version->value == SPEAROFDESTINY) {

@@ -264,7 +264,6 @@ PRIVATE const char *M_Intermission_Key (int key)
                 break;
 
             default:
-                Com_Printf ("No secret level from floor %d!\n", currentMap.map + 1);
                 ClientStatic.key_dest = key_console;
                 return NULL;
             }
@@ -321,23 +320,11 @@ PRIVATE const char *M_Intermission_Key (int key)
                 break;
 
             default:
-                Com_Printf ("No secret level from e%dm%d!\n", currentMap.episode + 1, currentMap.map + 1);
                 ClientStatic.key_dest = key_console;
                 return NULL;
             }
         } else {
             switch (currentLevel) {
-#if 0
-
-            case 8:
-            case 18:
-            case 28:
-            case 38:
-            case 48:
-            case 58:
-                // go back to the episode select screen
-                return NULL;
-#endif
 
             case 9:
                 nextLevel = 1;

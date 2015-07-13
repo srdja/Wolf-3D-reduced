@@ -200,19 +200,9 @@ int GLimp_SetMode (int *pwidth, int *pheight, int mode, _boolean fullscreen)
 
     r_fakeFullscreen = Cvar_Get ("r_fakeFullscreen", "0", CVAR_ARCHIVE);
 
-    if (fullscreen) {
-        Com_Printf ("...setting fullscreen mode %d:", mode);
-    } else {
-        Com_Printf ("...setting mode %d:", mode);
-    }
-
     if (! VID_GetModeInfo (&width, &height, mode)) {
-        Com_Printf (" invalid mode\n");
         return rserr_invalid_mode;
     }
-
-    Com_Printf (" %d %d\n", width, height);
-
     // destroy the existing window
     GLimp_Shutdown();
 
@@ -238,8 +228,6 @@ int GLimp_SetMode (int *pwidth, int *pheight, int mode, _boolean fullscreen)
     if (! XF86VidModeQueryVersion (display, &MajorVersion, &MinorVersion)) {
         vidmode_ext = false;
     } else {
-        Com_Printf ("Using XFree86-VidModeExtension Version %d.%d\n",
-                    MajorVersion, MinorVersion);
         vidmode_ext = true;
     }
 

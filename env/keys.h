@@ -68,12 +68,9 @@ void Key_Init (void);
 void Key_Event (int key, _boolean down, unsigned time);
 void Key_WriteBindings (FILE *f);
 void Key_SetBinding (int keynum, char *binding);
-char *Key_GetBinding (const int keynum);
 int Key_GetKey (const char *binding);
 void Key_ClearStates (void);
 char *Key_KeynumToString (int keynum);
-
-
 
 #endif /* __KEYS_H__ */
 

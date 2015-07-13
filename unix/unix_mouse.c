@@ -134,7 +134,6 @@ PUBLIC void install_grabs (void)
 
         if (! XF86DGAQueryVersion (display, &MajorVersion, &MinorVersion)) {
             // unable to query, probalby not supported
-            Com_Printf ("Failed to detect XF86DGA Mouse\n");
             Cvar_Set ("in_dgamouse", "0");
         } else {
             dgamouse = true;

@@ -21,13 +21,6 @@
 #ifndef __OPENGL_LOCAL_H__
 #define __OPENGL_LOCAL_H__
 
-#ifdef _WIN32
-
-#define WIN32_LEAN_AND_MEAN 1
-#include <windows.h>
-
-#endif
-
 #include <stdio.h>
 
 
@@ -51,52 +44,14 @@
 int glMaxTexSize; // maximum texture size
 
 
-//===================================================================
-
-
 void GL_SetDefaultState (void);
 void GL_UpdateSwapInterval (void);
 
 extern  float   gldepthmin, gldepthmax;
 
 
-
-//====================================================
-
-
-
-extern  int         gl_filter_min, gl_filter_max;
-
-//
-// view origin
-//
-extern  vec3_t  vup;
-extern  vec3_t  vpn;
-extern  vec3_t  vright;
-extern  vec3_t  r_origin;
-
-//
-// screen size info
-//
-//extern    refdef_t    r_newrefdef;
-
-extern  cvar_t  *r_norefresh;
-extern  cvar_t  *r_lefthand;
-extern  cvar_t  *r_speeds;
-extern  cvar_t  *r_novis;
-extern  cvar_t  *r_nocull;
-
-
-extern cvar_t   *gl_vertex_arrays;
-
-extern cvar_t   *gl_ext_swapinterval;
 extern cvar_t   *gl_ext_palettedtexture;
-extern cvar_t   *gl_ext_multitexture;
-extern cvar_t   *gl_ext_pointparameters;
-extern cvar_t   *gl_ext_compiled_vertex_array;
 
-
-extern  cvar_t  *gl_bitdepth;
 extern  cvar_t  *gl_mode;
 extern  cvar_t  *gl_round_down;
 extern  cvar_t  *gl_picmip;
@@ -106,32 +61,16 @@ extern  cvar_t  *gl_clear;
 extern  cvar_t  *gl_drawbuffer;
 extern  cvar_t  *gl_driver;
 extern  cvar_t  *gl_swapinterval;
-extern  cvar_t  *gl_texturemode;
 
 extern  cvar_t  *r_fullscreen;
 extern  cvar_t  *vid_gamma;
 
 extern  cvar_t      *intensity;
 
-extern  int     gl_solid_format;
-extern  int     gl_alpha_format;
-extern  int     gl_tex_alpha_format;
-
-
-
 
 void R_Bind (int texnum);
-void R_MBind (GLenum target, int texnum);
 void R_TexEnv (GLenum value);
-void R_EnableMultitexture (_boolean enable);
 void R_SelectTexture (GLenum);
-
-
-//====================================================================
-
-
-int     registration_sequence;
-
 
 
 typedef struct {
@@ -151,18 +90,10 @@ typedef struct {
 
     int currenttextures[4];
     int currenttmu;
-
-
 } glstate_t;
 
 extern glconfig_t  gl_config;
 extern glstate_t   gl_state;
-
-
-//////////////////////////////////////////////////////
-
-
-//////////////////////////////////////////////////////
 
 
 typedef struct {
@@ -220,18 +151,6 @@ typedef struct {
 extern GL_Extensions gl_ext;
 
 void MYgluPerspective (GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble zFar);
-void PrintGLError (W32 err, const char *from);
-
-
-
-
-/*
-====================================================================
-
-IMPLEMENTATION SPECIFIC FUNCTIONS
-
-====================================================================
-*/
 
 void        GLimp_BeginFrame();
 void        GLimp_EndFrame (void);
@@ -239,14 +158,6 @@ _boolean    GLimp_Init (void *hinstance, void *hWnd);
 void        GLimp_Shutdown (void);
 int         GLimp_SetMode (int *pwidth, int *pheight, int mode, _boolean fullscreen);
 void        GLimp_AppActivate (_boolean active);
-
-
-
-
-
-
-
-
 
 
 #endif /* __OPENGL_LOCAL_H__ */

@@ -51,14 +51,8 @@ void Memory_free (void *memblock);
 void Memory_outofmem (const char *name, const char *file, W32 line);
 
 #define MM_MALLOC( size )               Memory_malloc( (size) )
-#define MM_CALLOC( num, size )          Memory_calloc( (num), (size) )
-#define MM_REALLOC( memblock, size )    Memory_realloc( (memblock), (size) )
-
 #define MM_FREE( memblock ) { Memory_free( (memblock) ); ((memblock)) = NULL; }
-
 #define MM_OUTOFMEM( name ) Memory_outofmem( (name), __FILE__, __LINE__ )
-
-
 
 
 #endif /* __MEMORY_H__ */

@@ -519,46 +519,9 @@ void *pfwglGetProcAddress (const char *symbol)
  */
 PUBLIC int OpenGL_Init (const char *dllname)
 {
-#ifdef _WIN32
-
-    char buffer[ 1024 ], *ptr;
-
-    SearchPath (NULL, dllname, NULL, sizeof (buffer) - 1, buffer, &ptr);
-
-    Com_Printf ("...calling LoadLibrary( %s ): ", buffer);
-
-    if ((hinstOpenGL = LoadLibrary (dllname)) == 0) {
-        char *buf = NULL;
-
-        Com_Printf ("failed\n");
-
-        FormatMessage (FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
-                       NULL, GetLastError(),
-                       MAKELANGID (LANG_NEUTRAL, SUBLANG_DEFAULT),
-                       (LPTSTR) &buf, 0, NULL);
-
-        Com_Printf ("%s\n", buf);
-
-        return 0;
-    }
-
-#elif __unix__
-
-    Com_Printf ("...calling dlopen( %s ): ", dllname);
-
     if ((OpenGLLib = dlopen (dllname, RTLD_LAZY | RTLD_GLOBAL)) == 0) {
-        Com_Printf ("failed\n");
-
-        Com_Printf ("%s\n", dlerror());
-
         return 0;
     }
-
-#else
-
-#error "Please define interface to OpenGL library!"
-
-#endif
 
     if (! (pfglAccum                     = (GLACCUM)GPA ("glAccum"))) return 0;
 
@@ -1228,53 +1191,6 @@ PUBLIC int OpenGL_Init (const char *dllname)
 
     if (! (pfglViewport                  = (GLVIEWPORT)GPA ("glViewport"))) return 0;
 
-
-#ifdef _WIN32
-
-    if (! (pfwglCopyContext              = (WGLCOPYCONTEXT)GPA ("wglCopyContext"))) return 0;
-
-    if (! (pfwglCreateContext            = (WGLCREATECONTEXT)GPA ("wglCreateContext"))) return 0;
-
-    if (! (pfwglCreateLayerContext       = (WGLCREATELAYERCONTEXT)GPA ("wglCreateLayerContext"))) return 0;
-
-    if (! (pfwglDeleteContext            = (WGLDELETECONTEXT)GPA ("wglDeleteContext"))) return 0;
-
-    if (! (pfwglDescribeLayerPlane       = (WGLDESCRIBELAYERPLANE)GPA ("wglDescribeLayerPlane"))) return 0;
-
-    if (! (pfwglGetCurrentContext        = (WGLGETCURRENTCONTEXT)GPA ("wglGetCurrentContext"))) return 0;
-
-    if (! (pfwglGetCurrentDC             = (WGLGETCURRENTDC)GPA ("wglGetCurrentDC"))) return 0;
-
-    if (! (pfwglGetLayerPaletteEntries   = (WGLGETLAYERPALETTEENTRIES)GPA ("wglGetLayerPaletteEntries"))) return 0;
-
-    if (! (pfwglGetProcAddress           = (WGLGETPROCADDRESS)GPA ("wglGetProcAddress"))) return 0;
-
-    if (! (pfwglMakeCurrent              = (WGLMAKECURRENT)GPA ("wglMakeCurrent"))) return 0;
-
-    if (! (pfwglRealizeLayerPalette      = (WGLREALIZELAYERPALETTE)GPA ("wglRealizeLayerPalette"))) return 0;
-
-    if (! (pfwglSetLayerPaletteEntries   = (WGLSETLAYERPALETTEENTRIES)GPA ("wglSetLayerPaletteEntries"))) return 0;
-
-    if (! (pfwglShareLists               = (WGLSHARELISTS)GPA ("wglShareLists"))) return 0;
-
-    if (! (pfwglSwapLayerBuffers         = (WGLSWAPLAYERBUFFERS)GPA ("wglSwapLayerBuffers"))) return 0;
-
-    if (! (pfwglUseFontBitmaps           = (WGLUSEFONTBITMAPS)GPA ("wglUseFontBitmapsA"))) return 0;
-
-    if (! (pfwglUseFontOutlines          = (WGLUSEFONTOUTLINES)GPA ("wglUseFontOutlinesA"))) return 0;
-
-    if (! (pfwglChoosePixelFormat        = (WGLCHOOSEPIXELFORMAT)GPA ("wglChoosePixelFormat"))) return 0;
-
-    if (! (pfwglDescribePixelFormat      = (WGLDESCRIBEPIXELFORMAT)GPA ("wglDescribePixelFormat"))) return 0;
-
-    if (! (pfwglGetPixelFormat           = (WGLGETPIXELFORMAT)GPA ("wglGetPixelFormat"))) return 0;
-
-    if (! (pfwglSetPixelFormat           = (WGLSETPIXELFORMAT)GPA ("wglSetPixelFormat"))) return 0;
-
-    if (! (pfwglSwapBuffers              = (WGLSWAPBUFFERS)GPA ("wglSwapBuffers"))) return 0;
-
-#elif __unix__
-
     if (! (pfglXChooseVisual             =  GPA ("glXChooseVisual"))) return 0;
 
     if (! (pfglXCreateContext            =  GPA ("glXCreateContext"))) return 0;
@@ -1286,14 +1202,6 @@ PUBLIC int OpenGL_Init (const char *dllname)
     if (! (pfglXCopyContext              =  GPA ("glXCopyContext"))) return 0;
 
     if (! (pfglXSwapBuffers              =  GPA ("glXSwapBuffers"))) return 0;
-
-#else
-
-#error "Please define interface to OpenGL library!"
-
-#endif
-
-    Com_Printf ("succeeded\n");
 
     return 1;
 }

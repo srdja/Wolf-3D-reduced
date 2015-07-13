@@ -81,7 +81,6 @@ PUBLIC int Sprite_GetNewSprite (void)
     }
 
     if (levelData.numSprites >= MAX_SPRITES) {
-        Com_Printf ("Warning levelData.numSprites == MAX_SPRITES\n");
         return -1;
     }
 

@@ -132,8 +132,6 @@ PUBLIC void Client_PrepRefresh (const char *r_mapname)
         return;
     }
 
-    Com_Printf ("Map: %s\n", r_world->mapName);
-
     R_DrawPsyched (30);
     R_EndFrame();
 
@@ -141,12 +139,8 @@ PUBLIC void Client_PrepRefresh (const char *r_mapname)
     Level_ScanInfoPlane (r_world);  // Spawn items/guards
 
 
-    Com_Printf ("Spawning Entities\n");
-
     PL_Spawn (r_world->pSpawn, r_world);  // Spawn Player
 
-
-    Com_Printf ("Caching Textures and Sounds\n");
     Level_PrecacheTextures_Sound (r_world);
 
     R_DrawPsyched (80);

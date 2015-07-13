@@ -79,12 +79,10 @@ PRIVATE _boolean PL_ChangeWeapon (player_t *self, int weapon)
     itemflag = ITEM_WEAPON_1 << weapon;
 
     if (self->ammo[ AMMO_BULLETS ] == 0 && weapon != WEAPON_KNIFE) {
-        Com_Printf ("Not enough ammo.\n");
         return false;
     }
 
     if (! (self->items & itemflag)) {
-        Com_Printf ("No weapon.\n");
         return false;
     }
 
@@ -452,7 +450,6 @@ PUBLIC void PL_Process (player_t *self, LevelData_t *lvl)
         break;
 
     default:
-        Com_Printf ("Unknown Impulse: %d\n", ClientState.cmd.impulse);
         break;
     }
 
@@ -527,8 +524,6 @@ PRIVATE void Cmd_Give_f (void)
 PRIVATE void Cmd_God_f (void)
 {
     Player.flags ^= FL_GODMODE;
-
-    Com_Printf ("God mode %s\n", Player.flags & FL_GODMODE ? "ON" : "OFF");
 }
 
 

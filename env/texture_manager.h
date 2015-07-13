@@ -156,13 +156,8 @@ texture_t *TM_FindTexture_Sprite (W32 imageId);
 texture_t *TM_FindTexture (const char *name, texturetype_t type);
 
 void TM_GetTextureSize (SW32 *width, SW32 *height, const char *name);
-
 void TM_ResampleTexture (PW8 in, int inwidth, int inheight, PW8 out,  int outwidth, int outheight, W16 bytes, InterpolationType interpolation);
-
 void TM_FreeUnusedTextures (void);
-
-
-
 
 
 #endif /* __TEXTURE_MANAGER_H__ */

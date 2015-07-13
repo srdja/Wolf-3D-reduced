@@ -41,8 +41,6 @@
 
 void LoadTGA (const char *filename, W8 **pic, W16 *width, W16 *height, W16 *bytes);
 
-
-
 W8 WriteTGA (const char *filename, W16 bpp, W16 width, W16 height,
              void *Data, W8 upsideDown, W8 rle);
 

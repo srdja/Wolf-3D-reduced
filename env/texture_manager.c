@@ -59,47 +59,6 @@ W32 texture_registration_sequence;
  */
 PUBLIC void TM_TextureList_f (void)
 {
-    int     i;
-    texture_t   *image;
-    int     texels;
-    const char *palstrings[ 2 ] = {
-        "RGB",
-        "PAL"
-    };
-
-    Com_Printf ("------------------\n");
-    texels = 0;
-
-    for (i = 0, image = ttextures ; i < numttextures ; ++i, ++image) {
-        if (image->texnum <= 0)
-            continue;
-
-        texels += image->upload_width * image->upload_height;
-
-        switch (image->type) {
-        case TT_Sprite:
-            Com_Printf ("S");
-            break;
-
-        case TT_Wall:
-            Com_Printf ("W");
-            break;
-
-        case TT_Pic:
-            Com_Printf ("P");
-            break;
-
-        default:
-            Com_Printf (" ");
-            break;
-        }
-
-        Com_Printf (" %3i %3i %s: %s\n",
-                    image->upload_width, image->upload_height, palstrings[ 0 ], image->name);
-    }
-
-    Com_Printf ("Total texel count (not counting mipmaps): %i\n", texels);
-
 }
 
 /**
@@ -640,9 +599,6 @@ shrink_line (double               *dest,
 
         slicepos -= old_width;
 
-        if (! (slicepos < width))
-            Com_Printf ("Assertion (slicepos < width) failed. Please report.\n");
-
         if (slicepos == 0) {
             /* Simplest case: we have reached a whole pixel boundary.  Store
                 the average value per channel and reset the accumulators for
@@ -666,13 +622,6 @@ shrink_line (double               *dest,
                 accum[b] = slice;
             }
         }
-    }
-
-    /* Sanity check: srcp should point to the next-to-last position, and
-        slicepos should be zero.  */
-    if (! (srcp - src == old_width * bytes && slicepos == 0)) {
-        Com_Printf ("Assertion (srcp - src == old_width * bytes && slicepos == 0)"
-                    " failed. Please report.");
     }
 }
 

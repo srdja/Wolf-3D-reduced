@@ -30,104 +30,8 @@
 #define __PLATFORM_H__
 
 
-
-// Windows
-/////////////////////////////////////////////////
-
-#if defined(WINDOWS) || defined(_WINDOWS) || defined(_WIN32) || defined(_WIN64)
-
-#define PLATFORM_NAME "Windows"
-
-#define PATH_SEP '\\'
-
-#endif
-
-
-// Linux
-/////////////////////////////////////////////////
-
-#if defined(linux) || defined(__linux__)
-
 #define PLATFORM_NAME "Linux"
-
 #define PATH_SEP '/'
-
-#endif
-
-
-// BSD
-/////////////////////////////////////////////////
-
-#if defined(__FreeBSD__)
-
-#define PLATFORM_NAME "FreeBSD"
-
-#define PATH_SEP '/'
-
-#endif
-
-#if defined(__NetBSD__)
-
-#define PLATFORM_NAME "NetBSD"
-
-#define PATH_SEP '/'
-
-#endif
-
-#if defined(__OpenBSD__)
-
-#define PLATFORM_NAME "OpenBSD"
-
-#define PATH_SEP '/'
-
-#endif
-
-
-// Solaris
-/////////////////////////////////////////////////
-
-#if defined(sun) || defined(__sun__)
-
-#define PLATFORM_NAME "Solaris"
-
-#define PATH_SEP '/'
-
-#endif
-
-
-// MAC
-/////////////////////////////////////////////////
-
-#if defined( macintosh )
-
-#define PLATFORM_NAME "MAC OS"
-
-#define PATH_SEP ':'
-
-#endif
-
-
-#if defined(__APPLE__) && defined(__MACH__)
-
-#define MACOS_X     1
-
-#define PLATFORM_NAME "MAC OS X"
-
-#define PATH_SEP ':'
-
-#endif
-
-
-// Other
-/////////////////////////////////////////////////
-
-#ifndef PLATFORM_NAME
-
-#define PLATFORM_NAME "Unknown OS"
-#define PATH_SEP '/'
-
-#endif
-
 
 
 /* Define CPUSTRING based on platform */
@@ -250,27 +154,15 @@ typedef intptr_t            INT_PTR;
 
 
 typedef enum {
-
     false = 0,
     true  = 1
-
 } _boolean;
 
-
 typedef unsigned char       byte;
-
-
 
 #define Swap16( x )     ( ( (((W16) (x)) & 0x00FF) << 8 ) | ( (((W16) (x))& 0xFF00) >> 8) )
 #define Swap32( x )     ( ( ((W32) (x)) & 0xFF000000) >> 24 ) | ( ((( (W32) (x) ) & 0xFF0000) >> 8)  ) | ( ((( (W32) (x) ) & 0xFF00) << 8 ) ) | ( (( (W32) (x) ) & 0xFF) << 24 )
 #define Swap64( x )     ( ( Swap32( (x) & 0xFFFFFFFF ) << 32 ) | Swap32( (x) >> 32 ) )
-
-
-#if defined(__ARCH_X86__) || defined(__ARCH_X64__)  // Little endian
-
-
-#define LITTLE_ENDIAN_SYSTEM    1
-
 
 #define BigShort( x )           Swap16( x )
 #define LittleShort( x )        ( x )
@@ -283,29 +175,6 @@ typedef unsigned char       byte;
 
 #define Big64( x )              Swap64( x )
 #define Little64( x )           ( x )
-
-
-#else // Big endian
-
-#define BIG_ENDIAN_SYSTEM   1
-
-
-#define BigShort( x )           ( x )
-#define LittleShort( x )        Swap16( x )
-
-#define BigLong( x )            ( x )
-#define LittleLong( x )         Swap32( x )
-
-#define BigFloat( x )           ( x )
-#define LittleFloat( x )        SwapFloat( x )
-
-#define Big64( x )              ( x )
-#define Little64( x )           Swap64( x )
-
-#endif
-
-
-
 
 
 #endif /* __PLATFORM_H__ */

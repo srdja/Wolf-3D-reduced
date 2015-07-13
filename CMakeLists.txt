@@ -77,7 +77,6 @@ set ( env_HEADER
 	${CMAKE_SOURCE_DIR}/env/renderer.h
 	${CMAKE_SOURCE_DIR}/env/sound.h
 	${CMAKE_SOURCE_DIR}/env/sound_local.h
-	${CMAKE_SOURCE_DIR}/env/system.h
 	${CMAKE_SOURCE_DIR}/env/texture_manager.h
 	${CMAKE_SOURCE_DIR}/env/tga.h
 	${CMAKE_SOURCE_DIR}/env/tgaconfig.h
@@ -155,7 +154,6 @@ set( platform_SOURCE
 		${CMAKE_SOURCE_DIR}/unix/unix_keys.c
 		${CMAKE_SOURCE_DIR}/unix/unix_main.c
 		${CMAKE_SOURCE_DIR}/unix/unix_mouse.c
-		${CMAKE_SOURCE_DIR}/unix/unix_system.c
 		${CMAKE_SOURCE_DIR}/unix/unix_timer.c
 		${CMAKE_SOURCE_DIR}/unix/unix_vid_sys.c
 )

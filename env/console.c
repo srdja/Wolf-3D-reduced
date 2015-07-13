@@ -147,18 +147,15 @@ PRIVATE void Con_Dump_f (void)
     char    name[MAX_OSPATH];
 
     if (Cmd_Argc() != 2) {
-        Com_Printf ("usage: conDump <filename>\n");
         return;
     }
 
     com_snprintf (name, sizeof (name), "%s%c%s.txt", FS_Gamedir(), PATH_SEP, Cmd_Argv (1));
 
-    Com_Printf ("Dumped console text to %s.\n", name);
     FS_CreateDirectory (name);
     f = fopen (name, "w");
 
     if (!f) {
-        Com_Printf ("ERROR: couldn't open.\n");
         return;
     }
 
@@ -294,8 +291,6 @@ PUBLIC void Con_Init (void)
     con.linewidth = -1;
 
     Con_CheckResize();
-
-    Com_Printf ("Console Initialized\n");
 
 //
 // register our commands

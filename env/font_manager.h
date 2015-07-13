@@ -43,7 +43,6 @@
 typedef enum { FONT0 = 0, FONT1, FONT2, FONT3 } FONTSELECT;
 
 
-
 typedef struct {
     W8 nCharWidth[ 128 ];       /* width of each character */
     W8 nMaxWidth;               /* box width */
@@ -60,7 +59,6 @@ typedef struct {
 
 void Font_Init (void);
 void Font_Shutdown (void);
-
 
 void Font_SetSize (FONTSELECT fs, W16 size);
 W16 Font_GetSize (FONTSELECT fs);

@@ -45,11 +45,6 @@
 #include "platform.h"
 
 
-typedef struct vrect_s {
-    int x, y, width, height;
-
-} vrect_t;
-
 typedef struct {
     unsigned width, height; // coordinates from main game
 
@@ -61,14 +56,9 @@ extern  viddef_t    viddef;  // global video state
 void    Video_Init (void);
 void    Video_Shutdown (void);
 void    Video_CheckChanges (void);
-
 void    Video_MenuInit (void);
-void    VID_MenuDraw (void);
-const char *VID_MenuKey (int);
-
 
 void VID_NewWindow (int width, int height);
 _boolean VID_GetModeInfo (int *width, int *height, int mode);
-
 
 #endif /* __VIDEO_H__ */

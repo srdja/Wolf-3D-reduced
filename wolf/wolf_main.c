@@ -74,20 +74,10 @@ extern void Con_ToggleAutomap_f (void);
  */
 PUBLIC void Game_Init (void)
 {
-    Com_Printf ("\n------ Game Init ------\n");
-
-
-    // noset vars
-//  dedicated = Cvar_Get( "dedicated", "0", CVAR_ROM );
-
-    // latched vars
-//  sv_cheats = Cvar_Get( "cheats", "0", CVAR_SERVERINFO |CVAR_LATCH );
-
     skill = Cvar_Get ("skill", "1", CVAR_LATCH);
     g_version = Cvar_Get ("g_version", "0", CVAR_ARCHIVE | CVAR_LATCH);
     g_fov = Cvar_Get ("g_fov", "68", CVAR_ARCHIVE | CVAR_LATCH);
     g_autoaim = Cvar_Get ("g_autoaim", "1", CVAR_ARCHIVE | CVAR_LATCH);
-//  maxentities = Cvar_Get( "maxentities", "1024", CVAR_LATCH );
     mapScale = Cvar_Get ("mapScale", "10", CVAR_ARCHIVE);
 
 
@@ -107,9 +97,6 @@ PUBLIC void Game_Init (void)
 
     Game_Reset();
     PL_Init();
-
-    Com_Printf ("\n-----------------------\n");
-
 }
 
 /**
@@ -117,8 +104,6 @@ PUBLIC void Game_Init (void)
  */
 PUBLIC void Game_Shutdown (void)
 {
-    Com_Printf ("==== Game Shutdown ====\n");
-
     Z_FreeTags (TAG_LEVEL);
     Z_FreeTags (TAG_GAME);
 }
@@ -142,7 +127,6 @@ PUBLIC void SaveTheGame (const char *name)
     LevelData_t copiedLevelData;
 
     if (Player.playstate != ex_playing) {
-        Com_Printf ("Cannot save while not playing!");
         return;
     }
 
@@ -150,7 +134,6 @@ PUBLIC void SaveTheGame (const char *name)
     f = fopen (path, "wb");
 
     if (! f) {
-        Com_Printf ("Could not open %s.\n", path);
         return;
     }
 
@@ -209,23 +192,15 @@ PUBLIC int LoadTheGame (const char *name)
     f = fopen (path, "rb");
 
     if (! f) {
-        Com_Printf ("Could not open %s.\n", path);
         return 0;
     }
 
     fread (&currentMap, 1, sizeof (currentMap) , f);
 
     if (currentMap.version != SAVEGAME_VERSION) {
-        Com_Printf ("Savegame header version mismatch: %i != %i\n", currentMap.version, SAVEGAME_VERSION);
         fclose (f);
         return 0;
     }
-
-
-    Com_Printf ("episode: %i\nmap: %i\n", currentMap.episode, currentMap.map);
-
-    // load the huds
-    //fread( &huds, 1,sizeof(huds), f);
 
     // do a normal map start
     Cvar_SetValue (skill->name, (float)currentMap.skill);
@@ -254,7 +229,6 @@ PUBLIC int LoadTheGame (const char *name)
     ClientState.viewangles[ PITCH ] = RAD2FINE (Player.position.pitch);
 
     if (version != SAVEGAME_VERSION) {
-        Com_Printf ("Savegame trailer version mismatch: %i != %i\n", version, SAVEGAME_VERSION);
         return 0;
     }
 

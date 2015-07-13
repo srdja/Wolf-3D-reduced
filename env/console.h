@@ -42,15 +42,6 @@
 #include "platform.h"
 
 
-#define S_COLOR_BLACK   "^0"
-#define S_COLOR_RED     "^1"
-#define S_COLOR_GREEN   "^2"
-#define S_COLOR_YELLOW  "^3"
-#define S_COLOR_BLUE    "^4"
-#define S_COLOR_CYAN    "^5"
-#define S_COLOR_MAGENTA "^6"
-#define S_COLOR_WHITE   "^7"
-
 #define NUM_CON_TIMES 4
 
 #define     CON_TEXTSIZE    32768
@@ -78,13 +69,10 @@ typedef struct {
 
 extern  console_t   con;
 
-void Con_DrawCharacter (int cx, int line, int num);
-
 void Con_CheckResize (void);
 void Con_Init (void);
 void Con_DrawConsole (float frac);
 void Con_Print (char *txt);
-void Con_CenteredPrint (const char *text);
 void Con_DrawNotify (void);
 void Con_ClearNotify (void);
 void Con_ToggleConsole_f (void);
@@ -93,7 +81,6 @@ void Con_PageUp (void) ;
 void Con_PageDown (void) ;
 void Con_Top (void);
 void Con_Bottom (void);
-
 
 #endif /* __CONSOLE_H__ */
 

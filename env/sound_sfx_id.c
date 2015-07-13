@@ -53,13 +53,10 @@ PRIVATE _boolean s_registering = false;
 PRIVATE W32 s_registration_sequence = 0;
 
 
-
-
 void Sound_SoundList_f (void)
 {
 
 }
-
 
 
 /*
@@ -136,9 +133,6 @@ PUBLIC _boolean Sound_LoadSound (sfx_t *sfx)
 
     if (! LoadWavInfo (name, &data, &info)) {
         sfx->defaulted = true;
-
-        Com_Printf ("Could not find sound (%s)\n", name);
-
         return false;
     }
 
@@ -171,14 +165,10 @@ PUBLIC sfx_t *Sound_FindSound (const char *name)
     unsigned    hashKey;
 
     if (! name || ! name[ 0 ]) {
-        Com_Printf ("Sound_FindSound: NULL sound name\n");
-
         return NULL;
     }
 
     if (strlen (name) >= MAX_GAMEPATH) {
-        Com_Printf ("Sound_FindSound: sound name exceeds MAX_GAMEPATH\n");
-
         return NULL;
     }
 
@@ -193,8 +183,6 @@ PUBLIC sfx_t *Sound_FindSound (const char *name)
 
     // Create a new sfx_t
     if (s_numSfx == MAX_SFX) {
-        Com_Printf ("Sound_FindSound: MAX_SFX hit\n");
-
         return NULL;
     }
 
@@ -207,13 +195,6 @@ PUBLIC sfx_t *Sound_FindSound (const char *name)
     s_sfxHash[ hashKey ] = sfx;
 
     return sfx;
-}
-
-
-PUBLIC void Sound_BeginRegistration (void)
-{
-    s_registration_sequence++;
-    s_registering = true;
 }
 
 PUBLIC sfx_t *Sound_RegisterSound (const char *name)
@@ -240,16 +221,6 @@ PUBLIC sfx_t *Sound_RegisterSound (const char *name)
 
     return sfx;
 }
-
-PUBLIC void Sound_EndRegistration (void)
-{
-
-    s_registering = false;
-}
-
-
-
-
 
 
 void Sound_FreeSounds (void)

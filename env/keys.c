@@ -354,7 +354,6 @@ PRIVATE void Key_Console (int key)
         }
 
         Cbuf_AddText ("\n");
-        Com_Printf ("%s\n", key_lines[ edit_line ]);
         edit_line = (edit_line + 1) & 31;
         history_line = edit_line;
         key_lines[ edit_line ][ 0 ] = ']';
@@ -657,14 +656,12 @@ PRIVATE void Key_Unbind_f (void)
     int b;
 
     if (Cmd_Argc() != 2) {
-        Com_Printf ("unbind <key> : remove commands from a key\n");
         return;
     }
 
     b = Key_StringToKeynum (Cmd_Argv (1));
 
     if (b == -1) {
-        Com_Printf ("\"%s\" isn't a valid key\n", Cmd_Argv (1));
         return;
     }
 
@@ -697,23 +694,16 @@ PRIVATE void Key_Bind_f (void)
     c = Cmd_Argc();
 
     if (c < 2) {
-        Com_Printf ("bind <key> [command] : attach a command to a key\n");
         return;
     }
 
     b = Key_StringToKeynum (Cmd_Argv (1));
 
     if (b == -1) {
-        Com_Printf ("\"%s\" isn't a valid key\n", Cmd_Argv (1));
         return;
     }
 
     if (c == 2) {
-        if (keybindings[ b ])
-            Com_Printf ("\"%s\" = \"%s\"\n", Cmd_Argv (1), keybindings[ b ]);
-        else
-            Com_Printf ("\"%s\" is not bound\n", Cmd_Argv (1));
-
         return;
     }
 
@@ -752,13 +742,6 @@ PUBLIC void Key_WriteBindings (FILE *f)
  */
 PRIVATE void Key_Bindlist_f (void)
 {
-    int i;
-
-    for (i = 0 ; i < 256 ; ++i) {
-        if (keybindings[ i ] && keybindings[ i ][ 0 ]) {
-            Com_Printf ("%s \"%s\"\n", Key_KeynumToString (i), keybindings[ i ]);
-        }
-    }
 }
 
 /**
@@ -893,10 +876,6 @@ PUBLIC void Key_Event (int key, _boolean down, unsigned time)
                 && key_repeats[key] > 1) {
             return; // ignore most autorepeats
         }
-
-        if (key >= 200 && !keybindings[key]) {
-            Com_Printf ("%s is unbound, hit F4 to set.\n", Key_KeynumToString (key));
-        }
     } else {
         key_repeats[ key ] = 0;
     }
@@ -915,22 +894,11 @@ PUBLIC void Key_Event (int key, _boolean down, unsigned time)
         return;
     }
 
-    // any key during the attract mode will bring up the menu
-//      if (cl.attractloop && ClientStatic.key_dest != key_menu &&
-//              !(key >= K_F1 && key <= K_F12))
-//              key = K_ESCAPE;
-
     // menu key is hardcoded, so the user can never unbind it
     if (key == K_ESCAPE) {
         if (! down) {
             return;
         }
-
-//              if (cl.frame.playerstate.stats[STAT_LAYOUTS] && ClientStatic.key_dest == key_game)
-//              {       // put away help computer / inventory
-//                      Cbuf_AddText ("cmd putaway\n");
-//                      return;
-//              }
 
         switch (ClientStatic.key_dest) {
         case key_message:

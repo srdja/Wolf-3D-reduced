@@ -75,7 +75,6 @@ PUBLIC void Z_Free (void *memblock)
  */
 PUBLIC void Z_Stats_f (void)
 {
-    Com_Printf ("%i bytes in %i blocks\n", z_bytes, z_count);
 }
 
 /**

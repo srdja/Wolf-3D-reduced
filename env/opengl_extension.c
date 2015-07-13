@@ -66,7 +66,6 @@ GL_Extensions gl_ext;
 PRIVATE W8 ConfigARBMultiTexture (const char *glext)
 {
     if (strstr (glext, "GL_ARB_multitexture") == NULL) {
-        Com_Printf ("...GL_ARB_multitexture not found\n");
         return 0;
     }
 
@@ -139,8 +138,6 @@ PRIVATE W8 ConfigARBMultiTexture (const char *glext)
     if (! (pfglMultiTexCoord4dvARB = (void *)pfwglGetProcAddress ("glMultiTexCoord4dvARB"))) return 0;
 
 
-    Com_Printf ("...enabling GL_ARB_multitexture\n");
-
     return 1;
 }
 
@@ -148,7 +145,6 @@ PRIVATE W8 ConfigARBMultiTexture (const char *glext)
 PRIVATE W8 ConfigARBTextureCompression (const char *glext)
 {
     if (strstr (glext, "GL_ARB_texture_compression") == NULL) {
-        Com_Printf ("...GL_ARB_texture_compression not found\n");
         return 0;
     }
 
@@ -166,8 +162,6 @@ PRIVATE W8 ConfigARBTextureCompression (const char *glext)
 
     if (! (pfglGetCompressedTexImageARB = (void *)pfwglGetProcAddress ("glGetCompressedTexImageARB"))) return 0;
 
-    Com_Printf ("...enabling GL_ARB_texture_compression\n");
-
     return 1;
 }
 
@@ -175,12 +169,8 @@ PRIVATE W8 ConfigARBTextureCompression (const char *glext)
 PRIVATE W8 CheckARBTextureCubeMap (const char *glext)
 {
     if (strstr (glext, "GL_ARB_texture_cube_map") == NULL) {
-        Com_Printf ("...GL_ARB_texture_cube_map not found\n");
         return 0;
     }
-
-    Com_Printf ("...enabling GL_ARB_texture_cube_map\n");
-
     return 1;
 }
 
@@ -314,8 +304,6 @@ PRIVATE W8 ConfigARBVertexProgram (const char *glext)
 
     if (! (pfglIsProgramARB = (void *)pfwglGetProcAddress ("glIsProgramARB"))) return 0;
 
-    Com_Printf ("...enabling GL_ARB_vertex_program\n");
-
     return 1;
 }
 
@@ -335,24 +323,16 @@ PRIVATE W8 ConfigARBVertexProgram (const char *glext)
 PRIVATE W8 CheckEXTTextureCompressionS3TC (const char *glext)
 {
     if (strstr (glext, "GL_EXT_texture_compression_s3tc") == NULL) {
-        Com_Printf ("...GL_EXT_texture_compression_s3tc not found\n");
         return 0;
     }
-
-    Com_Printf ("...enabling GL_EXT_texture_compression_s3tc\n");
-
     return 1;
 }
 
 PRIVATE W8 CheckEXTTextureEnvCombine (const char *glext)
 {
     if (strstr (glext, "GL_EXT_texture_env_combine") == NULL) {
-        Com_Printf ("...GL_EXT_texture_env_combine not found\n");
         return 0;
     }
-
-    Com_Printf ("...enabling GL_EXT_texture_env_combine\n");
-
     return 1;
 }
 
@@ -361,10 +341,8 @@ PRIVATE W8 CheckEXTTextureEnvCombine (const char *glext)
 PRIVATE W8 ConfigEXTSecondaryColor (const char *glext)
 {
     if (strstr (glext, "GL_EXT_secondary_color") == NULL) {
-        Com_Printf ("...GL_EXT_secondary_color not found\n");
         return 0;
     }
-
 
     if (! (pfglSecondaryColor3bEXT = (void *)pfwglGetProcAddress ("glSecondaryColor3bEXT"))) return 0;
 
@@ -400,21 +378,17 @@ PRIVATE W8 ConfigEXTSecondaryColor (const char *glext)
 
     if (! (pfglSecondaryColorPointerEXT = (void *)pfwglGetProcAddress ("glSecondaryColorPointerEXT"))) return 0;
 
-    Com_Printf ("...enabling GL_EXT_secondary_color\n");
-
     return 1;
 }
 
 PRIVATE W8 ConfigEXTBlendColor (const char *glext)
 {
     if (strstr (glext, "GL_EXT_blend_color") == NULL) {
-        Com_Printf ("...GL_EXT_blend_color not found\n");
         return 0;
     }
 
     if (! (pfglBlendColorEXT = (void *)pfwglGetProcAddress ("glBlendColorEXT"))) return 0;
 
-    Com_Printf ("...enabling GL_EXT_blend_color\n");
 
     return 1;
 }
@@ -508,7 +482,6 @@ PRIVATE W8 ConfigEXTVertexShader (const char *glext)
     pfglGetIntegerv (GL_MAX_VERTEX_SHADER_LOCALS_EXT, &glnum);
 
     if (glnum < MY_GL_MAX_VERTEX_SHADER_LOCALS_EXT) {
-        Com_Printf ("...Some vertex programs may fail to load");
         return 0;
     }
 
@@ -533,9 +506,6 @@ PRIVATE W8 ConfigEXTVertexShader (const char *glext)
         return 0;
     }
 
-
-    Com_Printf ("...enabling GL_EXT_vertex_shader\n");
-
     return 1;
 }
 
@@ -543,10 +513,8 @@ PRIVATE W8 ConfigEXTVertexShader (const char *glext)
 PRIVATE W8 ConfigEXTVertexWeighting (const char *glext)
 {
     if (strstr (glext, "GL_EXT_vertex_weighting") == NULL) {
-        Com_Printf ("...GL_EXT_vertex_weighting not found\n");
         return 0;
     }
-
 
     if (! (pfglVertexWeightfEXT = (void *)pfwglGetProcAddress ("glVertexWeightfEXT"))) return 0;
 
@@ -554,34 +522,17 @@ PRIVATE W8 ConfigEXTVertexWeighting (const char *glext)
 
     if (! (pfglVertexWeightPointerEXT = (void *)pfwglGetProcAddress ("glVertexWeightPointerEXT"))) return 0;
 
-    Com_Printf ("...enabling GL_EXT_vertex_weighting\n");
-
     return 1;
 }
 
 PRIVATE W8 CheckEXTTextureFilterAnisotropic (const char *glext)
 {
     if (strstr (glext, "GL_EXT_texture_filter_anisotropic") == NULL) {
-        Com_Printf ("...GL_EXT_texture_filter_anisotropic not found\n");
         return 0;
     }
-
-    Com_Printf ("...enabling GL_EXT_texture_filter_anisotropic\n");
-
     return 1;
 }
 
-////////////////////////////////////////////////////////////
-
-
-
-
-
-//////////////////////////////
-//
-//  Nvidia Functions
-//
-//////////////////////////////
 
 PRIVATE W8 ConfigNVVertexArrayRange (const char *glext)
 {
@@ -601,24 +552,9 @@ PRIVATE W8 ConfigNVVertexArrayRange (const char *glext)
 
     if (! (pfglVertexArrayRangeNV = (void *)pfwglGetProcAddress ("glVertexArrayRangeNV")))return 0;
 
-#ifdef _WIN32
-
-    if (! (pfwglAllocateMemoryNV = (void *)pfwglGetProcAddress ("wglAllocateMemoryNV"))) return 0;
-
-    if (! (pfwglFreeMemoryNV = (void *)pfwglGetProcAddress ("wglFreeMemoryNV"))) return 0;
-
-#elif __unix__
-
     if (! (pfwglAllocateMemoryNV = (void *)pfwglGetProcAddress ("glXAllocateMemoryNV"))) return 0;
 
     if (! (pfwglFreeMemoryNV = (void *)pfwglGetProcAddress ("glXFreeMemoryNV"))) return 0;
-
-#else
-
-#error "Please define OS interface to GL_NV_vertex_array_range"
-
-#endif
-
 
     // Setup fence
     if (! (pfglDeleteFencesNV = (void *)pfwglGetProcAddress ("glDeleteFencesNV"))) return 0;
@@ -635,19 +571,14 @@ PRIVATE W8 ConfigNVVertexArrayRange (const char *glext)
 
     if (! (pfglSetFenceNV = (void *)pfwglGetProcAddress ("glSetFenceNV"))) return 0;
 
-    Com_Printf ("...enabling GL_NV_vertex_array_range & GL_NV_fence\n");
-
     return 1;
 }
 
 PRIVATE W8  CheckNVVertexArrayRange2 (const char *glext)
 {
     if (strstr (glext, "GL_NV_vertex_array_range2") == NULL) {
-        Com_Printf ("...GL_NV_vertex_array_range2 not found\n");
         return 0;
     }
-
-    Com_Printf ("...enabling GL_NV_vertex_array_range2\n");
 
     return 1;
 }
@@ -655,12 +586,8 @@ PRIVATE W8  CheckNVVertexArrayRange2 (const char *glext)
 PRIVATE W8 CheckNVTextureEnvCombine4 (const char *glext)
 {
     if (strstr (glext, "GL_NV_texture_env_combine4") == NULL) {
-        Com_Printf ("...GL_NV_texture_env_combine4 not found\n");
         return 0;
     }
-
-    Com_Printf ("...enabling GL_NV_texture_env_combine4\n");
-
     return 1;
 }
 
@@ -796,9 +723,6 @@ PRIVATE W8 ConfigNVVertexProgram (const char *glext)
 
     if (! (pfglVertexAttribs4ubvNV = (void *)pfwglGetProcAddress ("glVertexAttribs4ubvNV"))) return 0;
 
-
-    Com_Printf ("...enabling GL_NV_vertex_program\n");
-
     return 1;
 }
 
@@ -811,14 +735,8 @@ PRIVATE W8 CheckNVTextureShader (const char *glext)
     if (strstr (glext, "GL_NV_texture_shader") == NULL) {
         return 0;
     }
-
-    Com_Printf ("...enabling GL_NV_texture_shader\n");
-
     return 1;
 }
-
-////////////////////////////////////////////////////////////
-
 
 //////////////////////////////
 //
@@ -859,8 +777,6 @@ PRIVATE W8 ConfigATIVertexArrayObject (const char *glext)
 
     if (! (pfglGetVariantArrayObjectivATI = (void *)pfwglGetProcAddress ("glGetVariantArrayObjectivATI"))) return 0;
 
-    Com_Printf ("...enabling GL_ATI_vertex_array_object\n");
-
     return 1;
 }
 
@@ -874,8 +790,6 @@ PRIVATE W8 ConfigATIMapObjectBuffer (const char *glext)
     if (! (pfglMapObjectBufferATI = (void *)pfwglGetProcAddress ("glMapObjectBufferATI"))) return 0;
 
     if (! (pfglUnmapObjectBufferATI = (void *)pfwglGetProcAddress ("glUnmapObjectBufferATI"))) return 0;
-
-    Com_Printf ("...enabling GL_ATI_map_object_buffer\n");
 
     return 1;
 }
@@ -917,8 +831,6 @@ PRIVATE W8 ConfigATIFragmentShader (const char *glext)
 
     if (! (pfglSetFragmentShaderConstantATI = (void *)pfwglGetProcAddress ("glSetFragmentShaderConstantATI"))) return 0;
 
-    Com_Printf ("...enabling GL_ATI_fragment_shader\n");
-
     return 1;
 }
 
@@ -927,9 +839,6 @@ PRIVATE W8 CheckATITextureEnvCombine3 (const char *glext)
     if (strstr (glext, "GL_ATI_texture_env_combine3") == NULL) {
         return 0;
     }
-
-    Com_Printf ("...enabling GL_ATI_texture_env_combine3\n");
-
     return 1;
 }
 
@@ -939,9 +848,6 @@ PRIVATE W8 CheckATIXTextureEnvRoute (const char *glext)
     if (strstr (glext, "GL_ATIX_texture_env_route") == NULL) {
         return 0;
     }
-
-    Com_Printf ("...enabling GL_ATIX_texture_env_route\n");
-
     return 1;
 }
 
@@ -959,8 +865,6 @@ PRIVATE W8 ConfigATIEnvMapBumpMap (const char *glext)
     if (! (pfglGetTexBumpParameterivATI = (void *) pfwglGetProcAddress ("glGetTexBumpParameterivATI"))) return 0;
 
     if (! (pfglGetTexBumpParameterfvATI = (void *) pfwglGetProcAddress ("glGetTexBumpParameterfvATI"))) return 0;
-
-    Com_Printf ("...enabling GL_ATI_envmap_bumpmap\n");
 
     return 1;
 }

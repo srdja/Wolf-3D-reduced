@@ -98,8 +98,6 @@ typedef struct {
 
 } listener_t;
 
-
-
 void        Sound_SoundList_f (void);
 _boolean    Sound_LoadSound (sfx_t *sfx);
 sfx_t       *Sound_FindSound (const char *name);

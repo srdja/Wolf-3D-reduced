@@ -75,11 +75,9 @@ PRIVATE size_t ovc_read (void *ptr, size_t size, size_t nmemb, void *datasource)
 {
     musicTrack_t    *track = (musicTrack_t *)datasource;
 
-
     if (! size || ! nmemb) {
         return 0;
     }
-
 
     return FS_ReadFile (ptr, size, nmemb, track->hFile);
 }

@@ -120,8 +120,6 @@ PUBLIC pack_t *FS_LoadZipFile (const char *packfile)
     packhandle = fopen (packfile, "rb");
 
     if (! packhandle) {
-        Com_Printf ("Unable to open pack file (%s)\n", packfile);
-
         return NULL;
     }
 
@@ -293,8 +291,6 @@ PUBLIC pack_t *FS_LoadZipFile (const char *packfile)
     }
 
     if (numberofpackedfiles == 0) {
-        Com_Printf ("No file(s) added from packfile (%s)\n", packfile);
-
         return NULL;
     }
 
@@ -304,9 +300,6 @@ PUBLIC pack_t *FS_LoadZipFile (const char *packfile)
     pack->handle = packhandle;
     pack->numfiles = numberofpackedfiles;
     pack->files = pkrootnode;
-
-
-    Com_Printf ("Added packfile %s (%i files)\n", packfile, numberofpackedfiles);
 
     return pack;
 }

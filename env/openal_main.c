@@ -31,20 +31,8 @@
 #include "com_string.h"
 #include "openal_binding.h"
 
-
-#ifdef _WIN32
-
-#define OPENAL_DLL_NAME     "openal32.dll"
-
-#elif __unix__
-
 #define OPENAL_DLL_NAME     "libopenal.so"
 
-#else
-
-#error "Please define OPENAL_DLL_NAME"
-
-#endif
 
 PRIVATE ALCcontext *Context;
 PRIVATE ALCdevice *Device;
@@ -119,14 +107,10 @@ PRIVATE void Sound_Device_Register (void)
  */
 PUBLIC _boolean Sound_Device_Setup (void)
 {
-    Com_Printf ("...Initializing OpenAL subsystem\n");
-
     Sound_Device_Register();
 
     // Initialize our OpenAL dynamic bindings
     if (! OpenAL_Init (s_driver->string)) {
-        Com_Printf ("[%s]: Dynamic binding of (%s) failed\n", "openal_main.c", s_driver->string);
-
         goto failed;
     }
 
@@ -137,8 +121,6 @@ PUBLIC _boolean Sound_Device_Setup (void)
     Device = pfalcOpenDevice ((ALCubyte *) ((s_device->string[ 0 ]) ? s_device->string : NULL));
 
     if (Device == NULL) {
-        Com_Printf ("Failed to Initialize OpenAL\n");
-
         goto failed;
     }
 
@@ -146,28 +128,17 @@ PUBLIC _boolean Sound_Device_Setup (void)
     Context = pfalcCreateContext (Device, NULL);
 
     if (Context == NULL) {
-        Com_Printf ("Failed to initialize OpenAL\n");
-
         goto failed;
     }
-
-
 
     // Set active context
     pfalcGetError (Device);
     pfalcMakeContextCurrent (Context);
 
     if (pfalcGetError (Device) != ALC_NO_ERROR) {
-        Com_Printf ("Failed to Make Context Current\n");
-
         goto failed;
     }
-
-    /* Commented for dereferencing to an incomplete pointer. Cause unknown.
-        Com_DPrintf("Using device %s\n", Device->string); */
     return true;
-
-
 
 failed:
 

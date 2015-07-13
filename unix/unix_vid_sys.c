@@ -163,12 +163,7 @@ PRIVATE _boolean VID_LoadRefresh (void)
         R_Shutdown();
         return false;
     }
-
-
     IN_ActivateMouse();
-
-    Com_Printf ("------------------------------------\n");
-
     return true;
 }
 
@@ -264,5 +259,3 @@ PUBLIC void Video_Shutdown (void)
 {
     R_Shutdown();
 }
-
-

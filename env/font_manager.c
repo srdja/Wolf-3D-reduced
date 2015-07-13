@@ -72,19 +72,13 @@ PUBLIC font_t *createFont (const char *filename)
     W32 i;
 
     if (num_fonts == (MAX_FONTS - 1)) {
-        Com_Printf ("[createFont]: No more font slots open\n");
-
         return NULL;
     }
 
-
     temp_font = (font_t *)Z_Malloc (sizeof (font_t));
-
     temp_font->texfont = TM_FindTexture (filename, TT_Pic);
 
     if (NULL == temp_font->texfont) {
-        Com_Printf ("[createFont]: unable to open file (%s)\n", filename);
-
         Z_Free (temp_font);
 
         return NULL;
@@ -101,11 +95,8 @@ PUBLIC font_t *createFont (const char *filename)
     fp = FS_OpenFile (datname, 0);
 
     if (NULL == fp) {
-        Com_Printf ("[createFont]: unable to open file (%s)\n", datname);
-
         MM_FREE (datname);
         Z_Free (temp_font);
-
         return NULL;
     }
 
@@ -113,8 +104,6 @@ PUBLIC font_t *createFont (const char *filename)
 
     // check header size
     if (size < 10) {
-        Com_Printf ("[createFont]: File (%s) has incorrect file length\n", datname);
-
         MM_FREE (datname);
         Z_Free (temp_font);
 
@@ -122,8 +111,6 @@ PUBLIC font_t *createFont (const char *filename)
 
         return NULL;
     }
-
-
     // Check sig of font dat file
 
     FS_ReadFile (&size, 1, 4, fp);
@@ -137,8 +124,6 @@ PUBLIC font_t *createFont (const char *filename)
     size = LittleLong (size);
 
     if (size > 127) {
-        Com_Printf ("[createFont]: File (%s) has incorrect Character Width array\n", datname);
-
         MM_FREE (datname);
         Z_Free (temp_font);
 
@@ -148,19 +133,13 @@ PUBLIC font_t *createFont (const char *filename)
     }
 
     FS_ReadFile (&temp_font->nCharWidth, 1, size, fp);
-
     FS_CloseFile (fp);
-
-
-
 
     temp_font->nSize = 2;
     temp_font->colour[ 3 ] = 255;
 
     temp_font->hFrac = (float) (temp_font->nMaxHeight / (float)temp_font->texfont->height);
     temp_font->wFrac = (float) (temp_font->nMaxWidth / (float)temp_font->texfont->width);
-
-
 
     for (i = 0 ; i < MAX_FONTS ; ++i) {
         if (! myfonts[ i ]) {
@@ -169,18 +148,14 @@ PUBLIC font_t *createFont (const char *filename)
     }
 
     if (i == (MAX_FONTS - 1)) {
-        Com_Printf ("[createFont]: No more font slots open\n");
-
         MM_FREE (datname);
         Z_Free (temp_font);
-
         return NULL;
     }
 
     myfonts[ i ] = temp_font;
 
     MM_FREE (datname);
-
 
     return temp_font;
 }
@@ -197,18 +172,7 @@ PUBLIC void Font_Init (void)
     }
 
     (void)createFont ("pics/font1.tga");
-
-
     (void)createFont ("pics/font2.tga");
-
-}
-
-/**
- * \brief Shutdown font handler
- */
-PUBLIC void Font_Shutdown (void)
-{
-
 }
 
 /**

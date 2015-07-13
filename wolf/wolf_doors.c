@@ -382,20 +382,13 @@ PUBLIC void Door_Use (doors_t *Door, int keys)
     case DOOR_G_HORIZ:
         if (keys & ITEM_KEY_GOLD) {
             Door_ChangeDoorState (Door);
-        } else {
-            Com_Printf ("You need a gold key to open this door\n");
         }
-
         break;
 
     case DOOR_S_VERT:
     case DOOR_S_HORIZ:
-        if (keys & ITEM_KEY_SILVER) {
+        if (keys & ITEM_KEY_SILVER)
             Door_ChangeDoorState (Door);
-        } else {
-            Com_Printf ("You need a silver key to open this door\n");
-        }
-
         break;
     }
 

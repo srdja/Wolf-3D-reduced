@@ -912,15 +912,12 @@ PUBLIC LevelData_t *Level_LoadMap (const char *levelname)
     fhandle = FS_OpenFile (levelname, 0);
 
     if (! fhandle) {
-        Com_Printf ("Could not load map (%s)\n", levelname);
-
         return NULL;
     }
 
     filesize = FS_GetFileSize (fhandle);
 
     if (filesize < MAPHEADER_SIZE) {
-        Com_Printf ("Map file size is smaller than mapheader size\n");
         return NULL;
     }
 
@@ -931,11 +928,8 @@ PUBLIC LevelData_t *Level_LoadMap (const char *levelname)
     FS_ReadFile (&signature, 1, 4, fhandle);
 
     if (signature != MAP_SIGNATURE) {
-        Com_Printf ("File signature does not match MAP_SIGNATURE\n");
         return NULL;
     }
-
-
 
     FS_ReadFile (&rle, 2, 1, fhandle);
 
@@ -961,7 +955,6 @@ PUBLIC LevelData_t *Level_LoadMap (const char *levelname)
 
     if (filesize < (MAPHEADER_SIZE + mapNameLength + musicNameLength +
                     length[ 0 ] + length[ 1 ] + length[ 2 ])) {
-        Com_Printf ("filesize is less than MAPHEADER_SIZE + mapNameLength + musicNameLength + etc\n");
         return NULL;
     }
 
@@ -978,7 +971,6 @@ PUBLIC LevelData_t *Level_LoadMap (const char *levelname)
 
 
     if (filesize < (MAPHEADER_SIZE + mapNameLength + musicNameLength)) {
-        Com_Printf ("filesize is less than MAPHEADER_SIZE + mapNameLength + musicNameLength\n");
         return NULL;
     }
 

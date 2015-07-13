@@ -46,36 +46,13 @@
 
 #define BIG_INFO_STRING  8192  // used for system info key only
 
-//============================================================================
 
 char *Com_StringContains (char *str1, char *str2, int casesensitive);
 int Com_Filter (char *filter, char *name, int casesensitive);
 
-
-/////////////////////////////////////////////////////////////////////
-//
-//  Colour
-//
-/////////////////////////////////////////////////////////////////////
-
 extern colour3_t    colourBlack;
 extern colour3_t    colourGreen;
 extern colour3_t    colourWhite;
-
-
-/////////////////////////////////////////////////////////////////////
-//  End Colour
-/////////////////////////////////////////////////////////////////////
-
-
-/*
-==============================================================
-
-    MISC
-
-==============================================================
-*/
-
 
 #define ERR_FATAL       0       // exit the entire game with a popup window
 #define ERR_DROP        1       // print to console and disconnect from game
@@ -85,7 +62,6 @@ extern colour3_t    colourWhite;
 #define EXEC_INSERT 1       // insert at current position, but don't run yet
 #define EXEC_APPEND 2       // add to end of the command buffer
 
-void Com_Printf (const char *fmt, ...);
 void Com_DPrintf (const char *fmt, ...);
 void Com_Error (int code, const char *fmt, ...);
 void Com_Quit (void);
@@ -96,25 +72,10 @@ extern  cvar_t  *dedicated;
 void common_Init (int argc, char *argv[]);
 void common_Frame (int msec);
 
-
-/*
-==============================================================
-
-    NON-PORTABLE SYSTEM SERVICES
-
-==============================================================
-*/
 void    Sys_Error (const char *format, ...);
 void    Sys_Quit (void);
 char    *Sys_GetClipboardData (void);
 
-/*
-==============================================================
-
-    CLIENT / SERVER SYSTEMS
-
-==============================================================
-*/
 void Client_Init (void);
 void Client_Drop (void);
 void Client_Shutdown (void);
@@ -126,8 +87,6 @@ void Client_Frame (int msec);
 #define BUTTON_ATTACK       1
 #define BUTTON_USE          2
 #define BUTTON_ANY          128         // any key whatsoever
-
-
 
 
 // usercmd_t is sent to the server each client frame

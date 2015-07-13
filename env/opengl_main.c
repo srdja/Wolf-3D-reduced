@@ -40,40 +40,8 @@ float       gldepthmin, gldepthmax;
 glconfig_t gl_config;
 glstate_t  gl_state;
 
-
-
-
-
-//
-// view origin
-//
-vec3_t  vup;
-vec3_t  vpn;
-vec3_t  vright;
-vec3_t  r_origin;
-
-cvar_t  *r_norefresh;
-cvar_t  *r_speeds;
-cvar_t  *r_novis;
-cvar_t  *r_nocull;
-cvar_t  *r_lefthand;
-
-
-
-
-cvar_t  *gl_vertex_arrays;
-
-
-
-cvar_t  *gl_ext_swapinterval;
 cvar_t  *gl_ext_palettedtexture;
-cvar_t  *gl_ext_multitexture;
-cvar_t  *gl_ext_pointparameters;
-cvar_t  *gl_ext_compiled_vertex_array;
 
-//cvar_t    *gl_ext_TextureCompressionS3TC;
-
-cvar_t  *gl_bitdepth;
 cvar_t  *gl_drawbuffer;
 cvar_t  *gl_driver;
 cvar_t  *gl_mode;
@@ -83,7 +51,6 @@ cvar_t  *gl_ztrick;
 cvar_t  *gl_finish;
 cvar_t  *gl_clear;
 cvar_t  *gl_swapinterval;
-cvar_t  *gl_texturemode;
 
 cvar_t  *r_fullscreen;
 cvar_t  *vid_gamma;
@@ -148,22 +115,15 @@ PRIVATE void R_ScreenShot_f (void)
     }
 
     if (i == 100) {
-        Com_Printf ("R_ScreenShot_f: Couldn't create a file\n");
         return;
     }
 
-
     buffer = (PW8)MM_MALLOC (viddef.width * viddef.height * 3);
-
-
     pfglReadPixels (0, 0, viddef.width, viddef.height, GL_RGB, GL_UNSIGNED_BYTE, buffer);
-
 
     WriteTGA (checkname, 24, viddef.width, viddef.height, buffer, 1, 1);
 
-
     MM_FREE (buffer);
-    Com_Printf ("Wrote %s\n", picname);
 }
 
 /**
@@ -171,10 +131,7 @@ PRIVATE void R_ScreenShot_f (void)
  */
 PRIVATE void R_Strings_f (void)
 {
-    Com_Printf ("GL_VENDOR: %s\n", gl_config.vendor_string);
-    Com_Printf ("GL_RENDERER: %s\n", gl_config.renderer_string);
-    Com_Printf ("GL_VERSION: %s\n", gl_config.version_string);
-    Com_Printf ("GL_EXTENSIONS: %s\n", gl_config.extensions_string);
+
 }
 
 /**
@@ -188,7 +145,6 @@ PRIVATE void R_Clear (void)
         if (gl_clear->value) {
             pfglClear (GL_COLOR_BUFFER_BIT);
         }
-
         trickframe++;
 
         if (trickframe & 1) {
@@ -211,9 +167,7 @@ PRIVATE void R_Clear (void)
         gldepthmax = 1;
         pfglDepthFunc (GL_LEQUAL);
     }
-
     pfglDepthRange (gldepthmin, gldepthmax);
-
 }
 
 
@@ -234,7 +188,6 @@ PUBLIC void R_SetGL2D (void)
     pfglDisable (GL_BLEND);
     pfglEnable (GL_ALPHA_TEST);
     pfglColor4f (1, 1, 1, 1);
-
 }
 
 
@@ -243,13 +196,6 @@ PUBLIC void R_SetGL2D (void)
  */
 PRIVATE void R_Register (void)
 {
-    r_lefthand = Cvar_Get ("hand", "0", CVAR_USERINFO | CVAR_ARCHIVE);
-    r_norefresh = Cvar_Get ("r_norefresh", "0", CVAR_INIT);
-    r_novis = Cvar_Get ("r_novis", "0", CVAR_INIT);
-    r_nocull = Cvar_Get ("r_nocull", "0", CVAR_INIT);
-    r_speeds = Cvar_Get ("r_speeds", "0", CVAR_INIT);
-
-    gl_bitdepth = Cvar_Get ("gl_bitdepth", "0", CVAR_INIT);
     gl_mode = Cvar_Get ("gl_mode", "0", CVAR_ARCHIVE);
     gl_round_down = Cvar_Get ("gl_round_down", "1", CVAR_INIT);
     gl_picmip = Cvar_Get ("gl_picmip", "0", CVAR_INIT);
@@ -257,28 +203,18 @@ PRIVATE void R_Register (void)
     gl_finish = Cvar_Get ("gl_finish", "1", CVAR_ARCHIVE);
     gl_clear = Cvar_Get ("gl_clear", "0", CVAR_INIT);
     gl_driver = Cvar_Get ("gl_driver", OPENGL_DLL_NAME, CVAR_ARCHIVE);
-//  gl_texturemode = Cvar_Get( "gl_texturemode", "GL_LINEAR_MIPMAP_NEAREST", CVAR_ARCHIVE );
 
-    gl_vertex_arrays = Cvar_Get ("gl_vertex_arrays", "0", CVAR_ARCHIVE);
-
-    gl_ext_swapinterval = Cvar_Get ("gl_ext_swapinterval", "1", CVAR_ARCHIVE);
     gl_ext_palettedtexture = Cvar_Get ("gl_ext_palettedtexture", "1", CVAR_ARCHIVE);
-    gl_ext_multitexture = Cvar_Get ("gl_ext_multitexture", "1", CVAR_ARCHIVE);
-    gl_ext_pointparameters = Cvar_Get ("gl_ext_pointparameters", "1", CVAR_ARCHIVE);
-    gl_ext_compiled_vertex_array = Cvar_Get ("gl_ext_compiled_vertex_array", "1", CVAR_ARCHIVE);
 
     gl_drawbuffer = Cvar_Get ("gl_drawbuffer", "GL_BACK", CVAR_INIT);
     gl_swapinterval = Cvar_Get ("gl_swapinterval", "1", CVAR_ARCHIVE);
-
 
     r_fullscreen = Cvar_Get ("r_fullscreen", "0", CVAR_ARCHIVE);
     vid_gamma = Cvar_Get ("vid_gamma", "1.0", CVAR_ARCHIVE);
     r_ref = Cvar_Get ("r_ref", "soft", CVAR_ARCHIVE);
 
-
     Cmd_AddCommand ("screenshot", R_ScreenShot_f);
     Cmd_AddCommand ("r_strings", R_Strings_f);
-
 }
 
 /**
@@ -289,7 +225,6 @@ PRIVATE _boolean R_SetMode (void)
 {
     rserr_t err;
     _boolean fullscreen;
-
 
     fullscreen = (_boolean)r_fullscreen->value;
 
@@ -302,7 +237,6 @@ PRIVATE _boolean R_SetMode (void)
         if (err == rserr_invalid_fullscreen) {
             Cvar_SetValue ("r_fullscreen", 0);
             r_fullscreen->modified = false;
-            Com_Printf ("[R_SetMode()] -fullscreen unavailable in this mode\n");
 
             if ((err = GLimp_SetMode (&viddef.width, &viddef.height, FloatToInt (gl_mode->value), false)) == rserr_ok) {
                 return true;
@@ -310,12 +244,10 @@ PRIVATE _boolean R_SetMode (void)
         } else if (err == rserr_invalid_mode) {
             Cvar_SetValue ("gl_mode", (float)gl_state.prev_mode);
             gl_mode->modified = false;
-            Com_Printf ("ref_gl::R_SetMode() - invalid mode\n");
         }
 
         // try setting it back to something safe
         if ((err = GLimp_SetMode (&viddef.width, &viddef.height, gl_state.prev_mode, false)) != rserr_ok) {
-            Com_Printf ("ref_gl::R_SetMode() - could not revert to safe mode\n");
             return false;
         }
     }
@@ -339,17 +271,11 @@ PUBLIC int R_Init (void *hinstance, void *hWnd)
     int     err;
     int     a, b;
 
-
-    Com_Printf ("\n------ Display Initialization ------\n");
-
-    Com_Printf ("Initializing OpenGL Subsystem\n");
-
     R_Register();
 
     // Initialize our OpenGL dynamic bindings
     if (! OpenGL_Init (gl_driver->string)) {
         OpenGL_Shutdown();
-        Com_Printf ("Dynamic binding of (%s) failed\n", gl_driver->string);
         return -1;
     }
 
@@ -365,7 +291,6 @@ PUBLIC int R_Init (void *hinstance, void *hWnd)
     // create the window and set up the context
     if (! R_SetMode()) {
         OpenGL_Shutdown();
-        Com_Printf ("R_Init() - could not R_SetMode()\n");
         return -1;
     }
 
@@ -373,16 +298,11 @@ PUBLIC int R_Init (void *hinstance, void *hWnd)
 
     //  get various GL strings
     gl_config.vendor_string = pfglGetString (GL_VENDOR);
-    Com_Printf ("GL_VENDOR: %s\n", gl_config.vendor_string);
 
     gl_config.renderer_string = pfglGetString (GL_RENDERER);
-    Com_Printf ("GL_RENDERER: %s\n", gl_config.renderer_string);
 
     gl_config.version_string = pfglGetString (GL_VERSION);
-    Com_Printf ("GL_VERSION: %s\n", gl_config.version_string);
-
     gl_config.extensions_string = pfglGetString (GL_EXTENSIONS);
-    Com_Printf ("GL_EXTENSIONS: %s\n", gl_config.extensions_string);
 
     com_strlcpy (renderer_buffer, gl_config.renderer_string, sizeof (renderer_buffer));
     (void)com_strlwr (renderer_buffer);
@@ -397,39 +317,13 @@ PUBLIC int R_Init (void *hinstance, void *hWnd)
         gl_config.Version_1_2 = true;
     }
 
-
-#ifdef __unix__
-
     Cvar_SetValue ("gl_finish", 1);
-
-#endif
 
     //FIXME: A lot of these aren't required
 
-    Com_Printf ("Initializing OpenGL extensions\n");
     GL_ConfigExtensions (gl_config.extensions_string);
 
-//  if( ! gl_ext.ARBMultiTexture )
-//  {
-//      Com_Printf( "Missing Required GL extension: GL_ARB_multitexture. Update your driver.\n" );
-//      return -1;
-//  }
-//
-//  if( ! GLEW_EXT_texture_env_combine )
-//  {
-//      Com_Printf( "Missing Important GL extension: GL_EXT_texture_env_combine => All envcombine are setup to GL_MODULATE!");
-//  }
-//
-    if (gl_ext.nMaxAnisotropy) {
-        Com_Printf ("GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT: %4.2f\n", GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT);
-    }
-
-
-    Com_Printf ("GL_MAX_TEXTURE_UNITS_ARB: %d\n", GL_MAX_TEXTURE_UNITS_ARB);
-
-
     pfglGetIntegerv (GL_MAX_TEXTURE_SIZE, &glMaxTexSize);
-    Com_Printf ("GL_MAX_TEXTURE_SIZE: %d\n", glMaxTexSize);
 
     GL_SetDefaultState();
 
@@ -437,11 +331,6 @@ PUBLIC int R_Init (void *hinstance, void *hWnd)
     Font_Init();
 
     err = pfglGetError();
-
-    if (err != GL_NO_ERROR) {
-        Com_Printf ("glGetError() = 0x%x\n", err);
-    }
-
     return 1;
 }
 
@@ -450,13 +339,6 @@ PUBLIC int R_Init (void *hinstance, void *hWnd)
  */
 PUBLIC void R_Shutdown (void)
 {
-//  Cmd_RemoveCommand ("modellist");
-//  Cmd_RemoveCommand ("screenshot");
-//  Cmd_RemoveCommand ("imagelist");
-//  Cmd_RemoveCommand ("gl_strings");
-
-//  Mod_FreeAll ();
-
     TM_Shutdown();
 
     /*
@@ -468,7 +350,6 @@ PUBLIC void R_Shutdown (void)
     ** shutdown our OpenGL subsystem
     */
     OpenGL_Shutdown();
-
 }
 
 
@@ -511,26 +392,8 @@ PUBLIC void R_BeginFrame (void)
         }
 
     }
-
-//
-// texturemode stuff
-//
-//  if ( gl_texturemode->modified )
-//  {
-//      R_TextureMode( gl_texturemode->string );
-//      gl_texturemode->modified = false;
-//  }
-
-
-
-//
-// swapinterval stuff
-//
     GL_UpdateSwapInterval();
 
-//
-// clear screen if desired
-//
     R_Clear();
 }
 
@@ -543,79 +406,10 @@ PUBLIC void R_EndFrame (void)
 }
 
 /**
- * \brief Application active
- * \param[in] active Is the current application active?
- */
-PUBLIC void R_AppActivate (_boolean active)
-{
-    GLimp_AppActivate (active);
-}
-
-
-/**
  * \brief Update swap interval
  */
 PUBLIC void GL_UpdateSwapInterval (void)
 {
-    if (gl_swapinterval->modified) {
+    if (gl_swapinterval->modified)
         gl_swapinterval->modified = false;
-
-#ifdef _WIN32
-
-        if (pfwglSwapIntervalEXT) {
-            pfwglSwapIntervalEXT (FloatToInt (gl_swapinterval->value));
-        }
-
-#endif
-
-    }
-}
-
-/**
- * \brief Print GL error message.
- * \param[in] err Error code
- * \param[in] from Function name that produced the error.
- */
-PUBLIC void PrintGLError (W32 err, const char *from)
-{
-    if (err == GL_NO_ERROR) {
-        return;
-    }
-
-    if (from != "") {
-        Com_Printf ("\n\n\nGL Error: %s\n", from);
-    }
-
-    switch (err) {
-    case GL_NO_ERROR:
-        Com_Printf ("GL_NO_ERROR:\nNo error has been recorded. The value of this symbolic constant is guaranteed to be zero.\n");
-        break;
-
-    case GL_INVALID_ENUM:
-        Com_Printf ("GL_INVALID_ENUM:\nAn unacceptable value is specified for an enumerated argument. The offending function is ignored, having no side effect other than to set the error flag.\n");
-        break;
-
-    case GL_INVALID_VALUE:
-        Com_Printf ("GL_INVALID_VALUE:\nA numeric argument is out of range. The offending function is ignored, having no side effect other than to set the error flag.\n");
-        break;
-
-    case GL_INVALID_OPERATION:
-        Com_Printf ("GL_INVALID_OPERATION:\nThe specified operation is not allowed in the current state. The offending function is ignored, having no side effect other than to set the error flag.\n");
-        break;
-
-    case GL_STACK_OVERFLOW:
-        Com_Printf ("GL_STACK_OVERFLOW:\nThis function would cause a stack overflow. The offending function is ignored, having no side effect other than to set the error flag.\n");
-        break;
-
-    case GL_STACK_UNDERFLOW:
-        Com_Printf ("GL_STACK_UNDERFLOW:\nThis function would cause a stack underflow. The offending function is ignored, having no side effect other than to set the error flag.\n");
-        break;
-
-    case GL_OUT_OF_MEMORY:
-        Com_Printf ("GL_OUT_OF_MEMORY:\nThere is not enough memory left to execute the function. The state of OpenGL is undefined, except for the state of the error flags, after this error is recorded.\n");
-        break;
-
-    default:
-        Com_Printf ("Unknown GL error flag 0x%x\n", err);
-    }
 }

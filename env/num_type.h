@@ -35,15 +35,6 @@ typedef W8  colour3_t[ 3 ]; // RGB
 typedef W8  colour4_t[ 4 ]; // RGBA
 
 #define BIT( x )    ( 1 << (x) )
-
-
-
-
 #define FloatToInt( a ) (SW32)(a)
-#define DoubleToInt( a ) (SW32)(a)
-
-
-
-
 
 #endif /* __NUM_TYPE_H__ */

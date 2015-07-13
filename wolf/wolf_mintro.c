@@ -263,7 +263,6 @@ PUBLIC void M_Intro_f (void)
 
 
     if (Cmd_Argc() < 2) {
-        Com_Printf ("Usage: intro <name>\n");
         return;
     }
 
@@ -304,8 +303,6 @@ PUBLIC void M_Intro_f (void)
         intro_slide = 3;
     } else {
         intro_slide = 0;
-        Com_Printf ("Unknown parameter %s\n", s);
-
         return;
     }
 

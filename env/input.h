@@ -33,20 +33,11 @@
 #include "platform.h"
 #include "client.h"
 
-
-
 void IN_Init (void);
-
 void IN_Shutdown (void);
-
-// oportunity for devices to stick commands on the script buffer
-
 void IN_Frame (void);
-
 void IN_Move (usercmd_t *cmd);
-// add additional movement on top of the keyboard move cmd
 
-void IN_Activate (_boolean active);
 
 #endif /* __INPUT_H__ */
 

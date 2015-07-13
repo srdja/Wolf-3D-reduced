@@ -158,7 +158,6 @@ PRIVATE int Pow_Give (pow_t type)
         type -= pow_key1;
         PL_GiveKey (&Player, type);
         Sound_StartSound (NULL, 0, CHAN_ITEM, Sound_RegisterSound ("lsfx/012.wav"), 1, ATTN_NORM, 0);
-        Com_Printf ("Picked up a %s key.\n", keynames[ type ]);
         break;
 
 //
@@ -169,7 +168,6 @@ PRIVATE int Pow_Give (pow_t type)
         Sound_StartSound (NULL, 0, CHAN_ITEM, Sound_RegisterSound ("lsfx/035.wav"), 1, ATTN_NORM, 0);
 
         if (++levelstate.found_treasure == levelstate.total_treasure) {
-            Com_Printf ("You found the last treasure!");
         }
 
         break;
@@ -179,7 +177,6 @@ PRIVATE int Pow_Give (pow_t type)
         Sound_StartSound (NULL, 0, CHAN_ITEM, Sound_RegisterSound ("lsfx/036.wav"), 1, ATTN_NORM, 0);
 
         if (++levelstate.found_treasure == levelstate.total_treasure) {
-            Com_Printf ("You found the last treasure!");
         }
 
         break;
@@ -189,7 +186,6 @@ PRIVATE int Pow_Give (pow_t type)
         Sound_StartSound (NULL, 0, CHAN_ITEM, Sound_RegisterSound ("lsfx/037.wav"), 1, ATTN_NORM, 0);
 
         if (++levelstate.found_treasure == levelstate.total_treasure) {
-            Com_Printf ("You found the last treasure!");
         }
 
         break;
@@ -199,7 +195,6 @@ PRIVATE int Pow_Give (pow_t type)
         Sound_StartSound (NULL, 0, CHAN_ITEM, Sound_RegisterSound ("lsfx/045.wav"), 1, ATTN_NORM, 0);
 
         if (++levelstate.found_treasure == levelstate.total_treasure) {
-            Com_Printf ("You found the last treasure!");
         }
 
         break;
@@ -270,13 +265,13 @@ PRIVATE int Pow_Give (pow_t type)
     case pow_machinegun:
         PL_GiveWeapon (&Player, WEAPON_MACHINEGUN);
         Sound_StartSound (NULL, 0, CHAN_ITEM, Sound_RegisterSound ("lsfx/030.wav"), 1, ATTN_NORM, 0);
-        Com_Printf ("You got the machine gun!\n");
+
         break;
 
     case pow_gatlinggun:
         PL_GiveWeapon (&Player, WEAPON_GATLINGGUN);
         Sound_StartSound (NULL, 0, CHAN_ITEM, Sound_RegisterSound ("lsfx/038.wav"), 1, ATTN_NORM, 0);
-        Com_Printf ("You got the Gatling gun!\n");
+
 
         Player.facecount = -100;
         Player.face_gotgun = true;
@@ -290,19 +285,14 @@ PRIVATE int Pow_Give (pow_t type)
         PL_GiveAmmo (&Player, AMMO_BULLETS, 25);
 
         if (++levelstate.found_treasure == levelstate.total_treasure) {
-            Com_Printf ("You found the last treasure!");
         } else {
-            Com_Printf ("Full Heal");
         }
 
         Sound_StartSound (NULL, 0, CHAN_ITEM, Sound_RegisterSound ("lsfx/034.wav"), 1, ATTN_NORM, 0);
-        Com_Printf (" Extra life!\n");
         break;
 
     case pow_spear: {
         char szTextMsg[ 256 ];
-
-        Com_Printf ("Spear of Destiny picked up!\n");
 
         Sound_StartSound (NULL, 0, CHAN_ITEM, Sound_RegisterSound ("sodsfx/109.wav"), 1, ATTN_NORM, 0);
 
@@ -312,7 +302,6 @@ PRIVATE int Pow_Give (pow_t type)
     break;
 
     default:
-        Com_DPrintf ("Warning: Unknown item type: %d\n", type);
         break;
     }
 

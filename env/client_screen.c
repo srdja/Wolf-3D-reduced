@@ -112,4 +112,3 @@ PUBLIC void Client_Screen_Init (void)
 {
     scr_conspeed = Cvar_Get ("scr_conspeed", "3", CVAR_INIT);
 }
-

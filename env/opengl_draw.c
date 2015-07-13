@@ -29,15 +29,7 @@
  * \date 1997-2001
  */
 
-
 #include "opengl_local.h"
-
-//#include "vid.h"
-
-#include "common.h"
-
-texture_t       *draw_chars;
-
 
 /**
  * \brief Draw ASCII character to the screen.
@@ -107,42 +99,6 @@ PUBLIC void R_Draw_Character (int x, int y, int num, font_t *myfont)
 
 
 /**
- * \brief Draw stretched image to the screen.
- * \param[in] x x-coordinate.
- * \param[in] y y-coordinate.
- * \param[in] w Width of region.
- * \param[in] h Height of region.
- * \return
- * \note
- */
-PUBLIC void R_Draw_StretchPic (int x, int y, int w, int h, const char *pic)
-{
-    texture_t *gl;
-
-    gl = TM_FindTexture (pic, TT_Pic);
-
-    if (! gl) {
-        Com_Printf ("Can't find pic: %s\n", pic);
-        return;
-    }
-
-    R_Bind (gl->texnum);
-
-    pfglBegin (GL_QUADS);
-
-    pfglTexCoord2f (0.0f, 0.0f);
-    pfglVertex2i (x, y);
-    pfglTexCoord2f (1.0f, 0.0f);
-    pfglVertex2i (x + w, y);
-    pfglTexCoord2f (1.0f, 1.0f);
-    pfglVertex2i (x + w, y + h);
-    pfglTexCoord2f (0.0f, 1.0f);
-    pfglVertex2i (x, y + h);
-
-    pfglEnd();
-}
-
-/**
  * \brief Draw image to the screen.
  * \param[in] x x-coordinate.
  * \param[in] y y-coordinate.
@@ -157,7 +113,6 @@ PUBLIC void R_Draw_Pic (int x, int y, const char *pic)
     tex = TM_FindTexture (pic, TT_Pic);
 
     if (! tex) {
-        Com_Printf ("Can't find pic: %s\n", pic);
         return;
     }
 
@@ -195,7 +150,6 @@ PUBLIC void R_Draw_Tile (int x, int y, int w, int h, const char *pic)
     image = TM_FindTexture (pic, TT_Wall);
 
     if (! image) {
-        Com_Printf ("Can't find pic: %s\n", pic);
         return;
     }
 
@@ -284,5 +238,3 @@ PUBLIC void R_Draw_Line (int nXStart, int nYStart, int nXEnd, int nYEnd, int wid
     pfglColor3f (1, 1, 1);
     pfglEnable (GL_TEXTURE_2D);
 }
-
-

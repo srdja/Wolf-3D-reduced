@@ -103,7 +103,6 @@ PRIVATE void KeyDown (kbutton_t *b)
     } else if (!b->down[ 1 ]) {
         b->down[ 1 ] = k;
     } else {
-        Com_Printf ("Three keys down for a button!\n");
         return;
     }
 

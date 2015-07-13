@@ -34,10 +34,6 @@ typedef float mat3_t[ 9 ];  // 3x3 matrix
 typedef float mat4_t[ 16 ]; // 4x4 matrix
 
 void Matrix3x3Multiply (mat3_t in1, mat3_t in2, mat3_t out);
-void MatrixIdentity (mat4_t matrix);
-void MatrixInvert (mat4_t in, mat4_t out);
-void VectorMatrixMultiply (vec3_t vecIn, mat4_t m, vec3_t vecOut);
-void VectorMatrix3x3Multiply (vec3_t vecIn, mat4_t m, vec3_t vecOut);
 
 
 #endif /* __MATRIX_H__ */

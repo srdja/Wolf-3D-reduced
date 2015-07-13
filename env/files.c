@@ -161,7 +161,6 @@ PUBLIC void FS_SetGamedir (char *dir)
 
     if (strstr (dir, "..") || strstr (dir, "/")
             || strstr (dir, "\\") || strstr (dir, ":")) {
-        Com_Printf ("Gamedir should be a single filename, not a path\n");
         return;
     }
 
@@ -210,7 +209,6 @@ PRIVATE void FS_Link_f (void)
     filelink_t  *flink, **prev;
 
     if (Cmd_Argc() != 3) {
-        Com_Printf ("Usage: link <from> <to>\n");
         return;
     }
 
@@ -331,25 +329,15 @@ PRIVATE void FS_Dir_f (void)
             tmp++;
         }
 
-        Com_Printf ("Directory of %s\n", findname);
-        Com_Printf ("----\n");
-
         if ((dirnames = FS_ListFiles (findname, &ndirs, 0, 0)) != 0) {
             int i;
 
             for (i = 0; i < ndirs - 1; i++) {
-                if (strrchr (dirnames[i], PATH_SEP))
-                    Com_Printf ("%s\n", strrchr (dirnames[i], PATH_SEP) + 1);
-                else
-                    Com_Printf ("%s\n", dirnames[i]);
-
                 MM_FREE (dirnames[i]);
             }
 
             MM_FREE (dirnames);
         }
-
-        Com_Printf ("\n");
     };
 }
 
@@ -358,26 +346,6 @@ PRIVATE void FS_Dir_f (void)
  */
 PRIVATE void FS_Path_f (void)
 {
-    searchpath_t    *s;
-    filelink_t      *l;
-
-    Com_Printf ("Current search path:\n");
-
-    for (s = fs_searchpaths ; s ; s = s->next) {
-        if (s == fs_base_searchpaths)
-            Com_Printf ("----------\n");
-
-        if (s->pack)
-            Com_Printf ("%s (%i files)\n", s->pack->filename, s->pack->numfiles);
-        else
-            Com_Printf ("%s\n", s->filename);
-    }
-
-    Com_Printf ("\nLinks:\n");
-
-    for (l = fs_links ; l ; l = l->next) {
-        Com_Printf ("%s : %s\n", l->from, l->to);
-    }
 }
 
 

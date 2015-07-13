@@ -88,7 +88,6 @@ void Cbuf_AddText (const char *text)
     l = strlen (text);
 
     if (cmd_text.cursize + l >= cmd_text.maxsize) {
-        Com_Printf ("Cbuf_AddText: overflow\n");
         return;
     }
 
@@ -111,7 +110,6 @@ void Cbuf_InsertText (const char *text)
     len = strlen (text) + 1;
 
     if (len + cmd_text.cursize > cmd_text.maxsize) {
-        Com_Printf ("Cbuf_InsertText overflowed\n");
         return;
     }
 
@@ -236,7 +234,6 @@ void Cmd_Exec_f (void)
     filehandle_t    *scriptFileHandle;
 
     if (Cmd_Argc() != 2) {
-        Com_Printf ("exec <filename> : execute a script file\n");
         return;
     }
 
@@ -252,11 +249,8 @@ void Cmd_Exec_f (void)
     FS_ReadFile (f, 1, len, scriptFileHandle);
 
     if (!f) {
-        Com_Printf ("couldn't exec %s\n", Cmd_Argv (1));
         return;
     }
-
-    Com_Printf ("execing %s\n", Cmd_Argv (1));
 
     Cbuf_InsertText (f);
 
@@ -273,7 +267,6 @@ void Cmd_Vstr_f (void)
     char    *v;
 
     if (Cmd_Argc() != 2) {
-        Com_Printf ("vstr <variablename> : execute a variable command\n");
         return;
     }
 
@@ -287,12 +280,6 @@ void Cmd_Vstr_f (void)
  */
 void Cmd_Echo_f (void)
 {
-    int i;
-
-    for (i = 1 ; i < Cmd_Argc() ; i++)
-        Com_Printf ("%s ", Cmd_Argv (i));
-
-    Com_Printf ("\n");
 }
 
 /**
@@ -473,11 +460,6 @@ void Cmd_AddCommand (const char *cmd_name, xcommand_t function)
     // fail if the command already exists
     for (cmd = cmd_functions ; cmd ; cmd = cmd->next) {
         if (!strcmp (cmd_name, cmd->name)) {
-            // allow completion-only commands to be silently doubled
-            if (function != NULL) {
-                Com_Printf ("Cmd_AddCommand: %s already defined\n", cmd_name);
-            }
-
             return;
         }
     }
@@ -607,13 +589,10 @@ void Cmd_List_f (void)
     i = 0;
 
     for (cmd = cmd_functions ; cmd ; cmd = cmd->next) {
-        if (match && !Com_Filter (match, cmd->name, false)) continue;
-
-        Com_Printf ("%s\n", cmd->name);
+        if (match && !Com_Filter (match, cmd->name, false))
+            continue;
         i++;
     }
-
-    Com_Printf ("%i commands\n", i);
 }
 
 /*

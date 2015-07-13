@@ -486,7 +486,6 @@ PUBLIC void Sound_StartLocalSound (const char *filename)
     sfx = Sound_RegisterSound (filename);
 
     if (! sfx) {
-        Com_Printf ("Sound_StartLocalSound: could not cache (%s)\n", filename);
         return;
     }
 
@@ -637,7 +636,6 @@ PRIVATE void Sound_Play_f (void)
     char    name[ MAX_GAMEPATH ];
 
     if (Cmd_Argc() == 1) {
-        Com_Printf ("Usage: play <soundfile>\n");
         return;
     }
 
@@ -700,14 +698,9 @@ PRIVATE void Sound_Register (void)
 
 PUBLIC void Sound_Init (void)
 {
-    Com_Printf ("\n------- Sound Initialization -------\n");
-
-
     Sound_Register();
 
-
     if (! Sound_Device_Setup()) {
-        Com_Printf ("------------------------------------\n");
         return;
     }
 
@@ -715,9 +708,6 @@ PUBLIC void Sound_Init (void)
 
     Sound_AllocChannels();
     Sound_StopAllSounds();
-
-
-    Com_Printf ("------------------------------------\n");
 }
 
 

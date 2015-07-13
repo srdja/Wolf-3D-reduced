@@ -367,7 +367,6 @@ PUBLIC void R_BeginRegistration (const char *map)
     r_world = Level_LoadMap (fullname);
 
     if (r_world == NULL) {
-        Com_Printf ("Could not load map (%s)\n", map);
         return;
     }
 

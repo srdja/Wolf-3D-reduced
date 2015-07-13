@@ -41,8 +41,6 @@
 
 char *FS_getFileName (char *path);
 void FS_RemoveExtension (const char *in, char *out);
-char *FS_getFileExtension (const char *in);
-_boolean FS_getFileBase (const char *in, char *out, W32 size_out);
 _boolean FS_getPath (const char *in, char *out, W32 size_out);
 void FS_DefaultExtension (char *path, const int maxSize, const char *extension);
 

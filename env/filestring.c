@@ -71,70 +71,6 @@ PUBLIC void FS_RemoveExtension (const char *in, char *out)
     *out = '\0';    /* NUL-terminate string */
 }
 
-/**
- * \brief Returns file extension from path string.
- * \param[in] in Path to get file extension from.
- * \return Pointer to file extension, otherwise NULL.
- * \note Extension cannot be longer than 31 characters.
- */
-PUBLIC char *FS_getFileExtension (const char *in)
-{
-    static char temp_ext[ 32 ];
-    W32     i;
-
-    while (*in && *in != '.') {
-        in++;
-    }
-
-    if (! *in) {
-        return NULL;
-    }
-
-    in++;
-
-    for (i = 0 ; i < (sizeof (temp_ext) - 1) && *in ; i++, in++) {
-        temp_ext[ i ] = *in;
-    }
-
-    temp_ext[ i ] = '\0';   /* NUL-terminate string */
-
-    return temp_ext;
-}
-
-/**
- * \brief Returns base file name from path string.
- * \param[in] in Path to get file extension from.
- * \param[in,out] out File name.
- * \param[in] size_out Size of out buffer in bytes.
- * \return On success true, otherwise false.
- */
-PUBLIC _boolean FS_getFileBase (const char *in, char *out, W32 size_out)
-{
-    const char *start, *end;
-
-    start = in + strlen (in) - 1;
-    end = start;
-
-    while (start != in && *start != PATH_SEP) {
-        start--;
-    }
-
-    start++;
-
-    while (end != start && *end != '.') {
-        end--;
-    }
-
-    if (((end - start) + 1) >= (size_out - 1)) {
-        Com_Printf ("[FS_getFileBase]: Buffer overflow\n");
-
-        return false;
-    }
-
-    com_strlcpy (out, start, (end - start) + 1);
-
-    return true;
-}
 
 /**
  * \brief Returns path from full path.
@@ -154,13 +90,10 @@ PUBLIC _boolean FS_getPath (const char *in, char *out, W32 size_out)
     }
 
     if (((start - in) + 1) >= (size_out - 1)) {
-        Com_Printf ("[FS_getPath]: Buffer overflow\n");
-
         return false;
     }
 
     com_strlcpy (out, in, (start - in) + 1);
-
     return true;
 }
 
@@ -175,10 +108,6 @@ PUBLIC void FS_DefaultExtension (char *path, const int maxSize, const char *exte
     char    oldPath[MAX_OSPATH];
     char    *src;
 
-//
-// if path doesn't have a .EXT, append extension
-// (extension should include the .)
-//
     src = path + strlen (path) - 1;
 
     while (*src != '/' && src != path) {
@@ -188,11 +117,6 @@ PUBLIC void FS_DefaultExtension (char *path, const int maxSize, const char *exte
 
         src--;
     }
-
     com_strlcpy (oldPath, path, sizeof (oldPath));
     com_snprintf (path, maxSize, "%s%s", oldPath, extension);
 }
-
-
-
-

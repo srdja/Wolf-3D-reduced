@@ -303,15 +303,11 @@ PUBLIC void LoadTGA (const char *filename, W8 **pic, W16 *width, W16 *height, W1
 // Get header information.
 //
     if (datalength < TGA_HEADER_SIZE) {
-        Com_Printf ("Could not read header from (%s)\n", filename);
-
         goto TGALOADFAILED;
     }
 
     if (FS_FileSeek (hFile, 0, SEEK_SET) ||
             FS_ReadFile (header, sizeof (header), 1, hFile) != 1) {
-        Com_Printf ("Cannot read header from (%s)\n", filename);
-
         goto TGALOADFAILED;
     }
 

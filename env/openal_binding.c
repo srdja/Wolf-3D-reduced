@@ -189,51 +189,9 @@ PUBLIC void OpenAL_Shutdown (void)
  */
 PUBLIC _boolean OpenAL_Init (const char *dllname)
 {
-
-#ifdef _WIN32
-
-    char buffer[ 1024 ], *ptr;
-
-    SearchPath (NULL, dllname, NULL, sizeof (buffer) - 1, buffer, &ptr);
-
-    Com_Printf ("...calling LoadLibrary( %s ): ", buffer);
-
-    if ((hinstOpenAL = LoadLibrary (dllname)) == 0) {
-        char *buf = NULL;
-
-        Com_Printf ("failed\n");
-
-        FormatMessage (FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
-                       NULL, GetLastError(),
-                       MAKELANGID (LANG_NEUTRAL, SUBLANG_DEFAULT),
-                       (LPTSTR) &buf, 0, NULL);
-
-        Com_Printf ("%s\n", buf);
-
-        return false;
-    }
-
-#elif __unix__
-
-    Com_Printf ("...calling dlopen( %s ): ", dllname);
-
     if ((OpenALLib = dlopen (dllname, RTLD_LAZY | RTLD_GLOBAL)) == 0) {
-        Com_Printf ("failed\n");
-
-        Com_Printf ("%s\n", dlerror());
-
         return false;
     }
-
-#else
-
-#error "Please define interface to OpenAL library!"
-
-#endif
-
-
-    Com_Printf ("succeeded.\nInitializing OpenAL...\n");
-
 
     if (! (pfalcCloseDevice              = (ALCCLOSEDEVICE)GPA ("alcCloseDevice"))) return false;
 
@@ -374,8 +332,5 @@ PUBLIC _boolean OpenAL_Init (const char *dllname)
 
     if (! (pfalSourceUnqueueBuffers          = (ALSOURCEUNQUEUEBUFFERS)GPA ("alSourceUnqueueBuffers"))) return false;
 
-    Com_Printf ("succeeded.\n");
-
     return true;
-
 }

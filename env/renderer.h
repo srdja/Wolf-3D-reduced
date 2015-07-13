@@ -51,23 +51,7 @@
 #include "texture_manager.h"
 #include "font_manager.h"
 
-
-#ifdef _WIN32
-
-#define OPENGL_DLL_NAME   "opengl32.dll"
-
-#elif __unix__
-
 #define OPENGL_DLL_NAME   "libGL.so.1"
-
-#else
-
-#error "Define OPENGL_DLL_NAME"
-
-#endif
-
-
-
 
 
 typedef enum {
@@ -75,9 +59,6 @@ typedef enum {
 
     rserr_invalid_fullscreen,
     rserr_invalid_mode,
-
-    rserr_unknown
-
 } rserr_t;
 
 
@@ -91,23 +72,12 @@ void R_EndRegistration (void);
 void R_BeginFrame (void);
 void R_EndFrame (void);
 
-void R_AppActivate (_boolean active);
-void R_SwapBuffers (int);
-void R_SetPalette (const unsigned char *palette);
-
-
-
-
 void R_DeleteTexture (unsigned int texnum);
 _boolean R_UploadTexture (texture_t *tex, PW8 data);
 
-
 void R_SetGL2D (void);
 
-
-
 void R_Draw_Pic (int x, int y, const char *name);
-void R_Draw_StretchPic (int x, int y, int w, int h, const char *name);
 void R_Draw_Character (int x, int y, int num, font_t *myfont);
 void R_Draw_Tile (int x, int y, int w, int h, const char *name);
 void R_Draw_Fill (int x, int y, int w, int h, colour3_t c);

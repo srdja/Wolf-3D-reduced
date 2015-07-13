@@ -44,14 +44,8 @@ PRIVATE void SV_GameMap_f (void)
     char r_mapname[ 32 ];
 
     if (Cmd_Argc() != 2) {
-        Com_Printf ("USAGE: gamemap <map>\n");
         return;
     }
-
-//  Com_DPrintf( "SV_GameMap( %s )\n", Cmd_Argv( 1 ) );
-
-//  FS_CreateDirectory( va( "%s/save/current/", FS_Gamedir() ) );
-
     // check for clearing the current savegame
     Cmd_Argv (1);
 

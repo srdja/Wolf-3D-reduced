@@ -143,7 +143,6 @@ PRIVATE void Client_WriteConfiguration (void)
     fp = fopen (path, "w");
 
     if (!fp) {
-        Com_Printf ("Could not write config.cfg.\n");
         return;
     }
 
@@ -163,7 +162,6 @@ PUBLIC void Client_Shutdown (void)
     static _boolean isdown = false;
 
     if (isdown) {
-        Com_DPrintf ("recursive shutdown\n");
         return;
     }
     isdown = true;

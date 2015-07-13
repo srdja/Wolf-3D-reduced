@@ -36,81 +36,25 @@
 
 #include "common.h"
 #include <setjmp.h>
-#include "console.h"
 #include "com_string.h"
-#include "system.h"
 #include "keys.h"
 
 #include "../wolf/wolf_local.h"
 
-
 #define MAXPRINTMSG 4096
-#define MAX_NUM_ARGVS   50
-
 
 colour3_t   colourBlack = {   0,   0,   0 };
-colour3_t   colourRed   = { 255,   0,   0 };
 colour3_t   colourGreen = {   0, 255,   0 };
-colour3_t   colourBlue  = {   0,   0, 255 };
 colour3_t   colourWhite = { 255, 255, 255 };
 
 jmp_buf abortframe;     // an ERR_DROP occured, exit the entire frame
 
 cvar_t  *developer;
-cvar_t  *logfile_active;    // 1 = buffer log, 2 = flush after each print
 cvar_t  *dedicated;
 
 FILE    *logfile;
 
-/*
-============================================================================
 
-CLIENT / SERVER interactions
-
-============================================================================
-*/
-
-/**
- * \brief Print formatted output to the standard output stream.
- * \param[in] fmt Format control.
- * \param[in] ... Optional arguments.
- * \note Both client and server can use this, and it will output to the appropriate place.
- */
-PUBLIC void Com_Printf (const char *fmt, ...)
-{
-    va_list     argptr;
-    static char msg[ MAXPRINTMSG ];
-
-    va_start (argptr, fmt);
-    (void)vsnprintf (msg, sizeof (msg), fmt, argptr);
-    va_end (argptr);
-
-    msg[ sizeof (msg) - 1 ] = '\0';
-    Con_Print (msg);
-
-    // logfile
-    if (logfile_active && logfile_active->value) {
-        char name[ MAX_GAMEPATH ];
-
-        if (!logfile) {
-            com_snprintf (name, sizeof (name), "%s/console.log", FS_Gamedir());
-
-            if (logfile_active->value > 2) {
-                logfile = fopen (name, "a");
-            } else {
-                logfile = fopen (name, "w");
-            }
-        }
-
-        if (logfile) {
-            fprintf (logfile, "%s", msg);
-        }
-
-        if (logfile_active->value > 1) {
-            fflush (logfile);        // force it to save every time
-        }
-    }
-}
 
 /**
  * \brief Print formatted output to the development output stream.
@@ -132,8 +76,6 @@ PUBLIC void Com_DPrintf (const char *fmt, ...)
     va_end (argptr);
 
     msg[ sizeof (msg) - 1 ] = '\0';
-
-    Com_Printf ("%s", msg);
 }
 
 
@@ -483,7 +425,6 @@ PUBLIC void common_Init (int argc, char *argv[])
     Cmd_AddCommand ("error", Com_Error_f);
 
     developer = Cvar_Get ("developer", "1", CVAR_INIT);
-    logfile_active = Cvar_Get ("logfile", "2", CVAR_INIT);
 
     dedicated = Cvar_Get ("dedicated", "0", CVAR_ROM);
 
@@ -491,7 +432,6 @@ PUBLIC void common_Init (int argc, char *argv[])
         Cmd_AddCommand ("quit", Com_Quit);
     }
 
-    Sys_OS_Init();
     Client_Init();
     Game_Init();    // game and player init
 
