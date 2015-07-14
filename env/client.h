@@ -53,7 +53,7 @@ typedef struct {
 
 extern  client_state_t ClientState;
 
-typedef enum { key_console, key_game, key_message, key_menu, KEY_AUTOMAP} keydest_t;
+typedef enum {key_console, key_game, key_menu, KEY_AUTOMAP} keydest_t;
 
 ///////////////////
 //

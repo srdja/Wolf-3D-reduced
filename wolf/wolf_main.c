@@ -73,7 +73,7 @@ PUBLIC void Game_Init (void)
     g_autoaim = Cvar_Get ("g_autoaim", "1", CVAR_ARCHIVE | CVAR_LATCH);
     mapScale = Cvar_Get ("mapScale", "10", CVAR_ARCHIVE);
 
-    Cmd_AddCommand ("toggleautomap", Con_ToggleAutomap_f);
+    //Cmd_AddCommand ("toggleautomap", Con_ToggleAutomap_f);
 
 
     WM_BuildTables();

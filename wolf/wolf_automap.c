@@ -374,17 +374,6 @@ PUBLIC void Automap()
 }
 
 /**
- * \brief Automap input handler
- */
-PUBLIC void automap_keydown (int key)
-{
-    if (Key_IsDown (Key_GetKey ("toggleautomap"))) {
-        ClientStatic.key_dest = key_game;
-        ClientStatic.menuState = IPM_GAME;
-    }
-}
-
-/**
  * \brief Automap trigger
  */
 PUBLIC void Con_ToggleAutomap_f (void)
@@ -396,3 +385,17 @@ PUBLIC void Con_ToggleAutomap_f (void)
         OpenAutomap();
     }
 }
+
+/**
+ * \brief Automap input handler
+ */
+PUBLIC void automap_keydown (int key)
+{
+    if (Key_IsDown (key)) {
+        fprintf(stdout, "Tab pressed\n");
+        Con_ToggleAutomap_f();
+        ClientStatic.key_dest = key_game;
+        ClientStatic.menuState = IPM_GAME;
+    }
+}
+

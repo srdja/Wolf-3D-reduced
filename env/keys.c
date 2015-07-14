@@ -212,57 +212,6 @@ PUBLIC char     chat_buffer[ MAXCMDLINE ];
 PUBLIC int      chat_bufferlen = 0;
 
 
-/**
- * \brief Key from message loop
- * \param[in] key Key that has been pressed.
- */
-PRIVATE void Key_Message (int key)
-{
-
-    if (key == K_ENTER || key == K_KP_ENTER) {
-        if (chat_team) {
-            Cbuf_AddText ("say_team \"");
-        } else {
-            Cbuf_AddText ("say \"");
-        }
-
-        Cbuf_AddText (chat_buffer);
-        Cbuf_AddText ("\"\n");
-
-        ClientStatic.key_dest = key_game;
-        chat_bufferlen = 0;
-        chat_buffer[ 0 ] = '\0'; // NUL-terminate chat buffer.
-        return;
-    }
-
-    if (key == K_ESCAPE) {
-        ClientStatic.key_dest = key_game;
-        chat_bufferlen = 0;
-        chat_buffer[ 0 ] = '\0'; // NUL-terminate chat buffer.
-        return;
-    }
-
-    if (key < 32 || key > 127) {
-        return; // non printable
-    }
-
-    if (key == K_BACKSPACE) {
-        if (chat_bufferlen) {
-            chat_bufferlen--;
-            chat_buffer[ chat_bufferlen ] = '\0'; // NUL-terminate chat buffer.
-        }
-
-        return;
-    }
-
-    if (chat_bufferlen == sizeof (chat_buffer) - 1) {
-        return; // all full
-    }
-
-    chat_buffer[ chat_bufferlen++ ] = key;
-    chat_buffer[ chat_bufferlen ] = '\0'; // NUL-terminate chat buffer.
-}
-
 //============================================================================
 
 /**
@@ -587,6 +536,7 @@ PUBLIC void Key_Event (int key, _boolean down, unsigned time)
         shift_down = down;
     }
 
+    // Exits the active key context
     // menu key is hardcoded, so the user can never unbind it
     if (key == K_ESCAPE) {
         if (! down) {
@@ -594,10 +544,6 @@ PUBLIC void Key_Event (int key, _boolean down, unsigned time)
         }
 
         switch (ClientStatic.key_dest) {
-        case key_message:
-            Key_Message (key);
-            break;
-
         case KEY_AUTOMAP:
             automap_keydown (key);
             break;
@@ -607,7 +553,6 @@ PUBLIC void Key_Event (int key, _boolean down, unsigned time)
             break;
 
         case key_game:
-        case key_console:
             M_Menu_Main_f();
             break;
 
@@ -663,6 +608,7 @@ PUBLIC void Key_Event (int key, _boolean down, unsigned time)
 //
 // if not a consolekey, send to the interpreter no matter what mode is
 //
+    // ON key down
     if ((ClientStatic.key_dest == key_menu && menubound[key])
             || (ClientStatic.key_dest == key_console && !consolekeys[key])
             || (ClientStatic.key_dest == key_game)) {
@@ -690,16 +636,11 @@ PUBLIC void Key_Event (int key, _boolean down, unsigned time)
         automap_keydown (key);
         break;
 
-    case key_message:
-        Key_Message (key);
-        break;
-
     case key_menu:
         M_Keydown (key);
         break;
 
     case key_game:
-    case key_console:
         break;
 
     default:

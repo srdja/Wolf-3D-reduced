@@ -64,11 +64,9 @@ PRIVATE W32 old_sys_frame_time;
 
 */
 
-kbutton_t   in_klook;
 kbutton_t   in_left, in_right, in_forward, in_back;
-kbutton_t   in_lookup, in_lookdown, in_moveleft, in_moveright;
+kbutton_t   in_moveleft, in_moveright;
 kbutton_t   in_strafe, in_speed, in_use, in_attack;
-kbutton_t   in_up, in_down;
 
 int     in_impulse;
 
@@ -168,30 +166,6 @@ PRIVATE void KeyUp (kbutton_t *b)
     b->state |= 4;      // impulse up
 }
 
-void IN_KLookDown (void)
-{
-    KeyDown (&in_klook);
-}
-void IN_KLookUp (void)
-{
-    KeyUp (&in_klook);
-}
-void IN_UpDown (void)
-{
-    KeyDown (&in_up);
-}
-void IN_UpUp (void)
-{
-    KeyUp (&in_up);
-}
-void IN_DownDown (void)
-{
-    KeyDown (&in_down);
-}
-void IN_DownUp (void)
-{
-    KeyUp (&in_down);
-}
 void IN_LeftDown (void)
 {
     KeyDown (&in_left);
@@ -224,22 +198,7 @@ void IN_BackUp (void)
 {
     KeyUp (&in_back);
 }
-void IN_LookupDown (void)
-{
-    KeyDown (&in_lookup);
-}
-void IN_LookupUp (void)
-{
-    KeyUp (&in_lookup);
-}
-void IN_LookdownDown (void)
-{
-    KeyDown (&in_lookdown);
-}
-void IN_LookdownUp (void)
-{
-    KeyUp (&in_lookdown);
-}
+
 void IN_MoveleftDown (void)
 {
     KeyDown (&in_moveleft);
@@ -464,10 +423,6 @@ PRIVATE usercmd_t Client_CreateCmd (void)
  */
 PUBLIC void Client_InitInput (void)
 {
-    Cmd_AddCommand ("+moveup", IN_UpDown);
-    Cmd_AddCommand ("-moveup", IN_UpUp);
-    Cmd_AddCommand ("+movedown", IN_DownDown);
-    Cmd_AddCommand ("-movedown", IN_DownUp);
     Cmd_AddCommand ("+left", IN_LeftDown);
     Cmd_AddCommand ("-left", IN_LeftUp);
     Cmd_AddCommand ("+right", IN_RightDown);
@@ -476,10 +431,6 @@ PUBLIC void Client_InitInput (void)
     Cmd_AddCommand ("-forward", IN_ForwardUp);
     Cmd_AddCommand ("+back", IN_BackDown);
     Cmd_AddCommand ("-back", IN_BackUp);
-    Cmd_AddCommand ("+lookup", IN_LookupDown);
-    Cmd_AddCommand ("-lookup", IN_LookupUp);
-    Cmd_AddCommand ("+lookdown", IN_LookdownDown);
-    Cmd_AddCommand ("-lookdown", IN_LookdownUp);
     Cmd_AddCommand ("+strafe", IN_StrafeDown);
     Cmd_AddCommand ("-strafe", IN_StrafeUp);
     Cmd_AddCommand ("+moveleft", IN_MoveleftDown);
@@ -493,8 +444,6 @@ PUBLIC void Client_InitInput (void)
     Cmd_AddCommand ("+use", IN_UseDown);
     Cmd_AddCommand ("-use", IN_UseUp);
     Cmd_AddCommand ("impulse", IN_Impulse);
-    Cmd_AddCommand ("+klook", IN_KLookDown);
-    Cmd_AddCommand ("-klook", IN_KLookUp);
 }
 
 /**

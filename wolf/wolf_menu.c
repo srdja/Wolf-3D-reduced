@@ -794,7 +794,6 @@ void M_Menu_LoadGame_f (void)
 
     SAVEGAME MENU
     -------------
-
 =============================================================================
 */
 static menuframework_s  s_savegame_menu;

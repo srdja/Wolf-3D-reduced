@@ -59,6 +59,7 @@ PUBLIC void Com_Quit (void)
     Sys_Quit();
 }
 
+extern void StartGame(int a,  int b, int c);
 
 PUBLIC void common_Init()
 {
@@ -84,7 +85,9 @@ PUBLIC void common_Init()
     Client_Init();
     Game_Init();    // game and player init
 
+    StartGame( 0,  0,  1);
+/*
     // if the user didn't give any commands, run default action
     Cbuf_AddText ("intro PC13\n");
-    Cbuf_Execute();
+    Cbuf_Execute();*/
 }

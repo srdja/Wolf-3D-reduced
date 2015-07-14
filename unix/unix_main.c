@@ -143,7 +143,6 @@ int main (int argc, char *argv[])
         do {
             newtime = Sys_Milliseconds();
             time = newtime - oldtime;
-
         } while (time < 1);
 
         Cbuf_Execute();
