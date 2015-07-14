@@ -30,21 +30,6 @@
 
 
 
-/*
-    Make sure the following macros are defined.
-*/
-
-#ifndef __FILE__
-
-#define __FILE__    ""
-
-#endif
-
-#ifndef __LINE__
-
-#define __LINE__    0L
-
-#endif
 
 
 
@@ -52,10 +37,6 @@
     These function prefixes are used for figuring out which
     functions are exported and which are not.
 */
-
-#define PUBLIC          /* Accessible outside this module     */
-#define PRIVATE static  /* Accessible only within this module */
-
 
 
 #endif /* __COMMON_UTILS_H__ */

@@ -286,9 +286,9 @@ PRIVATE float Client_KeyState (kbutton_t *key)
     return val;
 }
 
-cvar_t  *cl_forwardspeed;
-cvar_t  *cl_sidespeed;
-cvar_t  *cl_yawspeed;
+float cl_forwardspeed;
+float cl_sidespeed;
+float cl_yawspeed;
 
 /**
  * Moves the local angle positions.
@@ -298,7 +298,7 @@ PRIVATE void Client_AdjustAngles (void)
     float speed = (float)ClientStatic.frametime * 100.0f;
 
     if (! (in_strafe.state & 1)) {
-        ClientState.viewangles[ YAW ] += (int) (speed * cl_yawspeed->value * (Client_KeyState (&in_left) - Client_KeyState (&in_right)));
+        ClientState.viewangles[ YAW ] += (int) (speed * cl_yawspeed * (Client_KeyState (&in_left) - Client_KeyState (&in_right)));
     }
 }
 
@@ -315,15 +315,15 @@ PRIVATE void Client_BaseMove (usercmd_t *cmd)
     vectorCopy (ClientState.viewangles, cmd->angles);
 
     if (in_strafe.state & 1) {
-        cmd->sidemove += (short) (cl_sidespeed->value * Client_KeyState (&in_right));
-        cmd->sidemove -= (short) (cl_sidespeed->value * Client_KeyState (&in_left));
+        cmd->sidemove += (short) (cl_sidespeed * Client_KeyState (&in_right));
+        cmd->sidemove -= (short) (cl_sidespeed * Client_KeyState (&in_left));
     }
 
-    cmd->sidemove += (short) (cl_sidespeed->value * Client_KeyState (&in_moveright));
-    cmd->sidemove -= (short) (cl_sidespeed->value * Client_KeyState (&in_moveleft));
+    cmd->sidemove += (short) (cl_sidespeed * Client_KeyState (&in_moveright));
+    cmd->sidemove -= (short) (cl_sidespeed * Client_KeyState (&in_moveleft));
 
-    cmd->forwardmove += (short) (cl_forwardspeed->value * Client_KeyState (&in_forward));
-    cmd->forwardmove -= (short) (cl_forwardspeed->value * Client_KeyState (&in_back));
+    cmd->forwardmove += (short) (cl_forwardspeed * Client_KeyState (&in_forward));
+    cmd->forwardmove -= (short) (cl_forwardspeed * Client_KeyState (&in_back));
 }
 
 /**

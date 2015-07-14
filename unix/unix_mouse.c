@@ -51,9 +51,7 @@ PRIVATE int old_mouse_x, old_mouse_y;
 
 PRIVATE cvar_t  *m_filter;
 PRIVATE cvar_t  *in_mouse;
-PRIVATE cvar_t  *in_dgamouse;
-
-PRIVATE _boolean    mlooking;
+PRIVATE int in_dgamouse;
 
 _boolean mouse_active = false;
 _boolean dgamouse = false;
@@ -97,12 +95,12 @@ PUBLIC void install_grabs (void)
                   None,
                   CurrentTime);
 
-    if (in_dgamouse->value) {
+    if (in_dgamouse) {
         int MajorVersion, MinorVersion;
 
         if (! XF86DGAQueryVersion (display, &MajorVersion, &MinorVersion)) {
             // unable to query, probalby not supported
-            Cvar_Set ("in_dgamouse", "0");
+            dgamouse = 0;
         } else {
             dgamouse = true;
             XF86DGADirectVideo (display, DefaultScreen (display), XF86DGADirectMouse);
@@ -143,32 +141,13 @@ PUBLIC void uninstall_grabs (void)
     mouse_active = false;
 }
 
-
-PRIVATE void Force_CenterView_f (void)
-{
-    ClientState.viewangles[ PITCH ] = 0;
-}
-
-
-PRIVATE void RW_IN_MLookDown (void)
-{
-    mlooking = true;
-}
-
-
-
-PRIVATE void RW_IN_MLookUp (void)
-{
-    mlooking = false;
-}
-
 PUBLIC void IN_StartupMouse (void)
 {
     // mouse variables
     m_filter = Cvar_Get ("m_filter", "0", 0);
     in_mouse = Cvar_Get ("in_mouse", "1", CVAR_ARCHIVE);
-    in_dgamouse = Cvar_Get ("in_dgamouse", "1", CVAR_ARCHIVE);
-    m_forward = Cvar_Get ("m_forward", "1", 0);
+    in_dgamouse = 1;
+    m_forward = 1;
 
     //Cmd_AddCommand ("+mlook", RW_IN_MLookDown);
     //Cmd_AddCommand ("-mlook", RW_IN_MLookUp);
@@ -195,14 +174,14 @@ PUBLIC void IN_MouseMove (usercmd_t *cmd)
     old_mouse_x = mx;
     old_mouse_y = my;
 
-    mx *= sensitivity->value;
-    my *= sensitivity->value;
+    mx *= sensitivity;
+    my *= sensitivity;
 
 // add mouse X/Y movement to cmd
 
-    ClientState.viewangles[ YAW ] -= m_yaw->value * mx;
+    ClientState.viewangles[ YAW ] -= m_yaw * mx;
 
-    cmd->forwardmove -= m_forward->value * my;
+    cmd->forwardmove -= m_forward * my;
 
     mx = my = 0;
 }

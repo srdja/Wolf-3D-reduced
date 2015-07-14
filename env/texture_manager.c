@@ -32,6 +32,7 @@
  *      Portion of this code was derived from Quake II, and was originally written by Id Software, Inc.
  */
 
+#include "common.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -483,7 +484,7 @@ PUBLIC void TM_GetTextureSize (SW32 *width, SW32 *height, const char *name)
 
 
 /* Note: cubic function no longer clips result */
-PRIVATE INLINECALL double
+PRIVATE double
 cubic (double dx,
        int    jm1,
        int    j,
@@ -695,7 +696,7 @@ get_premultiplied_double_row(W8 *in, int PRbytes, int x, int y, int w, double *r
 }
 
 
-PRIVATE INLINECALL void
+PRIVATE void
 rotate_pointers (W8 **p, W32 n)
 {
     W32  i;

@@ -205,10 +205,8 @@ PUBLIC void M_ForceMenuOff (void)
         ClientStatic.menuState = IPM_GAME;
     }
 
-
     m_menudepth = 0;
     Key_ClearStates();
-    Cvar_Set ("paused", "0");
 }
 
 /**

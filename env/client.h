@@ -61,12 +61,12 @@ typedef enum {key_console, key_game, key_menu, KEY_AUTOMAP} keydest_t;
 //
 ///////////////////
 
-extern  cvar_t  *cl_forwardspeed;
-extern  cvar_t  *cl_sidespeed;
-extern  cvar_t  *cl_yawspeed;
-extern  cvar_t  *sensitivity;
-extern  cvar_t  *m_forward;
-extern  cvar_t  *m_yaw;
+extern float cl_forwardspeed;
+extern float cl_sidespeed;
+extern float cl_yawspeed;
+extern float sensitivity;
+extern float m_forward;
+extern float m_yaw;
 
 
 ///////////////////
@@ -85,7 +85,6 @@ extern kbutton_t in_left, in_right, in_forward, in_back;
 extern kbutton_t in_moveleft, in_moveright;
 extern kbutton_t in_strafe, in_speed, in_use, in_attack;
 
-void Client_InitInput (void);
 void Client_SendCommand (void);
 
 typedef struct {

@@ -76,31 +76,15 @@ PRIVATE void AlwaysRunFunc()
     Cvar_SetValue ("cl_run", (float)s_options_alwaysrun_box.curvalue);
 }
 
-PRIVATE void FreeLookFunc()
-{
-    Cvar_SetValue ("freelook", (float)s_options_freelook_box.curvalue);
-}
-
 PRIVATE void MouseSpeedFunc (void *unused)
 {
     Cvar_SetValue ("m_sensitivity", s_options_sensitivity_slider.curvalue * 100);
 }
 
-PRIVATE float ClampCvar (float min, float max, float value)
-{
-    if (value < min) {
-        return min;
-    }
-
-    if (value > max) {
-        return max;
-    }
-    return value;
-}
 
 PRIVATE void ControlsSetMenuItemValues (void)
 {
-    s_options_sensitivity_slider.curvalue   = sensitivity->value / 100;
+    s_options_sensitivity_slider.curvalue   = sensitivity / 100;
 }
 
 PRIVATE void ControlsResetDefaultsFunc (void *unused)
@@ -109,11 +93,6 @@ PRIVATE void ControlsResetDefaultsFunc (void *unused)
     //Cbuf_Execute();
 
     ControlsSetMenuItemValues();
-}
-
-PRIVATE void InvertMouseFunc (void *unused)
-{
-
 }
 
 PRIVATE void Options_MenuInit (void)

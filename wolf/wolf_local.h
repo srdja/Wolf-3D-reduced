@@ -122,18 +122,13 @@ typedef struct {
 
 } LRstruct;
 
-
 extern LRstruct LevelRatios;
-
 
 
 extern cvar_t   *g_version;
 extern cvar_t   *g_fov;
 extern cvar_t   *g_autoaim;
 extern cvar_t   *skill;
-extern cvar_t   *deathmatch;
-extern cvar_t   *maxentities;
-
 
 extern int tics;
 

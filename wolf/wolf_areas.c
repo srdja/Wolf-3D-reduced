@@ -43,6 +43,7 @@
 
 */
 
+#include "../env/common.h"
 #include <memory.h>
 #include <string.h>
 

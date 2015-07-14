@@ -31,7 +31,6 @@
 #include "opengl_local.h"
 #include "video.h"
 #include "com_string.h"
-#include "tga.h"
 #include "common.h"
 
 
@@ -42,7 +41,7 @@ glstate_t  gl_state;
 
 cvar_t  *gl_ext_palettedtexture;
 
-cvar_t  *gl_drawbuffer;
+cvar_t *gl_drawbuffer;
 cvar_t  *gl_driver;
 cvar_t  *gl_mode;
 cvar_t  *gl_round_down;
@@ -81,58 +80,6 @@ PUBLIC void MYgluPerspective (GLdouble fovy, GLdouble aspect,
     glFrustum (xmin, xmax, ymin, ymax, zNear, zFar);
 }
 
-/**
- * \brief Console callback for taking a screen shot
- */
-PRIVATE void R_ScreenShot_f (void)
-{
-    W8      *buffer;
-    char    picname[ 80 ];
-    char    checkname[ MAX_OSPATH ];
-    int     i;
-    FILE    *f;
-
-    // create the scrnshots directory if it doesn't exist
-    com_snprintf (checkname, sizeof (checkname), "%s/scrnshot", FS_Gamedir());
-    FS_CreateDirectory (checkname);
-
-//
-// find a file name to save it to
-//
-    strncpy(picname, "scrn00.tga", sizeof(picname));
-
-    for (i = 0 ; i <= 99 ; ++i) {
-        picname[ 4 ] = i / 10 + '0';
-        picname[ 5 ] = i % 10 + '0';
-        com_snprintf (checkname, sizeof (checkname), "%s%cscrnshot%c%s", FS_Gamedir(), PATH_SEP, PATH_SEP, picname);
-        f = fopen (checkname, "rb");
-
-        if (! f) {
-            break;  // file doesn't exist
-        }
-
-        fclose (f);
-    }
-
-    if (i == 100) {
-        return;
-    }
-
-    buffer = (PW8)malloc (viddef.width * viddef.height * 3);
-    glReadPixels (0, 0, viddef.width, viddef.height, GL_RGB, GL_UNSIGNED_BYTE, buffer);
-
-    WriteTGA (checkname, 24, viddef.width, viddef.height, buffer, 1, 1);
-
-    free (buffer);
-}
-
-/**
- * \brief Console callback for displaying GL information
- */
-PRIVATE void R_Strings_f (void)
-{
-
-}
 
 /**
  * \brief clear buffers to preset values
@@ -212,9 +159,6 @@ PRIVATE void R_Register (void)
     r_fullscreen = Cvar_Get ("r_fullscreen", "0", CVAR_ARCHIVE);
     vid_gamma = Cvar_Get ("vid_gamma", "1.0", CVAR_ARCHIVE);
     r_ref = Cvar_Get ("r_ref", "soft", CVAR_ARCHIVE);
-
-    //Cmd_AddCommand ("screenshot", R_ScreenShot_f);
-    //Cmd_AddCommand ("r_strings", R_Strings_f);
 }
 
 /**

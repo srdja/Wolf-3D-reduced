@@ -37,10 +37,9 @@
 #include "input.h"
 #include "com_string.h"
 
-cvar_t  *sensitivity;
-cvar_t  *m_yaw;
-cvar_t  *m_forward;
-cvar_t  *name;
+float sensitivity;
+float m_yaw;
+float m_forward;
 
 client_state_t  ClientState;
 client_static_t ClientStatic;
@@ -71,14 +70,12 @@ PRIVATE void Client_InitLocal (void)
     //ClientStatic.state = ca_disconnected;
     ClientStatic.realtime = Sys_Milliseconds();
 
-    cl_forwardspeed = Cvar_Get ("cl_forwardspeed", "4000", CVAR_INIT);
-    cl_sidespeed    = Cvar_Get ("cl_sidespeed", "4000", CVAR_INIT);
-    cl_yawspeed     = Cvar_Get ("cl_yawspeed", "100", CVAR_INIT);
-
-    sensitivity = Cvar_Get ("m_sensitivity", "50", CVAR_ARCHIVE);
-
-    m_yaw   = Cvar_Get ("m_yaw", "1", CVAR_INIT);
-    m_forward = Cvar_Get ("m_forward", "1", CVAR_INIT);
+    cl_forwardspeed = 4000;
+    cl_sidespeed    = 4000;
+    cl_yawspeed     = 100;
+    sensitivity     = 50;
+    m_yaw           = 1;
+    m_forward       = 1;
 
 //
 // register our commands

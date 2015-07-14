@@ -30,6 +30,7 @@
  */
 
 #include "opengl_local.h"
+#include "common.h"
 
 /**
  * \brief Draw ASCII character to the screen.

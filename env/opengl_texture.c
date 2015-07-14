@@ -29,10 +29,10 @@
  * \note Portion of this code was derived from Quake II, and was originally written by Id Software, Inc.
  */
 
-#include <string.h>
+#include "common.h"
 #include "opengl_local.h"
 
-PRIVATE INLINECALL GLenum WrapToGL (TWrapMode mode)
+PRIVATE GLenum WrapToGL (TWrapMode mode)
 {
     if (mode == Repeat) {
         return GL_REPEAT;
@@ -45,7 +45,7 @@ PRIVATE INLINECALL GLenum WrapToGL (TWrapMode mode)
     }
 }
 
-PRIVATE INLINECALL GLenum MagFilterToGL (TMagFilter MagFilter)
+PRIVATE GLenum MagFilterToGL (TMagFilter MagFilter)
 {
     switch (MagFilter) {
     case Nearest:
@@ -61,7 +61,7 @@ PRIVATE INLINECALL GLenum MagFilterToGL (TMagFilter MagFilter)
     return GL_LINEAR;
 }
 
-PRIVATE INLINECALL GLenum MinFilterToGL (_boolean MipMap, TMinFilter MinFilter)
+PRIVATE GLenum MinFilterToGL (_boolean MipMap, TMinFilter MinFilter)
 {
     if (MipMap) {
         switch (MinFilter) {

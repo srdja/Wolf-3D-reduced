@@ -137,23 +137,6 @@ float Cvar_VariableValue (const char *var_name)
 
 /*
 ============
-Cvar_VariableString
-============
-*/
-char *Cvar_VariableString (const char *var_name)
-{
-    cvar_t *var;
-
-    var = Cvar_FindVar (var_name);
-
-    if (!var)
-        return "";
-
-    return var->string;
-}
-
-/*
-============
 Cvar_Get
 
 If the variable already exists, the value will not be set unless CVAR_ROM
@@ -426,15 +409,6 @@ PUBLIC void Cvar_Init (void)
     g_autoaim              = Cvar_Get("g_autoaim", "1", CVAR_INIT);
     mapScale               = Cvar_Get("mapScale", "8", CVAR_INIT);
     g_version              = Cvar_Get("g_version", "0", CVAR_INIT);
-    name                   = Cvar_Get("name", "wolf", CVAR_INIT);
     r_fullscreen           = Cvar_Get("r_fullscreen", "0", CVAR_INIT);
 
-    //Cmd_AddCommand ("toggle", Cvar_Toggle_f);
-    //Cmd_AddCommand ("set", Cvar_Set_f);
-    //Cmd_AddCommand ("sets", Cvar_SetS_f);
-   // Cmd_AddCommand ("setu", Cvar_SetU_f);
-    //Cmd_AddCommand ("seta", Cvar_SetA_f);
-    //Cmd_AddCommand ("reset", Cvar_Reset_f);
-   // Cmd_AddCommand ("cvarlist", Cvar_List_f);
-   // Cmd_AddCommand ("cvar_restart", Cvar_Restart_f);
 }

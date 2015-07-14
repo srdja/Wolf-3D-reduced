@@ -28,10 +28,8 @@
  * \date 2004
  */
 
+#include "../env/common.h"
 #include <sys/time.h>
-
-#include "../env/platform.h"
-#include "../env/common_utils.h"
 
 
 /**

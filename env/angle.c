@@ -27,7 +27,7 @@
  */
 
 #include "com_math.h"
-
+#include "common.h"
 
 /**
  * Finds the difference between two angles.
@@ -35,7 +35,7 @@
  * @param[in] angle2 Angle in radians.
  * @return Returns the absolute difference between two angles in radians, this will always be between 0 and PI.
  */
-INLINECALL float angle_diff (float angle1, float angle2)
+float angle_diff (float angle1, float angle2)
 {
     float d;
 
@@ -58,7 +58,7 @@ INLINECALL float angle_diff (float angle1, float angle2)
  * @param[in] angle2 Angle in radians.
  * @return Returns the clockwise distance from angle2 to angle1, this may be greater than 180 degrees.
  */
-INLINECALL float angle_wise (float angle1, float angle2)
+float angle_wise (float angle1, float angle2)
 {
     if (angle1 > angle2) {
         return angle1 - angle2;
@@ -72,7 +72,7 @@ INLINECALL float angle_wise (float angle1, float angle2)
  * @param[in] angle Angle in radians.
  * @return Angle normalized to the range [-180 < angle <= 180] in radians
  */
-INLINECALL float angle_normalize (float angle)
+float angle_normalize (float angle)
 {
     while (angle < 0) {
         angle += (2 * M_PI);

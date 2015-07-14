@@ -28,22 +28,18 @@
 #ifndef __COM_MATH_H__
 #define __COM_MATH_H__
 
-
 #include "angle.h"
 #include "vector.h"
 
 
 #define PITCH   0   /* up / down */
 #define YAW     1   /* left / right */
-#define ROLL    2   /* fall over */
-
 
 #ifndef M_PI
 
 #define M_PI    3.14159265358979323846f // matches value in gcc v2 math.h
 
 #endif
-
 
 
 #ifndef ABS
@@ -53,30 +49,8 @@
 #endif
 
 
-
-#define nanmask ( 255 << 23 )
-
-#define IS_NAN( x ) ( ( (*(int *) &x ) & nanmask ) == nanmask )
-
-
-
-/* Use RINT() instead of rint() */
-#ifdef __GNUC__
-
 #define RINT( x ) rint( x )
 
-#else
-
-#define RINT( x ) floor( (x) + 0.5 )
-
-#endif
-
-
-
-
-void MathLib_Init (void);
-
-float (*pfSqrt) (float x);
 
 float CalcFov (float fov_x, float width, float height);
 

@@ -29,6 +29,7 @@
  * \note This code was derived from NewWolf, and was originally written by DarkOne the Hacker.
  */
 
+#include "../env/common.h"
 #include <stdio.h>
 #include <math.h>
 #include <time.h>

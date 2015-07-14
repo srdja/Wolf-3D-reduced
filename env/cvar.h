@@ -74,7 +74,6 @@ default values.
 // used for system variables, not for player
 // specific configurations
 
-#define CVAR_USERINFO       2   // sent to server on connect or change
 #define CVAR_SERVERINFO     4   // sent in response to front end requests
 #define CVAR_SYSTEMINFO     8   // these cvars will be duplicated on all clients
 #define CVAR_INIT       16  // don't allow change from console at all,
@@ -88,9 +87,7 @@ default values.
 
 #define CVAR_ROM        64  // display only, cannot be set by user at all
 #define CVAR_USER_CREATED   128 // created by a set command
-#define CVAR_TEMP       256 // can be set even when cheats are disabled, but is not archived
 #define CVAR_CHEAT      512 // can not be changed if cheats are disabled
-#define CVAR_NORESTART      1024    // do not clear when a cvar_restart is issued
 
 // nothing outside the Cvar_*() functions should modify these fields!
 typedef struct cvar_s {
@@ -107,9 +104,6 @@ typedef struct cvar_s {
     struct cvar_s *hashNext;
 } cvar_t;
 
-#define MAX_CVAR_VALUE_STRING   256
-
-typedef int cvarHandle_t;
 
 cvar_t *Cvar_Get (const char *var_name, const char *value, int flags);
 // creates the variable if it doesn't exist, or returns the existing one
@@ -124,24 +118,13 @@ void    Cvar_SetValue (const char *var_name, float value);
 // expands value to a string and calls Cvar_Set
 
 float   Cvar_VariableValue (const char *var_name);
-int Cvar_VariableIntegerValue (const char *var_name);
-// returns 0 if not defined or non numeric
 
-char    *Cvar_VariableString (const char *var_name);
-
-void    Cvar_Reset (const char *var_name);
-
-_boolean Cvar_Command (void);
-// called by Cmd_ExecuteString when Cmd_Argv(0) doesn't match a known
-// command.  Returns true if the command was a variable reference that
-// was handled. (print or change)
 
 void    Cvar_WriteVariables (FILE *f);
 // writes lines containing "set variable value" for all variables
 // with the archive flag set to true.
 
 void    Cvar_Init (void);
-void    Cvar_Restart_f (void);
 
 extern  int         cvar_modifiedFlags;
 // whenever a cvar is modifed, its flags will be OR'd into this, so

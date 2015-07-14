@@ -32,15 +32,14 @@
 #define __COMMON_H__
 
 
-#include "platform.h"
+
 #include "com_math.h"
 #include "cvar.h"
 #include "num_type.h"
-
 #include "memory.h"
 #include "filesystem.h"
-
 #include "../app_def.h"
+#include "platform.h"
 
 void    Sys_Quit (void);
 char    *Sys_GetClipboardData (void);
@@ -48,6 +47,11 @@ char    *Sys_GetClipboardData (void);
 void Client_Init (void);
 void Client_Shutdown (void);
 void Client_Frame (int msec);
+
+
+#define PUBLIC          /* Accessible outside this module     */
+#define PRIVATE static  /* Accessible only within this module */
+
 
 //
 // button bits

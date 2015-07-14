@@ -75,7 +75,6 @@ PUBLIC void Game_Init (void)
 
     //Cmd_AddCommand ("toggleautomap", Con_ToggleAutomap_f);
 
-
     WM_BuildTables();
     CorrectBossDeathTimeouts();
 

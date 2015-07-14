@@ -122,8 +122,6 @@ PRIVATE void ApplyChanges (void *unused)
 {
     float gamma;
 
-
-
     // Scale to a range of -1.f to 1.f
     gamma = (s_brightness_slider.curvalue - 10.0f) / 10.0f;
 
