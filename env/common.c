@@ -71,16 +71,15 @@ PUBLIC void common_Init()
     // prepare enough of the subsystems to handle
     // cvar and command buffer management
 
-    Cbuf_Init();
-    Cmd_Init();
+   // Cmd_Init();
 
     Key_Init();
 
     FS_InitFilesystem();
 
-    Cbuf_AddText ("exec DEFAULT.CFG\n");
-    Cbuf_AddText ("exec config.cfg\n");
-    Cbuf_Execute();
+   // Cbuf_AddText ("exec DEFAULT.CFG\n");
+    //Cbuf_AddText ("exec config.cfg\n");
+    //Cbuf_Execute();
 
     Client_Init();
     Game_Init();    // game and player init

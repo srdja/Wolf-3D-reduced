@@ -213,8 +213,8 @@ PRIVATE void R_Register (void)
     vid_gamma = Cvar_Get ("vid_gamma", "1.0", CVAR_ARCHIVE);
     r_ref = Cvar_Get ("r_ref", "soft", CVAR_ARCHIVE);
 
-    Cmd_AddCommand ("screenshot", R_ScreenShot_f);
-    Cmd_AddCommand ("r_strings", R_Strings_f);
+    //Cmd_AddCommand ("screenshot", R_ScreenShot_f);
+    //Cmd_AddCommand ("r_strings", R_Strings_f);
 }
 
 /**

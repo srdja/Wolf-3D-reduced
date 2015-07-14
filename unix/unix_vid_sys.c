@@ -204,7 +204,7 @@ PUBLIC void Video_Init (void)
     vid_gamma = Cvar_Get ("vid_gamma", "1", CVAR_ARCHIVE);
 
     /* Add some console commands that we want to handle */
-    Cmd_AddCommand ("vid_restart", VID_Restart_f);
+    //Cmd_AddCommand ("vid_restart", VID_Restart_f);
 
     /* Start the graphics mode and load refresh DLL */
     Video_CheckChanges();

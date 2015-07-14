@@ -129,39 +129,6 @@ void Cbuf_InsertText (const char *text)
 }
 
 /**
- * Execute command text at exec_when.
- * @param exec_when Desired time of execution. If EXEC_NOW, execute right away.
- * If EXEC_INSERT, execute it after the current command. If EXEC_APPEND, append
- * at the end of command buffer. Puts out a fatal error if an invalid value is given.
- * @param text Pointer to the command.
- * @ingroup COMMAND BUFFER
- */
-void Cbuf_ExecuteText (int exec_when, const char *text)
-{
-    switch (exec_when) {
-    case EXEC_NOW:
-        if (text && strlen (text) > 0) {
-            Cmd_ExecuteString (text);
-        } else {
-            Cbuf_Execute();
-        }
-
-        break;
-
-    case EXEC_INSERT:
-        Cbuf_InsertText (text);
-        break;
-
-    case EXEC_APPEND:
-        Cbuf_AddText (text);
-        break;
-
-    default:
-        break;
-    }
-}
-
-/**
  * Execute all commands in the command buffer.
  * @ingroup COMMAND BUFFER
  */
@@ -535,10 +502,6 @@ void Cmd_ExecuteString (const char *text)
         }
     }
 
-    // check cvars
-    if (Cvar_Command()) {
-        return;
-    }
 
 }
 
@@ -549,7 +512,7 @@ Cmd_Init
 */
 void Cmd_Init (void)
 {
-    Cmd_AddCommand ("exec", Cmd_Exec_f);
-    Cmd_AddCommand ("vstr", Cmd_Vstr_f);
-    Cmd_AddCommand ("wait", Cmd_Wait_f);
+   // //Cmd_AddCommand ("exec", Cmd_Exec_f);
+   /// Cmd_AddCommand ("vstr", Cmd_Vstr_f);
+   // Cmd_AddCommand ("wait", Cmd_Wait_f);
 }

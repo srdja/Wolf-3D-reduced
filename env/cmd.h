@@ -46,21 +46,12 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "platform.h"
 
-void Cbuf_Init (void);
-void Cbuf_AddText (const char *text);
-void Cbuf_ExecuteText (int exec_when, const char *text);
-void Cbuf_Execute (void);
 
 #define MAX_STRING_TOKENS   1024    // max tokens resulting from Cmd_TokenizeString
 #define MAX_TOKEN_CHARS     1024    // max length of an individual token
 
 
 typedef void (*xcommand_t) (void);
-
-void    Cmd_Init (void);
-void    Cmd_AddCommand (const char *cmd_name, xcommand_t function);
-
-void    Cmd_RemoveCommand (const char *cmd_name);
 
 int     Cmd_Argc (void);
 char    *Cmd_Argv (int arg);

@@ -382,11 +382,6 @@ _boolean Cvar_Command (void)
         return false;
     }
 
-    // perform a variable print or set
-    if (Cmd_Argc() == 1) {
-        return true;
-    }
-
     // set the value if forcing isn't required
     Cvar_Set2 (v->name, Cmd_Argv (1), false);
     return true;
@@ -530,19 +525,6 @@ void Cvar_SetA_f (void)
     v->flags |= CVAR_ARCHIVE;
 }
 
-/*
-============
-Cvar_Reset_f
-============
-*/
-void Cvar_Reset_f (void)
-{
-    if (Cmd_Argc() != 2) {
-        return;
-    }
-
-    Cvar_Reset (Cmd_Argv (1));
-}
 
 /*
 ============
@@ -646,7 +628,22 @@ void Cvar_Restart_f (void)
     }
 }
 
-
+extern cvar_t *r_ref;
+extern cvar_t *vid_gamma;
+extern cvar_t *gl_mode;
+extern cvar_t *gl_finish;
+extern cvar_t *gl_driver;
+extern cvar_t *gl_ext_palettedtexture;
+extern cvar_t *gl_swapinterval;
+ cvar_t *r_fakeFullscreen;
+extern cvar_t *in_mouse;
+ cvar_t *in_dgamouse;
+extern cvar_t *g_fov;
+extern cvar_t *g_autoaim;
+extern cvar_t *mapScale;;
+extern cvar_t *g_version;
+extern cvar_t *name;
+extern cvar_t *r_fullscreen;
 /*
 ============
 Cvar_Init
@@ -658,12 +655,29 @@ PUBLIC void Cvar_Init (void)
 {
     cvar_cheats = Cvar_Get ("sv_cheats", "1", CVAR_ROM | CVAR_SYSTEMINFO);
 
-    Cmd_AddCommand ("toggle", Cvar_Toggle_f);
-    Cmd_AddCommand ("set", Cvar_Set_f);
-    Cmd_AddCommand ("sets", Cvar_SetS_f);
-    Cmd_AddCommand ("setu", Cvar_SetU_f);
-    Cmd_AddCommand ("seta", Cvar_SetA_f);
-    Cmd_AddCommand ("reset", Cvar_Reset_f);
-    Cmd_AddCommand ("cvarlist", Cvar_List_f);
-    Cmd_AddCommand ("cvar_restart", Cvar_Restart_f);
+    r_ref                  = Cvar_Get("r_ref", "gl", CVAR_INIT);
+    vid_gamma              = Cvar_Get("vid_gamma", "18.299999", CVAR_INIT);
+    gl_mode                = Cvar_Get("gl_mode", "1", CVAR_INIT);
+    gl_finish              = Cvar_Get("gl_finish", "1", CVAR_INIT);
+    gl_driver              = Cvar_Get("gl_driver", "libGL.so.1", CVAR_INIT);
+    gl_ext_palettedtexture = Cvar_Get("gl_ext_palettedtexture", "0", CVAR_INIT);
+    gl_swapinterval        = Cvar_Get("gl_swapinterval", "1", CVAR_INIT);
+    r_fakeFullscreen       = Cvar_Get("r_fakeFullscreen", "0", CVAR_INIT);
+    in_mouse               = Cvar_Get("in_mouse", "1", CVAR_INIT);
+    in_dgamouse            = Cvar_Get("in_dgamouse", "1", CVAR_INIT);
+    g_fov                  = Cvar_Get("g_fov", "68", CVAR_INIT);
+    g_autoaim              = Cvar_Get("g_autoaim", "1", CVAR_INIT);
+    mapScale               = Cvar_Get("mapScale", "8", CVAR_INIT);
+    g_version              = Cvar_Get("g_version", "0", CVAR_INIT);
+    name                   = Cvar_Get("name", "wolf", CVAR_INIT);
+    r_fullscreen           = Cvar_Get("r_fullscreen", "0", CVAR_INIT);
+
+    //Cmd_AddCommand ("toggle", Cvar_Toggle_f);
+    //Cmd_AddCommand ("set", Cvar_Set_f);
+    //Cmd_AddCommand ("sets", Cvar_SetS_f);
+   // Cmd_AddCommand ("setu", Cvar_SetU_f);
+    //Cmd_AddCommand ("seta", Cvar_SetA_f);
+    //Cmd_AddCommand ("reset", Cvar_Reset_f);
+   // Cmd_AddCommand ("cvarlist", Cvar_List_f);
+   // Cmd_AddCommand ("cvar_restart", Cvar_Restart_f);
 }

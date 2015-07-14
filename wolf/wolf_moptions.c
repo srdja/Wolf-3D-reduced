@@ -105,8 +105,8 @@ PRIVATE void ControlsSetMenuItemValues (void)
 
 PRIVATE void ControlsResetDefaultsFunc (void *unused)
 {
-    Cbuf_AddText ("exec DEFAULT.CFG\n");
-    Cbuf_Execute();
+    //Cbuf_AddText ("exec DEFAULT.CFG\n");
+    //Cbuf_Execute();
 
     ControlsSetMenuItemValues();
 }
@@ -574,14 +574,15 @@ PRIVATE void Keys_MenuDraw (void)
 
 PRIVATE const char *Keys_MenuKey (int key)
 {
+
     menuaction_s *item = (menuaction_s *) Menu_ItemAtCursor (&s_keys_menu);
 
     if (bind_grab) {
         if (key != K_ESCAPE && key != '`') {
             char cmd[ 1024 ];
 
-            com_snprintf (cmd, sizeof (cmd), "bind \"%s\" \"%s\"\n", Key_KeynumToString (key), bindnames[ item->generic.localdata[ 0 ] ][ 0 ]);
-            Cbuf_ExecuteText (EXEC_NOW, cmd);
+           // com_snprintf (cmd, sizeof (cmd), "bind \"%s\" \"%s\"\n", Key_KeynumToString (key), bindnames[ item->generic.localdata[ 0 ] ][ 0 ]);
+            //Cbuf_ExecuteText (EXEC_NOW, cmd);
         }
 
         Menu_SetStatusBar (&s_keys_menu, "enter to change, backspace to clear");

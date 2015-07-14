@@ -891,8 +891,9 @@ void M_Menu_SaveGame_f (void)
 
 void Menu_Init (void)
 {
-    Cmd_AddCommand ("intro", M_Intro_f);
-    Cmd_AddCommand ("intermission", M_Intermission_f);
+    //Cmd_AddCommand ("intro", M_Intro_f);
+    //Cmd_AddCommand ("intermission", M_Intermission_f);
+    /*
     Cmd_AddCommand ("secret", M_Secret_f);
 
     Cmd_AddCommand ("menu_main", M_Menu_Main_f);
@@ -903,7 +904,7 @@ void Menu_Init (void)
     Cmd_AddCommand ("menu_video", M_Menu_Video_f);
     Cmd_AddCommand ("menu_options", M_Menu_Options_f);
     Cmd_AddCommand ("menu_keys", M_Menu_Keys_f);
-    Cmd_AddCommand ("menu_quit", M_Menu_Quit_f);
+    Cmd_AddCommand ("menu_quit", M_Menu_Quit_f);*/
 }
 
 void M_Draw (void)

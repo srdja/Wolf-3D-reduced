@@ -170,10 +170,10 @@ PUBLIC void IN_StartupMouse (void)
     in_dgamouse = Cvar_Get ("in_dgamouse", "1", CVAR_ARCHIVE);
     m_forward = Cvar_Get ("m_forward", "1", 0);
 
-    Cmd_AddCommand ("+mlook", RW_IN_MLookDown);
-    Cmd_AddCommand ("-mlook", RW_IN_MLookUp);
+    //Cmd_AddCommand ("+mlook", RW_IN_MLookDown);
+    //Cmd_AddCommand ("-mlook", RW_IN_MLookUp);
 
-    Cmd_AddCommand ("force_centerview", Force_CenterView_f);
+    //Cmd_AddCommand ("force_centerview", Force_CenterView_f);
 
     mx = my = 0.0;
     mouse_avail = true;

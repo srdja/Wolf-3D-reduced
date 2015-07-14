@@ -543,10 +543,10 @@ PUBLIC void PL_Init (void)
     PL_Reset();
     PL_NewGame (&Player);
 
-    Cmd_AddCommand ("god", Cmd_God_f);
-    Cmd_AddCommand ("notarget", PL_notarget_f);
+    //Cmd_AddCommand ("god", Cmd_God_f);
+    //Cmd_AddCommand ("notarget", PL_notarget_f);
 
-    Cmd_AddCommand ("give", Cmd_Give_f);
+    //Cmd_AddCommand ("give", Cmd_Give_f);
 }
 
 // ------------------------- * environment interraction * -------------------------

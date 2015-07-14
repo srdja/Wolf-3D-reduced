@@ -82,7 +82,6 @@ PRIVATE void Client_InitLocal (void)
 //
 // register our commands
 //
-    Cmd_AddCommand ("quit", Client_Quit_f);
 }
 
 /**

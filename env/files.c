@@ -129,29 +129,6 @@ PUBLIC char *FS_Gamedir (void)
 }
 
 /**
- * \brief Execute autoexec script
- */
-PUBLIC void FS_ExecAutoexec (void)
-{
-    char *dir;
-    char name[ MAX_GAMEPATH ];
-
-    dir = Cvar_VariableString ("gamedir");
-
-    if (*dir) {
-        com_snprintf (name, sizeof (name), "%s%c%s%cautoexec.cfg", fs_basedir->string, PATH_SEP, dir, PATH_SEP);
-    } else {
-        com_snprintf (name, sizeof (name), "%s%c%s%cautoexec.cfg", fs_basedir->string, PATH_SEP, BASE_DIRECTORY, PATH_SEP);
-    }
-
-    if (FS_FindFirst (name, 0, FA_DIR | FA_HIDDEN | FA_SYSTEM)) {
-        Cbuf_AddText ("exec autoexec.cfg\n");
-    }
-
-    FS_FindClose();
-}
-
-/**
  * \brief Sets the gamedir and path to a different directory.
  * \param[in] dir New game directory.
  */
@@ -199,48 +176,6 @@ PUBLIC void FS_SetGamedir (char *dir)
 
         FS_AddGameDirectory (va ("%s%c%s", fs_basedir->string, PATH_SEP, dir));
     }
-}
-
-/**
- * \brief Console callback method to create file links.
- */
-PRIVATE void FS_Link_f (void)
-{
-    filelink_t  *flink, **prev;
-
-    if (Cmd_Argc() != 3) {
-        return;
-    }
-
-    // see if the link already exists
-    prev = &fs_links;
-
-    for (flink = fs_links ; flink ; flink = flink->next) {
-        if (! strcmp (flink->from, Cmd_Argv (1))) {
-            free (flink->to);
-
-            if (! strlen (Cmd_Argv (2))) {
-                // delete it
-                *prev = flink->next;
-                free (flink->from);
-                free (flink);
-                return;
-            }
-
-            flink->to = com_strcopy (Cmd_Argv (2));
-            return;
-        }
-
-        prev = &flink->next;
-    }
-
-    // create a new link
-    flink = malloc (sizeof (*flink));
-    flink->next = fs_links;
-    fs_links = flink;
-    flink->from = com_strcopy (Cmd_Argv (1));
-    flink->fromlength = strlen (flink->from);
-    flink->to = com_strcopy (Cmd_Argv (2));
 }
 
 /**
@@ -383,9 +318,9 @@ PUBLIC void FS_InitFilesystem (void)
 {
     char path[1024];
 
-    Cmd_AddCommand ("path", FS_Path_f);
-    Cmd_AddCommand ("link", FS_Link_f);
-    Cmd_AddCommand ("dir", FS_Dir_f);
+    //Cmd_AddCommand ("path", FS_Path_f);
+    //Cmd_AddCommand ("link", FS_Link_f);
+    //Cmd_AddCommand ("dir", FS_Dir_f);
 
     //
     // basedir <path>

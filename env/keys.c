@@ -205,14 +205,6 @@ PUBLIC _boolean Key_IsDown (int keynum)
     return keydown[ keynum ];
 }
 
-//============================================================================
-
-PUBLIC _boolean chat_team;
-PUBLIC char     chat_buffer[ MAXCMDLINE ];
-PUBLIC int      chat_bufferlen = 0;
-
-
-//============================================================================
 
 /**
  * \brief Convert string to key number
@@ -351,45 +343,6 @@ PRIVATE void Key_Unbindall_f (void)
 
 
 /**
- * \brief Console callback method to bind key mapping
- */
-PRIVATE void Key_Bind_f (void)
-{
-    int                     i, c, b;
-    char            cmd[ 1024 ];
-
-    c = Cmd_Argc();
-
-    if (c < 2) {
-        return;
-    }
-
-    b = Key_StringToKeynum (Cmd_Argv (1));
-
-    if (b == -1) {
-        return;
-    }
-
-    if (c == 2) {
-        return;
-    }
-
-// copy the rest of the command line
-    cmd[ 0 ] = '\0';                // start out with a null string
-
-    for (i = 2; i < c; ++i) {
-        com_strlcat (cmd, Cmd_Argv (i), sizeof (cmd));
-
-        if (i != (c - 1)) {
-            com_strlcat (cmd, " ", sizeof (cmd));
-        }
-    }
-
-    Key_SetBinding (b, cmd);
-}
-
-
-/**
  * \brief Writes lines containing "bind key value".
  * \param[in] f File handle to write out key bindings
  */
@@ -488,9 +441,9 @@ PUBLIC void Key_Init (void)
 //
 // register our functions
 //
-    Cmd_AddCommand ("bind",          Key_Bind_f);
-    Cmd_AddCommand ("unbind",       Key_Unbind_f);
-    Cmd_AddCommand ("unbindall", Key_Unbindall_f);
+    //Cmd_AddCommand ("bind",          Key_Bind_f);
+   // Cmd_AddCommand ("unbind",       Key_Unbind_f);
+    //Cmd_AddCommand ("unbindall", Key_Unbindall_f);
 }
 
 /**

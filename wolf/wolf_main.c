@@ -193,7 +193,7 @@ PUBLIC int LoadTheGame (const char *name)
 
     oldCompleted = currentMap.levelCompleted;
     StartGame (currentMap.episode, currentMap.map, currentMap.skill);
-    Cbuf_Execute();
+    //Cbuf_Execute();
 
     currentMap.levelCompleted = oldCompleted;
 

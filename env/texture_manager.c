@@ -1091,7 +1091,7 @@ PUBLIC void TM_Init (void)
     free (data);
 
 
-    Cmd_AddCommand ("listTextures", TM_TextureList_f);
+    //Cmd_AddCommand ("listTextures", TM_TextureList_f);
 
 
 }
@@ -1139,7 +1139,4 @@ PUBLIC void TM_Shutdown (void)
         R_DeleteTexture (tex->texnum);
         memset (tex, 0, sizeof (*tex));
     }
-
-
-    Cmd_RemoveCommand ("listTextures");
 }

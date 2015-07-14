@@ -145,7 +145,7 @@ int main (int argc, char *argv[])
             time = newtime - oldtime;
         } while (time < 1);
 
-        Cbuf_Execute();
+        //Cbuf_Execute();
         Client_Frame (time);
 
         oldtime = newtime;
