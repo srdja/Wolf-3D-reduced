@@ -1,5 +1,6 @@
 project ( WOLF3D_REDUX )
 
+set(CMAKE_BUILD_TYPE Debug)
 
 # Required cmake version
 cmake_minimum_required ( VERSION 2.8 )
