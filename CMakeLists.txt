@@ -32,14 +32,11 @@ set( env_SOURCE
 )
 
 set ( env_HEADER
-		       	
-	${CMAKE_SOURCE_DIR}/env/angle.h
+
 	${CMAKE_SOURCE_DIR}/env/platform.h
 	${CMAKE_SOURCE_DIR}/env/color.h
-	${CMAKE_SOURCE_DIR}/env/num_type.h
 	${CMAKE_SOURCE_DIR}/env/client.h
 	${CMAKE_SOURCE_DIR}/env/common.h
-	${CMAKE_SOURCE_DIR}/env/common_utils.h
 	${CMAKE_SOURCE_DIR}/env/com_math.h
 	${CMAKE_SOURCE_DIR}/env/com_string.h
 	${CMAKE_SOURCE_DIR}/env/cvar.h
@@ -49,15 +46,13 @@ set ( env_HEADER
 	${CMAKE_SOURCE_DIR}/env/font_manager.h
 	${CMAKE_SOURCE_DIR}/env/input.h
 	${CMAKE_SOURCE_DIR}/env/keys.h
-	${CMAKE_SOURCE_DIR}/env/menu_conf.h	
-	${CMAKE_SOURCE_DIR}/env/num_type.h
+	${CMAKE_SOURCE_DIR}/env/menu_conf.h
 	${CMAKE_SOURCE_DIR}/env/opengl_local.h
 	${CMAKE_SOURCE_DIR}/env/renderer.h
 	${CMAKE_SOURCE_DIR}/env/texture_manager.h
 	${CMAKE_SOURCE_DIR}/env/tga.h
 	${CMAKE_SOURCE_DIR}/env/tgaconfig.h
 	${CMAKE_SOURCE_DIR}/env/timer.h
-	${CMAKE_SOURCE_DIR}/env/vector.h
 	${CMAKE_SOURCE_DIR}/env/video.h
 	${CMAKE_SOURCE_DIR}/env/zippak.h
 )

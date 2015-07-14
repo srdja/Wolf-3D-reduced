@@ -133,31 +133,31 @@ PUBLIC pack_t *FS_LoadZipFile (const char *packfile)
 
         // Read in local header
         ret = fread (&temp16, 1, 2, packhandle);
-        zlocalhead.version_needed = LittleShort (temp16);
+        zlocalhead.version_needed = temp16;
 
         ret += fread (&temp16, 1, 2, packhandle);
-        zlocalhead.flag = LittleShort (temp16);
+        zlocalhead.flag = temp16;
 
         ret += fread (&temp16, 1, 2, packhandle);
-        zlocalhead.compression_method = LittleShort (temp16);
+        zlocalhead.compression_method = temp16;
 
         ret += fread (&temp32, 1, 4, packhandle);
-        zlocalhead.timedate = LittleLong (temp32);
+        zlocalhead.timedate = temp32;
 
         ret += fread (&temp32, 1, 4, packhandle);
-        zlocalhead.crc32 = LittleLong (temp32);
+        zlocalhead.crc32 = temp32;
 
         ret += fread (&temp32, 1, 4, packhandle);
-        zlocalhead.compressed_size = LittleLong (temp32);
+        zlocalhead.compressed_size = temp32;
 
         ret += fread (&temp32, 1, 4, packhandle);
-        zlocalhead.uncompressed_size = LittleLong (temp32);
+        zlocalhead.uncompressed_size = temp32;
 
         ret += fread (&temp16, 1, 2, packhandle);
-        zlocalhead.filename_length = LittleShort (temp16);
+        zlocalhead.filename_length = temp16;
 
         ret += fread (&temp16, 1, 2, packhandle);
-        zlocalhead.extrafield_length = LittleShort (temp16);
+        zlocalhead.extrafield_length = temp16;
 
         if (ret != LOCALHEAD_SIZE) {
             printf("[FS_LoadZipFile]: Read error on local header in file (%s)\n", packfile);

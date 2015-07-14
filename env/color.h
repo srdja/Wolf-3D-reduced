@@ -5,7 +5,7 @@
 #ifndef WOLF3D_REDUX_COLOR_H
 #define WOLF3D_REDUX_COLOR_H
 
-#include "num_type.h"
+#include "com_math.h"
 
 extern colour3_t colourWhite;
 extern colour3_t colourBlack;

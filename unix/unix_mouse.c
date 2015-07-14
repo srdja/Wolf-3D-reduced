@@ -36,7 +36,6 @@
 
 #include <X11/extensions/Xxf86dga.h>
 
-#include "../env/common_utils.h"
 #include "../env/video.h"
 #include "../env/client.h"
 

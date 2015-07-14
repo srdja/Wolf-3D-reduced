@@ -39,13 +39,9 @@
 
 typedef uint8_t  W8;
 typedef uint8_t *PW8;
-typedef int8_t              SW8,    *PSW8;
 typedef uint16_t            W16,    *PW16;
-typedef int16_t             SW16,   *PSW16;
-typedef uint32_t            W32,    *PW32;
-typedef int32_t             SW32,   *PSW32;
-typedef uint64_t            W64,    *PW64;
-typedef int64_t             SW64,   *PSW64;
+typedef uint32_t            W32;
+typedef int32_t             SW32;
 typedef intptr_t            INT_PTR;
 
 
@@ -53,11 +49,6 @@ typedef enum {
     false = 0,
     true  = 1
 } _boolean;
-
-typedef unsigned char       byte;
-
-#define LittleShort( x )        ( x )
-#define LittleLong( x )         ( x )
 
 #endif /* __PLATFORM_H__ */
 

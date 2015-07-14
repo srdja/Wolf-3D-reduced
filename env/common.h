@@ -35,7 +35,7 @@
 
 #include "com_math.h"
 #include "cvar.h"
-#include "num_type.h"
+#include "com_math.h"
 #include "memory.h"
 #include "filesystem.h"
 #include "../app_def.h"

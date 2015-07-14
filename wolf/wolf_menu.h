@@ -31,7 +31,6 @@
 #define __WOLF_MENU_H__
 
 #include "../env/platform.h"
-#include "../env/common_utils.h"
 #include "../env/video.h"
 
 #include "../env/menu_conf.h"

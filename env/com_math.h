@@ -28,8 +28,27 @@
 #ifndef __COM_MATH_H__
 #define __COM_MATH_H__
 
-#include "angle.h"
-#include "vector.h"
+#include "platform.h"
+
+#define DEG2RAD( a ) ( (a) * 0.01745329251994329576f ) // a * M_PI / 180.0f
+#define RAD2DEG( a ) ( (int)((a) * 57.2957795130823209071f) ) // a * 180.0f / M_PI
+
+#define ANGLE2SHORT( x )    ( (int)((x) * 65536 / 360) & 65535 )
+
+extern float angle_diff (float angle1, float angle2);
+extern float angle_wise (float angle1, float angle2);
+extern float angle_normalize (float angle);
+
+typedef float vec_t;
+typedef vec_t vec3_t[ 3 ];
+
+#define vectorCopy( a, b )  ( (b)[ 0 ] = (a)[ 0 ], (b)[ 1 ] = (a)[ 1 ], (b)[ 2 ] = (a)[ 2 ] )
+
+typedef W8  colour3_t[ 3 ]; // RGB
+typedef W8  colour4_t[4];
+
+#define BIT( x )    ( 1 << (x) )
+#define FloatToInt( a ) (SW32)(a)
 
 
 #define PITCH   0   /* up / down */

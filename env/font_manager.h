@@ -38,7 +38,7 @@
 
 #include "platform.h"
 #include "texture_manager.h"
-#include "num_type.h"
+#include "com_math.h"
 
 typedef enum { FONT0 = 0, FONT1, FONT2, FONT3 } FONTSELECT;
 

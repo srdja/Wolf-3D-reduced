@@ -121,7 +121,6 @@ PUBLIC font_t *createFont (const char *filename)
 
 
     FS_ReadFile (&size, 1, 4, fp);
-    size = LittleLong (size);
 
     if (size > 127) {
         free (datname);

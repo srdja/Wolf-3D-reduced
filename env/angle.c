@@ -27,7 +27,6 @@
  */
 
 #include "com_math.h"
-#include "common.h"
 
 /**
  * Finds the difference between two angles.

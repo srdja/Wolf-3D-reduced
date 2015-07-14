@@ -27,7 +27,6 @@
 
 #include "platform.h"
 #include "keys.h"
-#include "common_utils.h"
 #include "texture_manager.h"
 #include "client.h"
 #include "video.h"

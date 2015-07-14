@@ -27,7 +27,7 @@
 
 #include <math.h>
 
-#include "num_type.h"
+#include "com_math.h"
 #include "opengl_local.h"
 #include "video.h"
 #include "com_string.h"

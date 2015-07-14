@@ -52,7 +52,7 @@
 #include "wolf_powerups.h"
 
 #include "../env/platform.h"
-#include "num_type.h"
+#include "com_math.h"
 
 ///////////////////
 //
