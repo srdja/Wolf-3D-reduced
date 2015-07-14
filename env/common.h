@@ -42,22 +42,6 @@
 
 #include "../app_def.h"
 
-#define BIG_INFO_STRING  8192  // used for system info key only
-
-extern colour3_t    colourBlack;
-extern colour3_t    colourWhite;
-
-
-#define EXEC_NOW    0       // don't return until completed
-#define EXEC_INSERT 1       // insert at current position, but don't run yet
-#define EXEC_APPEND 2       // add to end of the command buffer
-
-void Com_DPrintf (const char *fmt, ...);
-void Com_Quit (void);
-
-void common_Init ();
-
-void    Sys_Error (const char *format, ...);
 void    Sys_Quit (void);
 char    *Sys_GetClipboardData (void);
 

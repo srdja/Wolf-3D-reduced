@@ -31,6 +31,7 @@
 
 #include "wolf_local.h"
 
+#include "../env/color.h"
 #include "../env/renderer.h"
 
 /////////////////////////////////////////////////////////////////////
@@ -41,7 +42,6 @@
 
 
 PRIVATE const char **credits;
-PRIVATE char *creditsIndex[ 256 ];
 
 
 PRIVATE const char *reduxcredits[] = {

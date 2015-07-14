@@ -35,6 +35,7 @@
 #include "../env/renderer.h"
 #include "../env/video.h"
 #include "../env/client.h"
+#include "../env/color.h"
 #include "../env/com_string.h"
 
 #include "wolf_local.h"

@@ -37,7 +37,7 @@
 
 #include "../env/client.h"
 #include "../env/keycodes.h"
-
+#include "../env/color.h"
 
 extern void M_Main_Draw (void);
 extern void M_SMain_Draw (void);

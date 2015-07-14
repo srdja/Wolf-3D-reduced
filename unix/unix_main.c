@@ -117,6 +117,12 @@ char *Sys_GetClipboardData (void)
             3.  Enter application loop.
 -----------------------------------------------------------------------------
 */
+
+#include "keys.h"
+#include "../wolf/wolf_local.h"
+
+extern void StartGame(int a,  int b, int c);
+
 int main (int argc, char *argv[])
 {
     int     time, oldtime, newtime;
@@ -124,7 +130,17 @@ int main (int argc, char *argv[])
     // go back to real user for config loads
     seteuid (getuid());
 
-    common_Init();
+    // FIXME moved from common
+    // ----------------
+    Cvar_Init();
+    Key_Init();
+
+    FS_InitFilesystem();
+    Client_Init();
+    Game_Init();    // game and player init
+
+    StartGame( 0,  0,  1);
+    // --------------
 
     fcntl (0, F_SETFL, fcntl (0, F_GETFL, 0) | FNDELAY);
 

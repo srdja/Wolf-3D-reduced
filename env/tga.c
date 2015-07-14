@@ -265,7 +265,7 @@ PUBLIC void LoadTGA (const char *filename, W8 **pic, W16 *width, W16 *height, W1
     hFile = FS_OpenFile (filename, 0);
 
     if (! hFile) {
-        Com_DPrintf ("Could not open (%s) for reading\n", filename);
+        printf("Could not open (%s) for reading\n", filename);
 
         goto TGALOADFAILED;
     }
@@ -275,7 +275,7 @@ PUBLIC void LoadTGA (const char *filename, W8 **pic, W16 *width, W16 *height, W1
     if (! FS_FileSeek (hFile, -26L, SEEK_END)) {
         /* Is file big enough for a footer? */
         if (FS_ReadFile (footer, sizeof (footer), 1, hFile) != 1) {
-            Com_DPrintf ("Cannot read footer from (%s)\n" , filename);
+            printf("Cannot read footer from (%s)\n", filename);
 
             goto TGALOADFAILED;
         } else if (memcmp (footer + 8, magic, sizeof (magic)) == 0) {
@@ -286,7 +286,7 @@ PUBLIC void LoadTGA (const char *filename, W8 **pic, W16 *width, W16 *height, W1
             if (offset != 0) {
                 if (FS_FileSeek (hFile, offset, SEEK_SET) ||
                         FS_ReadFile (extension, sizeof (extension), 1, hFile) != 1) {
-                    Com_DPrintf ("Cannot read extension from '%s'\n", filename);
+                    printf("Cannot read extension from '%s'\n", filename);
 
                     goto TGALOADFAILED;
                 }
@@ -375,7 +375,7 @@ PUBLIC void LoadTGA (const char *filename, W8 **pic, W16 *width, W16 *height, W1
     switch (targa_header.imageType) {
     case TGA_TYPE_MAPPED:
         if (targa_header.bpp != 8) {
-            Com_DPrintf ("Unhandled sub-format in (%s)\n", filename);
+            printf("Unhandled sub-format in (%s)\n", filename);
 
             goto TGALOADFAILED;
         }
@@ -387,7 +387,7 @@ PUBLIC void LoadTGA (const char *filename, W8 **pic, W16 *width, W16 *height, W1
     case TGA_TYPE_COLOR:
         if (targa_header.bpp != 15 && targa_header.bpp != 16 && targa_header.bpp != 24
                 && targa_header.bpp != 32) {
-            Com_DPrintf ("Unhandled sub-format in (%s)\n", filename);
+            printf("Unhandled sub-format in (%s)\n", filename);
             goto TGALOADFAILED;
         }
 
@@ -395,7 +395,7 @@ PUBLIC void LoadTGA (const char *filename, W8 **pic, W16 *width, W16 *height, W1
 
     case TGA_TYPE_GRAY:
         if (targa_header.bpp != 8 && (targa_header.alphaBits != 8 || (targa_header.bpp != 16 && targa_header.bpp != 15))) {
-            Com_DPrintf ("Unhandled sub-format in (%s)\n", filename);
+            printf("Unhandled sub-format in (%s)\n", filename);
             goto TGALOADFAILED;
         }
 
@@ -406,34 +406,34 @@ PUBLIC void LoadTGA (const char *filename, W8 **pic, W16 *width, W16 *height, W1
         break;
 
     default:
-        Com_DPrintf ("Unknown image type for (%s)\n", filename);
+        printf("Unknown image type for (%s)\n", filename);
         goto TGALOADFAILED;
 
     } /* end of switch targa_header.imageType */
 
     /* Plausible but unhandled formats */
     if (targa_header.bytes * 8 != targa_header.bpp && ! (targa_header.bytes == 2 && targa_header.bpp == 15)) {
-        Com_DPrintf ("No support yet for TGA with these parameters\n");
+        printf("No support yet for TGA with these parameters\n");
 
         goto TGALOADFAILED;
     }
 
     /* Check that we have a color map only when we need it. */
     if (targa_header.imageType == TGA_TYPE_MAPPED && targa_header.colorMapType != 1) {
-        Com_DPrintf ("Indexed image has invalid color map type %d\n",
-                     targa_header.colorMapType);
+        printf("Indexed image has invalid color map type %d\n",
+               targa_header.colorMapType);
 
         goto TGALOADFAILED;
     } else if (targa_header.imageType != TGA_TYPE_MAPPED && targa_header.colorMapType != 0) {
-        Com_DPrintf ("Non-indexed image has invalid color map type %d\n",
-                     targa_header.colorMapType);
+        printf("Non-indexed image has invalid color map type %d\n",
+               targa_header.colorMapType);
 
         goto TGALOADFAILED;
     }
 
     /* Skip the image ID field. */
     if (targa_header.idLength && FS_FileSeek (hFile, targa_header.idLength, SEEK_CUR)) {
-        Com_DPrintf ("File (%s) is truncated or corrupted\n", filename);
+        printf("File (%s) is truncated or corrupted\n", filename);
 
         goto TGALOADFAILED;
     }
@@ -455,7 +455,7 @@ PUBLIC void LoadTGA (const char *filename, W8 **pic, W16 *width, W16 *height, W1
             }
 
         } else {
-            Com_DPrintf ("File (%s) is truncated or corrupted\n", filename);
+            printf("File (%s) is truncated or corrupted\n", filename);
 
             goto TGALOADFAILED;
         }
@@ -617,7 +617,7 @@ PUBLIC W8 WriteTGA (const char *filename, W16 bpp, W16 width, W16 height,
     filestream = fopen (filename, "wb");
 
     if (filestream == NULL) {
-        Com_DPrintf ("Could not open file (%s) for write!\n", filename);
+        printf("Could not open file (%s) for write!\n", filename);
         return 0;
     }
 

@@ -10,10 +10,9 @@ set( EXE_NAME "wolf" )
 include_directories (env) 
 set( env_SOURCE 
 	${CMAKE_SOURCE_DIR}/env/angle.c
+	${CMAKE_SOURCE_DIR}/env/color.c
 	${CMAKE_SOURCE_DIR}/env/client_input.c
 	${CMAKE_SOURCE_DIR}/env/client_main.c
-	${CMAKE_SOURCE_DIR}/env/cmd.c
-	${CMAKE_SOURCE_DIR}/env/common.c
 	${CMAKE_SOURCE_DIR}/env/com_string.c
 	${CMAKE_SOURCE_DIR}/env/cvar.c
 	${CMAKE_SOURCE_DIR}/env/fileio.c
@@ -36,9 +35,9 @@ set ( env_HEADER
 		       	
 	${CMAKE_SOURCE_DIR}/env/angle.h
 	${CMAKE_SOURCE_DIR}/env/platform.h
+	${CMAKE_SOURCE_DIR}/env/color.h
 	${CMAKE_SOURCE_DIR}/env/num_type.h
 	${CMAKE_SOURCE_DIR}/env/client.h
-	${CMAKE_SOURCE_DIR}/env/cmd.h
 	${CMAKE_SOURCE_DIR}/env/common.h
 	${CMAKE_SOURCE_DIR}/env/common_utils.h
 	${CMAKE_SOURCE_DIR}/env/com_math.h
@@ -133,7 +132,7 @@ set( platform_SOURCE
 set( SOURCE ${env_SOURCE} ${wolf_SOURCE} ${platform_SOURCE} )
 set( HEADER ${env_HEADER} ${wolf_HEADER} ${platform_HEADER} )
 
-add_executable( ${EXE_NAME} ${SOURCE} ${HEADER} )
+add_executable( ${EXE_NAME} ${SOURCE} ${HEADER} env/color.h)
 
 
 SET(CMAKE_FIND_LIBRARY_PREFIXES "lib")

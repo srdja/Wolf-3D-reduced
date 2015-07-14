@@ -37,6 +37,7 @@
 
 #include "opengl_local.h"
 
+#include "../env/color.h"
 
 extern cvar_t   *mapScale;
 

@@ -33,6 +33,7 @@
 #include "wolf_menu.h"
 #include "wolf_player.h"
 #include "wolf_local.h"
+#include "../env/color.h"
 
 
 #include "../env/client.h"
@@ -50,7 +51,6 @@ colour3_t readcolour    = { 180, 172, 0 };
 colour3_t readhcolour   = { 252, 244, 0 };
 colour3_t textcolour    = { 140, 140, 140 };
 colour3_t highlight     = { 192, 192, 192 };
-
 
 colour3_t bannerline    = { 96, 0, 0 };
 

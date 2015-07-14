@@ -66,7 +66,7 @@ PUBLIC void Door_Reset (LevelDoors_t *lvldoors)
 PUBLIC int Door_Spawn (LevelDoors_t *lvldoors, int x, int y, int type)
 {
     if (lvldoors->doornum >= MAXDOORS) {
-        Com_DPrintf ("[%s]: Too many Doors on level! (%d)\n", "wolf_doors.c", lvldoors->doornum);
+        printf("[%s]: Too many Doors on level! (%d)\n", "wolf_doors.c", lvldoors->doornum);
         return 0;
     }
 
@@ -120,7 +120,7 @@ PUBLIC int Door_Spawn (LevelDoors_t *lvldoors, int x, int y, int type)
         break;
 
     default:
-        Com_DPrintf ("Door_Spawn: Unknown door type: %d\n", type);
+        printf("Door_Spawn: Unknown door type: %d\n", type);
         return 0;
     }
 

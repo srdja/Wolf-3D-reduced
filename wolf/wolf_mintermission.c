@@ -44,7 +44,7 @@
 #include "../env/com_string.h"
 #include "../env/renderer.h"
 #include "../env/keycodes.h"
-
+#include "../env/color.h"
 
 
 /////////////////////////////////////////////////////////////////////
@@ -56,8 +56,8 @@
 
 PRIVATE char *nextlevelname;
 
-PRIVATE colour3_t   colourPage = { 64,   64,    0 };
-PRIVATE colour3_t   colourTitle = { 0,   88,   88 };
+PRIVATE colour3_t colourPage = { 64,   64,    0 };
+PRIVATE colour3_t colourTitle = { 0,   88,   88 };
 
 
 PRIVATE void M_DrawInterBJ (int x, int y, int f)

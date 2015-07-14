@@ -40,7 +40,6 @@
 #define TOUPPER( c )    ( ISLOWER( c ) ? (c) - 'a' + 'A' : ( c ) )
 #define TOLOWER( c )    ( ISUPPER( c ) ? (c) - 'A' + 'a' : ( c ) )
 
-//size_t strncpy(char *dest, const char *source, size_t nMaxLength);
 size_t com_strlcat (char *dest, const char *source, size_t nMaxLength);
 
 int com_stricmp (const char *string1, const char *string2);

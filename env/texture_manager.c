@@ -79,7 +79,7 @@ PUBLIC texture_t *TM_LoadTexture (const char *name, W8 *data, int width, int hei
 
 
     if (strlen (name) >= sizeof (tex->name)) {
-        Com_DPrintf ("TM_LoadTexture: \"%s\" is too long\n", name);
+        printf("TM_LoadTexture: \"%s\" is too long\n", name);
         return r_notexture;
     }
 
@@ -93,7 +93,7 @@ PUBLIC texture_t *TM_LoadTexture (const char *name, W8 *data, int width, int hei
 
     if (i == numttextures) {
         if (numttextures == MAX_TEXTURES) {
-            Com_DPrintf ("MAX_TEXTURES reached\n");
+            printf("MAX_TEXTURES reached\n");
             return r_notexture;
         }
 
@@ -166,7 +166,7 @@ PUBLIC void TM_LoadTexture_DB (const char *name, texture_t   *tex, W8 *data, int
 {
 
     if (strlen (name) >= sizeof (tex->name)) {
-        Com_DPrintf ("TM_LoadTexture: \"%s\" is too long\n", name);
+        printf("TM_LoadTexture: \"%s\" is too long\n", name);
 
     }
 

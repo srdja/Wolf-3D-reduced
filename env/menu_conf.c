@@ -28,6 +28,7 @@
 #include "timer.h"
 #include "renderer.h"
 #include "video.h"
+#include "color.h"
 
 
 PRIVATE void MenuList_Draw (menulist_s *l);
@@ -43,9 +44,6 @@ PRIVATE void SpinControl_DoSlide (menulist_s *s, int dir);
 extern viddef_t viddef;
 
 #define VID_HEIGHT viddef.height
-
-colour3_t colourLGray = { 192, 192, 192 };
-colour3_t colourDGray = { 140, 140, 140 };
 
 
 PRIVATE void Separator_Draw (menuseparator_s *s)

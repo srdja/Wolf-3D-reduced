@@ -295,7 +295,7 @@ PUBLIC filehandle_t *FS_OpenFile (const char *filename, W32 FlagsAndAttributes)
                 return NULL;
             }
 
-            Com_DPrintf ("link file: %s\n", netpath);
+            printf("link file: %s\n", netpath);
 
             if (FlagsAndAttributes & FA_FILE_FLAG_LOAD) {
                 if (! LoadFile (hFile)) {
@@ -318,7 +318,7 @@ PUBLIC filehandle_t *FS_OpenFile (const char *filename, W32 FlagsAndAttributes)
     hFile->hFile = fopen (netpath, "rb");
 
     if (hFile->hFile) {
-        Com_DPrintf ("[FS_OpenFile]: %s\n", netpath);
+        printf("[FS_OpenFile]: %s\n", netpath);
 
         if (FlagsAndAttributes & FA_FILE_FLAG_LOAD) {
             if (! LoadFile (hFile)) {
@@ -348,7 +348,7 @@ PUBLIC filehandle_t *FS_OpenFile (const char *filename, W32 FlagsAndAttributes)
                     // found it!
                     hFile->filesize = pakfiles->uncompressed_length;
 
-                    Com_DPrintf ("PackFile: %s : %s\n", pak->filename, filename);
+                    printf("PackFile: %s : %s\n", pak->filename, filename);
 
                     // open a new file handle on the pakfile
                     hFile->hFile = fopen (pak->filename, "rb");
@@ -387,7 +387,7 @@ PUBLIC filehandle_t *FS_OpenFile (const char *filename, W32 FlagsAndAttributes)
                 continue;
             }
 
-            Com_DPrintf ("[FS_OpenFile]: %s\n", netpath);
+            printf("[FS_OpenFile]: %s\n", netpath);
 
             if (FlagsAndAttributes & FA_FILE_FLAG_LOAD) {
                 if (! LoadFile (hFile)) {
@@ -402,7 +402,7 @@ PUBLIC filehandle_t *FS_OpenFile (const char *filename, W32 FlagsAndAttributes)
 
     }
 
-    Com_DPrintf ("[FS_OpenFile]: Could not find (%s)\n", filename);
+    printf("[FS_OpenFile]: Could not find (%s)\n", filename);
 
     FS_CloseFile (hFile);
 

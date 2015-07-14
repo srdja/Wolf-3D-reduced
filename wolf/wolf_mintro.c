@@ -35,6 +35,7 @@
 
 #include "wolf_local.h"
 
+#include "../env/color.h"
 #include "../env/client.h"
 #include "../env/renderer.h"
 #include "../env/com_string.h"
@@ -45,7 +46,6 @@
 //  Intro Slide Show
 //
 /////////////////////////////////////////////////////////////////////
-
 
 
 PRIVATE W8 intro_slide = 0;

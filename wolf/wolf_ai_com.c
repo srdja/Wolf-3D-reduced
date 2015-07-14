@@ -575,7 +575,7 @@ PUBLIC void T_Advance (entity_t *self, think_t think)
     long move;
 
     if (! think) {
-        Com_DPrintf ("Warning: Advance without <think> proc\n");
+        printf("Warning: Advance without <think> proc\n");
         return;
     }
 

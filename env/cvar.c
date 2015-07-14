@@ -193,8 +193,8 @@ cvar_t *Cvar_Get (const char *var_name, const char *var_value, int flags)
             free(var->resetString);
             var->resetString = com_strcopy (var_value);
         } else if (var_value[0] && strcmp (var->resetString, var_value)) {
-            Com_DPrintf ("Warning: cvar \"%s\" given initial values: \"%s\" and \"%s\"\n",
-                         var_name, var->resetString, var_value);
+            printf("Warning: cvar \"%s\" given initial values: \"%s\" and \"%s\"\n",
+                   var_name, var->resetString, var_value);
         }
 
         // if we have a latched string, take that value now
@@ -242,7 +242,7 @@ cvar_t *Cvar_Set2 (const char *var_name, const char *value, _boolean force)
 {
     cvar_t  *var;
 
-    Com_DPrintf ("Cvar_Set2: %s %s\n", var_name, value);
+    printf("Cvar_Set2: %s %s\n", var_name, value);
 
     if (!Cvar_ValidateString (var_name)) {
         var_name = "BADNAME";

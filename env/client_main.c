@@ -53,13 +53,14 @@ client_static_t ClientStatic;
 PUBLIC void Client_Drop (void)
 {
 }
-
+#include "../wolf/wolf_local.h"
 /**
  * Console command to disconnect client from server.
  */
 PUBLIC void Client_Quit_f (void)
 {
-    Com_Quit();
+    Game_Shutdown();
+    Sys_Quit();
 }
 
 /**

@@ -120,7 +120,7 @@ PUBLIC pack_t *FS_LoadZipFile (const char *packfile)
         ret = fread (&ziphead, 1, 4, packhandle);
 
         if (ret != 4) {
-            Com_DPrintf ("[FS_LoadZipFile]: Read error on file (%s)\n", packfile);
+            printf("[FS_LoadZipFile]: Read error on file (%s)\n", packfile);
             break;
         }
 
@@ -160,7 +160,7 @@ PUBLIC pack_t *FS_LoadZipFile (const char *packfile)
         zlocalhead.extrafield_length = LittleShort (temp16);
 
         if (ret != LOCALHEAD_SIZE) {
-            Com_DPrintf ("[FS_LoadZipFile]: Read error on local header in file (%s)\n", packfile);
+            printf("[FS_LoadZipFile]: Read error on local header in file (%s)\n", packfile);
             break;
         }
 
@@ -172,7 +172,7 @@ PUBLIC pack_t *FS_LoadZipFile (const char *packfile)
                          SEEK_CUR);
 
             if (ret != 0) {
-                Com_DPrintf ("[FS_LoadZipFile]: Seek error in file (%s)\n", packfile);
+                printf("[FS_LoadZipFile]: Seek error in file (%s)\n", packfile);
                 break;
             }
 
@@ -181,7 +181,7 @@ PUBLIC pack_t *FS_LoadZipFile (const char *packfile)
 
         if (zlocalhead.compression_method != CM_NO_COMPRESSION &&
                 zlocalhead.compression_method != CM_DEFLATED) {
-            Com_DPrintf ("[FS_LoadZipFile] Compression Level not supported\n");
+            printf("[FS_LoadZipFile] Compression Level not supported\n");
 
             // seek past filename + extra field + file data
             ret = fseek (packhandle,
@@ -189,7 +189,7 @@ PUBLIC pack_t *FS_LoadZipFile (const char *packfile)
                          SEEK_CUR);
 
             if (ret != 0) {
-                Com_DPrintf ("[FS_LoadZipFile]: Seek error in file (%s)\n", packfile);
+                printf("[FS_LoadZipFile]: Seek error in file (%s)\n", packfile);
                 break;
             }
 
@@ -197,7 +197,7 @@ PUBLIC pack_t *FS_LoadZipFile (const char *packfile)
         }
 
         if (zlocalhead.filename_length >= sizeof (tempfilename) || zlocalhead.filename_length == 0) {
-            Com_DPrintf ("[FS_LoadZipFile]: Invalid file name length\n");
+            printf("[FS_LoadZipFile]: Invalid file name length\n");
 
             // seek past filename + extra field + file data
             ret = fseek (packhandle,
@@ -205,7 +205,7 @@ PUBLIC pack_t *FS_LoadZipFile (const char *packfile)
                          SEEK_CUR);
 
             if (ret != 0) {
-                Com_DPrintf ("[FS_LoadZipFile]: Seek error in file (%s)\n", packfile);
+                printf("[FS_LoadZipFile]: Seek error in file (%s)\n", packfile);
                 break;
             }
 
@@ -219,7 +219,7 @@ PUBLIC pack_t *FS_LoadZipFile (const char *packfile)
         ret = fread (&tempfilename, 1, zlocalhead.filename_length, packhandle);
 
         if (ret != zlocalhead.filename_length) {
-            Com_DPrintf ("[FS_LoadZipFile]: Read error on file name in file (%s)\n", packfile);
+            printf("[FS_LoadZipFile]: Read error on file name in file (%s)\n", packfile);
             break;
         }
 
@@ -237,7 +237,7 @@ PUBLIC pack_t *FS_LoadZipFile (const char *packfile)
         ret = fseek (packhandle, zlocalhead.extrafield_length, SEEK_CUR);
 
         if (ret != 0) {
-            Com_DPrintf ("[FS_LoadZipFile]: Seek error in file (%s)\n", packfile);
+            printf("[FS_LoadZipFile]: Seek error in file (%s)\n", packfile);
             break;
         }
 
@@ -254,7 +254,7 @@ PUBLIC pack_t *FS_LoadZipFile (const char *packfile)
         ret = fseek (packhandle, zlocalhead.extrafield_length + zlocalhead.compressed_size, SEEK_CUR);
 
         if (ret != 0) {
-            Com_DPrintf ("[FS_LoadZipFile]: Seek error in file (%s)\n", packfile);
+            printf("[FS_LoadZipFile]: Seek error in file (%s)\n", packfile);
             break;
         }
 

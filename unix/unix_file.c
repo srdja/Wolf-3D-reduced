@@ -109,7 +109,7 @@ PUBLIC char *FS_FindFirst (const char *path, W32 musthave, W32 canthave)
     struct dirent *d;
 
     if (fdir) {
-        Com_DPrintf ("FS_FindFirst without close\n");
+        printf("FS_FindFirst without close\n");
 
         return NULL;
     }
