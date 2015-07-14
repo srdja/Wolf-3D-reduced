@@ -162,6 +162,7 @@ PRIVATE const char *Game_MenuKey (int key)
 
 PUBLIC void M_Menu_Game_f (void)
 {
+    fprintf(stdout, "Entered game menu function\n");
     Game_MenuInit();
     M_PushMenu (Game_MenuDraw, Game_MenuKey);
     m_game_cursor = 1;
@@ -176,6 +177,7 @@ PUBLIC void M_Menu_Game_f (void)
 PRIVATE menuframework_s s_skill_menu;
 PRIVATE menuaction_s    s_skill_actions[ MAX_SKILLS ];
 
+extern void Client_PrepRefresh (const char *r_mapname);
 
 PUBLIC void StartGame (int episode, int mission, int skill)
 {
@@ -200,13 +202,17 @@ PUBLIC void StartGame (int episode, int mission, int skill)
 
     if (g_version->value == SPEAROFDESTINY) {
         com_snprintf (szTextMsg, sizeof (szTextMsg),
-                      "loading ; map s%.2d.map\n", mission);
+                     // "loading ; map s%.2d.map\n", mission);
+                      "s%.2d.map\n", mission);
     } else {
         com_snprintf (szTextMsg, sizeof (szTextMsg),
-                      "loading ; map w%d%d.map\n", episode, mission);
+                    //  "loading ; map w%d%d.map\n", episode, mission);
+                      "w%d%d.map", episode, mission);
     }
 
-    Cbuf_AddText (szTextMsg);
+    fprintf(stdout, "Enter game command sent [%s] \n", szTextMsg);
+    //Cbuf_AddText (szTextMsg);
+    Client_PrepRefresh (szTextMsg);
 }
 
 PRIVATE void ToughPic (int i)

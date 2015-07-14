@@ -240,6 +240,7 @@ PRIVATE void M_Intermission_Draw (void)
     R_DrawHUD();
 }
 
+extern void Client_PrepRefresh (const char *r_mapname);
 PRIVATE const char *M_Intermission_Key (int key)
 {
     char szTextMsg[ 128 ];
@@ -268,7 +269,7 @@ PRIVATE const char *M_Intermission_Key (int key)
             }
 
             com_snprintf (szTextMsg, sizeof (szTextMsg),
-                          "loading ; map s%.2d.map\n", mapon);
+                          "s%.2d.map", mapon);
         } else {
             int mapon = 0;
 
@@ -286,7 +287,7 @@ PRIVATE const char *M_Intermission_Key (int key)
             }
 
             com_snprintf (szTextMsg, sizeof (szTextMsg),
-                          "loading ; map s%.2d.map\n", mapon);
+                          "map s%.2d.map", mapon);
         }
     } else {
         int currentLevel = currentMap.episode * 10 + currentMap.map;
@@ -356,12 +357,15 @@ PRIVATE const char *M_Intermission_Key (int key)
         }
 
         com_snprintf (szTextMsg, sizeof (szTextMsg),
-                      "loading ; map w%.2d.map\n", nextLevel);
+                      "map w%.2d.map", nextLevel);
     }
 
     Player.playstate = ex_playing;
 
-    Cbuf_AddText (szTextMsg);
+
+
+    Client_PrepRefresh(szTextMsg);
+    //Cbuf_AddText (szTextMsg);
 
     return NULL;
 }

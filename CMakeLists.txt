@@ -93,7 +93,6 @@ set( wolf_SOURCE
 	${CMAKE_SOURCE_DIR}/wolf/wolf_raycast.c
 	${CMAKE_SOURCE_DIR}/wolf/wolf_renderer.c
 	${CMAKE_SOURCE_DIR}/wolf/wolf_sprites.c
-	${CMAKE_SOURCE_DIR}/wolf/wolf_sv_ccmds.c
 	${CMAKE_SOURCE_DIR}/wolf/wolf_weapon.c
 )
 

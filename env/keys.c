@@ -351,15 +351,6 @@ PUBLIC void Key_SetBinding (int keynum, char *binding)
 }
 
 
-PUBLIC char *Key_GetBinding (const int keynum)
-{
-    if (keynum == -1) {
-        return "";
-    }
-
-    return keybindings[ keynum ];
-}
-
 PUBLIC int Key_GetKey (const char *binding)
 {
     int i;
@@ -560,6 +551,8 @@ PUBLIC void Key_Init (void)
  * \param[in] time
  * \note Should NOT be called during an interrupt!
  */
+
+// TODO THIS FUNCTION GENERATES KEYPRESS COMMANDS
 PUBLIC void Key_Event (int key, _boolean down, unsigned time)
 {
     char    *kb;
@@ -570,7 +563,6 @@ PUBLIC void Key_Event (int key, _boolean down, unsigned time)
         if (down) {
             key_waiting = key;
         }
-
         return;
     }
 
@@ -686,12 +678,7 @@ PUBLIC void Key_Event (int key, _boolean down, unsigned time)
                 Cbuf_AddText ("\n");
             }
         }
-
         return;
-    }
-
-    if (! down) {
-        return;         // other systems only care about key down events
     }
 
     if (shift_down) {

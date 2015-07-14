@@ -31,7 +31,6 @@
 #include <stdlib.h>
 
 #include "wolf_menu.h"
-
 #include "wolf_player.h"
 #include "wolf_local.h"
 
@@ -436,15 +435,6 @@ void M_DrawInfoBar (void)
 }
 
 
-// =====================================================================
-
-
-
-
-
-
-
-
 /*
 =======================================================================
 
@@ -470,7 +460,6 @@ PRIVATE const char *menunames[] = {
     "Quit",
     0
 };
-
 
 
 /**
@@ -643,16 +632,6 @@ void M_Menu_Main_f (void)
 
 }
 
-
-
-
-
-
-
-
-
-
-
 /*
 =======================================================================
 
@@ -703,7 +682,7 @@ void Create_Savestrings (void)
         com_snprintf (m_savestrings[i], 32, "savegame %d", i);
     }
 }
-
+extern int LoadTheGame (const char *name);
 
 void LoadGameCallback (void *self)
 {
@@ -712,8 +691,10 @@ void LoadGameCallback (void *self)
     menuaction_s *a = (menuaction_s *) self;
 
     if (m_savevalid[ a->generic.localdata[ 0 ] ]) {
-        com_snprintf (loadCmd, sizeof (loadCmd), "load save%d\n", a->generic.localdata[ 0 ]);
-        Cbuf_AddText (loadCmd);
+        //com_snprintf (loadCmd, sizeof (loadCmd), "load save%d\n", a->generic.localdata[ 0 ]);
+        com_snprintf (loadCmd, sizeof (loadCmd), "save%d\n", a->generic.localdata[ 0 ]);
+        LoadTheGame(loadCmd);
+        //Cbuf_AddText (loadCmd);
     }
 
     M_ForceMenuOff();
@@ -819,13 +800,17 @@ void M_Menu_LoadGame_f (void)
 static menuframework_s  s_savegame_menu;
 static menuaction_s     s_savegame_actions[ MAX_SAVEGAMES ];
 
+extern void SaveTheGame (const char *name);
+
 void SaveGameCallback (void *self)
 {
     char saveCmd[64];
     menuaction_s *a = (menuaction_s *) self;
 
-    com_snprintf (saveCmd, sizeof (saveCmd), "save save%d\n", a->generic.localdata[ 0 ]);
-    Cbuf_AddText (saveCmd);
+    //com_snprintf (saveCmd, sizeof (saveCmd), "save save%d\n", a->generic.localdata[ 0 ]);
+    com_snprintf (saveCmd, sizeof (saveCmd), "save%d\n", a->generic.localdata[ 0 ]);
+    //Cbuf_AddText (saveCmd);
+    SaveTheGame(saveCmd);
     M_ForceMenuOff();
 }
 
@@ -964,4 +949,3 @@ PUBLIC void DrawMenus()
         break;
     }
 }
-

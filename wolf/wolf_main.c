@@ -45,15 +45,11 @@ cvar_t  *g_version; // Wolfenstein or Spear of Destiny
 cvar_t  *g_fov;
 cvar_t  *g_autoaim;
 cvar_t  *skill;
-cvar_t  *deathmatch;
-cvar_t  *maxentities;
 cvar_t  *mapScale;
 
 currentMap_t currentMap;
 
 char *spritelocation = WL6SPRITESDIRNAME;
-
-PRIVATE _boolean ingame;
 
 
 /**
@@ -64,9 +60,6 @@ PUBLIC void Game_Reset (void)
     memset (&levelstate, 0, sizeof (levelstate));
 }
 
-extern void Map_f (void);
-extern void Load_f (void);
-extern void Save_f (void);
 extern void Con_ToggleAutomap_f (void);
 
 /**
@@ -79,12 +72,6 @@ PUBLIC void Game_Init (void)
     g_fov = Cvar_Get ("g_fov", "68", CVAR_ARCHIVE | CVAR_LATCH);
     g_autoaim = Cvar_Get ("g_autoaim", "1", CVAR_ARCHIVE | CVAR_LATCH);
     mapScale = Cvar_Get ("mapScale", "10", CVAR_ARCHIVE);
-
-
-    // dm map list
-    Cmd_AddCommand ("map", Map_f);
-    Cmd_AddCommand ("load", Load_f);
-    Cmd_AddCommand ("save", Save_f);
 
     Cmd_AddCommand ("toggleautomap", Con_ToggleAutomap_f);
 
@@ -157,8 +144,6 @@ PUBLIC void SaveTheGame (const char *name)
 
     currentMap.version = SAVEGAME_VERSION;
     fwrite (&currentMap, 1, sizeof (currentMap), f);
-
-    //fwrite( &huds, 1,sizeof(huds), f);
 
     fwrite (&copiedLevelData, 1, sizeof (levelData), f);
     fwrite (&LevelRatios, 1, sizeof (LevelRatios), f);

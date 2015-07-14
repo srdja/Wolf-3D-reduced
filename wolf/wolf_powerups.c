@@ -129,6 +129,7 @@ PUBLIC void Powerup_Reset (void)
     levelData.numPowerups = 0;
 }
 
+extern void Client_PrepRefresh (const char *r_mapname);
 /*
 -----------------------------------------------------------------------------
  Function:
@@ -291,8 +292,10 @@ PRIVATE int Pow_Give (pow_t type)
 
         //Sound_StartSound (NULL, 0, CHAN_ITEM, Sound_RegisterSound ("sodsfx/109.wav"), 1, ATTN_NORM, 0);
 
-        com_snprintf (szTextMsg, sizeof (szTextMsg), "loading ; map s%.2d.map\n", 20);
-        Cbuf_AddText (szTextMsg);
+        //com_snprintf (szTextMsg, sizeof (szTextMsg), "loading ; map s%.2d.map\n", 20);
+        com_snprintf (szTextMsg, sizeof (szTextMsg), "s%.2d.map", 20);
+        //Cbuf_AddText (szTextMsg);
+        Client_PrepRefresh (szTextMsg);
     }
     break;
 

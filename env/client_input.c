@@ -500,7 +500,6 @@ PUBLIC void Client_InitInput (void)
 /**
  * Create a movement command to send to the server
  */
-PUBLIC void Client_SendCommand (void)
-{
+PUBLIC void Client_SendCommand (void) {
     ClientState.cmd = Client_CreateCmd();
 }

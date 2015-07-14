@@ -144,6 +144,14 @@ PUBLIC void Client_PrepRefresh (const char *r_mapname)
     }
 
     R_EndFrame();
+
+    // FIXME moved from wolf_sv_ccmds.c - Map_f()
+    if (r_world) {
+        ClientStatic.menuState = IPM_GAME;
+        ClientStatic.key_dest = key_game;
+    } else {
+        ClientStatic.key_dest = key_console;
+    }
 }
 
 

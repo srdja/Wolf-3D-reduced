@@ -71,8 +71,6 @@ PRIVATE menuaction_s    s_defaults_action;
 PRIVATE menuaction_s    s_driver_action;
 
 
-
-
 /*
 -----------------------------------------------------------------------------
  Function:
