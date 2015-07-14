@@ -501,19 +501,26 @@ PUBLIC void Key_Init (void)
  * \note Should NOT be called during an interrupt!
  */
 
+extern void IN_LeftDown (void);
+extern void IN_LeftUp (void);
+extern void IN_RightDown (void);
+extern void IN_RightUp (void);
+extern void IN_ForwardDown (void);
+extern void IN_ForwardUp (void);
+extern void IN_BackDown (void);
+extern void IN_BackUp (void);
+extern void IN_MoveleftDown (void);
+extern void IN_MoveleftUp (void);
+extern void IN_MoverightDown (void);
+extern void IN_MoverightUp (void);
+extern void IN_AttackDown (void);
+extern void IN_AttackUp (void);
+extern void IN_UseDown (void);
+extern void IN_UseUp (void);
+
 // TODO THIS FUNCTION GENERATES KEYPRESS COMMANDS
 PUBLIC void Key_Event (int key, _boolean down, unsigned time)
 {
-    char    *kb;
-    char    cmd[ 1024 ];
-
-    // hack for modal presses
-    if (key_waiting == -1) {
-        if (down) {
-            key_waiting = key;
-        }
-        return;
-    }
 
     // update auto-repeat status
     if (down) {
@@ -532,120 +539,66 @@ PUBLIC void Key_Event (int key, _boolean down, unsigned time)
         key_repeats[ key ] = 0;
     }
 
-    if (key == K_SHIFT) {
-        shift_down = down;
-    }
+    if (key == K_ESCAPE)
+        exit(0);
 
-    // Exits the active key context
-    // menu key is hardcoded, so the user can never unbind it
-    if (key == K_ESCAPE) {
-        if (! down) {
-            return;
-        }
-
-        switch (ClientStatic.key_dest) {
-        case KEY_AUTOMAP:
-            automap_keydown (key);
-            break;
-
-        case key_menu:
-            M_Keydown (key);
-            break;
-
-        case key_game:
-            M_Menu_Main_f();
-            break;
-
-        default:
-            Com_DPrintf ("Bad ClientStatic.key_dest\n");
-        }
-
-        return;
-    }
-
-    // track if any key is down for BUTTON_ANY
-    keydown[key] = down;
-
-    if (down) {
-        if (key_repeats[key] == 1) {
-            anykeydown++;
-        }
-    } else {
-        anykeydown--;
-
-        if (anykeydown < 0) {
-            anykeydown = 0;
-        }
-    }
-
-//
-// key up events only generate commands if the game key binding is
-// a button command (leading + sign).  These will occur even in console mode,
-// to keep the character from continuing an action started before a console
-// switch.  Button commands include the kenum as a parameter, so multiple
-// downs can be matched with ups
-//
-    if (! down) {
-        kb = keybindings[key];
-
-        if (kb && kb[0] == '+') {
-            com_snprintf (cmd, sizeof (cmd), "-%s %i %i\n", kb + 1, key, time);
-            Cbuf_AddText (cmd);
-        }
-
-        if (keyshift[key] != key) {
-            kb = keybindings[keyshift[key]];
-
-            if (kb && kb[0] == '+') {
-                com_snprintf (cmd, sizeof (cmd), "-%s %i %i\n", kb + 1, key, time);
-                Cbuf_AddText (cmd);
-            }
-        }
-
-        return;
-    }
-
-//
-// if not a consolekey, send to the interpreter no matter what mode is
-//
-    // ON key down
-    if ((ClientStatic.key_dest == key_menu && menubound[key])
-            || (ClientStatic.key_dest == key_console && !consolekeys[key])
-            || (ClientStatic.key_dest == key_game)) {
-        kb = keybindings[key];
-
-        if (kb) {
-            if (kb[0] == '+') {
-                // button commands add keynum and time as a parm
-                com_snprintf (cmd, sizeof (cmd), "%s %i %i\n", kb, key, time);
-                Cbuf_AddText (cmd);
-            } else {
-                Cbuf_AddText (kb);
-                Cbuf_AddText ("\n");
-            }
+    // FIXME transitional hack - only game play events
+    if (!down) {
+        switch (key) {
+            case 'a':
+                IN_MoveleftDown();
+                break;
+            case 'w':
+                IN_ForwardDown();
+                break;
+            case 's':
+                IN_BackDown();
+                break;
+            case 'd':
+                IN_MoverightDown();
+                break;
+            case K_LEFTARROW:
+                IN_LeftDown();
+                break;
+            case K_RIGHTARROW:
+                IN_RightDown();
+                break;
+            case K_SPACE:
+                IN_UseDown();
+                break;
+            case K_CTRL:
+                IN_AttackDown();
+                break;
         }
         return;
     }
-
-    if (shift_down) {
-        key = keyshift[ key ];
+    switch (key) {
+        case 'a':
+            IN_MoveleftUp();
+            break;
+        case 'w':
+            IN_ForwardUp();
+            break;
+        case 's':
+            IN_BackUp();
+            break;
+        case 'd':
+            IN_MoverightUp();
+            break;
+        case K_LEFTARROW:
+            IN_LeftUp();
+            break;
+        case K_RIGHTARROW:
+            IN_RightUp();
+            break;
+        case K_SPACE:
+            IN_UseUp();
+            break;
+        case K_CTRL:
+            IN_AttackUp();
+            break;
     }
 
-    switch (ClientStatic.key_dest) {
-    case KEY_AUTOMAP:
-        automap_keydown (key);
-        break;
-
-    case key_menu:
-        M_Keydown (key);
-        break;
-
-    case key_game:
-        break;
-
-    default:
-        break;
-    }
 }
 
 /**

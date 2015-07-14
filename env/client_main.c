@@ -70,8 +70,6 @@ PRIVATE void Client_InitLocal (void)
     //ClientStatic.state = ca_disconnected;
     ClientStatic.realtime = Sys_Milliseconds();
 
-    Client_InitInput();
-
     cl_forwardspeed = Cvar_Get ("cl_forwardspeed", "4000", CVAR_INIT);
     cl_sidespeed    = Cvar_Get ("cl_sidespeed", "4000", CVAR_INIT);
     cl_yawspeed     = Cvar_Get ("cl_yawspeed", "100", CVAR_INIT);
