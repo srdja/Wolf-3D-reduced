@@ -35,15 +35,10 @@
 #include <stdio.h>
 #include <stdarg.h>
 
-#include <math.h>
-
-#include "cmd.h"
 #include "com_string.h"
 #include "common_utils.h"
 
-
-
-
+/*
 /**
  * \brief Copies a specified number of characters from a source string into a buffer.
  * \param[in,out] dest Pointer to a buffer into which the function copies characters.
@@ -51,14 +46,14 @@
  * \param[in] nMaxLength Specifies the number of bytes to be copied from the string pointed to by source into the buffer pointed to by dest.
  * \return Returns the string length of \c source. If \c retval >= \c nMaxLength, truncation occurred.
  * \note At most \c nMaxLength-1 characters will be copied. Always NUL-terminates (unless \c nMaxLength == 0).
- */
-PUBLIC size_t com_strlcpy (char *dest, const char *source, size_t nMaxLength)
+ *//*
+PUBLIC size_t strncpy(char *dest, const char *source, size_t nMaxLength)
 {
     char *d = dest;
     const char *s = source;
     size_t n = nMaxLength;
 
-    /* Copy as many bytes as will fit */
+
     if (n != 0 && --n != 0) {
         do {
             if ((*d++ = *s++) == 0) {
@@ -68,10 +63,9 @@ PUBLIC size_t com_strlcpy (char *dest, const char *source, size_t nMaxLength)
         } while (--n != 0);
     }
 
-    /* Not enough room in dest, add NUL and traverse rest of source */
     if (n == 0) {
         if (nMaxLength != 0) {
-            *d = '\0';      /* NUL-terminate dest */
+            *d = '\0';
         }
 
         while (*s++) {
@@ -79,8 +73,8 @@ PUBLIC size_t com_strlcpy (char *dest, const char *source, size_t nMaxLength)
         }
     }
 
-    return (s - source - 1);     /* count does not include NUL */
-}
+    return (s - source - 1);
+}*/
 
 
 /**
@@ -199,59 +193,7 @@ PUBLIC void com_snprintf (char *dest, size_t size, const char *format, ...)
 // Debugging.
 //  printf("Contenido de bigbuffer: '%s'\n", bigbuffer);
 
-    com_strlcpy (dest, bigbuffer, size);
-}
-
-
-/**
- * \brief Convert a string to uppercase.
- * \param[in,out] string NUL-terminated string to capitalize.
- * \return This functions returns a pointer to the converted string. Because the modification is done in place,
- *  the pointer returned is the same as the pointer passed as the input argument. No return value is reserved to indicate an error.
- */
-PUBLIC char *com_strupr (char *string)
-{
-    char *ptr;
-
-    if (!string || !*string) {
-        return string;
-    }
-
-    ptr = string;
-
-    do {
-        *ptr = TOUPPER (*ptr);
-
-    } while (*ptr++);
-
-
-    return string;
-}
-
-
-/**
- * \brief Convert a string to lowercase.
- * \param[in,out] string NUL-terminated string to convert to lowercase.
- * \return This functions returns a pointer to the converted string. Because the modification is done in place,
- *  the pointer returned is the same as the pointer passed as the input argument. No return value is reserved to indicate an error.
- */
-PUBLIC char *com_strlwr (char *string)
-{
-    char *ptr;
-
-    if (!string || !*string) {
-        return string;
-    }
-
-    ptr = string;
-
-    do {
-        *ptr = TOLOWER (*ptr);
-
-    } while (*ptr++);
-
-
-    return string;
+    strncpy(dest, bigbuffer, size);
 }
 
 /**
@@ -272,7 +214,7 @@ PUBLIC char *com_strcopy (const char *source)
         return NULL;
     }
 
-    com_strlcpy (dest, source, length);
+    strncpy(dest, source, length);
 
     return dest;
 }
@@ -296,122 +238,6 @@ PUBLIC W32 com_strhash (const char *string)
 }
 
 /**
- * \brief Convert string to integer.
- * \param[in] string A NUL-terminated string that contains a number to convert.
- * \param[in,out] error Error code. See header.
- * \return A 32-bit signed integer equivalent to the number contained in \c string.
- */
-PUBLIC SW32 StringToInteger (const char *string, W32 *error)
-{
-    const char *ptr = string;
-    SW32 temp;
-    SW32 number = 0;
-    W32 errortag = 0;
-    _boolean bNegative = false;
-
-    if (!string || !*string) {
-        *error = SCE_NULL_VALUE;
-
-        return 0;
-    }
-
-    if (*ptr == '-') {
-        bNegative = true;
-
-        ptr++;
-    }
-
-    while (*ptr && ISNUMERIC (*ptr)) {
-        temp = number;
-        number = (number * 10) + *ptr - '0';
-
-        if (number < temp) {
-            errortag &= SCE_BUFFER_OVERFLOW;
-        }
-
-        ptr++;
-    }
-
-    if (*ptr) {
-        errortag &= SCE_NON_NUMERIC;
-    }
-
-
-    if (bNegative) {
-        number = -number;
-    }
-
-
-    *error = errortag;
-
-    return number;
-}
-
-/**
- * \brief Converts the string representation of a number to its floating-point number equivalent.
- * \param[in] string A NUL-terminated string that contains a number to convert.
- * \param[in,out] error Error code. See header.
- * \return A double-precision floating-point number that is equivalent to the numeric value or symbol specified in \c string
- */
-PUBLIC double StringToFloat (const char *string, W32 *error)
-{
-    const char *ptr = string;
-    double number = 0;
-    SW32 exponent = 0;
-    W32 expError = 0;
-    _boolean bNegative = false;
-
-    *error = 0;
-
-    if (!string || !*string) {
-        *error &= SCE_NULL_VALUE;
-
-        return 0;
-    }
-
-    if (*ptr == '-') {
-        bNegative = true;
-
-        ptr++;
-    } else if (*ptr == '+') {
-        ptr++;
-    }
-
-    while (*ptr && ISNUMERIC (*ptr)) {
-        number = (number * 10) + (double) (*ptr - '0');
-
-        ptr++;
-    }
-
-    if (*ptr == '.') {
-        ptr++;
-
-        while (*ptr && ISNUMERIC (*ptr)) {
-            number = (number * 10) + (double) (*ptr - '0');
-            exponent--;
-
-            ptr++;
-        }
-    }
-
-    if (TOLOWER (*ptr) == 'e') {
-        ptr++;
-
-        exponent += StringToInteger (ptr, &expError);
-    }
-
-    if (bNegative) {
-        number = -number;
-    }
-
-    if (expError) {
-        *error |= expError;
-    }
-
-    return (number * pow (10, exponent));
-}
-
-/**
  * \brief Does a varargs com_snprintf into a temp buffer.
  * \param[in] format  Format-control string.
  * \param[in] ... Optional arguments.
@@ -430,90 +256,4 @@ PUBLIC char *va (char *format, ...)
     string[ sizeof (string) - 1 ] = '\0';
 
     return string;
-}
-
-/**
- * \brief Parse a token out of a string.
- * \param[in/out] data_p  String to parse.
- * \return On success it will return the token string, otherwise it will return an empty string.
- */
-PUBLIC char *com_parse (char **data_p)
-{
-    int     c;
-    int     len;
-    char        *data;
-    static char com_token[ MAX_TOKEN_CHARS ];
-
-    data = *data_p;
-    len = 0;
-    com_token[ 0 ] = 0;
-
-    if (!data) {
-        *data_p = NULL;
-        return "";
-    }
-
-// skip whitespace
-skipwhite:
-
-    while ((c = *data) <= ' ') {
-        if (c == 0) {
-            *data_p = NULL;
-            return "";
-        }
-
-        data++;
-    }
-
-// skip // comments
-    if (c == '/' && data[ 1 ] == '/') {
-        while (*data && *data != '\n') {
-            data++;
-        }
-
-        goto skipwhite;
-    }
-
-// handle quoted strings specially
-    if (c == '\"') {
-        data++;
-
-        while (1) {
-            c = *data++;
-
-            if (c == '\"' || !c) {
-                com_token[ len ] = 0;
-                *data_p = data;
-                return com_token;
-            }
-
-            if (len < MAX_TOKEN_CHARS) {
-                com_token[ len ] = c;
-                len++;
-            }
-        }
-    }
-
-// parse a regular word
-    do {
-        if (len < MAX_TOKEN_CHARS) {
-            com_token[ len ] = c;
-            len++;
-        }
-
-        data++;
-        c = *data;
-
-    } while (c > 32);
-
-    if (len == MAX_TOKEN_CHARS) {
-//      Com_Printf ("Token exceeded %i chars, discarded.\n", MAX_TOKEN_CHARS);
-        len = 0;
-    }
-
-    com_token[ len ] = 0;
-
-    *data_p = data;
-
-    return com_token;
 }

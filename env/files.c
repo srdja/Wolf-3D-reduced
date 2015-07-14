@@ -73,13 +73,13 @@ PRIVATE void FS_AddGameDirectory (const char *dir)
     pack_t      *pak;
     char        *pakfile;
 
-    com_strlcpy (fs_gamedir, dir, sizeof (fs_gamedir));
+    strncpy(fs_gamedir, dir, sizeof(fs_gamedir));
 
     //
     // add the directory to the search path
     //
     search = (searchpath_t *) malloc (sizeof (searchpath_t));
-    com_strlcpy (search->filename, dir, sizeof (search->filename));
+    strncpy(search->filename, dir, sizeof(search->filename));
     search->next = fs_searchpaths;
     fs_searchpaths = search;
 
@@ -176,139 +176,6 @@ PUBLIC void FS_SetGamedir (char *dir)
 
         FS_AddGameDirectory (va ("%s%c%s", fs_basedir->string, PATH_SEP, dir));
     }
-}
-
-/**
- * \brief List files based on criteria.
- * \param[in] findname file name.
- * \param[out] numfiles Number of files found.
- * \param[in] musthave Must have these attributes.
- * \param[in] canthave Cannot have these attributes.
- * \return List of files found
- */
-PRIVATE char **FS_ListFiles (char *findname, int *numfiles, unsigned musthave, unsigned canthave)
-{
-    char *s;
-    int nfiles = 0;
-    char **list = 0;
-
-    s = FS_FindFirst (findname, musthave, canthave);
-
-    while (s) {
-        if (s[strlen (s) - 1] != '.')
-            nfiles++;
-
-        s = FS_FindNext (musthave, canthave);
-    }
-
-    FS_FindClose();
-
-    if (!nfiles)
-        return NULL;
-
-    nfiles++; // add space for a guard
-    *numfiles = nfiles;
-
-    list = (char **)malloc (sizeof (char *) * nfiles);
-
-    memset (list, 0, sizeof (char *) * nfiles);
-
-    s = FS_FindFirst (findname, musthave, canthave);
-    nfiles = 0;
-
-    while (s) {
-        if (s[ strlen (s) - 1 ] != '.') {
-            list[ nfiles ] = strdup (s);
-
-            (void)com_strlwr (list[ nfiles ]);
-
-            nfiles++;
-        }
-
-        s = FS_FindNext (musthave, canthave);
-    }
-
-    FS_FindClose();
-
-    return list;
-}
-
-/**
- * \brief List directories and files.
- */
-PRIVATE void FS_Dir_f (void)
-{
-    char    *path = NULL;
-    char    findname[1024];
-    char    wildcard[1024] = "*.*";
-    char    **dirnames;
-    int     ndirs;
-
-    if (Cmd_Argc() != 1) {
-        com_strlcpy (wildcard, Cmd_Argv (1), sizeof (wildcard));
-    }
-
-    while ((path = FS_NextPath (path)) != NULL) {
-        char *tmp = findname;
-
-        com_snprintf (findname, sizeof (findname), "%s%c%s", path, PATH_SEP, wildcard);
-
-        while (*tmp != 0) {
-            if (*tmp == '\\')
-                *tmp = '/';
-
-            tmp++;
-        }
-
-        if ((dirnames = FS_ListFiles (findname, &ndirs, 0, 0)) != 0) {
-            int i;
-
-            for (i = 0; i < ndirs - 1; i++) {
-                free (dirnames[i]);
-            }
-
-            free (dirnames);
-        }
-    };
-}
-
-/**
- * \brief List search path and file links.
- */
-PRIVATE void FS_Path_f (void)
-{
-}
-
-
-/**
- * \brief Allows enumerating all of the directories in the search path.
- * \param[in] prevpath Previous path searched
- * \return Next path to search on success, otherwise NULL
- */
-PUBLIC char *FS_NextPath (char *prevpath)
-{
-    searchpath_t    *s;
-    char            *prev;
-
-    if (! prevpath) {
-        return fs_gamedir;
-    }
-
-    prev = fs_gamedir;
-
-    for (s = fs_searchpaths ; s ; s = s->next) {
-        if (s->pack) {
-            continue;
-        }
-
-        if (prevpath == prev) {
-            return s->filename;
-        }
-
-        prev = s->filename;
-    }
-
-    return NULL;
 }
 
 /**

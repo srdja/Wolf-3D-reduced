@@ -77,16 +77,17 @@ int     in_impulse;
 PRIVATE void KeyDown (kbutton_t *b)
 {
     int k;
-    char    *c;
+  //  char    *c;
 
-    c = Cmd_Argv (1);
-
+  //  c = Cmd_Argv (1);
+/*
     if (c[ 0 ]) {
         k = atoi (c);
     } else {
         k = -1;     // typed manually at the console for continuous down
     }
-
+*/
+    k = -1;
     if (k == b->down[ 0 ] || k == b->down[ 1 ]) {
         return;     // repeating key
     }
@@ -102,10 +103,10 @@ PRIVATE void KeyDown (kbutton_t *b)
     if (b->state & 1) {
         return;     // still down
     }
-
+/*
     // save timestamp
     c = Cmd_Argv (2);
-    b->downtime = atoi (c);
+    b->downtime = atoi (c);*/
 
     if (!b->downtime) {
         b->downtime = sys_frame_time - 100;
@@ -122,11 +123,11 @@ PRIVATE void KeyDown (kbutton_t *b)
 PRIVATE void KeyUp (kbutton_t *b)
 {
     int     k;
-    char    *c;
+  //  char    *c;
     unsigned    uptime;
 
-    c = Cmd_Argv (1);
-
+  //  c = Cmd_Argv (1);
+/*
     if (c[ 0 ]) {
         k = atoi (c);
     } else {
@@ -134,7 +135,9 @@ PRIVATE void KeyUp (kbutton_t *b)
         b->down[ 0 ] = b->down[ 1 ] = 0;
         b->state = 4;   // impulse up
         return;
-    }
+    }*/
+
+    k = 1;
 
     if (b->down[ 0 ] == k) {
         b->down[ 0 ] = 0;
@@ -151,11 +154,11 @@ PRIVATE void KeyUp (kbutton_t *b)
     if (! (b->state & 1)) {
         return;     // still up (this should not happen)
     }
-
+/*
     // save timestamp
     c = Cmd_Argv (2);
     uptime = atoi (c);
-
+*/
     if (uptime) {
         b->msec += uptime - b->downtime;
     } else {
@@ -216,23 +219,6 @@ void IN_MoverightUp (void)
     KeyUp (&in_moveright);
 }
 
-void IN_SpeedDown (void)
-{
-    KeyDown (&in_speed);
-}
-void IN_SpeedUp (void)
-{
-    KeyUp (&in_speed);
-}
-void IN_StrafeDown (void)
-{
-    KeyDown (&in_strafe);
-}
-void IN_StrafeUp (void)
-{
-    KeyUp (&in_strafe);
-}
-
 void IN_AttackDown (void)
 {
     KeyDown (&in_attack);
@@ -251,10 +237,6 @@ void IN_UseUp (void)
     KeyUp (&in_use);
 }
 
-void IN_Impulse (void)
-{
-    in_impulse = atoi (Cmd_Argv (1));
-}
 
 /**
  * Key state tracking.

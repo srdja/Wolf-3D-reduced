@@ -491,50 +491,6 @@ PUBLIC void PL_Spawn (placeonplane_t location, LevelData_t *lvl)
     Player.playstate = ex_playing;
 }
 
-
-/**
- * \brief Console callback command to give player weapons and keys
- */
-PRIVATE void Cmd_Give_f (void)
-{
-    char        *name;
-
-
-    if (Cmd_Argc() < 2) {
-        return;
-    }
-
-    name = Cmd_Argv (1);
-
-    if (com_stricmp (name, "all") == 0) {
-        PL_GiveHealth (&Player, 999, 0);
-        PL_GiveAmmo (&Player, AMMO_BULLETS, 99);
-        PL_GiveWeapon (&Player, WEAPON_MACHINEGUN);
-        PL_GiveWeapon (&Player, WEAPON_GATLINGGUN);
-        PL_GiveKey (&Player, KEY_GOLD);
-        PL_GiveKey (&Player, KEY_SILVER);
-    }
-
-}
-
-/**
- * \brief Console callback command to make player invincible
- */
-PRIVATE void Cmd_God_f (void)
-{
-    Player.flags ^= FL_GODMODE;
-}
-
-
-/**
- * \brief Console callback command to adjust enemy targeting
- */
-PRIVATE void PL_notarget_f (void)
-{
-    Player.flags ^= FL_NOTARGET;
-}
-
-
 /**
  * \brief Initialize player structure
  */

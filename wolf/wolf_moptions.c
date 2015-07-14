@@ -343,7 +343,7 @@ PRIVATE void DrawKeyBindingFunc (void *self)
     } else {
         char name[ 128 ];
 
-        com_strlcpy (name, Key_KeynumToString (keys[ 0 ]), sizeof (name));
+        strncpy(name, Key_KeynumToString(keys[0]), sizeof(name));
 
         if (keys[ 1 ] != -1) {
             com_strlcat (name, " or ", sizeof (name));

@@ -114,7 +114,7 @@ PUBLIC char *FS_FindFirst (const char *path, W32 musthave, W32 canthave)
         return NULL;
     }
 
-    com_strlcpy (findpattern, FS_getFileName ((char *) path), sizeof (findpattern));
+    strncpy(findpattern, FS_getFileName((char *) path), sizeof(findpattern));
 
     FS_getPath (path, findbase, 1024);
 
@@ -131,7 +131,7 @@ PUBLIC char *FS_FindFirst (const char *path, W32 musthave, W32 canthave)
     while ((d = readdir (fdir)) != NULL) {
         if (! *findpattern || glob_match (findpattern, d->d_name)) {
             if (! *findbase) {
-                com_strlcpy (findpath, d->d_name, sizeof (findpath));
+                strncpy(findpath, d->d_name, sizeof(findpath));
             } else {
                 com_snprintf (findpath, sizeof (findpath), "%s/%s", findbase, d->d_name);
             }
@@ -163,7 +163,7 @@ PUBLIC char *FS_FindNext (W32 musthave, W32 canthave)
     while ((d = readdir (fdir)) != NULL) {
         if (! *findpattern || glob_match (findpattern, d->d_name)) {
             if (! *findbase) {
-                com_strlcpy (findpath, d->d_name, sizeof (findpath));
+                strncpy(findpath, d->d_name, sizeof(findpath));
             } else {
                 com_snprintf (findpath, sizeof (findpath), "%s/%s", findbase, d->d_name);
             }

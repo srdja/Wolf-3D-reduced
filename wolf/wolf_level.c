@@ -1104,11 +1104,11 @@ PUBLIC LevelData_t *Level_LoadMap (const char *levelname)
 
     Door_SetAreas (&newMap->Doors, newMap->areas);
 
-    com_strlcpy (levelstate.level_name, mapName, sizeof (levelstate.level_name));
+    strncpy(levelstate.level_name, mapName, sizeof(levelstate.level_name));
 
-    com_strlcpy (newMap->mapName, mapName, 127);
+    strncpy(newMap->mapName, mapName, 127);
     newMap->mapName[127] = '\0';
-    com_strlcpy (newMap->musicName, musicName, 127);
+    strncpy(newMap->musicName, musicName, 127);
     newMap->musicName[127] = '\0';
 
 

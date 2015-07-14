@@ -99,7 +99,7 @@ PRIVATE void R_ScreenShot_f (void)
 //
 // find a file name to save it to
 //
-    com_strlcpy (picname, "scrn00.tga", sizeof (picname));
+    strncpy(picname, "scrn00.tga", sizeof(picname));
 
     for (i = 0 ; i <= 99 ; ++i) {
         picname[ 4 ] = i / 10 + '0';
@@ -292,11 +292,12 @@ PUBLIC int R_Init (void *hinstance, void *hWnd)
     gl_config.version_string = glGetString (GL_VERSION);
     gl_config.extensions_string = glGetString (GL_EXTENSIONS);
 
-    com_strlcpy (renderer_buffer, gl_config.renderer_string, sizeof (renderer_buffer));
-    (void)com_strlwr (renderer_buffer);
+    strncpy(renderer_buffer, gl_config.renderer_string, sizeof(renderer_buffer));
+    strncpy(vendor_buffer, gl_config.vendor_string, sizeof(vendor_buffer));
 
-    com_strlcpy (vendor_buffer, gl_config.vendor_string, sizeof (vendor_buffer));
-    (void)com_strlwr (vendor_buffer);
+
+    //com_strlcpy (vendor_buffer, gl_config.vendor_string, sizeof (vendor_buffer));
+    //(void)com_strlwr (vendor_buffer);
 
     sscanf (gl_config.version_string, "%d.%d", &a, &b);
 

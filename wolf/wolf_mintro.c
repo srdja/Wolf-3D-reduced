@@ -246,7 +246,7 @@ PRIVATE void M_Intro_Draw (void)
         ++intro_slide;
     }
 }
-
+/*
 PRIVATE const char *M_Intro_Key (int key)
 {
     intro_basetime = ClientStatic.realtime;
@@ -254,8 +254,8 @@ PRIVATE const char *M_Intro_Key (int key)
 
     return NULL;
 }
-
-
+*/
+/*
 PUBLIC void M_Intro_f (void)
 {
     char *s;
@@ -312,3 +312,4 @@ PUBLIC void M_Intro_f (void)
 
     M_PushMenu (M_Intro_Draw, M_Intro_Key);
 }
+*/

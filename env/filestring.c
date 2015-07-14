@@ -93,7 +93,7 @@ PUBLIC _boolean FS_getPath (const char *in, char *out, W32 size_out)
         return false;
     }
 
-    com_strlcpy (out, in, (start - in) + 1);
+    strncpy(out, in, (start - in) + 1);
     return true;
 }
 
@@ -117,6 +117,6 @@ PUBLIC void FS_DefaultExtension (char *path, const int maxSize, const char *exte
 
         src--;
     }
-    com_strlcpy (oldPath, path, sizeof (oldPath));
+    strncpy(oldPath, path, sizeof(oldPath));
     com_snprintf (path, maxSize, "%s%s", oldPath, extension);
 }

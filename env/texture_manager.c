@@ -102,7 +102,7 @@ PUBLIC texture_t *TM_LoadTexture (const char *name, W8 *data, int width, int hei
 
     tex = &ttextures[ i ];
 
-    com_strlcpy (tex->name, name, MAX_GAMEPATH);
+    strncpy(tex->name, name, MAX_GAMEPATH);
     tex->registration_sequence = texture_registration_sequence;
 
     tex->width = width;
@@ -171,7 +171,7 @@ PUBLIC void TM_LoadTexture_DB (const char *name, texture_t   *tex, W8 *data, int
     }
 
 
-    com_strlcpy (tex->name, name, MAX_GAMEPATH);
+    strncpy(tex->name, name, MAX_GAMEPATH);
     tex->registration_sequence = texture_registration_sequence;
 
     tex->width = width;

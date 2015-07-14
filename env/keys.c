@@ -39,12 +39,8 @@ key up events are sent even if in console mode
 
 */
 
-#define MAXCMDLINE 256
-
-int     shift_down = false;
 int     anykeydown;
 
-int         key_waiting;
 char        *keybindings[ 256 ];
 _boolean    consolekeys[ 256 ];     // if true, can't be rebound while in console
 _boolean    menubound[ 256 ];       // if true, can't be rebound while in menu
@@ -205,35 +201,6 @@ PUBLIC _boolean Key_IsDown (int keynum)
     return keydown[ keynum ];
 }
 
-
-/**
- * \brief Convert string to key number
- * \param[in] str String character to convert to key number
- * \return A key number to be used to index keybindings[] by looking at
-    the given string. Single ASCII characters return themselves, while
-    the K_* names are matched up. Otherwise -1 is returned.
- */
-PRIVATE int Key_StringToKeynum (char *str)
-{
-    keyname_t *kn;
-
-    if (! str || ! str[ 0 ]) {
-        return -1;
-    }
-
-    if (! str[ 1 ]) {
-        return str[ 0 ];
-    }
-
-    for (kn = keynames ; kn->name ; ++kn) {
-        if (! com_stricmp (str, kn->name)) {
-            return kn->keynum;
-        }
-    }
-
-    return -1;
-}
-
 /**
  * \brief Convert key number to string
  * \param[in] keynum key number to convert to string
@@ -286,11 +253,10 @@ PUBLIC void Key_SetBinding (int keynum, char *binding)
 // allocate memory for new binding
     length = strlen (binding);
     newbinding = (char *)malloc (length + 1);
-    com_strlcpy (newbinding, binding, length + 1);
+    strncpy(newbinding, binding, length + 1);
     newbinding[ length ] = 0;
     keybindings[ keynum ] = newbinding;
 }
-
 
 PUBLIC int Key_GetKey (const char *binding)
 {
@@ -306,41 +272,6 @@ PUBLIC int Key_GetKey (const char *binding)
 
     return -1;
 }
-
-/**
- * \brief Console callback method to unbind key mapping
- */
-PRIVATE void Key_Unbind_f (void)
-{
-    int b;
-
-    if (Cmd_Argc() != 2) {
-        return;
-    }
-
-    b = Key_StringToKeynum (Cmd_Argv (1));
-
-    if (b == -1) {
-        return;
-    }
-
-    Key_SetBinding (b, "");
-}
-
-/**
- * \brief Console callback method to unbind all key mapping
- */
-PRIVATE void Key_Unbindall_f (void)
-{
-    int i;
-
-    for (i = 0; i < 256; ++i) {
-        if (keybindings[ i ]) {
-            Key_SetBinding (i, "");
-        }
-    }
-}
-
 
 /**
  * \brief Writes lines containing "bind key value".

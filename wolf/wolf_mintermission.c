@@ -688,40 +688,40 @@ PRIVATE void SOD_EndScreen_Draw (void)
     switch (victory_slide) {
     case 2:
         R_Draw_Tile (0, 0, viddef.width, viddef.height, "pics/C_BACKDROPPIC.tga");
-        com_strlcpy (texname, "pics/ENDSCREEN11PIC.tga", sizeof (texname));
+            strncpy(texname, "pics/ENDSCREEN11PIC.tga", sizeof(texname));
         break;
 
     case 5:
-        com_strlcpy (texname, "pics/ENDSCREEN4PIC.tga", sizeof (texname));
+        strncpy(texname, "pics/ENDSCREEN4PIC.tga", sizeof(texname));
         break;
 
     case 6:
-        com_strlcpy (texname, "pics/ENDSCREEN5PIC.tga", sizeof (texname));
+        strncpy(texname, "pics/ENDSCREEN5PIC.tga", sizeof(texname));
         break;
 
     case 7:
-        com_strlcpy (texname, "pics/ENDSCREEN6PIC.tga", sizeof (texname));
+        strncpy(texname, "pics/ENDSCREEN6PIC.tga", sizeof(texname));
         break;
 
     case 8:
-        com_strlcpy (texname, "pics/ENDSCREEN7PIC.tga", sizeof (texname));
+        strncpy(texname, "pics/ENDSCREEN7PIC.tga", sizeof(texname));
         break;
 
     case 9:
-        com_strlcpy (texname, "pics/ENDSCREEN8PIC.tga", sizeof (texname));
+        strncpy(texname, "pics/ENDSCREEN8PIC.tga", sizeof(texname));
         break;
 
     case 10:
-        com_strlcpy (texname, "pics/ENDSCREEN9PIC.tga", sizeof (texname));
+        strncpy(texname, "pics/ENDSCREEN9PIC.tga", sizeof(texname));
         break;
 
     case 11:
         R_Draw_Tile (0, 0, viddef.width, viddef.height, "pics/C_BACKDROPPIC.tga");
-        com_strlcpy (texname, "pics/ENDSCREEN12PIC.tga", sizeof (texname));
+            strncpy(texname, "pics/ENDSCREEN12PIC.tga", sizeof(texname));
         break;
 
     default:
-        com_strlcpy (texname, "", sizeof (texname));
+        strncpy(texname, "", sizeof(texname));
         break;
 
     }

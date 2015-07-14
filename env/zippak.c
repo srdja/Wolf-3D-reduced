@@ -225,7 +225,7 @@ PUBLIC pack_t *FS_LoadZipFile (const char *packfile)
 
         tempfilename[ zlocalhead.filename_length ] = '\0'; // NUL-terminate string
 
-        com_strlcpy (pknewnode->name, tempfilename, sizeof (pknewnode->name));
+        strncpy(pknewnode->name, tempfilename, sizeof(pknewnode->name));
 
         pknewnode->hashid = com_strhash (pknewnode->name);
 
@@ -268,7 +268,7 @@ PUBLIC pack_t *FS_LoadZipFile (const char *packfile)
 
 
     pack = (pack_t *)malloc (sizeof (pack_t));
-    com_strlcpy (pack->filename, packfile, sizeof (pack->filename));
+    strncpy(pack->filename, packfile, sizeof(pack->filename));
     pack->handle = packhandle;
     pack->numfiles = numberofpackedfiles;
     pack->files = pkrootnode;

@@ -92,7 +92,7 @@ PUBLIC void Client_PrepRefresh (const char *r_mapname)
         spritelocation = WL6SPRITESDIRNAME;
     }
 
-    com_strlcpy (mapname, r_mapname, sizeof (mapname));   // skip "maps/"
+    strncpy(mapname, r_mapname, sizeof(mapname));   // skip "maps/"
 
     // !@# fix crash bug if you type something short...
     if (strlen (mapname) > 4 && !strcmp (mapname + strlen (mapname) - 4, ".map")) {

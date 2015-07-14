@@ -204,10 +204,10 @@ int GLimp_SetMode (int *pwidth, int *pheight, int mode, _boolean fullscreen)
     GLimp_Shutdown();
 
     // get the default display name from the environment variable DISPLAY
-    com_strlcpy (display_name, getenv ("DISPLAY"), sizeof (display_name));
+    strncpy(display_name, getenv("DISPLAY"), sizeof(display_name));
 
     if (display_name[ 0 ] == 0) {
-        com_strlcpy (display_name, "unix:0.0", sizeof (display_name));
+        strncpy(display_name, "unix:0.0", sizeof(display_name));
     }
 
     if (! (display = XOpenDisplay (display_name))) {

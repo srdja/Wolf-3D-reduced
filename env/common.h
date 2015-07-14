@@ -35,7 +35,6 @@
 #include "platform.h"
 #include "com_math.h"
 #include "cvar.h"
-#include "cmd.h"
 #include "num_type.h"
 
 #include "memory.h"
