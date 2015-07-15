@@ -47,7 +47,7 @@
  * \return Returns strlen( source ) + MIN( nMaxLength, strlen( initial dest ) ). If retval >= nMaxLength, truncation occurred.
  * \note At most \c nMaxLength-1 characters will be copied. Always NUL-terminates (unless \c nMaxLength <= strlen( dest) ).
  */
-PUBLIC size_t com_strlcat (char *dest, const char *source, size_t nMaxLength)
+size_t com_strlcat (char *dest, const char *source, size_t nMaxLength)
 {
     char *d = dest;
     const char *s = source;
@@ -92,7 +92,7 @@ PUBLIC size_t com_strlcat (char *dest, const char *source, size_t nMaxLength)
  * \arg \c 0  \c string1 substring identical to \c string2 substring
  * \arg \c >0 \c string1 substring greater than \c string2 substring
  */
-PUBLIC int com_strnicmp (const char *string1, const char *string2, size_t count)
+int com_strnicmp (const char *string1, const char *string2, size_t count)
 {
     char c1, c2;
 
@@ -129,7 +129,7 @@ PUBLIC int com_strnicmp (const char *string1, const char *string2, size_t count)
  * \arg \c 0  \c string1 identical to \c string2
  * \arg \c >0 \c string1 greater than \c string2
  */
-PUBLIC int com_stricmp (const char *string1, const char *string2)
+int com_stricmp (const char *string1, const char *string2)
 {
     return com_strnicmp (string1, string2, 99999);
 }
@@ -142,7 +142,7 @@ PUBLIC int com_stricmp (const char *string1, const char *string2)
  * \param[in]  ... Optional arguments.
  * \note If the format string is longer than 32768 truncation will occur. Also, if \c format is longer than \c dest truncation will occur.
  */
-PUBLIC void com_snprintf (char *dest, size_t size, const char *format, ...)
+void com_snprintf (char *dest, size_t size, const char *format, ...)
 {
     va_list argptr;
     char    bigbuffer[ 0x8000 ];
@@ -164,7 +164,7 @@ PUBLIC void com_snprintf (char *dest, size_t size, const char *format, ...)
  * \return Pointer to copy, otherwise NULL.
  * \note Caller is responsible for freeing allocated data by calling Z_Free
  */
-PUBLIC char *com_strcopy (const char *source)
+char *com_strcopy (const char *source)
 {
     char *dest;
     W32 length;
@@ -186,7 +186,7 @@ PUBLIC char *com_strcopy (const char *source)
  * \param[in] string NUL-terminated string to hash.
  * \return Hash id.
  */
-PUBLIC W32 com_strhash (const char *string)
+W32 com_strhash (const char *string)
 {
     W32 hash = *string;
 
@@ -206,7 +206,7 @@ PUBLIC W32 com_strhash (const char *string)
  * \return Formatted string.
  * \note If format string is longer than 1024 it will be truncated.
  */
-PUBLIC char *va (char *format, ...)
+char *va (char *format, ...)
 {
     va_list argptr;
     static char string[ 1024 ];

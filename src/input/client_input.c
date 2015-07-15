@@ -36,8 +36,8 @@
 #include "input.h"
 
 extern  W32 sys_frame_time;
-PRIVATE W32 frame_msec;
-PRIVATE W32 old_sys_frame_time;
+static W32 frame_msec;
+static W32 old_sys_frame_time;
 
 /*!
     @note
@@ -74,7 +74,7 @@ int     in_impulse;
  * Called whenever a key goes into the down state.
  * @param[in] b Valid pointer to a kbutton_t structure.
  */
-PRIVATE void KeyDown (kbutton_t *b)
+static void KeyDown (kbutton_t *b)
 {
     int k;
 
@@ -106,7 +106,7 @@ PRIVATE void KeyDown (kbutton_t *b)
  * Called whenever a key goes into the up state.
  * @param[in] b Valid pointer to a kbutton_t structure.
  */
-PRIVATE void KeyUp (kbutton_t *b)
+static void KeyUp (kbutton_t *b)
 {
     int     k;
     unsigned    uptime;
@@ -213,7 +213,7 @@ void IN_UseUp (void)
  * @param[in] b Valid pointer to a kbutton_t structure.
  * @return Returns the fraction of the frame that the key was down.
  */
-PRIVATE float Client_KeyState (kbutton_t *key)
+static float Client_KeyState (kbutton_t *key)
 {
     float val = 0;
     _boolean impulsedown, impulseup, down;
@@ -263,7 +263,7 @@ float cl_yawspeed;
 /**
  * Moves the local angle positions.
  */
-PRIVATE void Client_AdjustAngles (void)
+static void Client_AdjustAngles (void)
 {
     float speed = (float)ClientStatic.frametime * 100.0f;
 
@@ -276,7 +276,7 @@ PRIVATE void Client_AdjustAngles (void)
  * Send the intended movement message to the server.
  * @param[in\out] Pointer to valid usercmd_t structure.
  */
-PRIVATE void Client_BaseMove (usercmd_t *cmd)
+static void Client_BaseMove (usercmd_t *cmd)
 {
     Client_AdjustAngles();
 
@@ -300,7 +300,7 @@ PRIVATE void Client_BaseMove (usercmd_t *cmd)
  * Final movement adjustments applied to move command.
  * @param[in] cmd Valid pointer to usercmd_t structure.
  */
-PRIVATE void Client_FinishMove (usercmd_t *cmd)
+static void Client_FinishMove (usercmd_t *cmd)
 {
     int     ms;
     int     i;
@@ -343,7 +343,7 @@ extern void IN_MouseMove (usercmd_t *cmd);
  * Create the movement command.
  * @return Filled out usercmd_t structure.
  */
-PRIVATE usercmd_t Client_CreateCmd (void)
+static usercmd_t Client_CreateCmd (void)
 {
     usercmd_t   cmd;
 
@@ -373,6 +373,6 @@ PRIVATE usercmd_t Client_CreateCmd (void)
 /**
  * Create a movement command to send to the server
  */
-PUBLIC void Client_SendCommand (void) {
+void Client_SendCommand (void) {
     ClientState.cmd = Client_CreateCmd();
 }

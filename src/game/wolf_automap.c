@@ -61,7 +61,7 @@ extern _boolean Key_IsDown (int keynum);
  * \param[in] a Valid pointer to mapTile_t structure
  * \param[in] b Valid pointer to mapTile_t structure
  */
-PRIVATE int MapTileSort (const void *a, const void *b)
+static int MapTileSort (const void *a, const void *b)
 {
     return ((mapTile_t *)a)->texnum - ((mapTile_t *)b)->texnum;
 }
@@ -69,7 +69,7 @@ PRIVATE int MapTileSort (const void *a, const void *b)
 /**
  * \brief Initialize automap
  */
-PUBLIC void OpenAutomap()
+void OpenAutomap()
 {
     mapTile_t *mt = mapTiles;
     int     x, y;
@@ -211,7 +211,7 @@ PUBLIC void OpenAutomap()
 /**
  * \brief Draw the automap
  */
-PUBLIC void Automap()
+void Automap()
 {
     int i;
     int halfWidth = viddef.width / 2;
@@ -376,7 +376,7 @@ PUBLIC void Automap()
 /**
  * \brief Automap trigger
  */
-PUBLIC void Con_ToggleAutomap_f (void)
+void Con_ToggleAutomap_f (void)
 {
     if (ClientStatic.key_dest == KEY_AUTOMAP) {
         ClientStatic.key_dest = key_game;
@@ -389,7 +389,7 @@ PUBLIC void Con_ToggleAutomap_f (void)
 /**
  * \brief Automap input handler
  */
-PUBLIC void automap_keydown (int key)
+void automap_keydown (int key)
 {
     if (Key_IsDown (key)) {
         fprintf(stdout, "Tab pressed\n");

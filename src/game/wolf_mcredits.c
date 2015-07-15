@@ -41,10 +41,10 @@
 /////////////////////////////////////////////////////////////////////
 
 
-PRIVATE const char **credits;
+static const char **credits;
 
 
-PRIVATE const char *reduxcredits[] = {
+static const char *reduxcredits[] = {
     "Wolfenstein 3-D Redux",
     "",
     "+Code Conductor",
@@ -75,7 +75,7 @@ PRIVATE const char *reduxcredits[] = {
 /**
  * \brief Callback to draw the credits menu
  */
-PRIVATE void M_Credits_MenuDraw (void)
+static void M_Credits_MenuDraw (void)
 {
     int i, x, y;
     int w, h;
@@ -122,7 +122,7 @@ PRIVATE void M_Credits_MenuDraw (void)
 /**
  * \brief Callback for key input, causes the credits menu to close
  */
-PRIVATE const char *M_Credits_Key (int key)
+static const char *M_Credits_Key (int key)
 {
     M_PopMenu();
 
@@ -132,7 +132,7 @@ PRIVATE const char *M_Credits_Key (int key)
 /**
  * \brief Trigger for credits menu
  */
-PUBLIC void M_Menu_Credits_f (void)
+void M_Menu_Credits_f (void)
 {
     credits = reduxcredits;
 

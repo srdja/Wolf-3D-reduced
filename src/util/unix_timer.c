@@ -36,7 +36,7 @@
  * \brief  This function retrieves the system time, in milliseconds. The system time is the time elapsed since application was started.
  * \return Returns the system time, in milliseconds.
  */
-PUBLIC W32 Sys_Milliseconds (void)
+W32 Sys_Milliseconds (void)
 {
     struct timeval tp;
     struct timezone tzp;

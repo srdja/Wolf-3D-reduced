@@ -43,22 +43,22 @@
 //
 /////////////////////////////////////////////////////////////////////
 
-PRIVATE menuframework_s s_sound_menu;
-PRIVATE menuslider_s    s_sound_mastervolume_slider;
-PRIVATE menuslider_s    s_sound_sfxvolume_slider;
-PRIVATE menuslider_s    s_sound_musicvolume_slider;
-PRIVATE menulist_s      s_sound_device_list;
+static menuframework_s s_sound_menu;
+static menuslider_s    s_sound_mastervolume_slider;
+static menuslider_s    s_sound_sfxvolume_slider;
+static menuslider_s    s_sound_musicvolume_slider;
+static menulist_s      s_sound_device_list;
 
 
-PRIVATE void UpdateMasterVolumeFunc (void *unused)
+static void UpdateMasterVolumeFunc (void *unused)
 {
 }
 
-PRIVATE void UpdateMusicVolumeFunc (void *unused)
+static void UpdateMusicVolumeFunc (void *unused)
 {
 }
 
-PRIVATE void Sound_MenuInit (void)
+static void Sound_MenuInit (void)
 {
     // configure controls menu and menu items
     s_sound_menu.x = (viddef.width >> 1) + 70;
@@ -101,7 +101,7 @@ PRIVATE void Sound_MenuInit (void)
 
 
 
-PRIVATE void Sound_MenuDraw (void)
+static void Sound_MenuDraw (void)
 {
     if (g_version == SPEAROFDESTINY) {
         R_Draw_Tile (0, 0, viddef.width, viddef.height, "pics/C_BACKDROPPIC.tga");
@@ -124,12 +124,12 @@ PRIVATE void Sound_MenuDraw (void)
     Menu_Draw (&s_sound_menu);
 }
 
-PRIVATE const char *Sound_MenuKey (int key)
+static const char *Sound_MenuKey (int key)
 {
     return Default_MenuKey (&s_sound_menu, key);
 }
 
-PUBLIC void M_Menu_Sound_f (void)
+void M_Menu_Sound_f (void)
 {
     Sound_MenuInit();
     M_PushMenu (Sound_MenuDraw, Sound_MenuKey);

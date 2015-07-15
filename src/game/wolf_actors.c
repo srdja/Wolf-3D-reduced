@@ -51,7 +51,7 @@ W8 r_add8dir[ 9 ] = { 4, 7, 6, 5, 0, 1, 2, 3, 0 };
  * \param[in] self Valid Pointer to an entity_t structure to change state.
  * \param[in] newState State to set entity.
  */
-PUBLIC void A_StateChange (entity_t *ent, en_state newState)
+void A_StateChange (entity_t *ent, en_state newState)
 {
     ent->state = newState;
     assert (ent->type >= 0 && ent->type < NUMENEMIES);
@@ -69,7 +69,7 @@ PUBLIC void A_StateChange (entity_t *ent, en_state newState)
  * \param[in] self Valid Pointer to an entity_t structure
  * \return 0 if we must remove this guard from Guards list, otherwise 1
  */
-PRIVATE int DoGuard (entity_t *ent)  // FIXME: revise!
+static int DoGuard (entity_t *ent)  // FIXME: revise!
 {
     think_t think;
 
@@ -131,7 +131,7 @@ PRIVATE int DoGuard (entity_t *ent)  // FIXME: revise!
  * \brief Remove guard from guards list
  * \param[in] self Valid Pointer to an entity_t structure to remove
  */
-PRIVATE void RemoveActor (entity_t *actor)
+static void RemoveActor (entity_t *actor)
 {
     Sprite_RemoveSprite (actor->sprite);
     memmove (actor, actor + 1, (INT_PTR) (&Guards[ NumGuards ]) - (INT_PTR) (actor + 1));
@@ -142,7 +142,7 @@ PRIVATE void RemoveActor (entity_t *actor)
  * \brief Process all guards currently in game.
  * \note This method should be called every frame
  */
-PUBLIC void ProcessGuards (void)
+void ProcessGuards (void)
 {
     int n, tex;
     assert (NumGuards < MAX_GUARDS);
@@ -172,7 +172,7 @@ PUBLIC void ProcessGuards (void)
 /**
  * \brief Reset guards status
  */
-PUBLIC void ResetGuards (void)
+void ResetGuards (void)
 {
     memset (Guards, 0, sizeof (Guards));
     NumGuards = 0;
@@ -183,7 +183,7 @@ PUBLIC void ResetGuards (void)
  * \brief Get the next available entity_t structure from Guards array
  * \return On success a valid pointer to a entity_t structure, otherwise NULL if no free slots are available.
  */
-PUBLIC entity_t *GetNewActor (void)
+entity_t *GetNewActor (void)
 {
     if (NumGuards > MAX_GUARDS) {
         return NULL;
@@ -203,7 +203,7 @@ PUBLIC entity_t *GetNewActor (void)
  * \param[in] lvl Valid pointer to levelData_t structure
  * \return On success valid pointer to newly spawned actor, otherwise NULL
  */
-PUBLIC entity_t *SpawnActor (enemy_t which, int x, int y, dir4type dir, LevelData_t *lvl)
+entity_t *SpawnActor (enemy_t which, int x, int y, dir4type dir, LevelData_t *lvl)
 {
     entity_t *new_actor;
 
@@ -248,7 +248,7 @@ PUBLIC entity_t *SpawnActor (enemy_t which, int x, int y, dir4type dir, LevelDat
  * \param[in] dir Direction
  * \param[in] lvl Valid pointer to levelData_t structure
  */
-PUBLIC void SpawnStand (enemy_t which, int x, int y, int dir, LevelData_t *lvl)
+void SpawnStand (enemy_t which, int x, int y, int dir, LevelData_t *lvl)
 {
     entity_t *self;
 
@@ -277,7 +277,7 @@ PUBLIC void SpawnStand (enemy_t which, int x, int y, int dir, LevelData_t *lvl)
  * \param[in] y Y position in tile map
  * \param[in] dir Direction
  */
-PUBLIC void SpawnPatrol (enemy_t which, int x, int y, int dir)
+void SpawnPatrol (enemy_t which, int x, int y, int dir)
 {
     entity_t *self;
 
@@ -302,7 +302,7 @@ PUBLIC void SpawnPatrol (enemy_t which, int x, int y, int dir)
  * \param[in] x X position in tile map
  * \param[in] y Y position in tile map
  */
-PUBLIC void SpawnDeadGuard (enemy_t which, int x, int y)
+void SpawnDeadGuard (enemy_t which, int x, int y)
 {
     entity_t *self;
 
@@ -325,7 +325,7 @@ PUBLIC void SpawnDeadGuard (enemy_t which, int x, int y)
  * \param[in] x X position in tile map
  * \param[in] y Y position in tile map
  */
-PUBLIC void SpawnBoss (enemy_t which, int x, int y)
+void SpawnBoss (enemy_t which, int x, int y)
 {
     entity_t *self;
     dir4type face;
@@ -380,7 +380,7 @@ PUBLIC void SpawnBoss (enemy_t which, int x, int y)
  * \param[in] x X position in tile map
  * \param[in] y Y position in tile map
  */
-PUBLIC void SpawnGhosts (enemy_t which, int x, int y)
+void SpawnGhosts (enemy_t which, int x, int y)
 {
     entity_t *self;
 

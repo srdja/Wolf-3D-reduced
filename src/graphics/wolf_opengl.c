@@ -65,31 +65,31 @@ float ratio; // viewport width/height
 /**
  * \brief Set openGL default state
  */
-PUBLIC void GL_SetDefaultState (void)
+void GL_SetDefaultState (void)
 {
-    glClearColor (1, 0, 0.5 , 0.5);
-    glCullFace (GL_FRONT);
-    glEnable (GL_TEXTURE_2D);
+    glClearColor(1, 0, 0.5 , 0.5);
+    glCullFace(GL_FRONT);
+    glEnable(GL_TEXTURE_2D);
 
-    glEnable (GL_ALPHA_TEST);
-    glAlphaFunc (GL_GREATER, 0.666f);
+    glEnable(GL_ALPHA_TEST);
+    glAlphaFunc(GL_GREATER, 0.666f);
 
-    glDisable (GL_DEPTH_TEST);
-    glDisable (GL_CULL_FACE);
-    glDisable (GL_BLEND);
+    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_CULL_FACE);
+    glDisable(GL_BLEND);
 
-    glColor4f (1, 1, 1, 1);
+    glColor4f(1, 1, 1, 1);
 
-    glPolygonMode (GL_FRONT_AND_BACK, GL_FILL);
-    glShadeModel (GL_FLAT);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    glShadeModel(GL_FLAT);
 
-    glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 /**
  * \brief Check field-of-view
  */
-PRIVATE void R_CheckFOV (void)
+static void R_CheckFOV (void)
 {
     ratio = (float) viddef.width / (float)viddef.height; // FIXME: move somewhere
     cur_y_fov = g_fov;
@@ -101,7 +101,7 @@ PRIVATE void R_CheckFOV (void)
  * \brief Set openGL 3D view
  * \param[in] viewport player's viewport
  */
-PUBLIC void R_SetGL3D (placeonplane_t viewport)
+void R_SetGL3D (placeonplane_t viewport)
 {
     R_CheckFOV();
 
@@ -130,7 +130,7 @@ PUBLIC void R_SetGL3D (placeonplane_t viewport)
  * \param[in] h Bottom
  * \param[in] color Color
  */
-PUBLIC void R_DrawBox (int x, int y, int w, int h, W32 color)
+void R_DrawBox (int x, int y, int w, int h, W32 color)
 {
     glDisable (GL_TEXTURE_2D);
 
@@ -204,7 +204,7 @@ void LoadWallTexture (int wallPicNum , _boolean *pIsDark)
  *              |________|
  *              south (y)
  */
-PUBLIC void R_Draw_Wall (float x, float y, float z1, float z2, int type, int tex)
+void R_Draw_Wall (float x, float y, float z1, float z2, int type, int tex)
 {
     float x1, x2, y1, y2;
     _boolean isDark;
@@ -270,7 +270,7 @@ PUBLIC void R_Draw_Wall (float x, float y, float z1, float z2, int type, int tex
  * \param[in] backside Set to true if door is back facing, otherwise set to false for front facing door.
  * \param[in] amount Set to true if door is back facing, otherwise set to false for front facing door.
  */
-PUBLIC void R_Draw_Door (int x, int y, float z1, float z2, _boolean vertical, _boolean backside, int tex, int amount)
+void R_Draw_Door (int x, int y, float z1, float z2, _boolean vertical, _boolean backside, int tex, int amount)
 {
     float x1, x2, y1, y2, amt;
     _boolean isDark;
@@ -327,7 +327,7 @@ PUBLIC void R_Draw_Door (int x, int y, float z1, float z2, _boolean vertical, _b
 /**
  * \brief Draws all visible sprites.
  */
-PUBLIC void R_DrawSprites (void)
+void R_DrawSprites (void)
 {
     float sina, cosa;
     float Ex, Ey, Dx, Dy;
@@ -376,13 +376,12 @@ PUBLIC void R_DrawSprites (void)
             glVertex3f (Dx, UPPERZCOORD, -Dy);
         glEnd();
     }
-
 }
 
 /**
  * \brief Draws weapon
  */
-PUBLIC void R_DrawWeapon (void)
+void R_DrawWeapon (void)
 {
     texture_t *tex;
     static int w = 128;
@@ -432,7 +431,7 @@ PUBLIC void R_DrawWeapon (void)
  * \param[in] y Y-Coordinent
  * \param[in] number Number value to draw
  */
-PUBLIC void R_DrawNumber (int x, int y, int number)
+void R_DrawNumber (int x, int y, int number)
 {
     texture_t *tex;
     int col;
@@ -484,7 +483,7 @@ W8 wfont[ ] = {
  * \param[in] y Y-Coordinent
  * \param[in] string Text
  */
-PUBLIC void R_put_line (int x, int y, const char *string)
+void R_put_line (int x, int y, const char *string)
 {
     texture_t *tex;
     int mx = x;

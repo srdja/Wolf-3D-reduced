@@ -74,7 +74,7 @@ const char *menu_out_sound  = "lsfx/039.wav";
 
 
 
-PRIVATE int m_main_cursor;
+static int m_main_cursor;
 
 
 void M_Menu_Main_f (void);
@@ -124,7 +124,7 @@ int     m_menudepth;
  * \param[in] name File name of banner image
  * \param[in] nYOffest Y offset
  */
-PUBLIC void M_Banner (const char *name, W16 nYOffest)
+void M_Banner (const char *name, W16 nYOffest)
 {
     SW32 w, h;
 
@@ -145,7 +145,7 @@ PUBLIC void M_Banner (const char *name, W16 nYOffest)
  * \param[in] name File name of banner image
  * \param[in] nYOffest Y offset
  */
-PUBLIC void M_BannerString (const char *string, W16 nYOffset)
+void M_BannerString (const char *string, W16 nYOffset)
 {
     int w, h;
 
@@ -159,7 +159,7 @@ PUBLIC void M_BannerString (const char *string, W16 nYOffset)
  * \param[in] draw Callback function to draw the menu screen
  * \param[in] key Callback function to handle input for menu screen
  */
-PUBLIC void M_PushMenu (void (*draw) (void), const char * (*key) (int k))
+void M_PushMenu (void (*draw) (void), const char * (*key) (int k))
 {
     int     i;
 
@@ -193,7 +193,7 @@ PUBLIC void M_PushMenu (void (*draw) (void), const char * (*key) (int k))
 /**
  * \brief Close the menu
  */
-PUBLIC void M_ForceMenuOff (void)
+void M_ForceMenuOff (void)
 {
     m_drawfunc = 0;
     m_keyfunc = 0;
@@ -404,7 +404,7 @@ void M_DrawCursor (int x, int y)
  * \param[in] act Active border colour
  * \param[in] deact deactive border colour
  */
-PUBLIC void M_DrawWindow (int x, int y, int w, int h,
+void M_DrawWindow (int x, int y, int w, int h,
                           colour3_t bg, colour3_t act, colour3_t deact)
 {
     R_Draw_Fill (x, y, w, h, bg);
@@ -445,7 +445,7 @@ void M_DrawInfoBar (void)
 #define MAIN_ITEMS  10  // Number of menu items on the main menu.
 // Used to keep track of cursor position.
 
-PRIVATE const char *menunames[] = {
+static const char *menunames[] = {
     "New Game",
     "Sound",
     "Control",
@@ -935,7 +935,7 @@ void M_Keydown (int key)
 
 extern void Automap();
 
-PUBLIC void DrawMenus()
+void DrawMenus()
 {
     switch (ClientStatic.menuState) {
 

@@ -192,7 +192,7 @@ keyname_t keynames[] = {
 ==============================================================================
 */
 
-PUBLIC _boolean Key_IsDown (int keynum)
+_boolean Key_IsDown (int keynum)
 {
     if (keynum == -1) {
         return false;
@@ -206,7 +206,7 @@ PUBLIC _boolean Key_IsDown (int keynum)
  * \param[in] keynum key number to convert to string
  * \return A string (either a single ASCII char, or a K_* name) for the given keynum.
  */
-PUBLIC char *Key_KeynumToString (int keynum)
+char *Key_KeynumToString (int keynum)
 {
     // FIXME: handle quote special (general escape sequence?)
     keyname_t       *kn;
@@ -235,7 +235,7 @@ PUBLIC char *Key_KeynumToString (int keynum)
 /**
  * \brief Set new key binding.
  */
-PUBLIC void Key_SetBinding (int keynum, char *binding)
+void Key_SetBinding (int keynum, char *binding)
 {
     char *newbinding;
     int length;
@@ -258,7 +258,7 @@ PUBLIC void Key_SetBinding (int keynum, char *binding)
     keybindings[ keynum ] = newbinding;
 }
 
-PUBLIC int Key_GetKey (const char *binding)
+int Key_GetKey (const char *binding)
 {
     int i;
 
@@ -277,7 +277,7 @@ PUBLIC int Key_GetKey (const char *binding)
  * \brief Writes lines containing "bind key value".
  * \param[in] f File handle to write out key bindings
  */
-PUBLIC void Key_WriteBindings (FILE *f)
+void Key_WriteBindings (FILE *f)
 {
     int     i;
 
@@ -291,7 +291,7 @@ PUBLIC void Key_WriteBindings (FILE *f)
 /**
  * \brief Initialize key mapping module.
  */
-PUBLIC void Key_Init (void)
+void Key_Init (void)
 {
     int i;
 //
@@ -403,7 +403,7 @@ extern void IN_UseDown (void);
 extern void IN_UseUp (void);
 
 // TODO THIS FUNCTION GENERATES KEYPRESS COMMANDS
-PUBLIC void Key_Event (int key, _boolean down, unsigned time)
+void Key_Event (int key, _boolean down, unsigned time)
 {
 
     // update auto-repeat status
@@ -488,7 +488,7 @@ PUBLIC void Key_Event (int key, _boolean down, unsigned time)
 /**
  * \brief Clear key states
  */
-PUBLIC void Key_ClearStates (void)
+void Key_ClearStates (void)
 {
     int i;
 

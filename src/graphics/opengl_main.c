@@ -49,7 +49,7 @@ int  gl_clear;
  * \param[in] zNear Specifies the distance from the viewer to the near clipping plane (always positive).
  * \param[in] zFar Specifies the distance from the viewer to the far clipping plane (always positive).
  */
-PUBLIC void MYgluPerspective (GLdouble fovy, GLdouble aspect,
+void MYgluPerspective (GLdouble fovy, GLdouble aspect,
                               GLdouble zNear, GLdouble zFar)
 {
     GLdouble xmin, xmax, ymin, ymax;
@@ -70,7 +70,7 @@ PUBLIC void MYgluPerspective (GLdouble fovy, GLdouble aspect,
 /**
  * \brief clear buffers to preset values
  */
-PRIVATE void R_Clear (void)
+static void R_Clear (void)
 {
     if (gl_ztrick) {
         static int trickframe;
@@ -107,7 +107,7 @@ PRIVATE void R_Clear (void)
 /**
  * \brief Set 2D virtual screen mode
  */
-PUBLIC void R_SetGL2D (void)
+void R_SetGL2D (void)
 {
     // set 2D virtual screen size
     glViewport (0, 0, viddef.width, viddef.height);
@@ -127,7 +127,7 @@ PUBLIC void R_SetGL2D (void)
 /**
  * \brief Register GL data and methods
  */
-PRIVATE void R_Register (void)
+static void R_Register (void)
 {
     gl_mode = 0;
     gl_round_down = 1;
@@ -139,7 +139,7 @@ PRIVATE void R_Register (void)
  * \brief Initialize OS specific parts of OpenGL.
  * \return true on success, otherwise false.
  */
-PRIVATE _boolean R_SetMode (void)
+static _boolean R_SetMode (void)
 {
     rserr_t err;
     _boolean fullscreen;
@@ -173,7 +173,7 @@ PRIVATE _boolean R_SetMode (void)
  * \param[in] hWnd A handle to a window
  * \return 1 on success, otherwise -1.
  */
-PUBLIC int R_Init (void *hinstance, void *hWnd)
+int R_Init (void *hinstance, void *hWnd)
 {
     gl_mode = 1;
 
@@ -226,7 +226,7 @@ PUBLIC int R_Init (void *hinstance, void *hWnd)
 /**
  * \brief Begin frame
  */
-PUBLIC void R_BeginFrame (void)
+void R_BeginFrame (void)
 {
     R_SetGL2D();
     glDrawBuffer (GL_BACK);
@@ -236,7 +236,7 @@ PUBLIC void R_BeginFrame (void)
 /**
  * \brief End frame
  */
-PUBLIC void R_EndFrame (void)
+void R_EndFrame (void)
 {
     GLimp_EndFrame();
 }

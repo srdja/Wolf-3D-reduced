@@ -48,8 +48,8 @@ p q r s t u v w x y z { | } ~
 
 
 #define MAX_FONTS  4
-PRIVATE font_t *myfonts[ MAX_FONTS ];
-PRIVATE W32 num_fonts = 0;
+static font_t *myfonts[ MAX_FONTS ];
+static W32 num_fonts = 0;
 
 
 typedef struct {
@@ -63,7 +63,7 @@ typedef struct {
  * \param[in] filename File name to load details
  * \return Valid pointer to font_t
  */
-PUBLIC font_t *createFont (const char *filename)
+font_t *createFont (const char *filename)
 {
     font_t *temp_font;
     char *datname;
@@ -162,7 +162,7 @@ PUBLIC font_t *createFont (const char *filename)
 /**
  * \brief Initialize font handler
  */
-PUBLIC void Font_Init (void)
+void Font_Init (void)
 {
     W32 i;
 
@@ -181,7 +181,7 @@ PUBLIC void Font_Init (void)
  * \param[out] w Width of text in pixels
  * \param[out] h Height of text in pixels
  */
-PUBLIC void Font_GetMsgDimensions (FONTSELECT fs, const char *string, int *w, int *h)
+void Font_GetMsgDimensions (FONTSELECT fs, const char *string, int *w, int *h)
 {
     int width = 0;
     int mx = 0;
@@ -228,7 +228,7 @@ PUBLIC void Font_GetMsgDimensions (FONTSELECT fs, const char *string, int *w, in
  * \param[in] fs Font to use
  * \param[in] size Size of font
  */
-PUBLIC void Font_SetSize (FONTSELECT fs, W16 size)
+void Font_SetSize (FONTSELECT fs, W16 size)
 {
     if (myfonts[ fs ]) {
         myfonts[ fs ]->nSize = size;
@@ -240,7 +240,7 @@ PUBLIC void Font_SetSize (FONTSELECT fs, W16 size)
  * \param[in] fs Font to use
  * \return Size of font, otherwise 0
  */
-PUBLIC W16 Font_GetSize (FONTSELECT fs)
+W16 Font_GetSize (FONTSELECT fs)
 {
     if (myfonts[ fs ]) {
         return (myfonts[ fs ]->nMaxHeight * myfonts[ fs ]->nSize);
@@ -254,7 +254,7 @@ PUBLIC W16 Font_GetSize (FONTSELECT fs)
  * \param[in] fs Font to use
  * \param[in] c Colour
  */
-PUBLIC void Font_SetColour (FONTSELECT fs, colour3_t c)
+void Font_SetColour (FONTSELECT fs, colour3_t c)
 {
     if (myfonts[ fs ]) {
         myfonts[ fs ]->colour[ 0 ] = c[ 0 ];
@@ -270,7 +270,7 @@ PUBLIC void Font_SetColour (FONTSELECT fs, colour3_t c)
  * \param[in] y Y-Coordinate
  * \param[in] string Text to put on screen
  */
-PUBLIC void Font_put_line (FONTSELECT fs, int x, int y, const char *string)
+void Font_put_line (FONTSELECT fs, int x, int y, const char *string)
 {
     int mx = x;
     W16 scale;
@@ -327,7 +327,7 @@ void Font_put_lineR2L (FONTSELECT fs, int x, int y, const char *string)
  * \param[in] y Y-Coordinate
  * \param[in] num Character to put on screen
  */
-PUBLIC W16 Font_put_character (FONTSELECT fs, int x, int y, W16 num)
+W16 Font_put_character (FONTSELECT fs, int x, int y, W16 num)
 {
     if (! myfonts[ fs ] || num > 126) {
         return 0;
@@ -346,7 +346,7 @@ PUBLIC W16 Font_put_character (FONTSELECT fs, int x, int y, W16 num)
  * \param[in] start Start of string
  * \param[in] end End of string
  */
-PUBLIC void Font_put_line_size (FONTSELECT fs, int x, int y, const char *start, const char *end)
+void Font_put_line_size (FONTSELECT fs, int x, int y, const char *start, const char *end)
 {
     int mx = x;
     W16 scale;
@@ -373,7 +373,7 @@ PUBLIC void Font_put_line_size (FONTSELECT fs, int x, int y, const char *start, 
  * \param[in\out] sst String segment that fits
  * \return true if line fits, otherwise false.
  */
-PRIVATE W8 Font_get_line (FONTSELECT fs, int line_width, string_seg_t *sst)
+static W8 Font_get_line (FONTSELECT fs, int line_width, string_seg_t *sst)
 {
     int x = 0;
     int in_a_word = 0;
@@ -454,7 +454,7 @@ PRIVATE W8 Font_get_line (FONTSELECT fs, int line_width, string_seg_t *sst)
  * \param[in] space_between_lines Space between rows
  * \param[in] line_width_in_pixel Line width in pixels
  */
-PUBLIC void Font_put_paragraph (FONTSELECT fs, short x, short y,
+void Font_put_paragraph (FONTSELECT fs, short x, short y,
                                 const char *string,
                                 int space_between_lines,
                                 int line_width_in_pixel)

@@ -65,7 +65,7 @@ const char dsodsounds[ 7 ][ 32 ] = {
  * \brief Do a death scream sound depending on actor type.
  * \param[in] self Valid Pointer to an entity_t structure.
  */
-PUBLIC void A_DeathScream (entity_t *entity)
+void A_DeathScream (entity_t *entity)
 {
     switch (entity->type) {
     case en_mutant:
@@ -175,7 +175,7 @@ PUBLIC void A_DeathScream (entity_t *entity)
  * \brief Puts an actor into attack mode and possibly reverses the direction if the player is behind it.
  * \param[in] self Valid Pointer to an entity_t structure.
  */
-PUBLIC void A_FirstSighting (entity_t *self)
+void A_FirstSighting (entity_t *self)
 {
     switch (self->type) {
     case en_guard:
@@ -304,7 +304,7 @@ PUBLIC void A_FirstSighting (entity_t *self)
  * \brief Actor has been killed, so give points and spawn powerups
  * \param[in] self Valid pointer to an entity_t structure.
  */
-PRIVATE void A_KillActor (entity_t *self)
+static void A_KillActor (entity_t *self)
 {
     int tilex, tiley;
 
@@ -418,7 +418,7 @@ PRIVATE void A_KillActor (entity_t *self)
  * \param[in] damage Damage being dealt
  * \note Does damage points to enemy ob, either putting it into a stun frame or killing it.
  */
-PUBLIC void A_DamageActor (entity_t *self, int damage)
+void A_DamageActor (entity_t *self, int damage)
 {
     Player.madenoise = 1;
 
@@ -456,7 +456,7 @@ PUBLIC void A_DamageActor (entity_t *self, int damage)
  * \brief Play MechaHitler sound.
  * \param[in] self Valid pointer to an entity_t structure.
  */
-PUBLIC void A_MechaSound (entity_t *self)
+void A_MechaSound (entity_t *self)
 {
     if (areabyplayer[ self->areanumber ]) {
         //Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/080.wav"), 1, ATTN_NORM, 0);
@@ -467,7 +467,7 @@ PUBLIC void A_MechaSound (entity_t *self)
  * \brief Play slurpie sound.
  * \param[in] self Valid pointer to an entity_t structure.
  */
-PUBLIC void A_Slurpie (entity_t *self)
+void A_Slurpie (entity_t *self)
 {
    // Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("lsfx/061.wav"), 1, ATTN_NORM, 0);
 }
@@ -476,7 +476,7 @@ PUBLIC void A_Slurpie (entity_t *self)
  * \brief Spawn Hitler when MechaHitler is dead.
  * \param[in] self Valid pointer to an entity_t structure.
  */
-PUBLIC void A_HitlerMorph (entity_t *self)
+void A_HitlerMorph (entity_t *self)
 {
     int hitpoints[ 4 ] = { 500, 700, 800, 900 };
     entity_t *hitler;
@@ -517,13 +517,13 @@ PUBLIC void A_HitlerMorph (entity_t *self)
     It will get tired!
 */
 
-PRIVATE int angel_temp = 0;
+static int angel_temp = 0;
 
 /**
  * \brief Play Angel of Death breathing sound.
  * \param[in] self Valid pointer to an entity_t structure.
  */
-PUBLIC void A_Breathing (entity_t *self)
+void A_Breathing (entity_t *self)
 {
    // Sound_StartSound (NULL, 0, CHAN_VOICE, Sound_RegisterSound ("lsfx/080.wav"), 1, ATTN_NORM, 0);
 }
@@ -532,7 +532,7 @@ PUBLIC void A_Breathing (entity_t *self)
  * \brief Angel of Death is starting his attack
  * \param[in] self Valid pointer to an entity_t structure.
  */
-PUBLIC void A_StartAttack (entity_t *self)
+void A_StartAttack (entity_t *self)
 {
     angel_temp = 0;
 }
@@ -541,7 +541,7 @@ PUBLIC void A_StartAttack (entity_t *self)
  * \brief Relaunch Angel of Death state either pain or chase player
  * \param[in] self Valid pointer to an entity_t structure.
  */
-PUBLIC void A_Relaunch (entity_t *self)
+void A_Relaunch (entity_t *self)
 {
     if (++angel_temp == 3) {
         A_StateChange (self, st_pain);
@@ -559,7 +559,7 @@ PUBLIC void A_Relaunch (entity_t *self)
  * \brief Player is victorious
  * \param[in] self Valid pointer to an entity_t structure.
  */
-PUBLIC void A_Victory (entity_t *self)
+void A_Victory (entity_t *self)
 {
     M_Intermission_f();
 }
@@ -568,7 +568,7 @@ PUBLIC void A_Victory (entity_t *self)
  * \brief Entity is dormant state.
  * \param[in] self Valid pointer to an entity_t structure.
  */
-PUBLIC void A_Dormant (entity_t *self)
+void A_Dormant (entity_t *self)
 {
     int deltax, deltay;
     int xl, xh, yl, yh, x, y, n;
@@ -616,14 +616,14 @@ moveok:
     A_StateChange (self, st_path1);
 }
 
-PRIVATE entity_t *deathcamEnt;
-PRIVATE int deathcamTime;
-PRIVATE int deathcamPhase;
+static entity_t *deathcamEnt;
+static int deathcamTime;
+static int deathcamPhase;
 
 /**
  * \brief Deathcam sequence controller
  */
-PRIVATE void M_LetsSeeThatAgain_Draw (void)
+static void M_LetsSeeThatAgain_Draw (void)
 {
     float fangle;
     int dist;
@@ -686,7 +686,7 @@ PRIVATE void M_LetsSeeThatAgain_Draw (void)
     R_DrawHUD();
 }
 
-PRIVATE const char *M_LetsSeeThatAgain_Key (int key)
+static const char *M_LetsSeeThatAgain_Key (int key)
 {
     return NULL;
 }
@@ -695,7 +695,7 @@ PRIVATE const char *M_LetsSeeThatAgain_Key (int key)
  * \brief Enter the Deathcam sequence
  * \param[in] self Valid pointer to an entity_t structure.
  */
-PUBLIC void A_StartDeathCam (entity_t *self)
+void A_StartDeathCam (entity_t *self)
 {
     deathcamEnt = self;
     deathcamTime = ClientStatic.realtime;
@@ -713,7 +713,7 @@ PUBLIC void A_StartDeathCam (entity_t *self)
  * \brief Emmit rocket smoke.
  * \param[in] self Valid pointer to an entity_t structure.
  */
-PUBLIC void A_Smoke (entity_t *self)
+void A_Smoke (entity_t *self)
 {
     entity_t *smoke;
 
@@ -740,7 +740,7 @@ PUBLIC void A_Smoke (entity_t *self)
  * \param[in] lvl Valid Pointer to LevelData_t structure.
  * \return true if move ok, otherwise false.
  */
-PRIVATE _boolean ProjectileTryMove (entity_t *self, LevelData_t *lvl)
+static _boolean ProjectileTryMove (entity_t *self, LevelData_t *lvl)
 {
 #define PROJSIZE    0x2000
 
@@ -777,7 +777,7 @@ PRIVATE _boolean ProjectileTryMove (entity_t *self, LevelData_t *lvl)
  * \brief Called when projectile is in flight.
  * \param[in] self Valid pointer to an entity_t structure.
  */
-PUBLIC void T_Projectile (entity_t *self)
+void T_Projectile (entity_t *self)
 {
 #define PROJECTILESIZE  0xC000
 

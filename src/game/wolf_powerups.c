@@ -76,7 +76,7 @@ int Pow_Texture[ pow_last ] = {
 
 -----------------------------------------------------------------------------
 */
-PRIVATE void Pow_Remove (powerup_t *powerup)
+static void Pow_Remove (powerup_t *powerup)
 {
     powerup->x = -1;
     powerup->y = -1;
@@ -94,7 +94,7 @@ PRIVATE void Pow_Remove (powerup_t *powerup)
 
 -----------------------------------------------------------------------------
 */
-PRIVATE powerup_t *Pow_AddNew (void)
+static powerup_t *Pow_AddNew (void)
 {
     int i;
 
@@ -124,7 +124,7 @@ PRIVATE powerup_t *Pow_AddNew (void)
 
 -----------------------------------------------------------------------------
 */
-PUBLIC void Powerup_Reset (void)
+void Powerup_Reset (void)
 {
     levelData.numPowerups = 0;
 }
@@ -142,7 +142,7 @@ extern void Client_PrepRefresh (const char *r_mapname);
 
 -----------------------------------------------------------------------------
 */
-PRIVATE int Pow_Give (pow_t type)
+static int Pow_Give (pow_t type)
 {
 
     switch (type) {
@@ -319,7 +319,7 @@ PRIVATE int Pow_Give (pow_t type)
 
 -----------------------------------------------------------------------------
 */
-PUBLIC void Powerup_Spawn (int x, int y, int type)
+void Powerup_Spawn (int x, int y, int type)
 {
     powerup_t *newp;
 
@@ -346,7 +346,7 @@ PUBLIC void Powerup_Spawn (int x, int y, int type)
 
 -----------------------------------------------------------------------------
 */
-PUBLIC void Powerup_PickUp (int x, int y)
+void Powerup_PickUp (int x, int y)
 {
     int     i;
     powerup_t *pow;

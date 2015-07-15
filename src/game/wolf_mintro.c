@@ -48,9 +48,9 @@
 /////////////////////////////////////////////////////////////////////
 
 
-PRIVATE W8 intro_slide = 0;
+static W8 intro_slide = 0;
 
-PRIVATE W32 intro_basetime;
+static W32 intro_basetime;
 
 colour3_t pc13intro = { 32, 168, 248 };
 
@@ -60,10 +60,10 @@ typedef struct {
 
 } IntroLayer_t;
 
-PRIVATE IntroLayer_t sIntroLayer[ 6 ];
+static IntroLayer_t sIntroLayer[ 6 ];
 
 
-PRIVATE void Intro_PC13_Draw (void)
+static void Intro_PC13_Draw (void)
 {
     W32 w, h;
 
@@ -75,7 +75,7 @@ PRIVATE void Intro_PC13_Draw (void)
 
 
 
-PRIVATE void Intro_TitlePage_Draw (void)
+static void Intro_TitlePage_Draw (void)
 {
     W32 w, h;
 
@@ -93,7 +93,7 @@ PRIVATE void Intro_TitlePage_Draw (void)
 
 }
 
-PRIVATE void Intro_CreditsPage_Draw (void)
+static void Intro_CreditsPage_Draw (void)
 {
     W32 w, h;
 
@@ -134,7 +134,7 @@ typedef struct {
 
 } HighScore_t;
 
-PRIVATE HighScore_t Scores[ MAX_SCORES ] = {
+static HighScore_t Scores[ MAX_SCORES ] = {
     { "id software-'92", 10000, 1 },
     { "Adrian Carmack", 10000, 1 },
     { "John Carmack",   10000, 1 },
@@ -144,7 +144,7 @@ PRIVATE HighScore_t Scores[ MAX_SCORES ] = {
     { "Jay Wilbur",     10000, 1 }
 };
 
-PRIVATE void Intro_HighScore_Draw (void)
+static void Intro_HighScore_Draw (void)
 {
     W32 w, h;
     W16 i;
@@ -191,7 +191,7 @@ PRIVATE void Intro_HighScore_Draw (void)
 }
 
 
-PRIVATE void Intro_SHighScore_Draw (void)
+static void Intro_SHighScore_Draw (void)
 {
     W32 h;
     W16 i;
@@ -228,7 +228,7 @@ PRIVATE void Intro_SHighScore_Draw (void)
     }
 }
 
-PRIVATE void M_Intro_Draw (void)
+static void M_Intro_Draw (void)
 {
     if (intro_slide > 3) {
         //Sound_StopBGTrack();
@@ -247,7 +247,7 @@ PRIVATE void M_Intro_Draw (void)
     }
 }
 /*
-PRIVATE const char *M_Intro_Key (int key)
+static const char *M_Intro_Key (int key)
 {
     intro_basetime = ClientStatic.realtime;
     ++intro_slide;
@@ -256,7 +256,7 @@ PRIVATE const char *M_Intro_Key (int key)
 }
 */
 /*
-PUBLIC void M_Intro_f (void)
+void M_Intro_f (void)
 {
     char *s;
 

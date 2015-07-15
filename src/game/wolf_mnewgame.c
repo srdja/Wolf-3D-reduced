@@ -42,8 +42,8 @@
 extern void M_Menu_Skill_f (void);
 extern void M_Menu_Mission_f (void);
 
-PRIVATE int tempEpisode;
-PRIVATE int tempSkill;
+static int tempEpisode;
+static int tempSkill;
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -51,14 +51,14 @@ PRIVATE int tempSkill;
 //
 /////////////////////////////////////////////////////////////////////
 
-PRIVATE int     m_game_cursor;
+static int     m_game_cursor;
 
-PRIVATE menuframework_s s_game_menu;
-PRIVATE menuaction_s    s_episode_actions[ MAX_EPISODES ];
+static menuframework_s s_game_menu;
+static menuaction_s    s_episode_actions[ MAX_EPISODES ];
 
 
 
-PRIVATE void SetEpisodeGameFunc (void *data)
+static void SetEpisodeGameFunc (void *data)
 {
     menuaction_s *a = (menuaction_s *)data;
     char num[ 16 ];
@@ -71,13 +71,13 @@ PRIVATE void SetEpisodeGameFunc (void *data)
 }
 
 
-PRIVATE void MenuCursorDrawFunc (menuframework_s *menu)
+static void MenuCursorDrawFunc (menuframework_s *menu)
 {
     M_DrawCursor (((viddef.width - 616) >> 1) + 5, 70 + menu->cursor * 60);
 }
 
 
-PRIVATE void MenuDrawNewGameImages (void)
+static void MenuDrawNewGameImages (void)
 {
     char buffer[ 24 ];
     int i;
@@ -93,7 +93,7 @@ PRIVATE void MenuDrawNewGameImages (void)
     }
 }
 
-PRIVATE void Game_MenuInit (void)
+static void Game_MenuInit (void)
 {
     static char *wolf3d_episode_names[] = {
         "Episode 1\nEscape from Wolfenstein",
@@ -141,7 +141,7 @@ PRIVATE void Game_MenuInit (void)
     }
 }
 
-PRIVATE void Game_MenuDraw (void)
+static void Game_MenuDraw (void)
 {
     R_Draw_Fill (0, 0, viddef.width, viddef.height, bgcolour);
 
@@ -155,12 +155,12 @@ PRIVATE void Game_MenuDraw (void)
     Menu_Draw (&s_game_menu);
 }
 
-PRIVATE const char *Game_MenuKey (int key)
+static const char *Game_MenuKey (int key)
 {
     return Default_MenuKey (&s_game_menu, key);
 }
 
-PUBLIC void M_Menu_Game_f (void)
+void M_Menu_Game_f (void)
 {
     fprintf(stdout, "Entered game menu function\n");
     Game_MenuInit();
@@ -174,12 +174,12 @@ PUBLIC void M_Menu_Game_f (void)
 //
 /////////////////////////////////////////////////////////////////////
 
-PRIVATE menuframework_s s_skill_menu;
-PRIVATE menuaction_s    s_skill_actions[ MAX_SKILLS ];
+static menuframework_s s_skill_menu;
+static menuaction_s    s_skill_actions[ MAX_SKILLS ];
 
 extern void Client_PrepRefresh (const char *r_mapname);
 
-PUBLIC void StartGame (int episode, int mission, int g_skill)
+void StartGame (int episode, int mission, int g_skill)
 {
     char szTextMsg[ 128 ];
 
@@ -212,7 +212,7 @@ PUBLIC void StartGame (int episode, int mission, int g_skill)
     Client_PrepRefresh (szTextMsg);
 }
 
-PRIVATE void ToughPic (int i)
+static void ToughPic (int i)
 {
     char string[ 32 ];
 
@@ -227,7 +227,7 @@ PRIVATE void ToughPic (int i)
 }
 
 
-PRIVATE void SkillMenuCursorDrawFunc (struct _tag_menuframework *data)
+static void SkillMenuCursorDrawFunc (struct _tag_menuframework *data)
 {
     menuframework_s *menu = (menuframework_s *)data;
     M_DrawCursor (((viddef.width - 450) >> 1) + 5, 187 + menu->cursor * 30);
@@ -235,7 +235,7 @@ PRIVATE void SkillMenuCursorDrawFunc (struct _tag_menuframework *data)
 }
 
 
-PRIVATE void SkillGameFunc (void *data)
+static void SkillGameFunc (void *data)
 {
     menuaction_s *a = (menuaction_s *)data;
     tempSkill = a->generic.parent->cursor;
@@ -244,7 +244,7 @@ PRIVATE void SkillGameFunc (void *data)
 }
 
 
-PRIVATE void Skill_MenuInit (void)
+static void Skill_MenuInit (void)
 {
     static const char *skill_names[] = {
         "Can I play, Daddy?",
@@ -279,7 +279,7 @@ PRIVATE void Skill_MenuInit (void)
     }
 }
 
-PRIVATE void Skill_MenuDraw (void)
+static void Skill_MenuDraw (void)
 {
     if (g_version == SPEAROFDESTINY) {
         SW32 w, h;
@@ -309,12 +309,12 @@ PRIVATE void Skill_MenuDraw (void)
 
 
 
-PRIVATE const char *Skill_MenuKey (int key)
+static const char *Skill_MenuKey (int key)
 {
     return Default_MenuKey (&s_skill_menu, key);
 }
 
-PUBLIC void M_Menu_Skill_f (void)
+void M_Menu_Skill_f (void)
 {
     Skill_MenuInit();
     M_PushMenu (Skill_MenuDraw, Skill_MenuKey);
@@ -327,12 +327,12 @@ PUBLIC void M_Menu_Skill_f (void)
 //
 /////////////////////////////////////////////////////////////////////
 
-PRIVATE menuframework_s s_mission_menu;
-PRIVATE menuaction_s    s_mission_actions[ 10 ];
+static menuframework_s s_mission_menu;
+static menuaction_s    s_mission_actions[ 10 ];
 
 
 
-PRIVATE void SetMissionGameFunc (void *data)
+static void SetMissionGameFunc (void *data)
 {
     menuaction_s *a = (menuaction_s *)data;
     int floor = a->generic.parent->cursor;
@@ -369,12 +369,12 @@ PRIVATE void SetMissionGameFunc (void *data)
 }
 
 
-PRIVATE void MissionMenuCursorDrawFunc (menuframework_s *menu)
+static void MissionMenuCursorDrawFunc (menuframework_s *menu)
 {
     M_DrawCursor (((viddef.width - 616) >> 1) + 5, 70 + menu->cursor * 36);
 }
 
-PRIVATE void Mission_MenuInit (void)
+static void Mission_MenuInit (void)
 {
     static char *wolf3d_mission_names[] = {
         "Level 1",
@@ -466,7 +466,7 @@ PRIVATE void Mission_MenuInit (void)
     //Menu_Center( &s_mission_menu );
 }
 
-PRIVATE void Mission_MenuDraw (void)
+static void Mission_MenuDraw (void)
 {
     R_Draw_Fill (0, 0, viddef.width, viddef.height, bgcolour);
 
@@ -479,12 +479,12 @@ PRIVATE void Mission_MenuDraw (void)
     Menu_Draw (&s_mission_menu);
 }
 
-PRIVATE const char *Mission_MenuKey (int key)
+static const char *Mission_MenuKey (int key)
 {
     return Default_MenuKey (&s_mission_menu, key);
 }
 
-PUBLIC void M_Menu_Mission_f (void)
+void M_Menu_Mission_f (void)
 {
     Mission_MenuInit();
     M_PushMenu (Mission_MenuDraw, Mission_MenuKey);

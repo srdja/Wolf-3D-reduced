@@ -50,8 +50,8 @@
 #include "wolf_level.h"
 
 
-PUBLIC W8           areaconnect[ NUMAREAS ][ NUMAREAS ];    /* Is this area mated with another? */
-PUBLIC  _boolean    areabyplayer[ NUMAREAS ];               /* Which areas can I see into? */
+W8           areaconnect[ NUMAREAS ][ NUMAREAS ];    /* Is this area mated with another? */
+ _boolean    areabyplayer[ NUMAREAS ];               /* Which areas can I see into? */
 
 
 
@@ -59,7 +59,7 @@ PUBLIC  _boolean    areabyplayer[ NUMAREAS ];               /* Which areas can I
  * \brief Recursive routine to properly set the areabyplayer array by using the contents of the areaconnect array.
  * \param[in] area_number Area to connect
  */
-PRIVATE void Areas_RecursiveConnect (int area_number)
+static void Areas_RecursiveConnect (int area_number)
 {
     int i;
 
@@ -75,7 +75,7 @@ PRIVATE void Areas_RecursiveConnect (int area_number)
  * \brief Properly set the areabyplayer record
  * \param[in] area_number Area to connect
  */
-PUBLIC void Areas_Connect (int area_number)
+void Areas_Connect (int area_number)
 {
     memset (areabyplayer, 0, sizeof (areabyplayer));
     areabyplayer[ area_number ] = true;
@@ -87,7 +87,7 @@ PUBLIC void Areas_Connect (int area_number)
  * \param[in] area_number Area to connect
  * \note Called when a new level is loaded
  */
-PUBLIC void Areas_Init (int area_number)
+void Areas_Init (int area_number)
 {
     memset (areaconnect, 0, sizeof (areaconnect));
     memset (areabyplayer, 0, sizeof (areabyplayer));
@@ -99,7 +99,7 @@ PUBLIC void Areas_Init (int area_number)
  * \param[in] area1 Area to connect
  * \param[in] area2 Area to connect
  */
-PUBLIC void Areas_Join (int area1, int area2)
+void Areas_Join (int area1, int area2)
 {
     // FIXME: check for overflow!
     areaconnect[ area1 ][ area2 ]++;
@@ -111,7 +111,7 @@ PUBLIC void Areas_Join (int area1, int area2)
  * \param[in] area1 Area to disconnect
  * \param[in] area2 Area to disconnect
  */
-PUBLIC void Areas_Disconnect (int area1, int area2)
+void Areas_Disconnect (int area1, int area2)
 {
     // FIXME: check for underflow!
     areaconnect[ area1 ][ area2 ]--;

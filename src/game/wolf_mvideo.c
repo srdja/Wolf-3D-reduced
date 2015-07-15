@@ -38,7 +38,7 @@
 
 #include "../graphics/renderer.h"
 
-PRIVATE int gl_mode;
+static int gl_mode;
 
 
 /////////////////////////////////////////////////////////////////////
@@ -47,30 +47,30 @@ PRIVATE int gl_mode;
 //
 /////////////////////////////////////////////////////////////////////
 
-PRIVATE menuframework_s s_opengl_menu;
+static menuframework_s s_opengl_menu;
 
-PRIVATE menulist_s      s_mode_list;
-PRIVATE menuslider_s    s_tq_slider;
-PRIVATE menuslider_s    s_brightness_slider;
-PRIVATE menulist_s      s_fs_box;
-PRIVATE menulist_s      s_paletted_texture_box;
-PRIVATE menulist_s      s_finish_box;
-PRIVATE menuaction_s    s_cancel_action;
-PRIVATE menuaction_s    s_defaults_action;
+static menulist_s      s_mode_list;
+static menuslider_s    s_tq_slider;
+static menuslider_s    s_brightness_slider;
+static menulist_s      s_fs_box;
+static menulist_s      s_paletted_texture_box;
+static menulist_s      s_finish_box;
+static menuaction_s    s_cancel_action;
+static menuaction_s    s_defaults_action;
 
 
-PRIVATE void ResetDefaults()
+static void ResetDefaults()
 {
     Video_MenuInit();
 }
 
 
-PRIVATE void ApplyChanges (void *unused)
+static void ApplyChanges (void *unused)
 {
     M_ForceMenuOff();
 }
 
-PRIVATE void CancelChanges (void *unused)
+static void CancelChanges (void *unused)
 {
     extern void M_PopMenu (void);
 
@@ -78,7 +78,7 @@ PRIVATE void CancelChanges (void *unused)
 }
 
 
-PUBLIC void Video_MenuInit (void)
+void Video_MenuInit (void)
 {
     static const char *resolutions[] = {
         "[640 480]",

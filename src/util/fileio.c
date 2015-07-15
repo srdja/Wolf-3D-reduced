@@ -39,7 +39,7 @@
  * \param[in] Target file handle.
  * \return The file length in bytes.
  */
-PUBLIC SW32 FS_GetFileSize (filehandle_t *fhandle)
+SW32 FS_GetFileSize (filehandle_t *fhandle)
 {
     SW32    pos;
     SW32    end;
@@ -66,7 +66,7 @@ PUBLIC SW32 FS_GetFileSize (filehandle_t *fhandle)
  *                          SEEK_END -End of file.
  * \return If successful zero, otherwise a nonzero value.
  */
-PUBLIC W32 FS_FileSeek (filehandle_t *fhandle, SW32 offset, W32 origin)
+W32 FS_FileSeek (filehandle_t *fhandle, SW32 offset, W32 origin)
 {
     if (fhandle->bLoaded) {
         switch (origin) {
@@ -125,7 +125,7 @@ PUBLIC W32 FS_FileSeek (filehandle_t *fhandle, SW32 offset, W32 origin)
  * \param[in] filestream Pointer to valid FILE structure.
  * \note Closes a file stream that was returned by FS_FOpenFile.
  */
-PUBLIC void FS_CloseFile (filehandle_t *fhandle)
+void FS_CloseFile (filehandle_t *fhandle)
 {
     if (fhandle->hFile) {
         fclose (fhandle->hFile);
@@ -144,7 +144,7 @@ PUBLIC void FS_CloseFile (filehandle_t *fhandle)
  * \param[in] pakfiles Pointer to a valid packfile_t structure.
  * \return true on success, otherwise false.
  */
-PRIVATE _boolean LoadCompressedFile (filehandle_t *hFile, packfile_t *pakfiles)
+static _boolean LoadCompressedFile (filehandle_t *hFile, packfile_t *pakfiles)
 {
     int err;
     W32 read;
@@ -230,7 +230,7 @@ PRIVATE _boolean LoadCompressedFile (filehandle_t *hFile, packfile_t *pakfiles)
  * \param[out] Pointer to a valid filehandle_t structure.
  * \return true on success, otherwise false.
  */
-PRIVATE _boolean LoadFile (filehandle_t *hFile)
+static _boolean LoadFile (filehandle_t *hFile)
 {
     W32 read;
 
@@ -268,7 +268,7 @@ PRIVATE _boolean LoadFile (filehandle_t *hFile)
  *      Use the FS_CloseFile function to close an object handle returned
  *      by FS_OpenFile.
  */
-PUBLIC filehandle_t *FS_OpenFile (const char *filename, W32 FlagsAndAttributes)
+filehandle_t *FS_OpenFile (const char *filename, W32 FlagsAndAttributes)
 {
     searchpath_t    *search;
     char            netpath[ MAX_OSPATH ];
@@ -416,7 +416,7 @@ PUBLIC filehandle_t *FS_OpenFile (const char *filename, W32 FlagsAndAttributes)
  * \param[in] fhandle Pointer to valid filehandle_t structure.
  * \return On success number of full items actually read, otherwise -1.
  */
-PUBLIC SW32 FS_ReadFile (void *buffer, W32 size, W32 count, filehandle_t *fhandle)
+SW32 FS_ReadFile (void *buffer, W32 size, W32 count, filehandle_t *fhandle)
 {
     W8  *buf = (PW8)buffer;
 

@@ -151,13 +151,13 @@ statinfo_t static_sod[] = {
 statinfo_t *statinfo = static_wl6;
 int num_statics = sizeof (static_wl6) / sizeof (static_wl6[ 0 ]);
 
-PRIVATE W16 cachedGuard = 0;
-PRIVATE W16 cachedOfficer = 0;
-PRIVATE W16 cachedSS = 0;
-PRIVATE W16 cachedDog = 0;
-PRIVATE W16 cachedMutant = 0;
+static W16 cachedGuard = 0;
+static W16 cachedOfficer = 0;
+static W16 cachedSS = 0;
+static W16 cachedDog = 0;
+static W16 cachedMutant = 0;
 
-PRIVATE int progress_bar = 0;
+static int progress_bar = 0;
 
 extern void R_EndFrame (void);
 
@@ -188,7 +188,7 @@ void CacheTextures (W16 start, W16 end)
  * \brief Spawn all actors and mark down special places.
  * \param[in] lvl Level structure
  */
-PUBLIC void Level_ScanInfoPlane (LevelData_t *lvl)
+void Level_ScanInfoPlane (LevelData_t *lvl)
 {
     int x, y;
     W16 tile;
@@ -632,7 +632,7 @@ PUBLIC void Level_ScanInfoPlane (LevelData_t *lvl)
  * \param[in] x X position in tile map
  * \param[in] y Y position in tile map
  */
-PRIVATE void Lvl_SpawnStatic (LevelData_t *lvl, int type, int x, int y)
+static void Lvl_SpawnStatic (LevelData_t *lvl, int type, int x, int y)
 {
     int spr_id;
 
@@ -671,7 +671,7 @@ PRIVATE void Lvl_SpawnStatic (LevelData_t *lvl, int type, int x, int y)
  * \param[in] x X position in tile map
  * \param[in] y Y position in tile map
  */
-PRIVATE void Lvl_SpawnObj (LevelData_t *lvl, int type, int x, int y)
+static void Lvl_SpawnObj (LevelData_t *lvl, int type, int x, int y)
 {
     if (type >= 23 && type < 23 + num_statics) {
         // static object
@@ -756,7 +756,7 @@ PRIVATE void Lvl_SpawnObj (LevelData_t *lvl, int type, int x, int y)
  * \param[in/out] dest Destination buffer
  * \param[in] length The length of the EXPANDED data.
  */
-PRIVATE void Lvl_CarmackExpand (W16 *source, W16 *dest, W16 length)
+static void Lvl_CarmackExpand (W16 *source, W16 *dest, W16 length)
 {
 #define NEARTAG 0xA7
 #define FARTAG  0xA8
@@ -826,7 +826,7 @@ PRIVATE void Lvl_CarmackExpand (W16 *source, W16 *dest, W16 length)
  * \param[in] length The length of the EXPANDED data.
  * \param[in] rlewtag tag
  */
-PRIVATE void Lvl_RLEWexpand (W16 *source, W16 *dest,
+static void Lvl_RLEWexpand (W16 *source, W16 *dest,
                              long length, unsigned rlewtag)
 {
     unsigned value, count, i;
@@ -873,7 +873,7 @@ PRIVATE void Lvl_RLEWexpand (W16 *source, W16 *dest,
  * \param[in] levelname Name of level to load
  * \return Returns NULL on error, otherwise filled in LevelData_t structure.
  */
-PUBLIC LevelData_t *Level_LoadMap (const char *levelname)
+LevelData_t *Level_LoadMap (const char *levelname)
 {
     W16 rle;
     W32  offset[ 3 ];
@@ -1127,7 +1127,7 @@ PUBLIC LevelData_t *Level_LoadMap (const char *levelname)
  * \param[in] levelname level file name to verify
  * \return 0 if invalid map, 1 otherwise
  */
-PUBLIC int Level_VerifyMap (const char *levelname)
+int Level_VerifyMap (const char *levelname)
 {
     W16 rle;
     W32  offset[ 3 ];
@@ -1232,7 +1232,7 @@ cleanup:
  * \brief Precache textures and sounds
  * \param[in] lvl Level structure
  */
-PUBLIC void Level_PrecacheTextures_Sound (LevelData_t *lvl)
+void Level_PrecacheTextures_Sound (LevelData_t *lvl)
 {
     int x, y;
     char texname[ 32 ];
@@ -1288,7 +1288,7 @@ PUBLIC void Level_PrecacheTextures_Sound (LevelData_t *lvl)
  * \param[in] lvl Level structure
  * return true if a straight line between 2 points is unobstructed, otherwise false.
  */
-PUBLIC _boolean Level_CheckLine (SW32 x1, SW32 y1, SW32 x2, SW32 y2, LevelData_t *lvl)
+_boolean Level_CheckLine (SW32 x1, SW32 y1, SW32 x2, SW32 y2, LevelData_t *lvl)
 {
     SW32 xt1, yt1, xt2, yt2; /* tile positions */
     SW32 x, y;              /* current point in !tiles! */

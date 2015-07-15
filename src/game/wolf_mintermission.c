@@ -54,13 +54,13 @@
 /////////////////////////////////////////////////////////////////////
 
 
-PRIVATE char *nextlevelname;
+static char *nextlevelname;
 
-PRIVATE colour3_t colourPage = { 64,   64,    0 };
-PRIVATE colour3_t colourTitle = { 0,   88,   88 };
+static colour3_t colourPage = { 64,   64,    0 };
+static colour3_t colourTitle = { 0,   88,   88 };
 
 
-PRIVATE void M_DrawInterBJ (int x, int y, int f)
+static void M_DrawInterBJ (int x, int y, int f)
 {
     char    guypic[ 32 ];
     static _boolean cached;
@@ -88,11 +88,10 @@ PRIVATE void M_DrawInterBJ (int x, int y, int f)
 #define PAR_AMOUNT  500
 
 extern void R_DrawHUD (void);
-extern W32 gameTimeCount;
-PRIVATE W32 leveltime;
-PRIVATE _boolean bgive_bonus = false;
+static W32 leveltime;
+static _boolean bgive_bonus = false;
 
-PRIVATE void M_Secret_Draw (void)
+static void M_Secret_Draw (void)
 {
     char string[ 32 ];
 
@@ -139,7 +138,7 @@ PRIVATE void M_Secret_Draw (void)
     R_DrawHUD();
 }
 
-PRIVATE W16 ElevatorBackTo[] = { 1, 1, 7, 3, 5, 3 };
+static W16 ElevatorBackTo[] = { 1, 1, 7, 3, 5, 3 };
 
 // This is for Spear of Destiny
 #define FROMSECRET1     3
@@ -148,7 +147,7 @@ PRIVATE W16 ElevatorBackTo[] = { 1, 1, 7, 3, 5, 3 };
 #define SECRET2       19
 
 
-PRIVATE void M_Intermission_Draw (void)
+static void M_Intermission_Draw (void)
 {
     char string[ 32 ];
     W32 ratio;
@@ -241,7 +240,7 @@ PRIVATE void M_Intermission_Draw (void)
 }
 
 extern void Client_PrepRefresh (const char *r_mapname);
-PRIVATE const char *M_Intermission_Key (int key)
+static const char *M_Intermission_Key (int key)
 {
     char szTextMsg[ 128 ];
 
@@ -363,10 +362,7 @@ PRIVATE const char *M_Intermission_Key (int key)
     Player.playstate = ex_playing;
 
 
-
     Client_PrepRefresh(szTextMsg);
-    //Cbuf_AddText (szTextMsg);
-
     return NULL;
 }
 
@@ -375,18 +371,16 @@ PRIVATE const char *M_Intermission_Key (int key)
 //  Victory
 //
 
-PRIVATE W8 nvictory = 1;
+static W8 nvictory = 1;
 
-PRIVATE void M_Victory_Draw (void)
+static void M_Victory_Draw (void)
 {
     char string[ 32 ];
     W32 ratio;
     W32 min, sec;
 
     R_Draw_Fill (0, 0, viddef.width, viddef.height, interbkgnd);
-
     R_Draw_Pic (32, 12, "pics/L_BJWINSPIC.tga");
-
 
     com_snprintf (string, sizeof (string), "YOU WIN!");
     R_put_line (240, 38, string);
@@ -449,7 +443,7 @@ PRIVATE void M_Victory_Draw (void)
     R_DrawHUD();
 }
 
-PRIVATE const char victoryTextPageOneTitle[ 6 ] [ 1024 ] = {
+static const char victoryTextPageOneTitle[ 6 ] [ 1024 ] = {
     "CONGRATULATIONS!",
     "CONGRATULATIONS!",
     "CONGRATULATIONS!",
@@ -458,7 +452,7 @@ PRIVATE const char victoryTextPageOneTitle[ 6 ] [ 1024 ] = {
     "CONGRATULATIONS!"
 };
 
-PRIVATE const char victorytextPageOnePartOne[ 6 ][ 1024 ] = {
+static const char victorytextPageOnePartOne[ 6 ][ 1024 ] = {
     "You run out of the castle and hook up with the Underground. They inform you that the rumors were true: some hideous human experiments were seen around Castle Hollehammer.",
     "You stand over Schabbs' fat, evil, swollen putrid body, glad your mission is finally over. All his journals and equipment will be destroyed. Humanity is safe from his hordes of",
     "The absolute incarnation of evil, Adolf Hitler, lies at your feet in a pool of his own blood. His wrinkled, crimson-splattered visage still strains, a jagged- toothed rictus trying to",
@@ -467,7 +461,7 @@ PRIVATE const char victorytextPageOnePartOne[ 6 ][ 1024 ] = {
     "The General gasps his last breath, and the free world is safe from the terrifying Nazi chemical war. You return to Allied Headquarters, a Medal of Honor waiting for"
 };
 
-PRIVATE const char victorytextPageOnePartTwo[ 6 ][ 1024 ] = {
+static const char victorytextPageOnePartTwo[ 6 ][ 1024 ] = {
     "So Operation Eisenfaust is real!\n\nYou must journey there and terminate the maniacal Dr. Schabbs before his undead army marches against humanity!",
     "hideous mutants.\n\nYet the Nazi atrocities continue: thousands march into death camps even as the Nazi war machine falls to its knees. There is only one way to stop the madness. . . .",
     "cry out. Insane even in death. Your lips pinched in bitter victory, you kick his head off his remains and spit on his corpse.\n\nSieg heil . . . huh. Sieg hell.",
@@ -476,7 +470,7 @@ PRIVATE const char victorytextPageOnePartTwo[ 6 ][ 1024 ] = {
     "you.\n\nAllied Command informs you of some nefarious activities around Castle Hollehammer. Something about some grey-skinned berserk soldiers . . . ."
 };
 
-PRIVATE const char victoryTextPageTwoTitle[ 6 ][ 1024 ] = {
+static const char victoryTextPageTwoTitle[ 6 ][ 1024 ] = {
     "MORE WOLFENSTEIN",
     "MISSION: TERMINATE HITLER",
     "BUT THE ADVENTURE IS JUST BEGINNING!",
@@ -485,7 +479,7 @@ PRIVATE const char victoryTextPageTwoTitle[ 6 ][ 1024 ] = {
     "YOU DID IT!"
 };
 
-PRIVATE const char victorytextPageTwo[ 6 ][ 1024 ] = {
+static const char victorytextPageTwo[ 6 ][ 1024 ] = {
     "And in episode three, Hitler hides in his titanic bunker as the Third Reich crumbles about him. It is your job to assassinate him, ending his mad reign.\n\nAnd if you like Wolfenstein, you'll love the prequel trilogy of Nocturnal Missions! Thirty more action-packed, super-challenging levels!",
     "In episode three, Hitler hides in his titanic bunker as the Third Reich crumbles about him. It is your job to assassinate him, ending his mad reign. You find he has escaped to the Reichstag, and there you must confront him.\n\nAnd if you like Wolfenstein, you'll love the prequel trilogy of \"Nocturnal Missions!\" Thirty more action-packed, super-challenging levels!",
     "And if you like Wolfenstein, you'll love the prequel trilogy of \"Nocturnal Missions!\" Thirty more action-packed, super-challenging levels!\n\nB.J. battles the Nazis as they plan large-scale chemical warfare. Fight Otto Giftmacher, Gretel Grosse, and General Fettgesicht!",
@@ -496,7 +490,7 @@ PRIVATE const char victorytextPageTwo[ 6 ][ 1024 ] = {
 
 
 
-PRIVATE void M_Victory_Draw_PageOne (void)
+static void M_Victory_Draw_PageOne (void)
 {
     SW32 w, h;
 
@@ -526,7 +520,7 @@ PRIVATE void M_Victory_Draw_PageOne (void)
     Font_put_paragraph (FONT0, 32 + 4, 160 + 16 + 34, victorytextPageOnePartTwo[ currentMap.episode ], 0, 600);
 }
 
-PRIVATE void M_Victory_Draw_PageTwo (void)
+static void M_Victory_Draw_PageTwo (void)
 {
     SW32 w, h;
 
@@ -554,9 +548,9 @@ PRIVATE void M_Victory_Draw_PageTwo (void)
 }
 
 
-PRIVATE W16 page = 0;
+static W16 page = 0;
 
-PRIVATE void M_Victory_Text_Draw (void)
+static void M_Victory_Text_Draw (void)
 {
     if (page == 0) {
         M_Victory_Draw_PageOne();
@@ -566,7 +560,7 @@ PRIVATE void M_Victory_Text_Draw (void)
 }
 
 
-PRIVATE const char *M_Victory_Key (int key)
+static const char *M_Victory_Key (int key)
 {
     if (nvictory) {
         M_PopMenu();
@@ -619,15 +613,15 @@ typedef struct {
 
 } SpearVictoryLayer_t;
 
-PRIVATE SpearVictoryLayer_t sodvl[ 12 ];
-PRIVATE W16 victory_slide = 0;
-PRIVATE W32 victory_basetime;
+static SpearVictoryLayer_t sodvl[ 12 ];
+static W16 victory_slide = 0;
+static W32 victory_basetime;
 
 
-PRIVATE W32 collapse_basetime;
-PRIVATE W8 collapse_slide = 1;
+static W32 collapse_basetime;
+static W8 collapse_slide = 1;
 
-PRIVATE void SOD_Victory_BJCOLLAPSE_Draw (void)
+static void SOD_Victory_BJCOLLAPSE_Draw (void)
 {
     W32 w, h;
     static char name[ 32 ];
@@ -653,7 +647,7 @@ PRIVATE void SOD_Victory_BJCOLLAPSE_Draw (void)
 #define STR_ENDGAME2 "With the spear gone, the Allies will finally\nbe able to destroy Hitler..."
 
 
-PRIVATE void SOD_EndScreen2_Draw (void)
+static void SOD_EndScreen2_Draw (void)
 {
     W32 w, h;
 
@@ -677,7 +671,7 @@ PRIVATE void SOD_EndScreen2_Draw (void)
 
 
 
-PRIVATE void SOD_EndScreen_Draw (void)
+static void SOD_EndScreen_Draw (void)
 {
     W32 w, h;
     static char texname[ 64 ];
@@ -733,7 +727,7 @@ PRIVATE void SOD_EndScreen_Draw (void)
 }
 
 
-PRIVATE void M_SODVictory_Draw (void)
+static void M_SODVictory_Draw (void)
 {
     if (victory_slide > NUM_VICTORY_SLIDES) {
         M_ForceMenuOff();
@@ -759,7 +753,7 @@ PRIVATE void M_SODVictory_Draw (void)
     }
 }
 
-PRIVATE const char *M_SODVictory_Key (int key)
+static const char *M_SODVictory_Key (int key)
 {
     victory_basetime = ClientStatic.realtime;
     ++victory_slide;
@@ -782,7 +776,7 @@ PRIVATE const char *M_SODVictory_Key (int key)
 //  End of Spear Victory
 //
 
-PUBLIC void M_Intermission_f (void)
+void M_Intermission_f (void)
 {
     //Sound_StopAllSounds();
    // Sound_StopBGTrack();
@@ -884,7 +878,7 @@ PUBLIC void M_Intermission_f (void)
 }
 
 
-PUBLIC void M_Secret_f (void)
+void M_Secret_f (void)
 {
     // bit of a hack here, set the player state to ex_secretlevel and call M_Intermission_f()
     Player.playstate = ex_secretlevel;

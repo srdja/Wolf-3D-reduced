@@ -42,10 +42,10 @@
 #include "./com_string.h"
 
 
-PRIVATE char    findbase[ 128 ];
-PRIVATE char    findpath[ 128 ];
-PRIVATE char    findpattern[ 128 ];
-PRIVATE DIR     *fdir;
+static char    findbase[ 128 ];
+static char    findpath[ 128 ];
+static char    findpattern[ 128 ];
+static DIR     *fdir;
 
 
 /**
@@ -53,7 +53,7 @@ PRIVATE DIR     *fdir;
  * \param[in] dirname Pointer to a NUL-terminated string that specifies the path of the directory to be created.
  * \return On success nonzero, otherwise zero.
  */
-PUBLIC W8 FS_CreateDirectory (const char *dirname)
+W8 FS_CreateDirectory (const char *dirname)
 {
     int ret_val = mkdir (dirname, S_IRUSR | S_IWUSR | S_IXUSR);
 
@@ -68,7 +68,6 @@ PUBLIC W8 FS_CreateDirectory (const char *dirname)
  * \param[in] path Pointer to a NUL-terminated string that specifies the path to the new directory.
  * \return On success nonzero, otherwise zero.
  */
-PUBLIC
 
 /**
  * \brief Compare directory and file attributes.
@@ -77,7 +76,7 @@ PUBLIC
  * \param[in] canthave File or directory can not have these attributes.
  * \return On success true, otherwise false.
  */
-PRIVATE _boolean CompareAttributes (const char *path, W32 musthave, W32 canthave)
+static _boolean CompareAttributes (const char *path, W32 musthave, W32 canthave)
 {
     struct stat st;
 
@@ -103,7 +102,7 @@ PRIVATE _boolean CompareAttributes (const char *path, W32 musthave, W32 canthave
  * \param[in] canthave File or directory can not have these attributes.
  * \return On success string of file name or directory, otherwise NULL.
  */
-PUBLIC char *FS_FindFirst (const char *path, W32 musthave, W32 canthave)
+char *FS_FindFirst (const char *path, W32 musthave, W32 canthave)
 {
     struct dirent *d;
 
@@ -151,7 +150,7 @@ PUBLIC char *FS_FindFirst (const char *path, W32 musthave, W32 canthave)
  * \param[in] canthave File or directory can not have these attributes.
  * \return On success string of file name or directory, otherwise NULL.
  */
-PUBLIC char *FS_FindNext (W32 musthave, W32 canthave)
+char *FS_FindNext (W32 musthave, W32 canthave)
 {
     struct dirent *d;
 
@@ -179,7 +178,7 @@ PUBLIC char *FS_FindNext (W32 musthave, W32 canthave)
 /**
  * \brief Closes the search handle.
  */
-PUBLIC void FS_FindClose (void)
+void FS_FindClose (void)
 {
     if (fdir) {
         closedir (fdir);
@@ -193,19 +192,19 @@ PUBLIC void FS_FindClose (void)
  * \param[in] filename Pointer to a NUL-terminated string that specifies the file to be deleted.
  * \return If successful the return value is nonzero, otherwise zero.
  */
-PUBLIC
+
 
 /**
  * \brief Deletes an existing empty directory.
  * \param[in] pathname Pointer to a NUL-terminated string that specifies the directory to be deleted.
  * \return If successful the return value is nonzero, otherwise zero.
  */
-PUBLIC
+
 
 /**
  * \brief Retrieves current user directory.
  */
-PUBLIC  char *FS_Userdir()
+char *FS_Userdir()
 {
     static char *home = NULL;
     static char W3Dlocaldir[128] = {'\0'};

@@ -40,7 +40,7 @@ Pwall_t PWall;
 /**
  * \brief Reset pushwall status.
  */
-PUBLIC void PushWall_Reset (void)
+void PushWall_Reset (void)
 {
     memset (&PWall, 0, sizeof (Pwall_t));
 }
@@ -53,7 +53,7 @@ PUBLIC void PushWall_Reset (void)
  * \return Returns true if push successful, otherwise false.
  * \note Called whenever someone tries to push a secret wall.
  */
-PUBLIC _boolean PushWall_Push (int x, int y, dir4type dir)
+_boolean PushWall_Push (int x, int y, dir4type dir)
 {
     int dx, dy;
 
@@ -110,7 +110,7 @@ PUBLIC _boolean PushWall_Push (int x, int y, dir4type dir)
 /**
  * \brief Process push-walls
  */
-PUBLIC void PushWall_Process (void)
+void PushWall_Process (void)
 {
     if (! PWall.active) {
         return; // no active PWall to work with

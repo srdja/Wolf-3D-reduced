@@ -55,20 +55,20 @@
 #include "com_string.h"
 #include "filelink.h"
 
-PRIVATE char fs_gamedir[ MAX_OSPATH ];
+static char fs_gamedir[ MAX_OSPATH ];
 
 #define BASE_DIRECTORY "base"
 
-PRIVATE char  *fs_basedir;
-PRIVATE char  *fs_cddir;
-PRIVATE char  *fs_gamedirvar;
+static char  *fs_basedir;
+static char  *fs_cddir;
+static char  *fs_gamedirvar;
 
 /**
  * \brief Add directory to search path.
  * \param[in] dir Game directory path.
  * \note Sets fs_gamedir, adds the directory to the head of the path, then loads and adds *.pak then *.zip files.
  */
-PRIVATE void FS_AddGameDirectory (const char *dir)
+static void FS_AddGameDirectory (const char *dir)
 {
     searchpath_t    *search;
     char        path[ MAX_OSPATH ];
@@ -121,7 +121,7 @@ PRIVATE void FS_AddGameDirectory (const char *dir)
  * \brief Get root directory.
  * \return String with the name of the root directory.
  */
-PUBLIC char *FS_Gamedir (void)
+char *FS_Gamedir (void)
 {
     if (*fs_gamedir) {
         return fs_gamedir;
@@ -134,7 +134,7 @@ PUBLIC char *FS_Gamedir (void)
  * \brief Sets the gamedir and path to a different directory.
  * \param[in] dir New game directory.
  */
-PUBLIC void FS_SetGamedir (char *dir)
+void FS_SetGamedir (char *dir)
 {
     searchpath_t    *next;
 
@@ -170,7 +170,7 @@ PUBLIC void FS_SetGamedir (char *dir)
 /**
  * \brief Initialize file system.
  */
-PUBLIC void FS_InitFilesystem (void)
+void FS_InitFilesystem (void)
 {
     char path[1024];
 

@@ -41,7 +41,7 @@
  * \return
  * \note It can be clipped to the top of the screen to allow the console to be smoothly scrolled off.
  */
-PUBLIC void R_Draw_Character (int x, int y, int num, font_t *myfont)
+void R_Draw_Character (int x, int y, int num, font_t *myfont)
 {
     int row, col;
     int scale, sh; // scaled width, height
@@ -99,7 +99,7 @@ PUBLIC void R_Draw_Character (int x, int y, int num, font_t *myfont)
  * \return
  * \note
  */
-PUBLIC void R_Draw_Pic (int x, int y, const char *pic)
+void R_Draw_Pic (int x, int y, const char *pic)
 {
     texture_t *tex = TM_FindTexture (pic, TT_Pic);
 
@@ -131,7 +131,7 @@ PUBLIC void R_Draw_Pic (int x, int y, const char *pic)
  * \return
  * \note This repeats a tile graphic to fill a region on the screen.
  */
-PUBLIC void R_Draw_Tile (int x, int y, int w, int h, const char *pic)
+void R_Draw_Tile (int x, int y, int w, int h, const char *pic)
 {
     texture_t   *image;
 
@@ -168,7 +168,7 @@ PUBLIC void R_Draw_Tile (int x, int y, int w, int h, const char *pic)
  * \return
  * \note
  */
-PUBLIC void R_Draw_Fill (int x, int y, int w, int h, colour3_t c)
+void R_Draw_Fill (int x, int y, int w, int h, colour3_t c)
 {
     glDisable (GL_TEXTURE_2D);
 
@@ -195,7 +195,7 @@ PUBLIC void R_Draw_Fill (int x, int y, int w, int h, colour3_t c)
  * \return
  * \note
  */
-PUBLIC void R_Draw_Line (int nXStart, int nYStart, int nXEnd, int nYEnd, int width, colour3_t c)
+void R_Draw_Line (int nXStart, int nYStart, int nXEnd, int nYEnd, int width, colour3_t c)
 {
     glDisable (GL_TEXTURE_2D);
 

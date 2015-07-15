@@ -44,18 +44,18 @@ extern Window mainwin;
 
 extern _boolean vidmode_active;
 
-PRIVATE _boolean        mouse_avail;
+static _boolean        mouse_avail;
 int mx, my;
-PRIVATE int old_mouse_x, old_mouse_y;
+static int old_mouse_x, old_mouse_y;
 
-PRIVATE int m_filter;
-PRIVATE int in_dgamouse;
+static int m_filter;
+static int in_dgamouse;
 
 _boolean mouse_active = false;
 _boolean dgamouse = false;
 
 
-PRIVATE Cursor CreateNullCursor (Display *display, Window root)
+static Cursor CreateNullCursor (Display *display, Window root)
 {
     Pixmap cursormask;
     XGCValues xgc;
@@ -79,7 +79,7 @@ PRIVATE Cursor CreateNullCursor (Display *display, Window root)
 }
 
 
-PUBLIC void install_grabs (void)
+void install_grabs (void)
 {
 
 // inviso cursor
@@ -119,7 +119,7 @@ PUBLIC void install_grabs (void)
 }
 
 
-PUBLIC void uninstall_grabs (void)
+void uninstall_grabs (void)
 {
     if (! display || ! mainwin) {
         return;
@@ -139,7 +139,7 @@ PUBLIC void uninstall_grabs (void)
     mouse_active = false;
 }
 
-PUBLIC void IN_StartupMouse (void)
+void IN_StartupMouse (void)
 {
     // mouse variables
     m_filter = 0;
@@ -152,7 +152,7 @@ PUBLIC void IN_StartupMouse (void)
     install_grabs();
 }
 
-PUBLIC void IN_MouseMove (usercmd_t *cmd)
+void IN_MouseMove (usercmd_t *cmd)
 {
     if (! mouse_avail) {
         return;
@@ -178,7 +178,7 @@ PUBLIC void IN_MouseMove (usercmd_t *cmd)
     mx = my = 0;
 }
 
-PUBLIC void IN_ActivateMouse (void) {
+void IN_ActivateMouse (void) {
     if (!mouse_avail || !display || !mainwin) {
         return;
     }

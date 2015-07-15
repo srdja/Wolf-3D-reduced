@@ -30,7 +30,7 @@
  * \brief User is using a weapon, find out who it hit and calculate damage
  * \param[in] self User attacking
  */
-PUBLIC void weapon_attack (player_t *self)
+void weapon_attack (player_t *self)
 {
     entity_t *closest;
     int damage;

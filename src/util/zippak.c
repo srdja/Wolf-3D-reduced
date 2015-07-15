@@ -70,7 +70,7 @@ typedef struct localzipheader_s {
  * \return false if not acceptable, otherwise true.
  * \note Changes '\' to the more acceptable '/'
  */
-PRIVATE _boolean checkstring (char *string)
+static _boolean checkstring (char *string)
 {
     char *s = string;
 
@@ -94,7 +94,7 @@ PRIVATE _boolean checkstring (char *string)
  * \param[in] packfile Name of packfile to parse.
  * \return NULL on error, otherwise a link list of pack files.
  */
-PUBLIC pack_t *FS_LoadZipFile (const char *packfile)
+pack_t *FS_LoadZipFile (const char *packfile)
 {
     W32 ziphead;
     char tempfilename[ MAX_GAMEPATH ];

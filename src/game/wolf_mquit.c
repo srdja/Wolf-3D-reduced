@@ -47,7 +47,7 @@ extern void M_SMain_Draw (void);
 //
 /////////////////////////////////////////////////////////////////////
 
-PRIVATE const char *M_Quit_Key (int key)
+static const char *M_Quit_Key (int key)
 {
     switch (key) {
     case K_ESCAPE:
@@ -66,7 +66,7 @@ PRIVATE const char *M_Quit_Key (int key)
 }
 
 
-PRIVATE const char log_out_messages[ 18 ][ 80 ] = {
+static const char log_out_messages[ 18 ][ 80 ] = {
 
     { "Dost thou wish to\nleave with such hasty\nabandon?" },
     { "Chickening out...\nalready?" },
@@ -91,9 +91,9 @@ PRIVATE const char log_out_messages[ 18 ][ 80 ] = {
 
 };
 
-PRIVATE int menu_random;
+static int menu_random;
 
-PRIVATE void M_Quit_Draw (void)
+static void M_Quit_Draw (void)
 {
     int w, h;
 
@@ -112,7 +112,7 @@ PRIVATE void M_Quit_Draw (void)
 }
 
 
-PUBLIC void M_Menu_Quit_f (void)
+void M_Menu_Quit_f (void)
 {
     menu_random = US_RndT() % 18;
     M_PushMenu (M_Quit_Draw, M_Quit_Key);

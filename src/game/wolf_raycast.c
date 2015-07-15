@@ -46,7 +46,7 @@ W8 tile_visible[ 64 ][ 64 ]; // can player see this tile?
  * \param[in] lvl Pointer to valid LevelData_t structure.
  * \return Marks all visible tiles in tile_visible[] array.
  */
-PUBLIC void R_RayCast (placeonplane_t viewport, LevelData_t *lvl)
+void R_RayCast (placeonplane_t viewport, LevelData_t *lvl)
 {
     int n, x, y, vx, vy;
     float angle;
@@ -209,7 +209,7 @@ int y_tile_step[ 4 ] = { 1,  1, -1, -1 };
  * \return true to stop tracing, false otherwise.
  * \note Tells ray casting if we hit a wall or door and to stop tracing.
  */
-PRIVATE _boolean R_TraceCheck (LevelData_t *lvl, int x, int y, int frac, int dfrac, _boolean vert, _boolean flip, r_trace_t *trace)
+static _boolean R_TraceCheck (LevelData_t *lvl, int x, int y, int frac, int dfrac, _boolean vert, _boolean flip, r_trace_t *trace)
 {
     if (lvl->tilemap[ x ][ y ] & WALL_TILE) {
         if (vert) {
@@ -273,7 +273,7 @@ PRIVATE _boolean R_TraceCheck (LevelData_t *lvl, int x, int y, int frac, int dfr
  * \return
  * \note
  */
-PUBLIC void R_Trace (r_trace_t *trace, LevelData_t *lvl)
+void R_Trace (r_trace_t *trace, LevelData_t *lvl)
 {
     int xtilestep, ytilestep;
     int xstep, ystep;

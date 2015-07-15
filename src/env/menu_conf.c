@@ -31,11 +31,11 @@
 #include "../graphics/color.h"
 
 
-PRIVATE void MenuList_Draw (menulist_s *l);
-PRIVATE void Slider_DoSlide (menuslider_s *s, int dir);
-PRIVATE void Slider_Draw (menuslider_s *s);
-PRIVATE void SpinControl_Draw (menulist_s *s);
-PRIVATE void SpinControl_DoSlide (menulist_s *s, int dir);
+static void MenuList_Draw (menulist_s *l);
+static void Slider_DoSlide (menuslider_s *s, int dir);
+static void Slider_Draw (menuslider_s *s);
+static void SpinControl_Draw (menulist_s *s);
+static void SpinControl_DoSlide (menulist_s *s, int dir);
 
 #define RCOLUMN_OFFSET  16
 #define LCOLUMN_OFFSET -16
@@ -46,7 +46,7 @@ extern viddef_t viddef;
 #define VID_HEIGHT viddef.height
 
 
-PRIVATE void Separator_Draw (menuseparator_s *s)
+static void Separator_Draw (menuseparator_s *s)
 {
     if (s->generic.name) {
         Menu_DrawStringR2LDark (s->generic.fs, s->generic.x + s->generic.parent->x, s->generic.y + s->generic.parent->y, s->generic.name);
@@ -72,14 +72,14 @@ void DrawWindow (int x, int y, int w, int h,
 //
 /////////////////////////////////////////////////////////////////////
 
-PRIVATE void Action_DoEnter (menuaction_s *a)
+static void Action_DoEnter (menuaction_s *a)
 {
     if (a->generic.callback) {
         a->generic.callback (a);
     }
 }
 
-PRIVATE void Action_Draw (menuaction_s *a, int i)
+static void Action_Draw (menuaction_s *a, int i)
 {
 
     if (a->generic.flags & MENUFONT_LEFT_JUSTIFY) {

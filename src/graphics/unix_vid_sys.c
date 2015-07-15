@@ -69,7 +69,7 @@ vidmode_t vid_modes[] = {
  * \param[in] mode Video mode (see vidmode_t for details).
  * \return true if mode was accepted, otherwise false.
  */
-PUBLIC _boolean VID_GetModeInfo (int *width, int *height, int mode)
+_boolean VID_GetModeInfo (int *width, int *height, int mode)
 {
     if (mode < 0 || mode >= VID_NUM_MODES) {
         return false;
@@ -86,13 +86,13 @@ PUBLIC _boolean VID_GetModeInfo (int *width, int *height, int mode)
  * \param[in] width Width of new window.
  * \param[in] height Height of new window.
  */
-PUBLIC void VID_NewWindow (int width, int height)
+void VID_NewWindow (int width, int height)
 {
     viddef.width  = width;
     viddef.height = height;
 }
 
-PUBLIC void Video_Init (void)
+void Video_Init (void)
 {
     if (R_Init (0, 0) == -1) {
         printf("Renderer initialization failed\n");

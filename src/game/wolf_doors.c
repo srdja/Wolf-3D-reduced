@@ -47,7 +47,7 @@
  * \brief Resets doors status
  * \param[in] lvldoors LevelDoors_t  structure
  */
-PUBLIC void Door_Reset (LevelDoors_t *lvldoors)
+void Door_Reset (LevelDoors_t *lvldoors)
 {
     lvldoors->doornum = 0;
 
@@ -63,7 +63,7 @@ PUBLIC void Door_Reset (LevelDoors_t *lvldoors)
  * \param[in] type Type of door to spawn
  * \return 0 on error, otherwise 1
  */
-PUBLIC int Door_Spawn (LevelDoors_t *lvldoors, int x, int y, int type)
+int Door_Spawn (LevelDoors_t *lvldoors, int x, int y, int type)
 {
     if (lvldoors->doornum >= MAXDOORS) {
         printf("[%s]: Too many Doors on level! (%d)\n", "wolf_doors.c", lvldoors->doornum);
@@ -139,7 +139,7 @@ PUBLIC int Door_Spawn (LevelDoors_t *lvldoors, int x, int y, int type)
  * \param[in] lvldoors Level doors structure
  * \param[in] x X position in tile map
  */
-PUBLIC void Door_SetAreas (LevelDoors_t *lvldoors, int (*areas)[64])
+void Door_SetAreas (LevelDoors_t *lvldoors, int (*areas)[64])
 {
     int n, x, y;
 
@@ -164,7 +164,7 @@ PUBLIC void Door_SetAreas (LevelDoors_t *lvldoors, int (*areas)[64])
  * \param[in] vertical Set to true if door is vertical, false if horizontal.
  * \return 0 if door can not be closed, otherwise 1.
  */
-PRIVATE W8 CanCloseDoor (int x, int y, _boolean vertical)
+static W8 CanCloseDoor (int x, int y, _boolean vertical)
 {
     int n;
 
@@ -238,7 +238,7 @@ PRIVATE W8 CanCloseDoor (int x, int y, _boolean vertical)
  * \brief Open door
  * \param[in] door Door to open
  */
-PUBLIC void Door_Open (doors_t *door)
+void Door_Open (doors_t *door)
 {
     if (door->action == dr_open) {
         door->ticcount = 0;     // reset opened time
@@ -251,7 +251,7 @@ PUBLIC void Door_Open (doors_t *door)
  * \brief Change door state
  * \param[in] Door Door state to change
  */
-PRIVATE void Door_ChangeDoorState (doors_t *Door)
+static void Door_ChangeDoorState (doors_t *Door)
 {
     if (Door->action < dr_opening) {
         Door_Open (Door);
@@ -266,7 +266,7 @@ PRIVATE void Door_ChangeDoorState (doors_t *Door)
  * \param[in] lvldoors Doors to process
  * \param[in] t_tk Clock tics
  */
-PUBLIC void Door_Process (LevelDoors_t *lvldoors, int t_tk)
+void Door_Process (LevelDoors_t *lvldoors, int t_tk)
 {
     int n;
 
@@ -356,7 +356,7 @@ PUBLIC void Door_Process (LevelDoors_t *lvldoors, int t_tk)
  *         >0 <DOOR_FULLOPEN    Door is partially opened.
  * \note If there are no doors in tile assume a closed door!
  */
-PUBLIC int Door_Opened (LevelDoors_t *lvldoors, int x, int y)
+int Door_Opened (LevelDoors_t *lvldoors, int x, int y)
 {
     return lvldoors->DoorMap[ x ][ y ].action == dr_open ? DOOR_FULLOPEN : lvldoors->DoorMap[ x ][ y ].ticcount;
 }
@@ -367,7 +367,7 @@ PUBLIC int Door_Opened (LevelDoors_t *lvldoors, int x, int y)
  * \param[in] keys Player key flag
  * \return Always true
  */
-PUBLIC void Door_Use (doors_t *Door, int keys)
+void Door_Use (doors_t *Door, int keys)
 {
     switch (Door->type) {
     case DOOR_VERT:

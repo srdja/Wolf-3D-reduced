@@ -55,38 +55,38 @@
 extern void M_Menu_Keys_f (void);
 
 
-PRIVATE menuframework_s s_options_menu;
-PRIVATE menuaction_s    s_options_defaults_action;
-PRIVATE menuaction_s    s_options_customize_options_action;
-PRIVATE menuslider_s    s_options_sensitivity_slider;
-PRIVATE menulist_s      s_options_freelook_box;
-PRIVATE menulist_s      s_options_alwaysrun_box;
-PRIVATE menulist_s      s_options_invertmouse_box;
-PRIVATE menulist_s      s_options_lookspring_box;
-PRIVATE menulist_s      s_options_lookstrafe_box;
-PRIVATE menulist_s      s_options_console_action;
+static menuframework_s s_options_menu;
+static menuaction_s    s_options_defaults_action;
+static menuaction_s    s_options_customize_options_action;
+static menuslider_s    s_options_sensitivity_slider;
+static menulist_s      s_options_freelook_box;
+static menulist_s      s_options_alwaysrun_box;
+static menulist_s      s_options_invertmouse_box;
+static menulist_s      s_options_lookspring_box;
+static menulist_s      s_options_lookstrafe_box;
+static menulist_s      s_options_console_action;
 
-PRIVATE void CustomizeControlsFunc (void *unused)
+static void CustomizeControlsFunc (void *unused)
 {
     M_Menu_Keys_f();
 }
 
-PRIVATE void MouseSpeedFunc (void *unused)
+static void MouseSpeedFunc (void *unused)
 {
 }
 
 
-PRIVATE void ControlsSetMenuItemValues (void)
+static void ControlsSetMenuItemValues (void)
 {
     s_options_sensitivity_slider.curvalue   = sensitivity / 100;
 }
 
-PRIVATE void ControlsResetDefaultsFunc (void *unused)
+static void ControlsResetDefaultsFunc (void *unused)
 {
     ControlsSetMenuItemValues();
 }
 
-PRIVATE void Options_MenuInit (void)
+static void Options_MenuInit (void)
 {
     static const char *yesno_names[] = {
         "no",
@@ -146,7 +146,7 @@ PRIVATE void Options_MenuInit (void)
     Menu_AddItem (&s_options_menu, (void *) &s_options_console_action);
 }
 
-PRIVATE void Options_MenuDraw (void)
+static void Options_MenuDraw (void)
 {
     if (g_version == SPEAROFDESTINY) {
         R_Draw_Tile (0, 0, viddef.width, viddef.height, "pics/C_BACKDROPPIC.tga");
@@ -167,12 +167,12 @@ PRIVATE void Options_MenuDraw (void)
     Menu_Draw (&s_options_menu);
 }
 
-PRIVATE const char *Options_MenuKey (int key)
+static const char *Options_MenuKey (int key)
 {
     return Default_MenuKey (&s_options_menu, key);
 }
 
-PUBLIC void M_Menu_Options_f (void)
+void M_Menu_Options_f (void)
 {
     Options_MenuInit();
     M_PushMenu (Options_MenuDraw, Options_MenuKey);
@@ -205,28 +205,28 @@ char *bindnames[][2] = {
     { 0, 0 }
 };
 
-PRIVATE int     bind_grab;
+static int     bind_grab;
 
-PRIVATE menuframework_s s_keys_menu;
-PRIVATE menuaction_s    s_keys_attack_action;
-PRIVATE menuaction_s    s_keys_change_weapon_action;
-PRIVATE menuaction_s    s_keys_prev_weapon_action;
-PRIVATE menuaction_s    s_keys_walk_forward_action;
-PRIVATE menuaction_s    s_keys_backpedal_action;
-PRIVATE menuaction_s    s_keys_turn_left_action;
-PRIVATE menuaction_s    s_keys_turn_right_action;
-PRIVATE menuaction_s    s_keys_run_action;
-PRIVATE menuaction_s    s_keys_step_left_action;
-PRIVATE menuaction_s    s_keys_step_right_action;
-PRIVATE menuaction_s    s_keys_sidestep_action;
-PRIVATE menuaction_s    s_keys_mouse_look_action;
-PRIVATE menuaction_s    s_keys_use_action;
-PRIVATE menuaction_s    s_keys_move_up_action;
-PRIVATE menuaction_s    s_keys_move_down_action;
+static menuframework_s s_keys_menu;
+static menuaction_s    s_keys_attack_action;
+static menuaction_s    s_keys_change_weapon_action;
+static menuaction_s    s_keys_prev_weapon_action;
+static menuaction_s    s_keys_walk_forward_action;
+static menuaction_s    s_keys_backpedal_action;
+static menuaction_s    s_keys_turn_left_action;
+static menuaction_s    s_keys_turn_right_action;
+static menuaction_s    s_keys_run_action;
+static menuaction_s    s_keys_step_left_action;
+static menuaction_s    s_keys_step_right_action;
+static menuaction_s    s_keys_sidestep_action;
+static menuaction_s    s_keys_mouse_look_action;
+static menuaction_s    s_keys_use_action;
+static menuaction_s    s_keys_move_up_action;
+static menuaction_s    s_keys_move_down_action;
 
 
 
-PRIVATE void M_UnbindCommand (char *command)
+static void M_UnbindCommand (char *command)
 {
     int     j;
     int     length;
@@ -247,7 +247,7 @@ PRIVATE void M_UnbindCommand (char *command)
     }
 }
 
-PRIVATE void M_FindKeysForCommand (const char *command, int *twokeys)
+static void M_FindKeysForCommand (const char *command, int *twokeys)
 {
     int     count;
     int     j;
@@ -276,7 +276,7 @@ PRIVATE void M_FindKeysForCommand (const char *command, int *twokeys)
     }
 }
 
-PRIVATE void KeyCursorDrawFunc (menuframework_s *menu)
+static void KeyCursorDrawFunc (menuframework_s *menu)
 {
     static const char ccursor[ 2 ] = { ' ', '>' };
 
@@ -287,7 +287,7 @@ PRIVATE void KeyCursorDrawFunc (menuframework_s *menu)
     }
 }
 
-PRIVATE void DrawKeyBindingFunc (void *self)
+static void DrawKeyBindingFunc (void *self)
 {
     int keys[ 2 ];
     menuaction_s *a = (menuaction_s *) self;
@@ -314,7 +314,7 @@ PRIVATE void DrawKeyBindingFunc (void *self)
 
 }
 
-PRIVATE void KeyBindingFunc (void *self)
+static void KeyBindingFunc (void *self)
 {
     menuaction_s *a = (menuaction_s *) self;
     int keys[2];
@@ -330,7 +330,7 @@ PRIVATE void KeyBindingFunc (void *self)
     Menu_SetStatusBar (&s_keys_menu, "Press a key or button for this action");
 }
 
-PRIVATE void Keys_MenuInit (void)
+static void Keys_MenuInit (void)
 {
     int y = 0;
     int i = 0;
@@ -510,7 +510,7 @@ PRIVATE void Keys_MenuInit (void)
     Menu_Center (&s_keys_menu);
 }
 
-PRIVATE void Keys_MenuDraw (void)
+static void Keys_MenuDraw (void)
 {
     if (g_version == SPEAROFDESTINY) {
         R_Draw_Tile (0, 0, viddef.width, viddef.height, "pics/C_BACKDROPPIC.tga");
@@ -531,7 +531,7 @@ PRIVATE void Keys_MenuDraw (void)
     Menu_Draw (&s_keys_menu);
 }
 
-PRIVATE const char *Keys_MenuKey (int key)
+static const char *Keys_MenuKey (int key)
 {
 
     menuaction_s *item = (menuaction_s *) Menu_ItemAtCursor (&s_keys_menu);
@@ -566,7 +566,7 @@ PRIVATE const char *Keys_MenuKey (int key)
     }
 }
 
-PUBLIC void M_Menu_Keys_f (void)
+void M_Menu_Keys_f (void)
 {
     Keys_MenuInit();
     M_PushMenu (Keys_MenuDraw, Keys_MenuKey);

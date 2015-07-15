@@ -55,7 +55,7 @@ char *spritelocation = WL6SPRITESDIRNAME;
 /**
  * Reset level state
  */
-PUBLIC void Game_Reset (void)
+void Game_Reset (void)
 {
     memset (&levelstate, 0, sizeof (levelstate));
 }
@@ -65,7 +65,7 @@ extern void Con_ToggleAutomap_f (void);
 /**
  * Initialize game
  */
-PUBLIC void Game_Init (void)
+void Game_Init (void)
 {
     g_fov     = 68;
     g_autoaim = 1;
@@ -95,7 +95,7 @@ extern _boolean areabyplayer[ NUMAREAS ];
  * Save current game state to file
  * @param[in] name Name of save game file.
  */
-PUBLIC void SaveTheGame (const char *name)
+void SaveTheGame (const char *name)
 {
     FILE    *f;
     char    path[1024];
@@ -148,14 +148,14 @@ PUBLIC void SaveTheGame (const char *name)
     fclose (f);
 }
 
-extern PUBLIC void StartGame (int episode, int mission, int g_skill);
+extern void StartGame (int episode, int mission, int g_skill);
 
 /**
  * Load game state from file
  * @param[in] name Name of save game file to load.
  * @return 1 on success, otherwise 0
  */
-PUBLIC int LoadTheGame (const char *name)
+int LoadTheGame (const char *name)
 {
     FILE    *f;
     char    path[1024];

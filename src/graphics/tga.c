@@ -38,7 +38,7 @@
 
 #define TGA_HEADER_SIZE     18
 
-PRIVATE W8 *p_buf;  // current pointer to tga data block
+static W8 *p_buf;  // current pointer to tga data block
 
 
 
@@ -87,7 +87,7 @@ typedef struct _TargaHeader {
 
 
 
-PRIVATE void flip_line (W8 *buffer, TargaHeader *info)
+static void flip_line (W8 *buffer, TargaHeader *info)
 {
     W8  temp;
     W8 *alt;
@@ -107,7 +107,7 @@ PRIVATE void flip_line (W8 *buffer, TargaHeader *info)
     }
 }
 
-PRIVATE void upsample (W8 *dest, W8 *src,
+static void upsample (W8 *dest, W8 *src,
                        W32 width, W32 bytes, W8 alphaBits)
 {
     W32 x;
@@ -136,7 +136,7 @@ PRIVATE void upsample (W8 *dest, W8 *src,
     }
 }
 
-PRIVATE void bgr2rgb (W8 *dest, W8 *src,
+static void bgr2rgb (W8 *dest, W8 *src,
                       W32 width, W32 bytes, W32 alpha)
 {
     W32 x;
@@ -164,7 +164,7 @@ PRIVATE void bgr2rgb (W8 *dest, W8 *src,
 
 }
 
-PRIVATE SW32 rle_read (filehandle_t *fp, W8 *buffer,
+static SW32 rle_read (filehandle_t *fp, W8 *buffer,
                        TargaHeader *info)
 {
     static SW32   repeat = 0;
@@ -211,7 +211,7 @@ PRIVATE SW32 rle_read (filehandle_t *fp, W8 *buffer,
 }
 
 
-PRIVATE void read_line (filehandle_t *fp,
+static void read_line (filehandle_t *fp,
                         W8      *row,
                         W8      *buffer,
                         TargaHeader     *info)
@@ -241,7 +241,7 @@ PRIVATE void read_line (filehandle_t *fp,
 
 
 
-PUBLIC void LoadTGA (const char *filename, W8 **pic, W16 *width, W16 *height, W16 *bytes)
+void LoadTGA (const char *filename, W8 **pic, W16 *width, W16 *height, W16 *bytes)
 {
     TargaHeader     targa_header;
     W8    header[ 18 ];
@@ -523,7 +523,7 @@ TGALOADFAILED:
  Notes:
 -----------------------------------------------------------------------------
 */
-PRIVATE void rle_write (FILE   *fp,
+static void rle_write (FILE   *fp,
                         W8  *buffer,
                         W32 width,
                         W32 bytes)
@@ -602,7 +602,7 @@ PRIVATE void rle_write (FILE   *fp,
  Notes:
 -----------------------------------------------------------------------------
 */
-PUBLIC W8 WriteTGA (const char *filename, W16 bpp, W16 width, W16 height,
+W8 WriteTGA (const char *filename, W16 bpp, W16 width, W16 height,
                     void *Data, W8 upsideDown, W8 rle)
 {
     W16 i, x, y, BytesPerPixel;

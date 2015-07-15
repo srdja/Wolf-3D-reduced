@@ -51,7 +51,7 @@ client_static_t ClientStatic;
 /**
  * Initialize client variables and commands.
  */
-PRIVATE void Client_InitLocal (void)
+static void Client_InitLocal (void)
 {
     ClientStatic.realtime = Sys_Milliseconds();
 
@@ -69,7 +69,7 @@ extern void IN_StartupMouse (void);
  * Initialize Client sub-systems.
  * @return Initialize video and sound sub-systems.
  */
-PUBLIC void Client_Init (void)
+void Client_Init (void)
 {
     Video_Init();
     //Sound_Init();
@@ -86,7 +86,7 @@ extern int elevatorSwitchTime;
 /**
  * \brief Render game world
  */
-PRIVATE void V_RenderView (void)
+static void V_RenderView (void)
 {
     if (ClientStatic.key_dest != key_game) {
         return;
@@ -97,7 +97,7 @@ PRIVATE void V_RenderView (void)
 /**
  * \brief Process current frame
  */
-PUBLIC void Client_Screen_UpdateScreen (void)
+void Client_Screen_UpdateScreen (void)
 {
     R_BeginFrame();
     V_RenderView(); // Draw game world
@@ -109,7 +109,7 @@ PUBLIC void Client_Screen_UpdateScreen (void)
  * \brief Refresh level
  * \param[in] r_mapname Name of name
  */
-PUBLIC void Client_PrepRefresh (const char *r_mapname)
+void Client_PrepRefresh (const char *r_mapname)
 {
     char mapname[ 64 ]; //gsh, decided to allow longer map names
 

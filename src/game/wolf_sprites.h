@@ -404,10 +404,7 @@ typedef struct visobj_s {
 } visobj_t;
 
 extern visobj_t vislist[];
-
-
 void Sprite_Reset (void);
-
 
 void Sprite_RemoveSprite (int sprite_id);
 int Sprite_GetNewSprite (void);

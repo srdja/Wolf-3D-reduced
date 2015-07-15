@@ -63,15 +63,15 @@ extern void uninstall_grabs (void);
 extern void install_grabs (void);
 
 Display *display = NULL;
-PRIVATE int screen_num;
+static int screen_num;
 Window mainwin;
-PRIVATE GLXContext ctx = NULL;
+static GLXContext ctx = NULL;
 
-PRIVATE XF86VidModeModeInfo **vidmodes;
+static XF86VidModeModeInfo **vidmodes;
 
-PRIVATE _boolean vidmode_ext = false;
+static _boolean vidmode_ext = false;
 
-PRIVATE int num_vidmodes;
+static int num_vidmodes;
 _boolean vidmode_active = false;
 
 extern _boolean mouse_active;

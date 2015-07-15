@@ -39,9 +39,6 @@
 void Client_Init (void);
 void frame_run(int msec);
 
-#define PUBLIC          /* Accessible outside this module     */
-#define PRIVATE static  /* Accessible only within this module */
-
 //
 // button bits
 //

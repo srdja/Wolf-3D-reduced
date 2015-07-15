@@ -32,7 +32,7 @@
 #include "../common.h"
 #include "opengl_local.h"
 
-PRIVATE GLenum WrapToGL (TWrapMode mode)
+static GLenum WrapToGL (TWrapMode mode)
 {
     if (mode == Repeat) {
         return GL_REPEAT;
@@ -45,7 +45,7 @@ PRIVATE GLenum WrapToGL (TWrapMode mode)
     }
 }
 
-PRIVATE GLenum MagFilterToGL (TMagFilter MagFilter)
+static GLenum MagFilterToGL (TMagFilter MagFilter)
 {
     switch (MagFilter) {
     case Nearest:
@@ -61,7 +61,7 @@ PRIVATE GLenum MagFilterToGL (TMagFilter MagFilter)
     return GL_LINEAR;
 }
 
-PRIVATE GLenum MinFilterToGL (_boolean MipMap, TMinFilter MinFilter)
+static GLenum MinFilterToGL (_boolean MipMap, TMinFilter MinFilter)
 {
     if (MipMap) {
         switch (MinFilter) {
@@ -113,7 +113,7 @@ PRIVATE GLenum MinFilterToGL (_boolean MipMap, TMinFilter MinFilter)
  * \param[in] data Angle in radians.
  * \return true if texture was uploaded, otherwise false.
  */
-PUBLIC _boolean R_UploadTexture (texture_t *tex, PW8 data)
+_boolean R_UploadTexture (texture_t *tex, PW8 data)
 {
     W8 *scaled;
     W16 scaled_width, scaled_height;
@@ -201,12 +201,12 @@ PUBLIC _boolean R_UploadTexture (texture_t *tex, PW8 data)
     return true;
 }
 
-PUBLIC void R_DeleteTexture (unsigned int texnum)
+void R_DeleteTexture (unsigned int texnum)
 {
     glDeleteTextures (1, &texnum);
 }
 
-PUBLIC void R_Bind (int texnum)
+void R_Bind (int texnum)
 {
     // Is this texture already bound
     if (gl_state.currenttextures[ gl_state.currenttmu ] == texnum) {

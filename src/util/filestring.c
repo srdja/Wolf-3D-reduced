@@ -35,7 +35,7 @@
  * \param[in] path Path to get file name from.
  * \return Pointer to start of file name, otherwise NULL.
  */
-PUBLIC char *FS_getFileName (char *path)
+char *FS_getFileName (char *path)
 {
     char *last;
     last = path;
@@ -55,7 +55,7 @@ PUBLIC char *FS_getFileName (char *path)
  * \param[in] out Pointer to hold path string.
  * \return Nothing.
  */
-PUBLIC void FS_RemoveExtension (const char *in, char *out)
+void FS_RemoveExtension (const char *in, char *out)
 {
     while (*in && *in != '.') {
         *out++ = *in++;
@@ -71,7 +71,7 @@ PUBLIC void FS_RemoveExtension (const char *in, char *out)
  * \param[in] size_out Size of out buffer in bytes.
  * \return On success true, otherwise false.
  */
-PUBLIC _boolean FS_getPath (const char *in, char *out, W32 size_out)
+_boolean FS_getPath (const char *in, char *out, W32 size_out)
 {
     const char *start;
     start = in + strlen (in) - 1;

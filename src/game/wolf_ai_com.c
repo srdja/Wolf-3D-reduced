@@ -48,7 +48,7 @@
  * \return 1 if direction is OK, otherwise 0.
  * \note Called when actor finished previous move and is located in the 'center' of the tile. Entity will try walking in direction.
  */
-PUBLIC int AI_ChangeDir (entity_t *self, dir8type new_dir, LevelData_t *lvl)
+int AI_ChangeDir (entity_t *self, dir8type new_dir, LevelData_t *lvl)
 {
     int oldx, oldy, newx, newy; // all it tiles
     int n;
@@ -130,7 +130,7 @@ moveok:
  * \brief Entity is following a path
  * \param[in] self Valid pointer to entity_t structure of entity to change
  */
-PUBLIC void AI_Path (entity_t *self)
+void AI_Path (entity_t *self)
 {
     if (r_world->tilemap[ self->x >> TILE_SHIFT ][ self->y >> TILE_SHIFT ] & WAYPOINT_TILE) {
         long tileinfo = r_world->tilemap[self->x >> TILE_SHIFT][self->y >> TILE_SHIFT];
@@ -162,7 +162,7 @@ PUBLIC void AI_Path (entity_t *self)
  * \brief Attempts to choose and initiate a movement for entity that sends it towards the player while dodging.
  * \param[in] self Valid pointer to entity_t structure of entity to change
  */
-PRIVATE void AI_Dodge (entity_t *self)
+static void AI_Dodge (entity_t *self)
 {
     int deltax, deltay, i;
     dir8type dirtry[ 5 ], turnaround, tdir;
@@ -246,7 +246,7 @@ PRIVATE void AI_Dodge (entity_t *self)
  * \brief Attempts to choose and initiate a movement for entity that sends it towards the player
  * \param[in] self Valid pointer to entity_t structure of entity to change
  */
-PRIVATE void AI_Chase (entity_t *self)
+static void AI_Chase (entity_t *self)
 {
     int deltax, deltay;
     dir8type d[2];
@@ -336,7 +336,7 @@ PRIVATE void AI_Chase (entity_t *self)
  * \brief Run Away from player.
  * \param[in] self Valid pointer to entity_t structure of entity to change
  */
-PRIVATE void AI_Retreat (entity_t *self)
+static void AI_Retreat (entity_t *self)
 {
     int deltax, deltay;
     dir8type d[2], tdir;
@@ -386,7 +386,7 @@ PRIVATE void AI_Retreat (entity_t *self)
  * \return true if the player has been spoted, otherwise false.
  * \note If the sight is ok, check alertness and angle to see if they notice.
  */
-PRIVATE _boolean AI_CheckSight (entity_t *self)
+static _boolean AI_CheckSight (entity_t *self)
 {
 #define MINSIGHT 0x18000
 
@@ -446,7 +446,7 @@ PRIVATE _boolean AI_CheckSight (entity_t *self)
  * \return true tf the player is detected (by sight, noise, or proximity), the entity is put into its combat frame; otherwise false (actor could be delayed).
  * \note Incorporates a random reaction delay.
  */
-PRIVATE _boolean AI_FindTarget (entity_t *self)
+static _boolean AI_FindTarget (entity_t *self)
 {
     if (self->reacttime) { // count down reaction time
         self->reacttime -= tics;
@@ -531,7 +531,7 @@ PRIVATE _boolean AI_FindTarget (entity_t *self)
  * \param[in] dist Distance to move entity
  * \note Actors are not allowed to move inside the player. Does not check to see if the move in the tile map is valid.
  */
-PRIVATE void T_Move (entity_t *self, long dist)
+static void T_Move (entity_t *self, long dist)
 {
 
     if (self->dir == dir8_nodir || ! dist) {
@@ -570,7 +570,7 @@ PRIVATE void T_Move (entity_t *self, long dist)
  * \param[in] self Valid pointer to entity_t structure of entity to move
  * \param[in] think Objects AI while moving
  */
-PUBLIC void T_Advance (entity_t *self, think_t think)
+void T_Advance (entity_t *self, think_t think)
 {
     long move;
 
@@ -621,7 +621,7 @@ PUBLIC void T_Advance (entity_t *self, think_t think)
  * \brief Object will stand still and look for a target
  * \param[in] self Valid pointer to entity_t structure of entity
  */
-PUBLIC void T_Stand (entity_t *self)
+void T_Stand (entity_t *self)
 {
     AI_FindTarget (self);
 }
@@ -630,7 +630,7 @@ PUBLIC void T_Stand (entity_t *self)
  * \brief Objects path logic
  * \param[in] self Valid pointer to entity_t structure of entity
  */
-PUBLIC void T_Path (entity_t *self)
+void T_Path (entity_t *self)
 {
 
     if (AI_FindTarget (self)) {
@@ -656,7 +656,7 @@ PUBLIC void T_Path (entity_t *self)
  * \brief Ghosts path logic
  * \param[in] self Valid pointer to entity_t structure of entity
  */
-PUBLIC void T_Ghosts (entity_t *self)
+void T_Ghosts (entity_t *self)
 {
     if (self->dir == dir8_nodir) {
         AI_Chase (self);
@@ -675,7 +675,7 @@ PUBLIC void T_Ghosts (entity_t *self)
  * \brief Objects chase logic
  * \param[in] self Valid pointer to entity_t structure of entity
  */
-PUBLIC void T_Chase (entity_t *self)
+void T_Chase (entity_t *self)
 {
     int dx, dy, dist, chance;
     char dodge;
@@ -726,7 +726,7 @@ PUBLIC void T_Chase (entity_t *self)
  * \brief Objects bite logic
  * \param[in] self Valid pointer to entity_t structure of entity
  */
-PUBLIC void T_Bite (entity_t *self)
+void T_Bite (entity_t *self)
 {
     long dx, dy;
 
@@ -751,7 +751,7 @@ PUBLIC void T_Bite (entity_t *self)
  * \brief Dog chase logic
  * \param[in] self Valid pointer to entity_t structure of entity
  */
-PUBLIC void T_DogChase (entity_t *self)
+void T_DogChase (entity_t *self)
 {
     long dx, dy;
 
@@ -786,7 +786,7 @@ PUBLIC void T_DogChase (entity_t *self)
  * \param[in] self Valid pointer to entity_t structure of entity
  * \note Boss will retreat if too close to player.
  */
-PUBLIC void T_BossChase (entity_t *self)
+void T_BossChase (entity_t *self)
 {
     int dx, dy, dist;
     W8 dodge;
@@ -828,7 +828,7 @@ PUBLIC void T_BossChase (entity_t *self)
  * \brief Fake logic
  * \param[in] self Valid pointer to entity_t structure of entity
  */
-PUBLIC void T_Fake (entity_t *self)
+void T_Fake (entity_t *self)
 {
 
     if (Level_CheckLine (self->x, self->y, Player.position.origin[0], Player.position.origin[1], r_world)) { // got a shot at player?
@@ -854,7 +854,7 @@ PUBLIC void T_Fake (entity_t *self)
  * \brief Try to damage the player.
  * \param[in] self Valid pointer to entity_t structure of entity
  */
-PUBLIC void T_Shoot (entity_t *self)
+void T_Shoot (entity_t *self)
 {
     int dx, dy, dist;
     int hitchance, damage;
@@ -937,7 +937,7 @@ PUBLIC void T_Shoot (entity_t *self)
  * \brief UberMutant logic to damage the player.
  * \param[in] self Valid pointer to entity_t structure of entity
  */
-PUBLIC void T_UShoot (entity_t *self)
+void T_UShoot (entity_t *self)
 {
     int dx, dy, dist;
 
@@ -956,7 +956,7 @@ PUBLIC void T_UShoot (entity_t *self)
  * \brief Fire rocket or fire
  * \param[in] self Valid pointer to entity_t structure of entity
  */
-PUBLIC void T_Launch (entity_t *self)
+void T_Launch (entity_t *self)
 {
     entity_t *proj;
     float iangle;

@@ -51,20 +51,20 @@ extern viddef_t viddef;
 LevelData_t *r_world;
 
 
-PRIVATE const char weaponnames[ 4 ][ 32 ] = {
+static const char weaponnames[ 4 ][ 32 ] = {
     "pics/KNIFEPIC.tga",
     "pics/GUNPIC.tga",
     "pics/MACHINEGUNPIC.tga",
     "pics/GATLINGGUNPIC.tga"
 };
 
-PRIVATE SW32 hud_x, hud_y;
+static SW32 hud_x, hud_y;
 
 
 /**
  * \brief Draws the heads-up-display
  */
-PUBLIC void R_DrawHUD (void)
+void R_DrawHUD (void)
 {
     SW32 w, h;
     W32 score = Player.score;
@@ -96,7 +96,7 @@ PUBLIC void R_DrawHUD (void)
     R_DrawNumber (hud_x + 444, hud_y + 32, Player.ammo[AMMO_BULLETS]); // FIXME!
 }
 
-PRIVATE const char mugshotnames[ 24 ][ 32 ] = {
+static const char mugshotnames[ 24 ][ 32 ] = {
     "pics/FACE1APIC.tga",
     "pics/FACE1BPIC.tga",
     "pics/FACE1CPIC.tga",
@@ -128,7 +128,7 @@ PRIVATE const char mugshotnames[ 24 ][ 32 ] = {
     "pics/FACE8APIC.tga"
 };
 
-PRIVATE const char godmugshotnames[][ 32 ] = {
+static const char godmugshotnames[][ 32 ] = {
     "pics/GODMODEFACE0PIC.tga",
     "pics/GODMODEFACE1PIC.tga",
     "pics/GODMODEFACE2PIC.tga"
@@ -138,7 +138,7 @@ PRIVATE const char godmugshotnames[][ 32 ] = {
 /**
  * \brief Draws BJ's face on the heads-up-display
  */
-PUBLIC void R_DrawFace (void)
+void R_DrawFace (void)
 {
     Player.facecount += tics;
 
@@ -197,7 +197,7 @@ SW32 r_damageflash = 0;
 /**
  * \brief Draws BJ's face on the heads-up-display
  */
-PUBLIC void R_DamageFlash (int damage)
+void R_DamageFlash (int damage)
 {
     r_damageflash += damage;
 
@@ -209,7 +209,7 @@ PUBLIC void R_DamageFlash (int damage)
 /**
  * \brief Renders damage flash
  */
-PRIVATE void R_DrawFlash (void)
+static void R_DrawFlash (void)
 {
     if (r_damageflash) {
         R_DrawBox (0, 0, viddef.width, viddef.height, (0xFF << 24) | 245);
@@ -226,7 +226,7 @@ PRIVATE void R_DrawFlash (void)
  * \param[in] floor floor colour.
  * \param[in] ceiling ceiling colour.
  */
-PRIVATE void R_DrawBackGnd (float pitch, colour3_t floor, colour3_t ceiling)
+static void R_DrawBackGnd (float pitch, colour3_t floor, colour3_t ceiling)
 {
     int height = (int) ((viddef.height >> 1) * tan (-pitch) / TanDgr (g_fov * 0.5) + (viddef.height >> 1));
     R_Draw_Fill (0, 0, viddef.width, height, ceiling);
@@ -241,7 +241,7 @@ W32 intensity = 0;
 /**
  * \brief Renders the game world.
  */
-PUBLIC void R_DrawWorld (void)
+void R_DrawWorld (void)
 {
     placeonplane_t viewport;
 
@@ -287,7 +287,7 @@ colour3_t barthirdcolour    = { 252, 156, 156 };
  * \brief Draws the "Get Psyched" plaque.
  * \param[in] percent Set progress bar to this percentage (0 to 100).
  */
-PUBLIC void R_DrawPsyched (W32 percent)
+void R_DrawPsyched (W32 percent)
 {
     SW32 w, h;
     W32 bar_length;
@@ -314,7 +314,7 @@ PUBLIC void R_DrawPsyched (W32 percent)
  * \brief Start the rendering registration sequence.
  * \param[in] map The name of the map to load.
  */
-PUBLIC void R_BeginRegistration (const char *map)
+void R_BeginRegistration (const char *map)
 {
     char    fullname[ MAX_GAMEPATH ];
 
@@ -361,7 +361,7 @@ PUBLIC void R_BeginRegistration (const char *map)
  * \brief End the rendering registration sequence.
  * \note Releases unused textures
  */
-PUBLIC void R_EndRegistration (void)
+void R_EndRegistration (void)
 {
     TM_FreeUnusedTextures();
 }

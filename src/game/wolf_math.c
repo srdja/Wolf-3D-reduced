@@ -68,7 +68,7 @@ int dir4angle[5] = {ANG_0, ANG_90, ANG_180, ANG_270, ANG_0};
 /**
  * \brief Intialize wolf math module.
  */
-PUBLIC int WM_BuildTables (void)
+int WM_BuildTables (void)
 {
     srand ((unsigned int)time (NULL));
     return 1;
@@ -78,7 +78,7 @@ PUBLIC int WM_BuildTables (void)
  * \brief Generates a random number between 1 and 255
  * \return A value between 1 and 255.
  */
-PUBLIC int US_RndT (void)
+int US_RndT (void)
 {
     return (1 + (rand() % 255)) & 0xFF;
 }
@@ -88,7 +88,7 @@ PUBLIC int US_RndT (void)
  * \param[in] angle Angle in radians.
  * \return quadrant the angle resides in
  */
-PUBLIC quadrant GetQuadrant (float angle)
+quadrant GetQuadrant (float angle)
 {
     angle = angle_normalize (angle);
 
@@ -108,7 +108,7 @@ PUBLIC quadrant GetQuadrant (float angle)
  * \param[in] angle Angle in radians.
  * \return dir4type direction
  */
-PUBLIC dir4type Get4dir (float angle)
+dir4type Get4dir (float angle)
 {
     angle = angle_normalize (angle + M_PI / 4);
 
@@ -128,7 +128,7 @@ PUBLIC dir4type Get4dir (float angle)
  * \param[in] angle Angle in radians.
  * \return dir8type direction
  */
-PUBLIC dir8type Get8dir (float angle)
+dir8type Get8dir (float angle)
 {
     angle = angle_normalize (angle + M_PI / 12);
 
@@ -158,7 +158,7 @@ PUBLIC dir8type Get8dir (float angle)
  * \param[in] angle Angle in radians.
  * \return Returns distance between the point and line
  */
-PUBLIC int Point2LineDist (const int x, const int y, const float angle)
+int Point2LineDist (const int x, const int y, const float angle)
 {
     return ABS ((int) (x * sin (angle) - y * cos (angle)));
 }
@@ -171,7 +171,7 @@ PUBLIC int Point2LineDist (const int x, const int y, const float angle)
  * \param[in] angle Angle in radians.
  * \return Returns length of line segment
  */
-PUBLIC int LineLen2Point (const int x, const int y, const float angle)
+int LineLen2Point (const int x, const int y, const float angle)
 {
     return (int) (cos (angle) * x + sin (angle) * y);
 }
@@ -191,7 +191,7 @@ PUBLIC int LineLen2Point (const int x, const int y, const float angle)
  *      /a______|----------> x
  *  point1 = {x, y}
  */
-PUBLIC float TransformPoint (const double Point1X, const double Point1Y, const double Point2X, const double Point2Y)
+float TransformPoint (const double Point1X, const double Point1Y, const double Point2X, const double Point2Y)
 {
 
     return (float)angle_normalize ((float)atan2 (Point1Y - Point2Y, Point1X - Point2X));

@@ -44,7 +44,7 @@
  * \brief Reset sprite status.
  * \note Called only when client must reconnect will not set remove flag!
  */
-PUBLIC void Sprite_Reset (void)
+void Sprite_Reset (void)
 {
     levelData.numSprites = 0;
     memset (levelData.sprites, 0, sizeof (levelData.sprites));
@@ -54,7 +54,7 @@ PUBLIC void Sprite_Reset (void)
  * \brief Remove sprite.
  * \param[in] sprite_id sprite id to remove.
  */
-PUBLIC void Sprite_RemoveSprite (int sprite_id)
+void Sprite_RemoveSprite (int sprite_id)
 {
     if (sprite_id == -1) {
         return;
@@ -67,7 +67,7 @@ PUBLIC void Sprite_RemoveSprite (int sprite_id)
  * \brief Get index of free location.
  * \return -1 if there is no location free, otherwise a value between 0 and MAX_SPRITES
  */
-PUBLIC int Sprite_GetNewSprite (void)
+int Sprite_GetNewSprite (void)
 {
     W32 n;
     sprite_t *sprt;
@@ -93,7 +93,7 @@ PUBLIC int Sprite_GetNewSprite (void)
  * \param[in] index texture index.
  * \param[in] tex  texture to set as.
  */
-PUBLIC void Sprite_SetPos (int sprite_id, int x, int y, int angle)
+void Sprite_SetPos (int sprite_id, int x, int y, int angle)
 {
     if (sprite_id == -1) {
         return;
@@ -121,7 +121,7 @@ PUBLIC void Sprite_SetPos (int sprite_id, int x, int y, int angle)
  * \param[in] index texture index.
  * \param[in] tex  texture to set as.
  */
-PUBLIC void Sprite_SetTex (int sprite_id, int index, int tex)
+void Sprite_SetTex (int sprite_id, int index, int tex)
 {
     if (sprite_id == -1) {
         return;
@@ -150,7 +150,7 @@ visobj_t vislist[ MAX_SPRITES ];
  *          0   elem1 equal distance to elem2
  *          >0  elem1 closer than elem2
  */
-PRIVATE int Sprite_cmpVis (const void *elem1, const void *elem2)
+static int Sprite_cmpVis (const void *elem1, const void *elem2)
 {
     // macro to get distance from a void pointer to visobj_t
 #define vis_dist( vis ) ( ((visobj_t *)vis)->dist )
@@ -171,7 +171,7 @@ PRIVATE int Sprite_cmpVis (const void *elem1, const void *elem2)
  *      List is based on tile visibility array, made by raycaster.
  *      Called only by client.
  */
-PUBLIC int Sprite_CreateVisList (void)
+int Sprite_CreateVisList (void)
 {
     W32 tx, ty, n, num_visible;
     visobj_t *visptr;
