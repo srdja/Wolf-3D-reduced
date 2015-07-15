@@ -1,9 +1,0 @@
-Qué debería hacer FS_UserDir ?
-
-Primero, debería buscar el home. Cómo hacer esto está en un bookmark de StackOverflow.
-Después, debería corroborar la existencia de un directorio .wolf3dredux.
-Si no existe, crearlo.
-Finalmente, debería devolver una cadena de la forma % s / % s, con el home como primer argumento y .wolf3dredux como segundo argumento.
-Todo esto podría hacerse en menos de 10 líneas, si todo va bien :)
-
-(Podría ser en .config en lugar de home, para resultar menos invasivo en el home, en una de esas)
