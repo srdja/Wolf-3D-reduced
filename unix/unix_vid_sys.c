@@ -38,26 +38,10 @@
 #include "../env/renderer.h"
 #include "../env/video.h"
 
-// Console variables that we need to access from this module
-cvar_t      *vid_gamma;
-cvar_t      *r_ref;         // Name of Refresh DLL loaded
-cvar_t      *r_fullscreen;
-
 // Global variables used internally by this module
 viddef_t    viddef; // global video state; used by other modules
 
-
 #define VID_NUM_MODES ( sizeof( vid_modes ) / sizeof( vid_modes[ 0 ] ) )
-
-
-/**
- * \brief Console command to re-start the video mode.
- * \note We do this simply by setting the modified flag for the r_ref variable, which will cause the entire video mode to be reset on the next frame.
- */
-PRIVATE void VID_Restart_f (void)
-{
-    r_ref->modified = true;
-}
 
 
 typedef struct vidmode_s {
@@ -99,18 +83,6 @@ PUBLIC _boolean VID_GetModeInfo (int *width, int *height, int mode)
 }
 
 
-/*
------------------------------------------------------------------------------
- Function: VID_NewWindow -Set new window width height.
-
- Parameters: width -[in] width of new window.
-             height -[in] height of new window.
-
- Returns:   Nothing
-
- Notes: Sets global variables [viddef.width] [viddef.height]
------------------------------------------------------------------------------
-*/
 /**
  * \brief Set new window width height.
  * \param[in] width Width of new window.
@@ -124,90 +96,14 @@ PUBLIC void VID_NewWindow (int width, int height)
 //  ClientState.force_refdef = true;        // can't use a paused refdef
 }
 
-
-/*
------------------------------------------------------------------------------
- Function: VID_LoadRefresh -Restart the rendering layer.
-
- Parameters: Nothing
-
- Returns: false on error, true on success.
-
- Notes:
-    This function refreshes the rendering layer.
------------------------------------------------------------------------------
-*/
-extern void IN_ActivateMouse (void) ;
-
-PRIVATE _boolean VID_LoadRefresh (void)
-{
-    R_Shutdown();
-
-    if (R_Init (0, 0) == -1) {
-        R_Shutdown();
-        return false;
-    }
-    IN_ActivateMouse();
-    return true;
-}
-
-/*
------------------------------------------------------------------------------
- Function: Video_CheckChanges -Check for video mode changes.
-
- Parameters: Nothing
-
- Returns: Nothing
-
- Notes:
-    This function gets called once just before drawing each frame, and
-    it's sole purpose is to check to see if any of the video mode
-    parameters have changed, and if they have to update the video
-    mode to match.
------------------------------------------------------------------------------
-*/
-PUBLIC void Video_CheckChanges (void)
-{
-    while (r_ref->modified) {
-        // refresh has changed
-        r_ref->modified = false;
-        r_fullscreen->modified = true;
-
-        if (! VID_LoadRefresh()) {
-            break;
-        }
-    }
-}
-
-
-/*
------------------------------------------------------------------------------
- Function: Video_Init -Initialize video sub-system.
-
- Parameters: Nothing
-
- Returns:   Nothing
-
- Notes:
------------------------------------------------------------------------------
-*/
 PUBLIC void Video_Init (void)
 {
-    /* Create the video variables so we know how to start the graphics drivers */
-    // if DISPLAY is defined, try X
-    if (getenv ("DISPLAY")) {
-        r_ref = Cvar_Get ("r_ref", "softx", CVAR_ARCHIVE);
-    } else {
-        r_ref = Cvar_Get ("r_ref", "soft", CVAR_ARCHIVE);
-    }
-    r_fullscreen = Cvar_Get ("r_fullscreen", "0", CVAR_ARCHIVE);
-    vid_gamma = Cvar_Get ("vid_gamma", "1", CVAR_ARCHIVE);
-
-    /* Add some console commands that we want to handle */
-    //Cmd_AddCommand ("vid_restart", VID_Restart_f);
-
     /* Start the graphics mode and load refresh DLL */
-    Video_CheckChanges();
+    if (R_Init (0, 0) == -1) {
+        R_Shutdown();
+        return;
+    }
+    //IN_ActivateMouse();
 }
 
 

@@ -50,7 +50,6 @@
 #include "../env/com_string.h"
 #include "../env/client.h"
 
-
 #include "wolf_level.h"
 #include "wolf_player.h"
 #include "wolf_local.h"
@@ -65,7 +64,6 @@ extern viddef_t viddef;
 
 float cur_x_fov, cur_y_fov; // x & y field of view (in degrees)
 float ratio; // viewport width/height
-
 
 
 /**
@@ -90,8 +88,6 @@ PUBLIC void GL_SetDefaultState (void)
     glShadeModel (GL_FLAT);
 
     glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-    GL_UpdateSwapInterval();
 }
 
 /**
@@ -100,8 +96,8 @@ PUBLIC void GL_SetDefaultState (void)
 PRIVATE void R_CheckFOV (void)
 {
     ratio = (float) viddef.width / (float)viddef.height; // FIXME: move somewhere
-    cur_y_fov = g_fov->value;
-    cur_x_fov = CalcFov (g_fov->value, (float)viddef.height, (float)viddef.width);
+    cur_y_fov = g_fov;
+    cur_x_fov = CalcFov (g_fov, (float)viddef.height, (float)viddef.width);
 }
 
 

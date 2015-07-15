@@ -71,14 +71,8 @@ PRIVATE void CustomizeControlsFunc (void *unused)
     M_Menu_Keys_f();
 }
 
-PRIVATE void AlwaysRunFunc()
-{
-    Cvar_SetValue ("cl_run", (float)s_options_alwaysrun_box.curvalue);
-}
-
 PRIVATE void MouseSpeedFunc (void *unused)
 {
-    Cvar_SetValue ("m_sensitivity", s_options_sensitivity_slider.curvalue * 100);
 }
 
 
@@ -89,9 +83,6 @@ PRIVATE void ControlsSetMenuItemValues (void)
 
 PRIVATE void ControlsResetDefaultsFunc (void *unused)
 {
-    //Cbuf_AddText ("exec DEFAULT.CFG\n");
-    //Cbuf_Execute();
-
     ControlsSetMenuItemValues();
 }
 
@@ -113,7 +104,6 @@ PRIVATE void Options_MenuInit (void)
     s_options_menu.y = (viddef.height >> 1) - 110;
     s_options_menu.nitems = 0;
 
-
     s_options_sensitivity_slider.generic.type   = MTYPE_SLIDER;
     s_options_sensitivity_slider.generic.x      = 0;
     s_options_sensitivity_slider.generic.y      = y;
@@ -123,16 +113,6 @@ PRIVATE void Options_MenuInit (void)
     s_options_sensitivity_slider.generic.callback = MouseSpeedFunc;
     s_options_sensitivity_slider.minvalue       = 1;
     s_options_sensitivity_slider.maxvalue       = 10;
-
-    s_options_alwaysrun_box.generic.type = MTYPE_SPINCONTROL;
-    s_options_alwaysrun_box.generic.x   = 0;
-    s_options_alwaysrun_box.generic.y   = y += nYOffset;
-    s_options_alwaysrun_box.generic.fs      = FONT1;
-    s_options_alwaysrun_box.generic.fontBaseColour = &textcolour;
-    s_options_alwaysrun_box.generic.fontHighColour = &readcolour;
-    s_options_alwaysrun_box.generic.name    = "Always Run:";
-    s_options_alwaysrun_box.generic.callback = AlwaysRunFunc;
-    s_options_alwaysrun_box.itemnames = yesno_names;
 
     s_options_customize_options_action.generic.type = MTYPE_ACTION;
     s_options_customize_options_action.generic.x    = 0;
@@ -168,7 +148,7 @@ PRIVATE void Options_MenuInit (void)
 
 PRIVATE void Options_MenuDraw (void)
 {
-    if (g_version->value == SPEAROFDESTINY) {
+    if (g_version == SPEAROFDESTINY) {
         R_Draw_Tile (0, 0, viddef.width, viddef.height, "pics/C_BACKDROPPIC.tga");
         M_Banner ("pics/SC_CONTROLPIC.tga", 0);
         M_DrawWindow (((viddef.width - 550) >> 1), ((viddef.height - 335) >> 1) + 40, 550, 335,
@@ -532,7 +512,7 @@ PRIVATE void Keys_MenuInit (void)
 
 PRIVATE void Keys_MenuDraw (void)
 {
-    if (g_version->value == SPEAROFDESTINY) {
+    if (g_version == SPEAROFDESTINY) {
         R_Draw_Tile (0, 0, viddef.width, viddef.height, "pics/C_BACKDROPPIC.tga");
 
         M_Banner ("pics/SC_CUSTOMIZEPIC.tga", 0);

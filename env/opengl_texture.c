@@ -127,7 +127,7 @@ PUBLIC _boolean R_UploadTexture (texture_t *tex, PW8 data)
         ;
     }
 
-    if (gl_round_down->value && scaled_width > tex->width && tex->MipMap) {
+    if (gl_round_down && scaled_width > tex->width && tex->MipMap) {
         scaled_width >>= 1;
     }
 
@@ -135,14 +135,14 @@ PUBLIC _boolean R_UploadTexture (texture_t *tex, PW8 data)
         ;
     }
 
-    if (gl_round_down->value && scaled_height > tex->height && tex->MipMap) {
+    if (gl_round_down && scaled_height > tex->height && tex->MipMap) {
         scaled_height >>= 1;
     }
 
     // let people sample down the world textures for speed
     if (tex->MipMap) {
-        scaled_width >>= (int)gl_picmip->value;
-        scaled_height >>= (int)gl_picmip->value;
+        scaled_width >>= 0;
+        scaled_height >>= 0;
     }
 
     // don't ever bother with > glMaxTexSize textures

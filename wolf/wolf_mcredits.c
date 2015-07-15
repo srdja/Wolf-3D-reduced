@@ -80,7 +80,7 @@ PRIVATE void M_Credits_MenuDraw (void)
     int i, x, y;
     int w, h;
 
-    if (g_version->value == SPEAROFDESTINY) {
+    if (g_version == SPEAROFDESTINY) {
         R_Draw_Tile (0, 0, viddef.width, viddef.height, "pics/C_BACKDROPPIC.tga");
     } else {
         R_Draw_Fill (0, 0, viddef.width, viddef.height, bgcolour);

@@ -28,30 +28,19 @@
 
 #include "com_math.h"
 #include "filesystem.h"
-#include "cvar.h"
 #include "renderer.h"
 
 int glMaxTexSize; // maximum texture size
 
 void GL_SetDefaultState (void);
-void GL_UpdateSwapInterval (void);
 
 extern  float   gldepthmin, gldepthmax;
 
-extern  cvar_t  *gl_ext_palettedtexture;
-extern  cvar_t  *gl_mode;
-extern  cvar_t  *gl_round_down;
-extern  cvar_t  *gl_picmip;
-extern  cvar_t  *gl_finish;
-extern  cvar_t  *gl_ztrick;
-extern  cvar_t  *gl_clear;
-extern  cvar_t  *gl_drawbuffer;
-extern  cvar_t  *gl_driver;
-extern  cvar_t  *gl_swapinterval;
-extern  cvar_t  *r_fullscreen;
-extern  cvar_t  *vid_gamma;
-extern  cvar_t  *intensity;
-
+extern  int gl_mode;
+extern  int gl_round_down;
+extern  int gl_ztrick;
+extern  int gl_clear;
+extern  int intensity;
 
 void R_Bind (int texnum);
 

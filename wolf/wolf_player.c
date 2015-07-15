@@ -527,7 +527,7 @@ PUBLIC void PL_Damage (player_t *self, entity_t *attacker, int points)
         return;
     }
 
-    if (skill->value == gd_baby) {
+    if (skill == gd_baby) {
         points >>= 2;
     }
 

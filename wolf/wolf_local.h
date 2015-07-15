@@ -31,7 +31,6 @@
 #define __WOLF_LOCAL_H__
 
 #include "../env/common.h"
-#include "../env/cvar.h"
 
 
 // Game Version
@@ -125,10 +124,10 @@ typedef struct {
 extern LRstruct LevelRatios;
 
 
-extern cvar_t   *g_version;
-extern cvar_t   *g_fov;
-extern cvar_t   *g_autoaim;
-extern cvar_t   *skill;
+extern int g_version;
+extern float   g_fov;
+extern float g_autoaim;
+extern  int skill;
 
 extern int tics;
 

@@ -54,7 +54,7 @@ PUBLIC void R_RayCast (placeonplane_t viewport, LevelData_t *lvl)
 
 
 
-    float tanfov2 = (float)TanDgr (g_fov->value / 2.0) * (640.0f / 480.0f);
+    float tanfov2 = (float)TanDgr (g_fov / 2.0) * (640.0f / 480.0f);
     float tanval;
 
     memset (tile_visible, 0, sizeof (tile_visible));   // clear tile visible flags

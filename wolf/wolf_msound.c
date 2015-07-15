@@ -52,17 +52,10 @@ PRIVATE menulist_s      s_sound_device_list;
 
 PRIVATE void UpdateMasterVolumeFunc (void *unused)
 {
-    Cvar_SetValue ("s_masterVolume", s_sound_mastervolume_slider.curvalue / 10);
-}
-
-PRIVATE void UpdateSFXVolumeFunc (void *unused)
-{
-    Cvar_SetValue ("s_sfxVolume", s_sound_sfxvolume_slider.curvalue / 10);
 }
 
 PRIVATE void UpdateMusicVolumeFunc (void *unused)
 {
-    Cvar_SetValue ("s_musicVolume", s_sound_musicvolume_slider.curvalue / 10);
 }
 
 PRIVATE void Sound_MenuInit (void)
@@ -71,7 +64,7 @@ PRIVATE void Sound_MenuInit (void)
     s_sound_menu.x = (viddef.width >> 1) + 70;
     s_sound_menu.y = (viddef.height >> 1) - 20;
     s_sound_menu.nitems = 0;
-
+/*
     s_sound_mastervolume_slider.generic.type    = MTYPE_SLIDER;
     s_sound_mastervolume_slider.generic.x   = 0;
     s_sound_mastervolume_slider.generic.y   = 0;
@@ -82,20 +75,8 @@ PRIVATE void Sound_MenuInit (void)
     s_sound_mastervolume_slider.minvalue        = 0;
     s_sound_mastervolume_slider.maxvalue        = 10;
     s_sound_mastervolume_slider.curvalue        = Cvar_VariableValue ("s_masterVolume") * 10;
-
-
-    s_sound_sfxvolume_slider.generic.type   = MTYPE_SLIDER;
-    s_sound_sfxvolume_slider.generic.x  = 0;
-    s_sound_sfxvolume_slider.generic.y  = 30;
-    s_sound_sfxvolume_slider.generic.name   = "Effects Volume:";
-    s_sound_sfxvolume_slider.generic.fs     = FONT1;
-    s_sound_sfxvolume_slider.generic.fontBaseColour = &textcolour;
-    s_sound_sfxvolume_slider.generic.callback   = UpdateSFXVolumeFunc;
-    s_sound_sfxvolume_slider.minvalue       = 0;
-    s_sound_sfxvolume_slider.maxvalue       = 10;
-    s_sound_sfxvolume_slider.curvalue       = Cvar_VariableValue ("s_sfxVolume") * 10;
-
-
+*/
+    /*
     s_sound_musicvolume_slider.generic.type = MTYPE_SLIDER;
     s_sound_musicvolume_slider.generic.x    = 0;
     s_sound_musicvolume_slider.generic.y    = 60;
@@ -106,20 +87,6 @@ PRIVATE void Sound_MenuInit (void)
     s_sound_musicvolume_slider.minvalue     = 0;
     s_sound_musicvolume_slider.maxvalue     = 10;
     s_sound_musicvolume_slider.curvalue     = Cvar_VariableValue ("s_musicVolume") * 10;
-
-/*
-    if (0) { // sound_initialized
-        s_sound_device_list.generic.type    = MTYPE_SPINCONTROL;
-        s_sound_device_list.generic.x       = 0;
-        s_sound_device_list.generic.y       = 90;
-        s_sound_device_list.generic.name    = "Sound Device:";
-        s_sound_device_list.generic.fs      = FONT1;
-        s_sound_device_list.generic.fontBaseColour = &textcolour;
-        s_sound_device_list.generic.fontHighColour = &readcolour;
-        s_sound_device_list.generic.callback = UpdateSoundDeviceFunc;
-        s_sound_device_list.itemnames   = sound_devices;
-        s_sound_device_list.curvalue    = numDefaultSoundDevice;
-    }
 */
     Menu_AddItem (&s_sound_menu, (void *) &s_sound_mastervolume_slider);
     Menu_AddItem (&s_sound_menu, (void *) &s_sound_sfxvolume_slider);
@@ -136,7 +103,7 @@ PRIVATE void Sound_MenuInit (void)
 
 PRIVATE void Sound_MenuDraw (void)
 {
-    if (g_version->value == SPEAROFDESTINY) {
+    if (g_version == SPEAROFDESTINY) {
         R_Draw_Tile (0, 0, viddef.width, viddef.height, "pics/C_BACKDROPPIC.tga");
 
         M_BannerString ("Sound Setup", 15);

@@ -38,18 +38,7 @@
 
 #include "../env/renderer.h"
 
-
-extern cvar_t *r_ref;
-extern cvar_t *r_fullscreen;
-extern cvar_t *vid_gamma;
-
-
-PRIVATE cvar_t *gl_mode;
-PRIVATE cvar_t *gl_driver;
-PRIVATE cvar_t *gl_picmip;
-PRIVATE cvar_t *gl_ext_palettedtexture;
-PRIVATE cvar_t *gl_finish;
-
+PRIVATE int gl_mode;
 
 
 /////////////////////////////////////////////////////////////////////
@@ -68,102 +57,19 @@ PRIVATE menulist_s      s_paletted_texture_box;
 PRIVATE menulist_s      s_finish_box;
 PRIVATE menuaction_s    s_cancel_action;
 PRIVATE menuaction_s    s_defaults_action;
-PRIVATE menuaction_s    s_driver_action;
 
 
-/*
------------------------------------------------------------------------------
- Function:
-
- Parameters:
-
- Returns:
-
- Notes:
------------------------------------------------------------------------------
-*/
-PRIVATE void BrightnessCallback (void *s)
-{
-
-
-    s_brightness_slider.curvalue = s_brightness_slider.curvalue;
-
-
-}
-
-/*
------------------------------------------------------------------------------
- Function:
-
- Parameters:
-
- Returns:
-
- Notes:
------------------------------------------------------------------------------
-*/
 PRIVATE void ResetDefaults()
 {
     Video_MenuInit();
 }
 
-/*
------------------------------------------------------------------------------
- Function:
 
- Parameters:
-
- Returns:
-
- Notes:
------------------------------------------------------------------------------
-*/
 PRIVATE void ApplyChanges (void *unused)
 {
-    float gamma;
-
-    // Scale to a range of -1.f to 1.f
-    gamma = (s_brightness_slider.curvalue - 10.0f) / 10.0f;
-
-    Cvar_SetValue ("vid_gamma", gamma);
-
-    Cvar_SetValue ("gl_picmip", 3 - s_tq_slider.curvalue);
-    Cvar_SetValue ("r_fullscreen", (float)s_fs_box.curvalue);
-    Cvar_SetValue ("gl_ext_palettedtexture", (float)s_paletted_texture_box.curvalue);
-    Cvar_SetValue ("gl_finish", (float)s_finish_box.curvalue);
-    Cvar_SetValue ("gl_mode", (float)s_mode_list.curvalue);
-
-    Cvar_Set ("r_ref", "gl");
-    Cvar_Set ("gl_driver", OPENGL_DLL_NAME);
-
-
-    /*
-       update appropriate stuff if we're running OpenGL and gamma
-       has been modified
-    */
-
-    if (vid_gamma->modified) {
-        r_ref->modified = true;
-    }
-
-    if (gl_driver->modified) {
-        r_ref->modified = true;
-    }
-
     M_ForceMenuOff();
 }
 
-/*
------------------------------------------------------------------------------
- Function:
-
- Parameters:
-
- Returns:
-
- Notes:
------------------------------------------------------------------------------
-*/
 PRIVATE void CancelChanges (void *unused)
 {
     extern void M_PopMenu (void);
@@ -171,17 +77,7 @@ PRIVATE void CancelChanges (void *unused)
     M_PopMenu();
 }
 
-/*
------------------------------------------------------------------------------
- Function:
 
- Parameters:
-
- Returns:
-
- Notes:
------------------------------------------------------------------------------
-*/
 PUBLIC void Video_MenuInit (void)
 {
     static const char *resolutions[] = {
@@ -205,28 +101,10 @@ PUBLIC void Video_MenuInit (void)
     int y = 0;
     int nYOffset = 27;
 
-    if (! gl_driver)
-        gl_driver = Cvar_Get ("gl_driver", OPENGL_DLL_NAME, CVAR_INIT);
-
-    if (! gl_picmip)
-        gl_picmip = Cvar_Get ("gl_picmip", "0", CVAR_INIT);
-
-    if (! gl_mode)
-        gl_mode = Cvar_Get ("gl_mode", "3", CVAR_INIT);
-
-    if (! gl_ext_palettedtexture)
-        gl_ext_palettedtexture = Cvar_Get ("gl_ext_palettedtexture", "1", CVAR_ARCHIVE);
-
-    if (! gl_finish)
-        gl_finish = Cvar_Get ("gl_finish", "1", CVAR_ARCHIVE);
-
-
-    s_mode_list.curvalue = (int)gl_mode->value;
-
+    s_mode_list.curvalue = gl_mode;
 
     s_opengl_menu.x = (viddef.width >> 1) + 80;
     s_opengl_menu.nitems = 0;
-
 
     s_mode_list.generic.type = MTYPE_SPINCONTROL;
     s_mode_list.generic.name = "Video Mode";
@@ -236,51 +114,6 @@ PUBLIC void Video_MenuInit (void)
     s_mode_list.generic.fontBaseColour = &textcolour;
     s_mode_list.generic.fontHighColour = &readcolour;
     s_mode_list.itemnames = resolutions;
-
-    s_brightness_slider.generic.type    = MTYPE_SLIDER;
-    s_brightness_slider.generic.x   = 0;
-    s_brightness_slider.generic.y   = y += nYOffset;
-    s_brightness_slider.generic.fs      = FONT1;
-    s_brightness_slider.generic.fontBaseColour = &textcolour;
-    s_brightness_slider.generic.fontHighColour = &highlight;
-    s_brightness_slider.generic.name    = "brightness";
-    s_brightness_slider.generic.callback = BrightnessCallback;
-    s_brightness_slider.minvalue = 0;
-    s_brightness_slider.maxvalue = 20;
-    s_brightness_slider.curvalue = (vid_gamma->value + 10) * 10;
-
-    s_fs_box.generic.type = MTYPE_SPINCONTROL;
-    s_fs_box.generic.x  = 0;
-    s_fs_box.generic.y  = y += nYOffset;
-    s_fs_box.generic.fs     = FONT1;
-    s_fs_box.generic.fontBaseColour = &textcolour;
-    s_fs_box.generic.fontHighColour = &readcolour;
-    s_fs_box.generic.name   = "fullscreen";
-    s_fs_box.itemnames = yesno_names;
-    s_fs_box.curvalue = (int)r_fullscreen->value;
-
-
-
-    s_tq_slider.generic.type    = MTYPE_SLIDER;
-    s_tq_slider.generic.x       = 0;
-    s_tq_slider.generic.y       = y += nYOffset;
-    s_tq_slider.generic.fs      = FONT1;
-    s_tq_slider.generic.fontBaseColour = &textcolour;
-    s_tq_slider.generic.fontHighColour = &highlight;
-    s_tq_slider.generic.name    = "texture quality";
-    s_tq_slider.minvalue = 0;
-    s_tq_slider.maxvalue = 3;
-    s_tq_slider.curvalue = 3 - gl_picmip->value;
-
-    s_finish_box.generic.type = MTYPE_SPINCONTROL;
-    s_finish_box.generic.x  = 0;
-    s_finish_box.generic.y  = y += nYOffset;
-    s_finish_box.generic.fs     = FONT1;
-    s_finish_box.generic.fontBaseColour = &textcolour;
-    s_finish_box.generic.fontHighColour = &readcolour;
-    s_finish_box.generic.name = "sync every frame";
-    s_finish_box.curvalue = (int)gl_finish->value;
-    s_finish_box.itemnames = yesno_names;
 
     s_defaults_action.generic.type = MTYPE_ACTION;
     s_defaults_action.generic.name = "reset to defaults";
@@ -316,21 +149,11 @@ PUBLIC void Video_MenuInit (void)
     s_opengl_menu.x -= 8;
 }
 
-/*
------------------------------------------------------------------------------
- Function:
 
- Parameters:
-
- Returns:
-
- Notes:
------------------------------------------------------------------------------
-*/
 void Video_MenuDraw (void)
 {
 
-    if (g_version->value == SPEAROFDESTINY) {
+    if (g_version == SPEAROFDESTINY) {
         R_Draw_Tile (0, 0, viddef.width, viddef.height, "pics/C_BACKDROPPIC.tga");
 
         M_BannerString ("Video Setup", 15);
@@ -352,17 +175,7 @@ void Video_MenuDraw (void)
     Menu_Draw (&s_opengl_menu);
 }
 
-/*
------------------------------------------------------------------------------
- Function:
 
- Parameters:
-
- Returns:
-
- Notes:
------------------------------------------------------------------------------
-*/
 const char *Video_MenuKey (int key)
 {
     menuframework_s *m = &s_opengl_menu;
@@ -404,5 +217,3 @@ const char *Video_MenuKey (int key)
 
     return NULL;
 }
-
-

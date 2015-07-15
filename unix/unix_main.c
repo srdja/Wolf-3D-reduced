@@ -44,7 +44,7 @@
 
 W32 sys_frame_time;
 
-cvar_t *nostdout;
+int nostdout;
 
 
 extern void KBD_Update (void);
@@ -121,7 +121,7 @@ char *Sys_GetClipboardData (void)
 #include "keys.h"
 #include "../wolf/wolf_local.h"
 
-extern void StartGame(int a,  int b, int c);
+extern void StartGame(int a,  int b, int g_skill);
 
 int main (int argc, char *argv[])
 {
@@ -132,7 +132,6 @@ int main (int argc, char *argv[])
 
     // FIXME moved from common
     // ----------------
-    Cvar_Init();
     Key_Init();
 
     FS_InitFilesystem();
@@ -144,9 +143,9 @@ int main (int argc, char *argv[])
 
     fcntl (0, F_SETFL, fcntl (0, F_GETFL, 0) | FNDELAY);
 
-    nostdout = Cvar_Get ("nostdout", "0", CVAR_INIT);
+    nostdout = 0;
 
-    if (! nostdout->value) {
+    if (! nostdout) {
         fcntl (0, F_SETFL, fcntl (0, F_GETFL, 0) | FNDELAY);
     }
 

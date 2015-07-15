@@ -163,11 +163,11 @@ PUBLIC void R_DrawFace (void)
 
 
     if (Player.health) {
-        if (g_version->value == SPEAROFDESTINY && Player.flags & FL_GODMODE) {
+        if (g_version == SPEAROFDESTINY && Player.flags & FL_GODMODE) {
             R_Draw_Pic (hud_x + 272, hud_y + 8, godmugshotnames[ Player.faceframe ]);
         } else if (Player.face_gotgun) {
             R_Draw_Pic (hud_x + 272, hud_y + 8, "pics/GOTGATLINGPIC.tga");
-        } else if (g_version->value == SPEAROFDESTINY && Player.face_ouch) {
+        } else if (g_version == SPEAROFDESTINY && Player.face_ouch) {
             R_Draw_Pic (hud_x + 272, hud_y + 8, "pics/BJOUCHPIC.tga");
         } else {
             int health = Player.health;
@@ -228,7 +228,7 @@ PRIVATE void R_DrawFlash (void)
  */
 PRIVATE void R_DrawBackGnd (float pitch, colour3_t floor, colour3_t ceiling)
 {
-    int height = (int) ((viddef.height >> 1) * tan (-pitch) / TanDgr (g_fov->value * 0.5) + (viddef.height >> 1));
+    int height = (int) ((viddef.height >> 1) * tan (-pitch) / TanDgr (g_fov * 0.5) + (viddef.height >> 1));
     R_Draw_Fill (0, 0, viddef.width, height, ceiling);
 
     R_Draw_Fill (0, height, viddef.width, viddef.height - height, floor);
@@ -340,7 +340,7 @@ PUBLIC void R_BeginRegistration (const char *map)
         return;
     }
 
-    if (g_version->value == SPEAROFDESTINY) {
+    if (g_version == SPEAROFDESTINY) {
         if (strlen (map) >= 2) {
             levelstate.floornum = atoi (map + 1);
 

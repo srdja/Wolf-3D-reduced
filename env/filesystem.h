@@ -52,7 +52,6 @@ void    FS_InitFilesystem (void);
 void    FS_SetGamedir (char *dir);
 char    *FS_Gamedir (void);
 char    *FS_Userdir (void);
-char    *FS_NextPath (char *prevpath);
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -76,9 +75,6 @@ typedef struct {
 } filehandle_t;
 
 
-/* Desired Access Flags */
-#define DA_GENERIC_READ         0x01
-
 /* Flags and Attributes */
 #define FA_FILE_FLAG_LOAD       0x01
 
@@ -98,10 +94,7 @@ SW32 FS_GetFileSize (filehandle_t *fhandle);
 /////////////////////////////////////////////////////////////////////
 
 W8 FS_CreateDirectory (const char *dirname);
-
-#define FA_HIDDEN   0x02
 #define FA_DIR      0x08
-#define FA_SYSTEM   0x10
 
 // pass in an attribute mask of things you wish to REJECT
 char *FS_FindFirst (const char *path, W32 musthave, W32 canthave);

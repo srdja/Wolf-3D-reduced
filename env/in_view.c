@@ -30,23 +30,11 @@
 _boolean    mouseinitialized;
 // false when not focus app
 
-_boolean    in_appactive;
-_boolean    mlooking;
-
-cvar_t  *in_mouse;
-
 extern void IN_StartupMouse (void);
 extern void IN_ActivateMouse (void);
 extern void IN_DeactivateMouse (void);
 extern void IN_MouseMove (usercmd_t *cmd);
 
-/*
-=========================================================================
-
-VIEW CENTERING
-
-=========================================================================
-*/
 
 /**
  * \brief Initialize mouse and joy-stick.
@@ -71,19 +59,6 @@ void IN_Frame (void)
 {
     if (! mouseinitialized) {
         return;
-    }
-
-    if (! in_mouse || ! in_appactive) {
-        IN_DeactivateMouse();
-        return;
-    }
-
-    if (ClientStatic.key_dest == key_menu) {
-        // temporarily deactivate if in fullscreen
-        if (Cvar_VariableValue ("r_fullscreen") == 0) {
-            IN_DeactivateMouse();
-            return;
-        }
     }
     IN_ActivateMouse();
 }

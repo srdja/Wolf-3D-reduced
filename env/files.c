@@ -57,9 +57,11 @@
 
 PRIVATE char fs_gamedir[ MAX_OSPATH ];
 
-PRIVATE cvar_t  *fs_basedir;
-PRIVATE cvar_t  *fs_cddir;
-PRIVATE cvar_t  *fs_gamedirvar;
+#define BASE_DIRECTORY "base"
+
+PRIVATE char  *fs_basedir;
+PRIVATE char  *fs_cddir;
+PRIVATE char  *fs_gamedirvar;
 
 /**
  * \brief Add directory to search path.
@@ -156,26 +158,13 @@ PUBLIC void FS_SetGamedir (char *dir)
         fs_searchpaths = next;
     }
 
-    //
-    // flush all data, so it will be forced to reload
-    //
-//  if (dedicated && !dedicated->value)
-//      Cbuf_AddText ("vid_restart\nsnd_restart\n");
+    com_snprintf (fs_gamedir, sizeof (fs_gamedir), "%s%c%s", fs_basedir, PATH_SEP, dir);
 
-    com_snprintf (fs_gamedir, sizeof (fs_gamedir), "%s%c%s", fs_basedir->string, PATH_SEP, dir);
-
-    if (! strcmp (dir, BASE_DIRECTORY) || (*dir == 0)) {
-        Cvar_Get ("gamedir", "", CVAR_SERVERINFO | CVAR_ROM);
-        Cvar_Get ("game", "", CVAR_LATCH | CVAR_SERVERINFO);
-    } else {
-        Cvar_Get ("gamedir", dir, CVAR_SERVERINFO | CVAR_ROM);
-
-        if (fs_cddir->string[ 0 ]) {
-            FS_AddGameDirectory (va ("%s%c%s", fs_cddir->string, PATH_SEP, dir));
-        }
-
-        FS_AddGameDirectory (va ("%s%c%s", fs_basedir->string, PATH_SEP, dir));
+    if (fs_cddir[ 0 ]) {
+        FS_AddGameDirectory (va ("%s%c%s", fs_cddir, PATH_SEP, dir));
     }
+
+    FS_AddGameDirectory (va ("%s%c%s", fs_basedir, PATH_SEP, dir));
 }
 
 /**
@@ -185,41 +174,27 @@ PUBLIC void FS_InitFilesystem (void)
 {
     char path[1024];
 
-    //Cmd_AddCommand ("path", FS_Path_f);
-    //Cmd_AddCommand ("link", FS_Link_f);
-    //Cmd_AddCommand ("dir", FS_Dir_f);
+    fs_basedir = ".";
+    fs_cddir = "";
 
-    //
-    // basedir <path>
-    // allows the game to run from outside the data tree
-    //
-    fs_basedir = Cvar_Get ("basedir", ".", CVAR_ROM);
-
-    //
-    // cddir <path>
-    // Logically concatenates the cddir after the basedir. This
-    // allows the game to run from outside the data tree.
-    //
-    fs_cddir = Cvar_Get ("cddir", "", CVAR_ROM);
-
-    if (fs_cddir->string[ 0 ]) {
-        com_snprintf (path, sizeof (path), "%s%c%s", fs_cddir->string, PATH_SEP, BASE_DIRECTORY);
+    if (fs_cddir[ 0 ]) {
+        com_snprintf (path, sizeof (path), "%s%c%s", fs_cddir, PATH_SEP, BASE_DIRECTORY);
         FS_AddGameDirectory (path);
     }
 
     //
     // start up with BASEDIRNAME by default
     //
-    com_snprintf (path, sizeof (path), "%s%c%s", fs_basedir->string, PATH_SEP, BASE_DIRECTORY);
+    com_snprintf (path, sizeof (path), "%s%c%s", fs_basedir, PATH_SEP, BASE_DIRECTORY);
     FS_AddGameDirectory (path);
 
     // any set gamedirs will be freed up to here
     fs_base_searchpaths = fs_searchpaths;
 
     // check for game override
-    fs_gamedirvar = Cvar_Get ("game", "", CVAR_LATCH | CVAR_SERVERINFO);
+    fs_gamedirvar = "";
 
-    if (fs_gamedirvar->string[ 0 ]) {
-        FS_SetGamedir (fs_gamedirvar->string);
+    if (fs_gamedirvar[ 0 ]) {
+        FS_SetGamedir (fs_gamedirvar);
     }
 }

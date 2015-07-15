@@ -69,7 +69,7 @@ PUBLIC void A_DeathScream (entity_t *entity)
 {
     switch (entity->type) {
     case en_mutant:
-        if (g_version->value == SPEAROFDESTINY) {
+        if (g_version == SPEAROFDESTINY) {
             //Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/033.wav"), 1, ATTN_NORM, 0);
         } else {
           //  Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/037.wav"), 1, ATTN_NORM, 0);
@@ -78,7 +78,7 @@ PUBLIC void A_DeathScream (entity_t *entity)
         break;
 
     case en_guard:
-        if (g_version->value == SPEAROFDESTINY) {
+        if (g_version == SPEAROFDESTINY) {
          //   Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound (dsodsounds[ US_RndT() % 6 ]), 1, ATTN_NORM, 0);
         } else {
          //   Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound (dsounds[ US_RndT() % 6 ]), 1, ATTN_NORM, 0);
@@ -87,7 +87,7 @@ PUBLIC void A_DeathScream (entity_t *entity)
         break;
 
     case en_officer:
-        if (g_version->value == SPEAROFDESTINY) {
+        if (g_version == SPEAROFDESTINY) {
          //   Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/046.wav"), 1, ATTN_NORM, 0);
         } else {
           //  Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/074.wav"), 1, ATTN_NORM, 0);
@@ -96,7 +96,7 @@ PUBLIC void A_DeathScream (entity_t *entity)
         break;
 
     case en_ss:
-        if (g_version->value == SPEAROFDESTINY) {
+        if (g_version == SPEAROFDESTINY) {
           //  Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/035.wav"), 1, ATTN_NORM, 0);
         } else {
           //  Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/046.wav"), 1, ATTN_NORM, 0);
@@ -105,7 +105,7 @@ PUBLIC void A_DeathScream (entity_t *entity)
         break;
 
     case en_dog:
-        if (g_version->value == SPEAROFDESTINY) {
+        if (g_version == SPEAROFDESTINY) {
           //  Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/031.wav"), 1, ATTN_NORM, 0);
         } else {
            // Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/035.wav"), 1, ATTN_NORM, 0);
@@ -184,7 +184,7 @@ PUBLIC void A_FirstSighting (entity_t *self)
         break;
 
     case en_officer:
-        if (g_version->value == SPEAROFDESTINY) {
+        if (g_version == SPEAROFDESTINY) {
          //   Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/043.wav"), 1, ATTN_NORM, 0);
         } else {
           //  Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/071.wav"), 1, ATTN_NORM, 0);
@@ -494,7 +494,7 @@ PUBLIC void A_HitlerMorph (entity_t *self)
     hitler->tiley = self->tiley;//
     hitler->angle = self->angle;//
     hitler->dir = self->dir;//
-    hitler->health = hitpoints[ (int)skill->value ];
+    hitler->health = hitpoints[skill ];
     hitler->areanumber = self->areanumber;
     hitler->state = st_chase1;//
     hitler->type = en_hitler; //
@@ -814,7 +814,7 @@ PUBLIC void T_Projectile (entity_t *self)
     if (! ProjectileTryMove (self, r_world)) {
         if (self->type == en_rocket || self->type == en_hrocket) {
             // rocket ran into obstacle, draw explosion!
-            if (g_version->value == SPEAROFDESTINY) {
+            if (g_version == SPEAROFDESTINY) {
                 //Sound_StartSound (NULL, 1, CHAN_WEAPON, Sound_RegisterSound ("lsfx/001.wav"), 1, ATTN_NORM, 0);
             } else {
                // Sound_StartSound (NULL, 1, CHAN_WEAPON, Sound_RegisterSound ("lsfx/086.wav"), 1, ATTN_NORM, 0);

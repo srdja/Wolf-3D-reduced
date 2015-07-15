@@ -128,7 +128,7 @@ PUBLIC void M_Banner (const char *name, W16 nYOffest)
 {
     SW32 w, h;
 
-    if (g_version->value == SPEAROFDESTINY) {
+    if (g_version == SPEAROFDESTINY) {
         R_Draw_Fill (0, 20, viddef.width, 44, colourBlack);
         R_Draw_Fill (0, 66, viddef.width, 2, colourBlack);
     } else {
@@ -369,7 +369,7 @@ void M_DrawCursor (int x, int y)
         int i;
 
         for (i = 0 ; i < NUM_CURSOR_FRAMES ; ++i) {
-            if (g_version->value == SPEAROFDESTINY) {
+            if (g_version == SPEAROFDESTINY) {
                 com_snprintf (cursorname, sizeof (cursorname), "pics/SC_CURSOR%dPIC.tga", i);
             } else {
                 com_snprintf (cursorname, sizeof (cursorname), "pics/C_CURSOR%dPIC.tga", i);
@@ -382,7 +382,7 @@ void M_DrawCursor (int x, int y)
     }
 
 
-    if (g_version->value == SPEAROFDESTINY) {
+    if (g_version == SPEAROFDESTINY) {
         com_snprintf (cursorname, sizeof (cursorname), "pics/SC_CURSOR%dPIC.tga", f);
     } else {
         com_snprintf (cursorname, sizeof (cursorname), "pics/C_CURSOR%dPIC.tga", f);
@@ -423,7 +423,7 @@ void M_DrawInfoBar (void)
 {
     SW32 w, h;
 
-    if (g_version->value == SPEAROFDESTINY) {
+    if (g_version == SPEAROFDESTINY) {
         TM_GetTextureSize (&w, &h, "pics/SC_MOUSELBACKPIC.tga");
         R_Draw_Pic ((viddef.width - w) >> 1, viddef.height - h, "pics/SC_MOUSELBACKPIC.tga");
     } else {
@@ -620,7 +620,7 @@ void M_Menu_Main_f (void)
     //Sound_StopBGTrack();
     //Sound_StartBGTrack ("music/WONDERIN.ogg", "music/WONDERIN.ogg");
 
-    if (g_version->value == SPEAROFDESTINY) {
+    if (g_version == SPEAROFDESTINY) {
         M_PushMenu (M_SMain_Draw, M_Main_Key);
 
         return;
@@ -750,7 +750,7 @@ void LoadGame_MenuDraw (void)
 {
     int cx, cy;
 
-    if (g_version->value == SPEAROFDESTINY) {
+    if (g_version == SPEAROFDESTINY) {
         R_Draw_Tile (0, 0, viddef.width, viddef.height, "pics/C_BACKDROPPIC.tga");
 
         M_Banner ("pics/SC_LOADGAMEPIC.tga", 0);
@@ -815,7 +815,7 @@ void SaveGame_MenuDraw (void)
 {
     int cx, cy;
 
-    if (g_version->value == SPEAROFDESTINY) {
+    if (g_version == SPEAROFDESTINY) {
         R_Draw_Tile (0, 0, viddef.width, viddef.height, "pics/C_BACKDROPPIC.tga");
 
         M_Banner ("pics/SC_SAVEGAMEPIC.tga", 0);

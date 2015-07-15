@@ -234,7 +234,7 @@ PUBLIC entity_t *SpawnActor (enemy_t which, int x, int y, dir4type dir, LevelDat
     assert (new_actor->areanumber >= 0 && new_actor->areanumber < NUMAREAS);
     new_actor->type = which;
 
-    new_actor->health = starthitpoints[ (int)skill->value ][ which ];
+    new_actor->health = starthitpoints[skill ][ which ];
     new_actor->sprite = Sprite_GetNewSprite();
 
     return new_actor;
@@ -366,7 +366,7 @@ PUBLIC void SpawnBoss (enemy_t which, int x, int y)
 
     self->state = which == en_spectre ? st_path1 : st_stand;
     self->speed = SPDPATROL;
-    self->health = starthitpoints[ (int)skill->value ][ which ];
+    self->health = starthitpoints[skill ][ which ];
     self->ticcount = objstate[ which ][ st_stand ].timeout ? US_RndT() % objstate[ which ][ st_stand ].timeout + 1 : 0;
     self->flags |= FL_SHOOTABLE | FL_AMBUSH;
 
@@ -392,7 +392,7 @@ PUBLIC void SpawnGhosts (enemy_t which, int x, int y)
 
     self->state = st_chase1;
     self->speed = SPDPATROL * 3;
-    self->health = starthitpoints[ (int)skill->value ][ which ];
+    self->health = starthitpoints[skill ][ which ];
     self->ticcount = objstate[ which ][ st_chase1 ].timeout ? US_RndT() % objstate[ which ][ st_chase1 ].timeout + 1 : 0;
     self->flags |= FL_AMBUSH;
 

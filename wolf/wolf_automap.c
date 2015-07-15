@@ -38,7 +38,7 @@
 
 #include "../env/color.h"
 
-extern cvar_t   *mapScale;
+extern  float mapScale;
 
 float   mapOrigin[2];
 
@@ -236,7 +236,7 @@ PUBLIC void Automap()
     // Background colour
     R_Draw_Fill (0, 0, viddef.width, viddef.height, colourBlack);
 
-    scale = mapScale->value;
+    scale = mapScale;
 
     if (scale < 4.0) {
         // ensure we don't div by 0 from a console cvar change
@@ -245,41 +245,41 @@ PUBLIC void Automap()
 
 
     if (Key_IsDown (Key_GetKey ("+back"))) {  // Scroll Up
-        mapOrigin[1] -= (float) (4.0 /  mapScale->value);
+        mapOrigin[1] -= (float) (4.0 /  mapScale);
     }
 
     if (Key_IsDown (Key_GetKey ("+forward"))) {  // Scroll Down
-        mapOrigin[1] += (float) (4.0 / mapScale->value);
+        mapOrigin[1] += (float) (4.0 / mapScale);
     }
 
     if (Key_IsDown (Key_GetKey ("+moveleft"))) {  // Scroll Left
-        mapOrigin[0] -= (float) (4.0 / mapScale->value);
+        mapOrigin[0] -= (float) (4.0 / mapScale);
     }
 
     if (Key_IsDown (Key_GetKey ("+moveright"))) {  // Scroll Right
-        mapOrigin[0] += (float) (4.0 / mapScale->value);
+        mapOrigin[0] += (float) (4.0 / mapScale);
     }
 
     if (Key_IsDown (Key_GetKey ("+left"))) {  // Scale Up
-        float scale = mapScale->value;
+        float scale = mapScale;
         scale += 1.0;
 
         if (scale > 64.0) {
             scale = 64.0;
         }
 
-        Cvar_SetValue (mapScale->name, scale);
+        mapScale=scale;
     }
 
     if (Key_IsDown (Key_GetKey ("+right"))) {  // Scale Down
-        float scale = mapScale->value;
+        float scale = mapScale;
         scale -= 1.0;
 
         if (scale < 4.0) {
             scale = 4.0;
         }
 
-        Cvar_SetValue (mapScale->name, scale);
+        mapScale=scale;
     }
 
     if (Key_IsDown (Key_GetKey ("+use"))) {   // Centre on player
@@ -306,7 +306,7 @@ PUBLIC void Automap()
             scale = TargetZoom;
             zoom = 0;
         }
-        Cvar_SetValue (mapScale->name, scale);
+        mapScale=scale;
     }
 
     // set up matrix for drawing in tile units

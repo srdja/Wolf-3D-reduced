@@ -81,7 +81,7 @@ PRIVATE void Intro_TitlePage_Draw (void)
 
     R_Draw_Fill (0, 0, viddef.width, viddef.height, colourBlack);
 
-    if (g_version->value == SPEAROFDESTINY) {
+    if (g_version == SPEAROFDESTINY) {
         TM_GetTextureSize (&w, &h, "pics/STITLEPIC.tga");
         R_Draw_Pic ((viddef.width - w) >> 1, (viddef.height - h) >> 1, "pics/STITLEPIC.tga");
 
@@ -97,7 +97,7 @@ PRIVATE void Intro_CreditsPage_Draw (void)
 {
     W32 w, h;
 
-    if (g_version->value == SPEAROFDESTINY) {
+    if (g_version == SPEAROFDESTINY) {
 
         R_Draw_Tile (0, 0, viddef.width, viddef.height, "pics/C_BACKDROPPIC.tga");
 

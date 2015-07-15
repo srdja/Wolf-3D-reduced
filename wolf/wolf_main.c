@@ -41,11 +41,11 @@ level_locals_t  levelstate;
 
 LRstruct LevelRatios;
 
-cvar_t  *g_version; // Wolfenstein or Spear of Destiny
-cvar_t  *g_fov;
-cvar_t  *g_autoaim;
-cvar_t  *skill;
-cvar_t  *mapScale;
+int   g_version; // Wolfenstein or Spear of Destiny
+float g_fov;
+float  g_autoaim;
+int skill;
+float  mapScale;
 
 currentMap_t currentMap;
 
@@ -67,11 +67,11 @@ extern void Con_ToggleAutomap_f (void);
  */
 PUBLIC void Game_Init (void)
 {
-    skill = Cvar_Get ("skill", "1", CVAR_LATCH);
-    g_version = Cvar_Get ("g_version", "0", CVAR_ARCHIVE | CVAR_LATCH);
-    g_fov = Cvar_Get ("g_fov", "68", CVAR_ARCHIVE | CVAR_LATCH);
-    g_autoaim = Cvar_Get ("g_autoaim", "1", CVAR_ARCHIVE | CVAR_LATCH);
-    mapScale = Cvar_Get ("mapScale", "10", CVAR_ARCHIVE);
+    g_fov     = 68;
+    g_autoaim = 1;
+    g_version = 0;
+    mapScale  = 0; // automap scale
+    skill     = 1;
 
     //Cmd_AddCommand ("toggleautomap", Con_ToggleAutomap_f);
 
@@ -157,7 +157,7 @@ PUBLIC void SaveTheGame (const char *name)
     fclose (f);
 }
 
-extern PUBLIC void StartGame (int episode, int mission, int skill);
+extern PUBLIC void StartGame (int episode, int mission, int g_skill);
 
 /**
  * Load game state from file
@@ -187,7 +187,7 @@ PUBLIC int LoadTheGame (const char *name)
     }
 
     // do a normal map start
-    Cvar_SetValue (skill->name, (float)currentMap.skill);
+    skill = currentMap.skill;
     PL_NewGame (&Player);
 
     oldCompleted = currentMap.levelCompleted;

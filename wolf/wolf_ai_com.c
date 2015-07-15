@@ -906,7 +906,7 @@ PUBLIC void T_Shoot (entity_t *self)
 
     switch (self->type) {
     case en_ss:
-        if (g_version->value == SPEAROFDESTINY) {
+        if (g_version == SPEAROFDESTINY) {
             //Sound_StartSound (NULL, 1, CHAN_WEAPON, Sound_RegisterSound ("sfx/020.wav"), 1, ATTN_NORM, 0);
         } else {
            // Sound_StartSound (NULL, 1, CHAN_WEAPON, Sound_RegisterSound ("sfx/024.wav"), 1, ATTN_NORM, 0);
@@ -923,7 +923,7 @@ PUBLIC void T_Shoot (entity_t *self)
         break;
 
     default:
-        if (g_version->value == SPEAROFDESTINY) {
+        if (g_version == SPEAROFDESTINY) {
           //  Sound_StartSound (NULL, 1, CHAN_WEAPON, Sound_RegisterSound ("sfx/038.wav"), 1, ATTN_NORM, 0);
         } else {
            // Sound_StartSound (NULL, 1, CHAN_WEAPON, Sound_RegisterSound ("sfx/049.wav"), 1, ATTN_NORM, 0);
@@ -1028,7 +1028,7 @@ PUBLIC void T_Launch (entity_t *self)
     default:
         proj->type = en_rocket;
 
-        if (g_version->value == SPEAROFDESTINY) {
+        if (g_version == SPEAROFDESTINY) {
           //  Sound_StartSound (NULL, 1, CHAN_WEAPON, Sound_RegisterSound ("lsfx/008.wav"), 1, ATTN_NORM, 0);
         } else {
           //  Sound_StartSound (NULL, 1, CHAN_WEAPON, Sound_RegisterSound ("lsfx/085.wav"), 1, ATTN_NORM, 0);

@@ -78,7 +78,7 @@ PUBLIC _boolean PushWall_Push (int x, int y, dir4type dir)
 
     levelstate.found_secrets++;
 
-    if (g_version->value == SPEAROFDESTINY) {
+    if (g_version == SPEAROFDESTINY) {
         //Sound_StartSound (NULL, 1, CHAN_AUTO, Sound_RegisterSound ("sfx/030.wav"), 1, ATTN_STATIC, 0);
     } else {
         //Sound_StartSound (NULL, 1, CHAN_AUTO, Sound_RegisterSound ("sfx/034.wav"), 1, ATTN_STATIC, 0);

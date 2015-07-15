@@ -15,7 +15,6 @@ set( env_SOURCE
 	${CMAKE_SOURCE_DIR}/env/client_input.c
 	${CMAKE_SOURCE_DIR}/env/client_main.c
 	${CMAKE_SOURCE_DIR}/env/com_string.c
-	${CMAKE_SOURCE_DIR}/env/cvar.c
 	${CMAKE_SOURCE_DIR}/env/fileio.c
 	${CMAKE_SOURCE_DIR}/env/files.c
 	${CMAKE_SOURCE_DIR}/env/filestring.c
@@ -40,7 +39,6 @@ set ( env_HEADER
 	${CMAKE_SOURCE_DIR}/env/common.h
 	${CMAKE_SOURCE_DIR}/env/com_math.h
 	${CMAKE_SOURCE_DIR}/env/com_string.h
-	${CMAKE_SOURCE_DIR}/env/cvar.h
 	${CMAKE_SOURCE_DIR}/env/filelink.h
 	${CMAKE_SOURCE_DIR}/env/filestring.h
 	${CMAKE_SOURCE_DIR}/env/filesystem.h

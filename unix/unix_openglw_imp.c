@@ -48,11 +48,8 @@ GLimp_SwitchFullscreen
 */
 
 #include <signal.h>
-#include <unistd.h>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
-
-
 #include <GL/glx.h>
 
 #include <X11/extensions/xf86vmode.h>
@@ -60,9 +57,7 @@ GLimp_SwitchFullscreen
 #include "../env/opengl_local.h"
 
 #include "../env/video.h"
-#include "../env/com_string.h"
 #include "../env/common.h"
-
 
 extern void uninstall_grabs (void);
 extern void install_grabs (void);
@@ -72,7 +67,6 @@ PRIVATE int screen_num;
 Window mainwin;
 PRIVATE GLXContext ctx = NULL;
 
-
 PRIVATE XF86VidModeModeInfo **vidmodes;
 
 PRIVATE _boolean vidmode_ext = false;
@@ -80,96 +74,13 @@ PRIVATE _boolean vidmode_ext = false;
 PRIVATE int num_vidmodes;
 _boolean vidmode_active = false;
 
-PRIVATE cvar_t  *r_fakeFullscreen;
-
-
 extern _boolean mouse_active;
 extern _boolean dgamouse;
-
-
 
 #define KEY_MASK (KeyPressMask | KeyReleaseMask)
 #define MOUSE_MASK (ButtonPressMask | ButtonReleaseMask | PointerMotionMask | ButtonMotionMask )
 #define X_MASK (KEY_MASK | MOUSE_MASK | VisibilityChangeMask | StructureNotifyMask | ExposureMask | EnterWindowMask | LeaveWindowMask )
 
-
-PRIVATE char *signal_ErrorString (int sig)
-{
-    switch (sig) {
-    case SIGHUP:
-        return "Hangup (POSIX)";
-
-    case SIGINT:
-        return "Interrupt (ANSI)";
-
-    case SIGQUIT:
-        return "Quit (POSIX)";
-
-    case SIGILL:
-        return "Illegal instruction (ANSI)";
-
-    case SIGTRAP:
-        return "Trace trap (POSIX)";
-
-    case SIGIOT:
-        return "Abort (ANSI) | IOT trap (4.2 BSD)";
-
-    case SIGBUS:
-        return "BUS error (4.2 BSD)";
-
-    case SIGFPE:
-        return "Floating-point exception (ANSI)";
-
-    case SIGKILL:
-        return "Kill, unblockable (POSIX)";
-
-    case SIGUSR1:
-        return "User-defined signal 1 (POSIX)";
-
-    case SIGSEGV:
-        return "Segmentation violation (ANSI)";
-
-    case SIGUSR2:
-        return "User-defined signal 2 (POSIX)";
-
-    case SIGPIPE:
-        return "Broken pipe (POSIX)";
-
-    case SIGALRM:
-        return "Alarm clock (POSIX)";
-
-    case SIGTERM:
-        return "Termination (ANSI)";
-
-    default:
-        return "Unknown SIG";
-    }
-
-    return "";
-
-}
-
-
-PRIVATE void signal_handler (int sig)
-{
-    printf ("Received signal (%s), exiting...\n", signal_ErrorString (sig));
-    GLimp_Shutdown();
-    _exit (0);
-}
-
-
-PRIVATE void InitSig (void)
-{
-    signal (SIGHUP, signal_handler);
-    signal (SIGQUIT, signal_handler);
-    signal (SIGILL, signal_handler);
-    signal (SIGTRAP, signal_handler);
-    signal (SIGIOT, signal_handler);
-    signal (SIGBUS, signal_handler);
-    signal (SIGFPE, signal_handler);
-    signal (SIGSEGV, signal_handler);
-    signal (SIGTERM, signal_handler);
-}
 
 int GLimp_SetMode (int *pwidth, int *pheight, int mode, _boolean fullscreen)
 {
@@ -194,8 +105,6 @@ int GLimp_SetMode (int *pwidth, int *pheight, int mode, _boolean fullscreen)
     XEvent report;
     XSizeHints size_hints;
     char display_name[ 512 ];
-
-    r_fakeFullscreen = Cvar_Get ("r_fakeFullscreen", "0", CVAR_ARCHIVE);
 
     if (! VID_GetModeInfo (&width, &height, mode)) {
         return rserr_invalid_mode;
@@ -241,7 +150,7 @@ int GLimp_SetMode (int *pwidth, int *pheight, int mode, _boolean fullscreen)
         XF86VidModeGetAllModeLines (display, screen_num, &num_vidmodes, &vidmodes);
 
         // Are we going fullscreen?  If so, let's change video mode
-        if (fullscreen && ! r_fakeFullscreen->value) {
+        if (fullscreen) {
             best_dist = 9999999;
             best_fit = -1;
 
@@ -300,7 +209,7 @@ int GLimp_SetMode (int *pwidth, int *pheight, int mode, _boolean fullscreen)
     size_hints.min_height = height;
     size_hints.max_height = height;
 
-    XSetStandardProperties (display, mainwin, GAME_NAME, NULL, None, 0, 0, &size_hints);
+    XSetStandardProperties (display, mainwin, "Wolfenstein 3D", NULL, None, 0, 0, &size_hints);
 
     XSelectInput (display, mainwin, X_MASK);
 
@@ -362,13 +271,6 @@ void GLimp_Shutdown (void)
     ctx = NULL;
     display = NULL;
     mainwin = 0;
-}
-
-_boolean GLimp_Init (void *hinstance, void *wndproc)
-{
-    InitSig();
-
-    return true;
 }
 
 void GLimp_EndFrame (void)

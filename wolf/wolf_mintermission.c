@@ -100,7 +100,7 @@ PRIVATE void M_Secret_Draw (void)
 
     M_DrawInterBJ (0, 38, (int) (ClientStatic.realtime / 500) % 2);
 
-    if (g_version->value == SPEAROFDESTINY) {
+    if (g_version == SPEAROFDESTINY) {
         switch (levelstate.floornum) {
         case 4:
             com_snprintf (string, sizeof (string), "TRANS\nGROSSE\nDEFEATED!");
@@ -250,7 +250,7 @@ PRIVATE const char *M_Intermission_Key (int key)
 
     M_ForceMenuOff();
 
-    if (g_version->value == SPEAROFDESTINY) {
+    if (g_version == SPEAROFDESTINY) {
         if (Player.playstate == ex_secretlevel) {
             int mapon = 0;
 
@@ -805,7 +805,7 @@ PUBLIC void M_Intermission_f (void)
     LevelRatios.found_treasure += levelstate.found_treasure;
     LevelRatios.total_treasure += levelstate.total_treasure;
 
-    if (g_version->value == SPEAROFDESTINY) {
+    if (g_version == SPEAROFDESTINY) {
         switch (currentMap.map) {
         case 20:
             collapse_slide = 1;
@@ -870,11 +870,11 @@ PUBLIC void M_Intermission_f (void)
         M_PushMenu (M_Intermission_Draw, M_Intermission_Key);
     }
 
-    if (strstr (levelstate.level_name, "Boss") != NULL && g_version->value == WOLFENSTEINWL6) {
+    if (strstr (levelstate.level_name, "Boss") != NULL && g_version == WOLFENSTEINWL6) {
         //Sound_StartBGTrack ("music/URAHERO.ogg", "music/URAHERO.ogg");
 
         M_PushMenu (M_Victory_Draw, M_Victory_Key);
-    } else if (currentMap.map == 9 && g_version->value == WOLFENSTEINWL6) {
+    } else if (currentMap.map == 9 && g_version == WOLFENSTEINWL6) {
         PL_GivePoints (&Player, 15000);
         M_PushMenu (M_Secret_Draw, M_Intermission_Key);
     } else {

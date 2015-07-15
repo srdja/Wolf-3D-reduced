@@ -34,11 +34,9 @@
 
 
 #include "com_math.h"
-#include "cvar.h"
 #include "com_math.h"
 #include "memory.h"
 #include "filesystem.h"
-#include "../app_def.h"
 #include "platform.h"
 
 void    Sys_Quit (void);

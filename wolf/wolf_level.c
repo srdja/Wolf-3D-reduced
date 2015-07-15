@@ -216,7 +216,7 @@ PUBLIC void Level_ScanInfoPlane (LevelData_t *lvl)
             case 181:
             case 182:
             case 183:
-                if (skill->value < gd_hard)
+                if (skill < gd_hard)
                     break;
 
                 tile -= 36;
@@ -225,7 +225,7 @@ PUBLIC void Level_ScanInfoPlane (LevelData_t *lvl)
             case 145:
             case 146:
             case 147:
-                if (skill->value < gd_medium)
+                if (skill < gd_medium)
                     break;
 
                 tile -= 36;
@@ -246,7 +246,7 @@ PUBLIC void Level_ScanInfoPlane (LevelData_t *lvl)
             case 185:
             case 186:
             case 187:
-                if (skill->value < gd_hard)
+                if (skill < gd_hard)
                     break;
 
                 tile -= 36;
@@ -255,7 +255,7 @@ PUBLIC void Level_ScanInfoPlane (LevelData_t *lvl)
             case 149:
             case 150:
             case 151:
-                if (skill->value < gd_medium)
+                if (skill < gd_medium)
                     break;
 
                 tile -= 36;
@@ -283,7 +283,7 @@ PUBLIC void Level_ScanInfoPlane (LevelData_t *lvl)
             case 189:
             case 190:
             case 191:
-                if (skill->value < gd_hard)
+                if (skill < gd_hard)
                     break;
 
                 tile -= 36;
@@ -292,7 +292,7 @@ PUBLIC void Level_ScanInfoPlane (LevelData_t *lvl)
             case 153:
             case 154:
             case 155:
-                if (skill->value < gd_medium)
+                if (skill < gd_medium)
                     break;
 
                 tile -= 36;
@@ -314,7 +314,7 @@ PUBLIC void Level_ScanInfoPlane (LevelData_t *lvl)
             case 193:
             case 194:
             case 195:
-                if (skill->value < gd_hard)
+                if (skill < gd_hard)
                     break;
 
                 tile -= 36;
@@ -323,7 +323,7 @@ PUBLIC void Level_ScanInfoPlane (LevelData_t *lvl)
             case 157:
             case 158:
             case 159:
-                if (skill->value < gd_medium)
+                if (skill < gd_medium)
                     break;
 
                 tile -= 36;
@@ -347,7 +347,7 @@ PUBLIC void Level_ScanInfoPlane (LevelData_t *lvl)
             case 199:
             case 200:
             case 201:
-                if (skill->value < gd_hard)
+                if (skill < gd_hard)
                     break;
 
                 tile -= 36;
@@ -356,7 +356,7 @@ PUBLIC void Level_ScanInfoPlane (LevelData_t *lvl)
             case 163:
             case 164:
             case 165:
-                if (skill->value < gd_medium)
+                if (skill < gd_medium)
                     break;
 
                 tile -= 36;
@@ -377,7 +377,7 @@ PUBLIC void Level_ScanInfoPlane (LevelData_t *lvl)
             case 203:
             case 204:
             case 205:
-                if (skill->value < gd_hard)
+                if (skill < gd_hard)
                     break;
 
                 tile -= 36;
@@ -386,7 +386,7 @@ PUBLIC void Level_ScanInfoPlane (LevelData_t *lvl)
             case 167:
             case 168:
             case 169:
-                if (skill->value < gd_medium)
+                if (skill < gd_medium)
                     break;
 
                 tile -= 36;
@@ -410,7 +410,7 @@ PUBLIC void Level_ScanInfoPlane (LevelData_t *lvl)
             case 207:
             case 208:
             case 209:
-                if (skill->value < gd_hard)
+                if (skill < gd_hard)
                     break;
 
                 tile -= 36;
@@ -419,7 +419,7 @@ PUBLIC void Level_ScanInfoPlane (LevelData_t *lvl)
             case 171:
             case 172:
             case 173:
-                if (skill->value < gd_medium)
+                if (skill < gd_medium)
                     break;
 
                 tile -= 36;
@@ -440,7 +440,7 @@ PUBLIC void Level_ScanInfoPlane (LevelData_t *lvl)
             case 211:
             case 212:
             case 213:
-                if (skill->value < gd_hard)
+                if (skill < gd_hard)
                     break;
 
                 tile -= 36;
@@ -449,7 +449,7 @@ PUBLIC void Level_ScanInfoPlane (LevelData_t *lvl)
             case 175:
             case 176:
             case 177:
-                if (skill->value < gd_medium)
+                if (skill < gd_medium)
                     break;
 
                 tile -= 36;
@@ -542,7 +542,7 @@ PUBLIC void Level_ScanInfoPlane (LevelData_t *lvl)
             case 253:
             case 254:
             case 255:
-                if (skill->value < gd_hard)
+                if (skill < gd_hard)
                     break;
 
                 tile -= 18;
@@ -551,7 +551,7 @@ PUBLIC void Level_ScanInfoPlane (LevelData_t *lvl)
             case 235:
             case 236:
             case 237:
-                if (skill->value < gd_medium)
+                if (skill < gd_medium)
                     break;
 
                 tile -= 18;
@@ -572,7 +572,7 @@ PUBLIC void Level_ScanInfoPlane (LevelData_t *lvl)
             case 257:
             case 258:
             case 259:
-                if (skill->value < gd_hard)
+                if (skill < gd_hard)
                     break;
 
                 tile -= 18;
@@ -581,7 +581,7 @@ PUBLIC void Level_ScanInfoPlane (LevelData_t *lvl)
             case 239:
             case 240:
             case 241:
-                if (skill->value < gd_medium)
+                if (skill < gd_medium)
                     break;
 
                 tile -= 18;
@@ -895,7 +895,7 @@ PUBLIC LevelData_t *Level_LoadMap (const char *levelname)
 
 
 
-    if (g_version->value == SPEAROFDESTINY) {
+    if (g_version == SPEAROFDESTINY) {
         statinfo = static_sod;
         num_statics = sizeof (static_sod) / sizeof (static_sod[ 0 ]);
     } else {

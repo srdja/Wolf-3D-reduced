@@ -120,7 +120,7 @@ PRIVATE void Game_MenuInit (void)
     s_game_menu.nitems = 0;
     s_game_menu.cursordraw = MenuCursorDrawFunc;
 
-    if (g_version->value == SPEAROFDESTINY) {
+    if (g_version == SPEAROFDESTINY) {
         episode_names = spear_episode_names;
     } else {
         episode_names = wolf3d_episode_names;
@@ -179,17 +179,14 @@ PRIVATE menuaction_s    s_skill_actions[ MAX_SKILLS ];
 
 extern void Client_PrepRefresh (const char *r_mapname);
 
-PUBLIC void StartGame (int episode, int mission, int skill)
+PUBLIC void StartGame (int episode, int mission, int g_skill)
 {
     char szTextMsg[ 128 ];
-    char num[ 16 ];
 
-    currentMap.skill = skill;
+    currentMap.skill = g_skill;
     currentMap.levelCompleted = 0;
 
-    com_snprintf (num, sizeof (num), "%d", skill);
-
-    Cvar_Set ("skill", num);
+    skill = g_skill;
 
     memset (&LevelRatios, 0, sizeof (LevelRatios));
 
@@ -200,7 +197,7 @@ PUBLIC void StartGame (int episode, int mission, int skill)
     // disable updates and start the cinematic going
     M_ForceMenuOff();
 
-    if (g_version->value == SPEAROFDESTINY) {
+    if (g_version == SPEAROFDESTINY) {
         com_snprintf (szTextMsg, sizeof (szTextMsg),
                      // "loading ; map s%.2d.map\n", mission);
                       "s%.2d.map\n", mission);
@@ -219,7 +216,7 @@ PRIVATE void ToughPic (int i)
 {
     char string[ 32 ];
 
-    if (g_version->value == SPEAROFDESTINY) {
+    if (g_version == SPEAROFDESTINY) {
         com_snprintf (string, sizeof (string), "pics/SC_SKILL%dPIC.tga", i + 1);
     } else {
         com_snprintf (string, sizeof (string), "pics/C_SKILL%dPIC.tga", i + 1);
@@ -284,7 +281,7 @@ PRIVATE void Skill_MenuInit (void)
 
 PRIVATE void Skill_MenuDraw (void)
 {
-    if (g_version->value == SPEAROFDESTINY) {
+    if (g_version == SPEAROFDESTINY) {
         SW32 w, h;
 
         R_Draw_Tile (0, 0, viddef.width, viddef.height, "pics/C_BACKDROPPIC.tga");
@@ -340,7 +337,7 @@ PRIVATE void SetMissionGameFunc (void *data)
     menuaction_s *a = (menuaction_s *)data;
     int floor = a->generic.parent->cursor;
 
-    if (g_version->value == SPEAROFDESTINY) {
+    if (g_version == SPEAROFDESTINY) {
         switch (tempEpisode) {
         case 0:
             if (floor == 5) {
@@ -434,7 +431,7 @@ PRIVATE void Mission_MenuInit (void)
     s_mission_menu.nitems = 0;
     s_mission_menu.cursordraw = MissionMenuCursorDrawFunc;
 
-    if (g_version->value == SPEAROFDESTINY) {
+    if (g_version == SPEAROFDESTINY) {
         switch (tempEpisode) {
         case 0:
             mission_names = spear_tunnels_mission_names;

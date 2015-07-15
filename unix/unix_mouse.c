@@ -48,8 +48,7 @@ PRIVATE _boolean        mouse_avail;
 int mx, my;
 PRIVATE int old_mouse_x, old_mouse_y;
 
-PRIVATE cvar_t  *m_filter;
-PRIVATE cvar_t  *in_mouse;
+PRIVATE int m_filter;
 PRIVATE int in_dgamouse;
 
 _boolean mouse_active = false;
@@ -143,15 +142,9 @@ PUBLIC void uninstall_grabs (void)
 PUBLIC void IN_StartupMouse (void)
 {
     // mouse variables
-    m_filter = Cvar_Get ("m_filter", "0", 0);
-    in_mouse = Cvar_Get ("in_mouse", "1", CVAR_ARCHIVE);
+    m_filter = 0;
     in_dgamouse = 1;
     m_forward = 1;
-
-    //Cmd_AddCommand ("+mlook", RW_IN_MLookDown);
-    //Cmd_AddCommand ("-mlook", RW_IN_MLookUp);
-
-    //Cmd_AddCommand ("force_centerview", Force_CenterView_f);
 
     mx = my = 0.0;
     mouse_avail = true;
@@ -165,7 +158,7 @@ PUBLIC void IN_MouseMove (usercmd_t *cmd)
         return;
     }
 
-    if (m_filter->value) {
+    if (m_filter) {
         mx = (mx + old_mouse_x) * 0.5;
         my = (my + old_mouse_y) * 0.5;
     }

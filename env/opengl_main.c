@@ -30,31 +30,17 @@
 #include "com_math.h"
 #include "opengl_local.h"
 #include "video.h"
-#include "com_string.h"
 #include "common.h"
-
 
 float       gldepthmin, gldepthmax;
 
 glconfig_t gl_config;
 glstate_t  gl_state;
 
-cvar_t  *gl_ext_palettedtexture;
-
-cvar_t *gl_drawbuffer;
-cvar_t  *gl_driver;
-cvar_t  *gl_mode;
-cvar_t  *gl_round_down;
-cvar_t  *gl_picmip;
-cvar_t  *gl_ztrick;
-cvar_t  *gl_finish;
-cvar_t  *gl_clear;
-cvar_t  *gl_swapinterval;
-
-cvar_t  *r_fullscreen;
-cvar_t  *vid_gamma;
-cvar_t  *r_ref;
-
+int  gl_mode;
+int  gl_round_down;
+int  gl_ztrick;
+int  gl_clear;
 
 /**
  * \brief Set up a perspective projection matrix
@@ -86,10 +72,10 @@ PUBLIC void MYgluPerspective (GLdouble fovy, GLdouble aspect,
  */
 PRIVATE void R_Clear (void)
 {
-    if (gl_ztrick->value) {
+    if (gl_ztrick) {
         static int trickframe;
 
-        if (gl_clear->value) {
+        if (gl_clear) {
             glClear (GL_COLOR_BUFFER_BIT);
         }
         trickframe++;
@@ -104,7 +90,7 @@ PRIVATE void R_Clear (void)
             glDepthFunc (GL_GEQUAL);
         }
     } else {
-        if (gl_clear->value) {
+        if (gl_clear) {
             glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         } else {
             glClear (GL_DEPTH_BUFFER_BIT);
@@ -143,22 +129,10 @@ PUBLIC void R_SetGL2D (void)
  */
 PRIVATE void R_Register (void)
 {
-    gl_mode = Cvar_Get ("gl_mode", "0", CVAR_ARCHIVE);
-    gl_round_down = Cvar_Get ("gl_round_down", "1", CVAR_INIT);
-    gl_picmip = Cvar_Get ("gl_picmip", "0", CVAR_INIT);
-    gl_ztrick = Cvar_Get ("gl_ztrick", "0", CVAR_INIT);
-    gl_finish = Cvar_Get ("gl_finish", "1", CVAR_ARCHIVE);
-    gl_clear = Cvar_Get ("gl_clear", "0", CVAR_INIT);
-    gl_driver = Cvar_Get ("gl_driver", OPENGL_DLL_NAME, CVAR_ARCHIVE);
-
-    gl_ext_palettedtexture = Cvar_Get ("gl_ext_palettedtexture", "1", CVAR_ARCHIVE);
-
-    gl_drawbuffer = Cvar_Get ("gl_drawbuffer", "GL_BACK", CVAR_INIT);
-    gl_swapinterval = Cvar_Get ("gl_swapinterval", "1", CVAR_ARCHIVE);
-
-    r_fullscreen = Cvar_Get ("r_fullscreen", "0", CVAR_ARCHIVE);
-    vid_gamma = Cvar_Get ("vid_gamma", "1.0", CVAR_ARCHIVE);
-    r_ref = Cvar_Get ("r_ref", "soft", CVAR_ARCHIVE);
+    gl_mode = 0;
+    gl_round_down = 1;
+    gl_ztrick = 0;
+    gl_clear = 0;
 }
 
 /**
@@ -170,24 +144,18 @@ PRIVATE _boolean R_SetMode (void)
     rserr_t err;
     _boolean fullscreen;
 
-    fullscreen = (_boolean)r_fullscreen->value;
+    fullscreen = (_boolean)0;
 
-    r_fullscreen->modified = false;
-    gl_mode->modified = false;
-
-    if ((err = GLimp_SetMode (&viddef.width, &viddef.height, FloatToInt (gl_mode->value), fullscreen)) == rserr_ok) {
-        gl_state.prev_mode = FloatToInt (gl_mode->value);
+    if ((err = GLimp_SetMode (&viddef.width, &viddef.height, FloatToInt (gl_mode), fullscreen)) == rserr_ok) {
+        gl_state.prev_mode = FloatToInt (gl_mode);
     } else {
         if (err == rserr_invalid_fullscreen) {
-            Cvar_SetValue ("r_fullscreen", 0);
-            r_fullscreen->modified = false;
 
-            if ((err = GLimp_SetMode (&viddef.width, &viddef.height, FloatToInt (gl_mode->value), false)) == rserr_ok) {
+            if ((err = GLimp_SetMode (&viddef.width, &viddef.height, FloatToInt (gl_mode), false)) == rserr_ok) {
                 return true;
             }
         } else if (err == rserr_invalid_mode) {
-            Cvar_SetValue ("gl_mode", (float)gl_state.prev_mode);
-            gl_mode->modified = false;
+            gl_mode = gl_state.prev_mode;
         }
 
         // try setting it back to something safe
@@ -199,7 +167,6 @@ PRIVATE _boolean R_SetMode (void)
 }
 
 
-
 /**
  * \brief Initialize GL subsystem.
  * \param[in] hinstance A handle to a window instance.
@@ -208,17 +175,14 @@ PRIVATE _boolean R_SetMode (void)
  */
 PUBLIC int R_Init (void *hinstance, void *hWnd)
 {
+    gl_mode = 1;
+
     char renderer_buffer[ 1000 ];
     char vendor_buffer[ 1000 ];
     int     a, b;
 
     R_Register();
 
-    // Initialize OS-specific parts of OpenGL
-    if (! GLimp_Init (hinstance, hWnd)) {
-       // OpenGL_Shutdown();
-        return -1;
-    }
     // set our "safe" modes
     gl_state.prev_mode = 0;
 
@@ -239,17 +203,11 @@ PUBLIC int R_Init (void *hinstance, void *hWnd)
     strncpy(renderer_buffer, gl_config.renderer_string, sizeof(renderer_buffer));
     strncpy(vendor_buffer, gl_config.vendor_string, sizeof(vendor_buffer));
 
-
-    //com_strlcpy (vendor_buffer, gl_config.vendor_string, sizeof (vendor_buffer));
-    //(void)com_strlwr (vendor_buffer);
-
     sscanf (gl_config.version_string, "%d.%d", &a, &b);
 
     if (a >= 1 && b >= 2) {
         gl_config.Version_1_2 = true;
     }
-
-    Cvar_SetValue ("gl_finish", 1);
 
     //FIXME: A lot of these aren't required
 
@@ -279,33 +237,8 @@ PUBLIC void R_Shutdown (void)
  */
 PUBLIC void R_BeginFrame (void)
 {
-//
-// Change modes if necessary.
-//
-    if (gl_mode->modified || r_fullscreen->modified) {
-        // FIXME: only restart if CDS is required
-        cvar_t  *ref;
-
-        ref = Cvar_Get ("r_ref", "gl", CVAR_INIT);
-        ref->modified = true;
-    }
     R_SetGL2D();
-
-//
-// Draw buffer stuff.
-//
-    if (gl_drawbuffer->modified) {
-        gl_drawbuffer->modified = false;
-
-        if (com_stricmp (gl_drawbuffer->string, "GL_FRONT") == 0) {
-            glDrawBuffer (GL_FRONT);
-        } else {
-            glDrawBuffer (GL_BACK);
-        }
-
-    }
-    GL_UpdateSwapInterval();
-
+    glDrawBuffer (GL_BACK);
     R_Clear();
 }
 
@@ -315,13 +248,4 @@ PUBLIC void R_BeginFrame (void)
 PUBLIC void R_EndFrame (void)
 {
     GLimp_EndFrame();
-}
-
-/**
- * \brief Update swap interval
- */
-PUBLIC void GL_UpdateSwapInterval (void)
-{
-    if (gl_swapinterval->modified)
-        gl_swapinterval->modified = false;
 }

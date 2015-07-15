@@ -64,7 +64,7 @@ PUBLIC void weapon_attack (player_t *self)
         if (Guards[ n ].flags & FL_SHOOTABLE) { // && Guards[n].flags&FL_VISABLE
             int guardwidth;
 
-            if (!g_autoaim->value) {
+            if (!g_autoaim) {
                 // Make thin enemies harder to hit
                 switch (Guards[ n ].type) {
                 case en_guard:

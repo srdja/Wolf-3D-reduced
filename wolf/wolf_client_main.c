@@ -86,7 +86,7 @@ PUBLIC void Client_PrepRefresh (const char *r_mapname)
     R_DrawPsyched (0);
     R_EndFrame();
 
-    if (g_version->value == SPEAROFDESTINY) {
+    if (g_version == SPEAROFDESTINY) {
         spritelocation = SODSPRITESDIRNAME;
     } else {
         spritelocation = WL6SPRITESDIRNAME;
@@ -99,7 +99,7 @@ PUBLIC void Client_PrepRefresh (const char *r_mapname)
         mapname[ strlen (mapname) - 4 ] = '\0';      // cut off ".map"
     }
 
-    if (g_version->value == SPEAROFDESTINY) {
+    if (g_version == SPEAROFDESTINY) {
         currentMap.episode = 0;
         currentMap.map = atoi (mapname + 1);
     } else {
@@ -110,7 +110,7 @@ PUBLIC void Client_PrepRefresh (const char *r_mapname)
     //this is a hack for "Floor 18, Part II: Death's Door"
     //there's no gold key to leave the first room
     //so we give it to the player here... gsh
-    if (g_version->value == SPEAROFDESTINY && currentMap.map == 20) {
+    if (g_version == SPEAROFDESTINY && currentMap.map == 20) {
         Player.items |= ITEM_KEY_GOLD;
     }
 
@@ -186,7 +186,7 @@ PUBLIC void Client_Frame (int msec)
     tics = 1;
 
     // allow rendering change
-    Video_CheckChanges();
+   // Video_CheckChanges();
 
     if (ClientStatic.menuState == IPM_AUTOMAP) {
         glDepthMask (GL_TRUE);
