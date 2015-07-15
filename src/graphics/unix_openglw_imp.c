@@ -65,13 +65,13 @@ extern void install_grabs (void);
 Display *display = NULL;
 static int screen_num;
 Window mainwin;
+
 static GLXContext ctx = NULL;
-
 static XF86VidModeModeInfo **vidmodes;
-
 static _boolean vidmode_ext = false;
-
 static int num_vidmodes;
+
+
 _boolean vidmode_active = false;
 
 extern _boolean mouse_active;

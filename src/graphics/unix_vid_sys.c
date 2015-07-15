@@ -47,7 +47,6 @@ typedef struct vidmode_s {
     const char *description;
     int         width, height;
     int         mode;
-
 } vidmode_t;
 
 vidmode_t vid_modes[] = {
