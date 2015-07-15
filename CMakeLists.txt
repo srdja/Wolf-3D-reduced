@@ -13,13 +13,11 @@ set( env_SOURCE
 	${CMAKE_SOURCE_DIR}/env/angle.c
 	${CMAKE_SOURCE_DIR}/env/color.c
 	${CMAKE_SOURCE_DIR}/env/client_input.c
-	${CMAKE_SOURCE_DIR}/env/client_main.c
 	${CMAKE_SOURCE_DIR}/env/com_string.c
 	${CMAKE_SOURCE_DIR}/env/fileio.c
 	${CMAKE_SOURCE_DIR}/env/files.c
 	${CMAKE_SOURCE_DIR}/env/filestring.c
 	${CMAKE_SOURCE_DIR}/env/font_manager.c
-	${CMAKE_SOURCE_DIR}/env/in_view.c
 	${CMAKE_SOURCE_DIR}/env/keys.c
 	${CMAKE_SOURCE_DIR}/env/math.c
 	${CMAKE_SOURCE_DIR}/env/menu_conf.c
@@ -58,52 +56,52 @@ set ( env_HEADER
 
 include_directories (wolf)
 set( wolf_SOURCE
-	${CMAKE_SOURCE_DIR}/wolf/wolf_actors.c
-	${CMAKE_SOURCE_DIR}/wolf/wolf_actor_ai.c
-	${CMAKE_SOURCE_DIR}/wolf/wolf_act_stat.c
-	${CMAKE_SOURCE_DIR}/wolf/wolf_ai_com.c
-	${CMAKE_SOURCE_DIR}/wolf/wolf_areas.c
-	${CMAKE_SOURCE_DIR}/wolf/wolf_automap.c
-	${CMAKE_SOURCE_DIR}/wolf/wolf_bj.c
-	${CMAKE_SOURCE_DIR}/wolf/wolf_client_main.c
-	${CMAKE_SOURCE_DIR}/wolf/wolf_doors.c
-	${CMAKE_SOURCE_DIR}/wolf/wolf_level.c
-	${CMAKE_SOURCE_DIR}/wolf/wolf_main.c
-	${CMAKE_SOURCE_DIR}/wolf/wolf_math.c
-	${CMAKE_SOURCE_DIR}/wolf/wolf_mcredits.c
-	${CMAKE_SOURCE_DIR}/wolf/wolf_menu.c
-	${CMAKE_SOURCE_DIR}/wolf/wolf_mintermission.c
-	${CMAKE_SOURCE_DIR}/wolf/wolf_mintro.c
-	${CMAKE_SOURCE_DIR}/wolf/wolf_mnewgame.c
-	${CMAKE_SOURCE_DIR}/wolf/wolf_moptions.c
-	${CMAKE_SOURCE_DIR}/wolf/wolf_mquit.c
-	${CMAKE_SOURCE_DIR}/wolf/wolf_msound.c
-	${CMAKE_SOURCE_DIR}/wolf/wolf_mvideo.c
-	${CMAKE_SOURCE_DIR}/wolf/wolf_opengl.c
-	${CMAKE_SOURCE_DIR}/wolf/wolf_player.c
-	${CMAKE_SOURCE_DIR}/wolf/wolf_powerups.c
-	${CMAKE_SOURCE_DIR}/wolf/wolf_pushwalls.c
-	${CMAKE_SOURCE_DIR}/wolf/wolf_raycast.c
-	${CMAKE_SOURCE_DIR}/wolf/wolf_renderer.c
-	${CMAKE_SOURCE_DIR}/wolf/wolf_sprites.c
-	${CMAKE_SOURCE_DIR}/wolf/wolf_weapon.c
+	${CMAKE_SOURCE_DIR}/game/wolf_actors.c
+	${CMAKE_SOURCE_DIR}/game/wolf_actor_ai.c
+	${CMAKE_SOURCE_DIR}/game/wolf_act_stat.c
+	${CMAKE_SOURCE_DIR}/game/wolf_ai_com.c
+	${CMAKE_SOURCE_DIR}/game/wolf_areas.c
+	${CMAKE_SOURCE_DIR}/game/wolf_automap.c
+	${CMAKE_SOURCE_DIR}/game/wolf_bj.c
+	${CMAKE_SOURCE_DIR}/game/wolf_client_main.c
+	${CMAKE_SOURCE_DIR}/game/wolf_doors.c
+	${CMAKE_SOURCE_DIR}/game/wolf_level.c
+	${CMAKE_SOURCE_DIR}/game/wolf_main.c
+	${CMAKE_SOURCE_DIR}/game/wolf_math.c
+	${CMAKE_SOURCE_DIR}/game/wolf_mcredits.c
+	${CMAKE_SOURCE_DIR}/game/wolf_menu.c
+	${CMAKE_SOURCE_DIR}/game/wolf_mintermission.c
+	${CMAKE_SOURCE_DIR}/game/wolf_mintro.c
+	${CMAKE_SOURCE_DIR}/game/wolf_mnewgame.c
+	${CMAKE_SOURCE_DIR}/game/wolf_moptions.c
+	${CMAKE_SOURCE_DIR}/game/wolf_mquit.c
+	${CMAKE_SOURCE_DIR}/game/wolf_msound.c
+	${CMAKE_SOURCE_DIR}/game/wolf_mvideo.c
+	${CMAKE_SOURCE_DIR}/game/wolf_opengl.c
+	${CMAKE_SOURCE_DIR}/game/wolf_player.c
+	${CMAKE_SOURCE_DIR}/game/wolf_powerups.c
+	${CMAKE_SOURCE_DIR}/game/wolf_pushwalls.c
+	${CMAKE_SOURCE_DIR}/game/wolf_raycast.c
+	${CMAKE_SOURCE_DIR}/game/wolf_renderer.c
+	${CMAKE_SOURCE_DIR}/game/wolf_sprites.c
+	${CMAKE_SOURCE_DIR}/game/wolf_weapon.c
 )
 
 set ( wolf_HEADER
-	${CMAKE_SOURCE_DIR}/wolf/wolf_actors.h
-	${CMAKE_SOURCE_DIR}/wolf/wolf_actor_ai.h
-	${CMAKE_SOURCE_DIR}/wolf/wolf_act_stat.h
-	${CMAKE_SOURCE_DIR}/wolf/wolf_ai_com.h
-	${CMAKE_SOURCE_DIR}/wolf/wolf_bj.h
-	${CMAKE_SOURCE_DIR}/wolf/wolf_level.h
-	${CMAKE_SOURCE_DIR}/wolf/wolf_local.h
-	${CMAKE_SOURCE_DIR}/wolf/wolf_math.h
-	${CMAKE_SOURCE_DIR}/wolf/wolf_menu.h
-	${CMAKE_SOURCE_DIR}/wolf/wolf_player.h
-	${CMAKE_SOURCE_DIR}/wolf/wolf_powerups.h
-	${CMAKE_SOURCE_DIR}/wolf/wolf_raycast.h
-	${CMAKE_SOURCE_DIR}/wolf/wolf_renderer.h
-	${CMAKE_SOURCE_DIR}/wolf/wolf_sprites.h
+	${CMAKE_SOURCE_DIR}/game/wolf_actors.h
+	${CMAKE_SOURCE_DIR}/game/wolf_actor_ai.h
+	${CMAKE_SOURCE_DIR}/game/wolf_act_stat.h
+	${CMAKE_SOURCE_DIR}/game/wolf_ai_com.h
+	${CMAKE_SOURCE_DIR}/game/wolf_bj.h
+	${CMAKE_SOURCE_DIR}/game/wolf_level.h
+	${CMAKE_SOURCE_DIR}/game/wolf_local.h
+	${CMAKE_SOURCE_DIR}/game/wolf_math.h
+	${CMAKE_SOURCE_DIR}/game/wolf_menu.h
+	${CMAKE_SOURCE_DIR}/game/wolf_player.h
+	${CMAKE_SOURCE_DIR}/game/wolf_powerups.h
+	${CMAKE_SOURCE_DIR}/game/wolf_raycast.h
+	${CMAKE_SOURCE_DIR}/game/wolf_renderer.h
+	${CMAKE_SOURCE_DIR}/game/wolf_sprites.h
 )
 
 

@@ -43,7 +43,6 @@
  */
 PUBLIC void R_Draw_Character (int x, int y, int num, font_t *myfont)
 {
-
     int row, col;
     int scale, sh; // scaled width, height
     float frow, fcol;
@@ -67,14 +66,11 @@ PUBLIC void R_Draw_Character (int x, int y, int num, font_t *myfont)
     frow = row * myfont->hFrac;
     fcol = col * myfont->wFrac;
 
-
     glColor4ubv (myfont->colour);
 
     glEnable (GL_BLEND);
 
-
     R_Bind (myfont->texfont->texnum);
-
 
     glBegin (GL_QUADS);
         glTexCoord2f (fcol, frow);
@@ -105,27 +101,23 @@ PUBLIC void R_Draw_Character (int x, int y, int num, font_t *myfont)
  */
 PUBLIC void R_Draw_Pic (int x, int y, const char *pic)
 {
-    texture_t *tex;
+    texture_t *tex = TM_FindTexture (pic, TT_Pic);
 
-    tex = TM_FindTexture (pic, TT_Pic);
-
-    if (! tex) {
+    if (!tex) {
         return;
     }
 
     R_Bind (tex->texnum);
 
     glBegin (GL_QUADS);
-
-    glTexCoord2f (0.0, 0.0);
-    glVertex2i (x, y);
-    glTexCoord2f (1.0, 0.0);
-    glVertex2i (x + tex->width, y);
-    glTexCoord2f (1.0, 1.0);
-    glVertex2i (x + tex->width, y + tex->height);
-    glTexCoord2f (0.0, 1.0);
-    glVertex2i (x, y + tex->height);
-
+        glTexCoord2f (0.0, 0.0);
+        glVertex2i (x, y);
+        glTexCoord2f (1.0, 0.0);
+        glVertex2i (x + tex->width, y);
+        glTexCoord2f (1.0, 1.0);
+        glVertex2i (x + tex->width, y + tex->height);
+        glTexCoord2f (0.0, 1.0);
+        glVertex2i (x, y + tex->height);
     glEnd();
 }
 

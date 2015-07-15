@@ -1,7 +1,7 @@
 /*
 
     Copyright (C) 2004 Michael Liebscher
-    Copyright (C) 1997-2001 Id Software, Inc.
+    Copyright (C) 2000-2002 by DarkOne the Hacker
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License
@@ -20,42 +20,40 @@
 */
 
 /*
- *  video.h -- video driver defs.
+ *  wolf_act_stat.h:  Wolfenstein3-D entity management.
  *
- *  Author: Michael Liebscher   <johnnycanuck@users.sourceforge.net>
+ *  Author: Michael Liebscher <johnnycanuck@users.sourceforge.net>
  *  Date:   2004
  *
  *  Acknowledgement:
- *  This code was derived from Quake II, and was originally
+ *  Portion of this code was derived from NewWolf, and was originally
+ *  written by DarkOne the Hacker.
+ *
+ *  Portion of this code was derived from Wolfenstein3-D, and was originally
  *  written by Id Software, Inc.
  *
  */
 
 /*
     Notes:
-    This module is implemented by vid_sys.c.
+
 
 */
 
+#ifndef __WOLF_ACT_STAT_H__
+#define __WOLF_ACT_STAT_H__
 
+#include "wolf_bj.h"
+#include "wolf_actor_ai.h"
+#include "wolf_ai_com.h"
+#include "wolf_sprites.h"
 
-#ifndef __VIDEO_H__
-#define __VIDEO_H__
+#define ST_INFO_NULL { 0, SPR_DEMO, 0, NULL, NULL, st_dead }
 
-#include "platform.h"
+extern stateinfo objstate[ NUMENEMIES ][ NUMSTATES ];
+extern int  starthitpoints[ 4 ][ NUMENEMIES ];
 
+void CorrectBossDeathTimeouts();
 
-typedef struct {
-    unsigned width, height; // coordinates from main game
-} viddef_t;
+#endif /* __WOLF_ACT_STAT_H__ */
 
-extern  viddef_t    viddef;  // global video state
-
-// Video module initialisation etc
-void    Video_Init (void);
-void    Video_MenuInit (void);
-
-void VID_NewWindow (int width, int height);
-_boolean VID_GetModeInfo (int *width, int *height, int mode);
-
-#endif /* __VIDEO_H__ */

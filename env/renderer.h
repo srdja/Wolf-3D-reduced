@@ -51,9 +51,6 @@
 #include "texture_manager.h"
 #include "font_manager.h"
 
-#define OPENGL_DLL_NAME   "libGL.so.1"
-
-
 typedef enum {
     rserr_ok,
 
@@ -62,7 +59,6 @@ typedef enum {
 } rserr_t;
 
 int      R_Init (void *hinstance, void *hWnd);
-void     R_Shutdown (void);
 
 void R_BeginRegistration (const char *model);
 void R_EndRegistration (void);

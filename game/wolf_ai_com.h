@@ -1,7 +1,7 @@
 /*
 
     Copyright (C) 2004 Michael Liebscher
-    Copyright (C) 1997-2001 Id Software, Inc.
+    Copyright (C) 2000-2002 by DarkOne the Hacker
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License
@@ -20,42 +20,46 @@
 */
 
 /*
- *  video.h -- video driver defs.
+ *  wolf_ai_com.h:  Wolfenstein3-D entity management.
  *
- *  Author: Michael Liebscher   <johnnycanuck@users.sourceforge.net>
+ *  Author: Michael Liebscher <johnnycanuck@users.sourceforge.net>
  *  Date:   2004
  *
  *  Acknowledgement:
- *  This code was derived from Quake II, and was originally
+ *  Portion of this code was derived from NewWolf, and was originally
+ *  written by DarkOne the Hacker.
+ *
+ *  Portion of this code was derived from Wolfenstein3-D, and was originally
  *  written by Id Software, Inc.
  *
  */
 
 /*
     Notes:
-    This module is implemented by vid_sys.c.
+    This module is implemented by wolf_ai_com.c
 
 */
 
+#ifndef __WOLF_AI_COM_H__
+#define __WOLF_AI_COM_H__
+
+#include "wolf_actors.h"
+
+// common AI functions
+
+void T_Stand (entity_t *self);
+void T_Path (entity_t *self);
+void T_Ghosts (entity_t *self);
+void T_Chase (entity_t *self);
+void T_Bite (entity_t *self);
+void T_DogChase (entity_t *self);
+void T_BossChase (entity_t *self);
+void T_Fake (entity_t *self);
+
+void T_Shoot (entity_t *self);
+void T_UShoot (entity_t *self);
+void T_Launch (entity_t *self);
 
 
-#ifndef __VIDEO_H__
-#define __VIDEO_H__
+#endif /* __WOLF_AI_COM_H__ */
 
-#include "platform.h"
-
-
-typedef struct {
-    unsigned width, height; // coordinates from main game
-} viddef_t;
-
-extern  viddef_t    viddef;  // global video state
-
-// Video module initialisation etc
-void    Video_Init (void);
-void    Video_MenuInit (void);
-
-void VID_NewWindow (int width, int height);
-_boolean VID_GetModeInfo (int *width, int *height, int mode);
-
-#endif /* __VIDEO_H__ */

@@ -47,7 +47,6 @@
 #define MAX_GAMEPATH    64  // max length of a game pathname
 #define MAX_OSPATH  128 // max length of a filesystem pathname
 
-
 void    FS_InitFilesystem (void);
 void    FS_SetGamedir (char *dir);
 char    *FS_Gamedir (void);
@@ -83,9 +82,7 @@ void FS_CloseFile (filehandle_t *fhandle);
 // note: this can't be called from another DLL, due to MS libc issues
 
 SW32 FS_ReadFile (void *buffer, W32 size, W32 count, filehandle_t *fhandle);
-
-W32 FS_FileSeek (filehandle_t *fhandle, SW32 offset, W32 origin);
-
+W32  FS_FileSeek (filehandle_t *fhandle, SW32 offset, W32 origin);
 SW32 FS_GetFileSize (filehandle_t *fhandle);
 /////////////////////////////////////////////////////////////////////
 //

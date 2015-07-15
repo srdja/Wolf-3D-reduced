@@ -60,7 +60,6 @@ PUBLIC W8 FS_CreateDirectory (const char *dirname)
     if (ret_val == -1 && errno == EEXIST) {
         return 1;
     }
-
     return (W8) (! ret_val);
 }
 

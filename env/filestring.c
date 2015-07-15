@@ -27,12 +27,8 @@
 
 
 #include <string.h>
-
 #include "filesystem.h"
 #include "common.h"
-
-#include "com_string.h"
-
 
 /**
  * \brief Returns file name from path string.
@@ -42,17 +38,14 @@
 PUBLIC char *FS_getFileName (char *path)
 {
     char *last;
-
     last = path;
 
     while (*path) {
         if (*path == PATH_SEP) {
             last = path + 1;
         }
-
         path++;
     }
-
     return last;
 }
 
@@ -67,7 +60,6 @@ PUBLIC void FS_RemoveExtension (const char *in, char *out)
     while (*in && *in != '.') {
         *out++ = *in++;
     }
-
     *out = '\0';    /* NUL-terminate string */
 }
 
@@ -82,7 +74,6 @@ PUBLIC void FS_RemoveExtension (const char *in, char *out)
 PUBLIC _boolean FS_getPath (const char *in, char *out, W32 size_out)
 {
     const char *start;
-
     start = in + strlen (in) - 1;
 
     while (start != in && *start != PATH_SEP) {
@@ -92,31 +83,6 @@ PUBLIC _boolean FS_getPath (const char *in, char *out, W32 size_out)
     if (((start - in) + 1) >= (size_out - 1)) {
         return false;
     }
-
     strncpy(out, in, (start - in) + 1);
     return true;
-}
-
-/**
- * \brief Append file extension to path if necessary.
- * \param[in] in Path with file name.
- * \param[in] maxSize Max size of path buffer.
- * \param[in] extension Extension to append to path.
- */
-PUBLIC void FS_DefaultExtension (char *path, const int maxSize, const char *extension)
-{
-    char    oldPath[MAX_OSPATH];
-    char    *src;
-
-    src = path + strlen (path) - 1;
-
-    while (*src != '/' && src != path) {
-        if (*src == '.') {
-            return;                 // it has an extension
-        }
-
-        src--;
-    }
-    strncpy(oldPath, path, sizeof(oldPath));
-    com_snprintf (path, maxSize, "%s%s", oldPath, extension);
 }

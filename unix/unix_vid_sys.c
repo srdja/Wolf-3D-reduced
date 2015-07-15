@@ -82,7 +82,6 @@ PUBLIC _boolean VID_GetModeInfo (int *width, int *height, int mode)
     return true;
 }
 
-
 /**
  * \brief Set new window width height.
  * \param[in] width Width of new window.
@@ -92,22 +91,12 @@ PUBLIC void VID_NewWindow (int width, int height)
 {
     viddef.width  = width;
     viddef.height = height;
-
-//  ClientState.force_refdef = true;        // can't use a paused refdef
 }
 
 PUBLIC void Video_Init (void)
 {
-    /* Start the graphics mode and load refresh DLL */
     if (R_Init (0, 0) == -1) {
-        R_Shutdown();
-        return;
+        printf("Renderer initialization failed\n");
+        exit(1);
     }
-    //IN_ActivateMouse();
-}
-
-
-PUBLIC void Video_Shutdown (void)
-{
-    R_Shutdown();
 }

@@ -368,7 +368,7 @@ PRIVATE void Client_FinishMove (usercmd_t *cmd)
     in_impulse = 0;
 
 }
-
+extern void IN_MouseMove (usercmd_t *cmd);
 /**
  * Create the movement command.
  * @return Filled out usercmd_t structure.
@@ -391,7 +391,7 @@ PRIVATE usercmd_t Client_CreateCmd (void)
     Client_BaseMove (&cmd);
 
     // allow mice or other external controllers to add to the move
-    IN_Move (&cmd);
+    IN_MouseMove(&cmd);
 
     Client_FinishMove (&cmd);
 

@@ -176,7 +176,6 @@ PUBLIC _boolean R_UploadTexture (texture_t *tex, PW8 data)
 // upload base image
     glTexImage2D (GL_TEXTURE_2D, 0, comp, scaled_width, scaled_height, 0, tex->bytes == 4 ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, scaled);
 
-
 // upload mipmaps if required
     if (tex->MipMap) {
         int miplevel = 1;
@@ -202,12 +201,10 @@ PUBLIC _boolean R_UploadTexture (texture_t *tex, PW8 data)
     return true;
 }
 
-
 PUBLIC void R_DeleteTexture (unsigned int texnum)
 {
     glDeleteTextures (1, &texnum);
 }
-
 
 PUBLIC void R_Bind (int texnum)
 {

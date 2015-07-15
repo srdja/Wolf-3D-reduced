@@ -34,12 +34,10 @@
  */
 
 #include <unistd.h>
-#include <stdarg.h>
-#include <stdio.h>
 #include <fcntl.h>
 
-#include "../env/platform.h"
-#include "../env/common.h"
+#include "keys.h"
+#include "../game/wolf_local.h"
 #include "../env/timer.h"
 
 W32 sys_frame_time;
@@ -50,76 +48,11 @@ int nostdout;
 extern void KBD_Update (void);
 
 
-/**
- * \brief Appends one string to another.
- * \param[in,out] dest Pointer to a NUL-terminated string. The buffer must be large enough to contain both strings or else truncation will occur.
- * \param[in] source Pointer to a NUL-terminated string from which the function copies characters.
- * \param[in] nMaxLength Full size of dest, not space left.
- * \return Returns strlen( source ) + MIN( nMaxLength, strlen( initial dest ) ). If retval >= nMaxLength, truncation occurred.
- * \note At most \c nMaxLength-1 characters will be copied. Always NUL-terminates (unless \c nMaxLength <= strlen( dest) ).
- */
-void Sys_Error (const char *format, ...)
-{
-    va_list     argptr;
-    char        string[ 1024 ];
-
-// change stdin to non blocking
-    fcntl (0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
-
-    Client_Shutdown();
-
-    va_start (argptr, format);
-    (void)vsnprintf (string, sizeof (string), format, argptr);
-    va_end (argptr);
-
-    fprintf (stderr, "Error: %s\n", string);
-
-    _exit (1);
-}
-
 void Sys_Quit (void)
 {
-    Client_Shutdown();
-
     fcntl (0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
     _exit (0);
 }
-
-/*
------------------------------------------------------------------------------
- Function: Sys_GetClipboardData
-
- Parameters: Nothing.
-
- Returns: Pointer to a string on success, NULL otherwise.
-
- Notes: Grabs text from clipboard.
-        Caller is responsible for freeing data.
------------------------------------------------------------------------------
-*/
-char *Sys_GetClipboardData (void)
-{
-    return NULL;
-}
-
-
-/*
------------------------------------------------------------------------------
- Function: main -Application entry point.
-
- Parameters:
-
- Returns: Nothing.
-
- Notes: This is the application entry point.
-            1.  Check for mulitple instances.
-            2.  Init Sub-systems.
-            3.  Enter application loop.
------------------------------------------------------------------------------
-*/
-
-#include "keys.h"
-#include "../wolf/wolf_local.h"
 
 extern void StartGame(int a,  int b, int g_skill);
 
@@ -169,4 +102,3 @@ int main (int argc, char *argv[])
 // Should never get here!
     return 0;
 }
-

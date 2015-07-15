@@ -178,18 +178,6 @@ PUBLIC void IN_MouseMove (usercmd_t *cmd)
     mx = my = 0;
 }
 
-PUBLIC void IN_DeactivateMouse (void)
-{
-    if (! mouse_avail || ! display || ! mainwin) {
-        return;
-    }
-
-    if (mouse_active) {
-        uninstall_grabs();
-        mouse_active = false;
-    }
-}
-
 PUBLIC void IN_ActivateMouse (void) {
     if (!mouse_avail || !display || !mainwin) {
         return;

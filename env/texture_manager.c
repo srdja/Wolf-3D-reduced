@@ -34,16 +34,13 @@
 
 #include "common.h"
 
-#include <stdlib.h>
-#include <string.h>
 #include <math.h>
 
 #include "texture_manager.h"
 #include "renderer.h"
 #include "tga.h"
 #include "com_string.h"
-#include "common.h"
-#include "wolf_local.h"
+#include "../game/wolf_local.h"
 
 PRIVATE texture_t   _texSprites[ 768 ];  // Holds  sprites
 PRIVATE texture_t   _texWalls[ 256 ];  // Holds Walls
@@ -54,13 +51,6 @@ PRIVATE texture_t   *r_notexture;       // use for bad texture lookups
 
 W32 texture_registration_sequence;
 
-
-/**
- * \brief Console function to list loaded textures.
- */
-PUBLIC void TM_TextureList_f (void)
-{
-}
 
 /**
  * \brief Load raw image into video memory.
@@ -478,11 +468,6 @@ PUBLIC void TM_GetTextureSize (SW32 *width, SW32 *height, const char *name)
 }
 
 
-
-
-
-
-
 /* Note: cubic function no longer clips result */
 PRIVATE double
 cubic (double dx,
@@ -560,14 +545,6 @@ shrink_line (double               *dest,
     const double avg_ratio = (double) width / old_width;
     const double inv_width = 1.0 / width;
     int          slicepos;      /* slice position relative to width */
-
-#if 0
-
-    Com_DPrintf ("shrink_line bytes=%d old_width=%d width=%d interp=%d "
-                 "avg_ratio=%f\n",
-                 bytes, old_width, width, interp, avg_ratio);
-
-#endif
 
 //  g_return_if_fail( bytes <= 4 );
 
@@ -1086,58 +1063,6 @@ PUBLIC void TM_Init (void)
             }
         }
     }
-
     r_notexture = TM_LoadTexture ("***r_notexture***", data, 16, 16, TT_Pic, 4);
-
     free (data);
-
-
-    //Cmd_AddCommand ("listTextures", TM_TextureList_f);
-
-
-}
-
-/**
- * \brief Shutdown Texture Manager.
- */
-PUBLIC void TM_Shutdown (void)
-{
-    W32     i;
-    texture_t   *tex;
-
-    for (i = 0, tex = ttextures; i < numttextures; ++i, ++tex) {
-        if (! tex->registration_sequence) {
-            continue;       // free image_t slot
-        }
-
-        // free texture
-        R_DeleteTexture (tex->texnum);
-        memset (tex, 0, sizeof (*tex));
-    }
-
-
-
-    for (i = 0; i < 768; i++) {
-        tex =  &_texSprites[ i ];
-
-        if (! tex->registration_sequence) {
-            continue;       // free image_t slot
-        }
-
-        // free texture
-        R_DeleteTexture (tex->texnum);
-        memset (tex, 0, sizeof (*tex));
-    }
-
-    for (i = 0; i < 256; i++) {
-        tex =   &_texWalls[ i ];
-
-        if (! tex->registration_sequence) {
-            continue;       // free image_t slot
-        }
-
-        // free texture
-        R_DeleteTexture (tex->texnum);
-        memset (tex, 0, sizeof (*tex));
-    }
 }

@@ -31,25 +31,17 @@
 #ifndef __COMMON_H__
 #define __COMMON_H__
 
-
-
 #include "com_math.h"
 #include "com_math.h"
 #include "memory.h"
 #include "filesystem.h"
 #include "platform.h"
 
-void    Sys_Quit (void);
-char    *Sys_GetClipboardData (void);
-
 void Client_Init (void);
-void Client_Shutdown (void);
 void Client_Frame (int msec);
-
 
 #define PUBLIC          /* Accessible outside this module     */
 #define PRIVATE static  /* Accessible only within this module */
-
 
 //
 // button bits
@@ -66,8 +58,6 @@ typedef struct usercmd_s {
     short   angles[ 3 ];
     short   forwardmove, sidemove, upmove;
     W8  impulse;        // remove?
-    W8  lightlevel;     // light level the player is standing on
-
 } usercmd_t;
 
 #endif /* __COMMON_H__ */

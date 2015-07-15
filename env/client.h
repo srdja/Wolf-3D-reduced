@@ -101,14 +101,9 @@ typedef struct {
 extern client_static_t  ClientStatic;
 
 void Client_Init (void);
-void Client_Quit_f (void);
-
-void automap_keydown (int key);
-
 void Client_Screen_UpdateScreen (void);
 
 void Menu_Init (void);
-void M_Keydown (int key);
 void M_Draw (void);
 void M_Menu_Main_f (void);
 void M_ForceMenuOff (void);

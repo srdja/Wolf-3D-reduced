@@ -222,15 +222,6 @@ PUBLIC int R_Init (void *hinstance, void *hWnd)
     return 1;
 }
 
-/**
- * \brief Shutdown GL subsystem
- */
-PUBLIC void R_Shutdown (void)
-{
-    TM_Shutdown();
-    GLimp_Shutdown();
-}
-
 
 /**
  * \brief Begin frame
