@@ -46,17 +46,9 @@
 
 #include "../util/filesystem.h"
 
-
 #include "platform.h"
 #include "texture_manager.h"
 #include "font_manager.h"
-
-typedef enum {
-    rserr_ok,
-
-    rserr_invalid_fullscreen,
-    rserr_invalid_mode,
-} rserr_t;
 
 int opengl_init();
 

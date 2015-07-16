@@ -1,4 +1,3 @@
-
 set(EXE_NAME "wolf")
 
 # check subdirectories
@@ -131,24 +130,7 @@ include_directories(${SDL_image_INCLUDE_DIRS})
 pkg_search_module(SDL_mixer REQUIRED SDL2_mixer>=2.0.0)
 include_directories(${SDL_mixer_INCLUDE_DIRS})
 
-pkg_search_module(VORBIS REQUIRED vorbis>=1.3.0)
-include_directories(${VORBIS_INCLUDE_DIRS})
-
-pkg_search_module(VORBISENC REQUIRED vorbisenc>=1.3.0)
-include_directories(${VORBISENC_INCLUDE_DIRS})
-
-pkg_search_module(OPENAL REQUIRED openal>=1.0.0)
-include_directories(${OPENAL_INCLUDE_DIRS})
-
-pkg_search_module(OGG REQUIRED ogg>=1.3.0)
-include_directories(${OGG_INCLUDE_DIRS})
-
 find_library(M_LIB m)
-find_library(VOBRISFILE_LIB vorbisfile)
-find_library(X11_LIB X11)
-find_library(XF86_LIB Xxf86vm)
-find_library(XF86_DGA_LIB Xxf86dga)
-find_library(XEXT_LIB Xext)   
 find_library(Z_LIB z)
     
 find_library(COLLECTIONS 
@@ -162,21 +144,12 @@ include_directories(${OPENGL_INCLUDE_DIRS})
 
 set_target_properties(${EXE_NAME} PROPERTIES LINKER_LANGUAGE C)
 
-target_link_libraries( ${EXE_NAME} ${CMAKE_DL_LIBS}
-                                   ${M_LIB}
-                                   ${OPENGL_LIBRARIES}
-                                   ${XF86_LIB}
-                                   ${XF86_DGA_LIB}
-                                   ${XEXT_LIB}
-                                   ${X11_LIB}
-                                   ${Z_LIB}
-                                   ${OGG_LIBRARIES}
-                                   ${VOBRISFILE_LIB}
-                                   ${VORBIS_LIBRARIES}
-                                   ${VORBISENC_LIBRARIES}
-                                   ${OPENAL_LIBRARIES}
-                                   ${SDL2_LIBRARIES} 
-                                   ${SDL_image_LIBRARIES}
-                                   ${SDL_mixer_LIBRARIES}
-                                   ${COLLECTIONS}
-                                   )
+target_link_libraries(${EXE_NAME} ${CMAKE_DL_LIBS}
+                                  ${M_LIB}
+                                  ${OPENGL_LIBRARIES}       
+                                  ${Z_LIB}
+                                  ${SDL2_LIBRARIES} 
+                                  ${SDL_image_LIBRARIES}
+                                  ${SDL_mixer_LIBRARIES}
+                                  ${COLLECTIONS}
+                                  )
