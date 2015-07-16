@@ -34,6 +34,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <inttypes.h>
+#include <stdbool.h>
 
 #define PATH_SEP '/'
 
@@ -44,11 +45,7 @@ typedef uint32_t            W32;
 typedef int32_t             SW32;
 typedef intptr_t            INT_PTR;
 
-
-typedef enum {
-    false = 0,
-    true  = 1
-} _boolean;
+typedef bool _boolean;
 
 #endif /* __PLATFORM_H__ */
 

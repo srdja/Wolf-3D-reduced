@@ -69,9 +69,9 @@ extern glstate_t   gl_state;
 
 void MYgluPerspective (GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble zFar);
 
-void        GLimp_EndFrame (void);
+void        window_buffer_swap(void);
 _boolean    GLimp_Init (void *hinstance, void *hWnd);
 void        GLimp_Shutdown (void);
-int         GLimp_SetMode (int *pwidth, int *pheight, int mode, _boolean fullscreen);
+int         window_open(int *pwidth, int *pheight, int mode, _boolean fullscreen);
 
 #endif /* __OPENGL_LOCAL_H__ */

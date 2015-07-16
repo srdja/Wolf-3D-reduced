@@ -309,7 +309,6 @@ void TM_FreeUnusedTextures (void)
         R_DeleteTexture (tex->texnum);
         memset (tex, 0, sizeof (*tex));
     }
-
 }
 
 /**

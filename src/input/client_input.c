@@ -32,7 +32,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "keys.h"
 #include "input.h"
 
 extern  W32 sys_frame_time;
@@ -317,9 +316,9 @@ static void Client_FinishMove (usercmd_t *cmd)
 
     in_use.state &= ~2;
 
-    if (anykeydown && ClientStatic.key_dest == key_game) {
+  /*  if (anykeydown && ClientStatic.key_dest == key_game) {
         cmd->buttons |= BUTTON_ANY;
-    }
+    }*/
 
     // send milliseconds of time to apply the move
     ms = (int)ClientStatic.frametime * 1000;
@@ -361,7 +360,7 @@ static usercmd_t Client_CreateCmd (void)
     Client_BaseMove (&cmd);
 
     // allow mice or other external controllers to add to the move
-    IN_MouseMove(&cmd);
+    //IN_MouseMove(&cmd);
 
     Client_FinishMove (&cmd);
 

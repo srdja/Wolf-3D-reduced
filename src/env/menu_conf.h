@@ -30,7 +30,6 @@
 #ifndef __MENU_CONF_H__
 #define __MENU_CONF_H__
 
-#include "../input/keys.h"
 
 #include "font_manager.h"
 

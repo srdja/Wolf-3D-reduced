@@ -71,13 +71,12 @@ extern void IN_StartupMouse (void);
  */
 void Client_Init (void)
 {
-    Video_Init();
     //Sound_Init();
 
     Menu_Init();
 
     Client_InitLocal();
-    IN_StartupMouse();
+    //IN_StartupMouse();
 }
 
 extern void R_DrawWorld (void);
@@ -203,7 +202,7 @@ void frame_run(int msec)
     static int extratime;
     extratime += msec;
 
-    IN_ActivateMouse();
+    //IN_ActivateMouse();
 
     // decide the simulation time
     ClientStatic.frametime = extratime / 1000.0f;

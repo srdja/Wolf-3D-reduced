@@ -228,52 +228,11 @@ static menuaction_s    s_keys_move_down_action;
 
 static void M_UnbindCommand (char *command)
 {
-    int     j;
-    int     length;
-    char    *b;
-
-    length = strlen (command);
-
-    for (j = 0; j < 256; ++j) {
-        b = keybindings[ j ];
-
-        if (! b) {
-            continue;
-        }
-
-        if (! strncmp (b, command, length)) {
-            Key_SetBinding (j, "");
-        }
-    }
 }
 
 static void M_FindKeysForCommand (const char *command, int *twokeys)
 {
-    int     count;
-    int     j;
-    int     length;
-    char    *b;
 
-    twokeys[ 0 ] = twokeys[ 1 ] = -1;
-    length = strlen (command);
-    count = 0;
-
-    for (j = 0; j < 256; ++j) {
-        b = keybindings[ j ];
-
-        if (! b) {
-            continue;
-        }
-
-        if (! strncmp (b, command, length)) {
-            twokeys[ count ] = j;
-            count++;
-
-            if (count == 2) {
-                break;
-            }
-        }
-    }
 }
 
 static void KeyCursorDrawFunc (menuframework_s *menu)
@@ -302,12 +261,7 @@ static void DrawKeyBindingFunc (void *self)
     } else {
         char name[ 128 ];
 
-        strncpy(name, Key_KeynumToString(keys[0]), sizeof(name));
 
-        if (keys[ 1 ] != -1) {
-            com_strlcat (name, " or ", sizeof (name));
-            com_strlcat (name, Key_KeynumToString (keys[ 1 ]), sizeof (name));
-        }
 
         Font_put_line (a->generic.fs, a->generic.x + a->generic.parent->x + 30, a->generic.y + a->generic.parent->y, name);
     }

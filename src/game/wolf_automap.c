@@ -26,7 +26,6 @@
  */
 
 #include "platform.h"
-#include "../input/keys.h"
 #include "../graphics/texture_manager.h"
 #include "client.h"
 #include "../graphics/video.h"
@@ -243,7 +242,7 @@ void Automap()
         scale = 4.0;
     }
 
-
+/*
     if (Key_IsDown (Key_GetKey ("+back"))) {  // Scroll Up
         mapOrigin[1] -= (float) (4.0 /  mapScale);
     }
@@ -288,7 +287,7 @@ void Automap()
         TargetY = Player.position.origin[1] / (float)TILE_GLOBAL;
         TargetZoom = scale;
     }
-
+*/
     if (zoom) {
         float tolerance = 0.5f;//3;
         int invSpeed = 2;//3;
@@ -391,11 +390,11 @@ void Con_ToggleAutomap_f (void)
  */
 void automap_keydown (int key)
 {
-    if (Key_IsDown (key)) {
+   /* if (Key_IsDown (key)) {
         fprintf(stdout, "Tab pressed\n");
         Con_ToggleAutomap_f();
         ClientStatic.key_dest = key_game;
         ClientStatic.menuState = IPM_GAME;
-    }
+    }*/
 }
 

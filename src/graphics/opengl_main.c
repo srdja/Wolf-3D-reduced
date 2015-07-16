@@ -136,44 +136,12 @@ static void R_Register (void)
 }
 
 /**
- * \brief Initialize OS specific parts of OpenGL.
- * \return true on success, otherwise false.
- */
-static _boolean R_SetMode (void)
-{
-    rserr_t err;
-    _boolean fullscreen;
-
-    fullscreen = (_boolean)0;
-
-    if ((err = GLimp_SetMode (&viddef.width, &viddef.height, FloatToInt (gl_mode), fullscreen)) == rserr_ok) {
-        gl_state.prev_mode = FloatToInt (gl_mode);
-    } else {
-        if (err == rserr_invalid_fullscreen) {
-
-            if ((err = GLimp_SetMode (&viddef.width, &viddef.height, FloatToInt (gl_mode), false)) == rserr_ok) {
-                return true;
-            }
-        } else if (err == rserr_invalid_mode) {
-            gl_mode = gl_state.prev_mode;
-        }
-
-        // try setting it back to something safe
-        if ((err = GLimp_SetMode (&viddef.width, &viddef.height, gl_state.prev_mode, false)) != rserr_ok) {
-            return false;
-        }
-    }
-    return true;
-}
-
-
-/**
  * \brief Initialize GL subsystem.
  * \param[in] hinstance A handle to a window instance.
  * \param[in] hWnd A handle to a window
  * \return 1 on success, otherwise -1.
  */
-int R_Init (void *hinstance, void *hWnd)
+int opengl_init()
 {
     gl_mode = 1;
 
@@ -185,12 +153,6 @@ int R_Init (void *hinstance, void *hWnd)
 
     // set our "safe" modes
     gl_state.prev_mode = 0;
-
-    // create the window and set up the context
-    if (! R_SetMode()) {
-       // OpenGL_Shutdown();
-        return -1;
-    }
 
     Video_MenuInit();
 
@@ -208,7 +170,6 @@ int R_Init (void *hinstance, void *hWnd)
     if (a >= 1 && b >= 2) {
         gl_config.Version_1_2 = true;
     }
-
     //FIXME: A lot of these aren't required
 
     glGetIntegerv (GL_MAX_TEXTURE_SIZE, &glMaxTexSize);
@@ -238,5 +199,5 @@ void R_BeginFrame (void)
  */
 void R_EndFrame (void)
 {
-    GLimp_EndFrame();
+    window_buffer_swap();
 }

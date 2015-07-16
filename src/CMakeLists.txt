@@ -13,7 +13,6 @@ set(env_SOURCE
 	util/files.c
 	util/filestring.c
 	env/font_manager.c
-	input/keys.c
 	util/math.c
 	env/menu_conf.c
 	graphics/opengl_draw.c
@@ -36,7 +35,6 @@ set(env_HEADER
 	util/filesystem.h
 	env/font_manager.h
 	input/input.h
-	input/keys.h
 	env/menu_conf.h
 	graphics/opengl_local.h
 	graphics/renderer.h
@@ -103,10 +101,8 @@ set (CMAKE_EXEC_LINKER_FLAGS "${CMAKE_EXEC_LINKER_FLAGS} -pg -s")
 include_directories (unix)
 set(platform_SOURCE
 	util/glob.c
-	graphics/unix_openglw_imp.c
+	graphics/window.c
 	util/unix_file.c
-	input/unix_keys.c
-	input/unix_mouse.c
 	util/unix_timer.c
 	graphics/unix_vid_sys.c
 )
@@ -115,7 +111,7 @@ set(platform_SOURCE
 set( SOURCE ${env_SOURCE} ${wolf_SOURCE} ${platform_SOURCE} )
 set( HEADER ${env_HEADER} ${wolf_HEADER} ${platform_HEADER} )
 
-add_executable( ${EXE_NAME} ${SOURCE} ${HEADER} graphics/color.h main.c)
+add_executable( ${EXE_NAME} ${SOURCE} ${HEADER} graphics/color.h main.c graphics/window.h)
 
 #--------------------------------------------------------------
 # Find and link required libraries

@@ -58,7 +58,7 @@ typedef enum {
     rserr_invalid_mode,
 } rserr_t;
 
-int      R_Init (void *hinstance, void *hWnd);
+int opengl_init();
 
 void R_BeginRegistration (const char *model);
 void R_EndRegistration (void);

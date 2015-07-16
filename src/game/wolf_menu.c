@@ -206,7 +206,7 @@ void M_ForceMenuOff (void)
     }
 
     m_menudepth = 0;
-    Key_ClearStates();
+   // Key_ClearStates();
 }
 
 /**

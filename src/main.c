@@ -1,62 +1,48 @@
-/*
-    Copyright (C) 2004-2005 Michael Liebscher <johnnycanuck@users.sourceforge.net>
-    Copyright (C) 1997-2001 Id Software, Inc.
 
-    This program is free software; you can redistribute it and/or
-    modify it under the terms of the GNU General Public License
-    as published by the Free Software Foundation; either version 2
-    of the License, or (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
-    See the GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-*/
-/*
- *  unix_main.c: UNIX interface to application.
- *
- *  Author: Michael Liebscher <johnnycanuck@users.sourceforge.net>
- *
- *  Acknowledgement:
- *  This code was derived from Quake II, and was originally
- *  written by Id Software, Inc.
- *
- */
-
-#include "input/keys.h"
 #include "game/wolf_local.h"
 #include "util/timer.h"
 
+#include "graphics/window.h"
+
 W32 sys_frame_time;
 
-extern void KBD_Update (void);
 extern void StartGame(int a, int b, int g_skill);
+extern int opengl_init();
+
+void systems_init()
+{
+    // TODO load configurations
+
+    printf("Initializing window...\n");
+    if (!window_init(640, 480, false)) {
+        printf("Failed to initialize window!\n");
+        exit(1);
+    }
+
+    printf("Initializing OpenGL...\n");
+    if (opengl_init() == -1) {
+        printf("OpenGL initialization failed\n");
+        exit(1);
+    }
+
+    FS_InitFilesystem();
+    Client_Init();
+}
 
 int main(int argc, char *argv[])
 {
+    systems_init();
+
     int time_delta;
     int time_start;
     int time_current;
 
-    Key_Init();
-
-    FS_InitFilesystem();
-    Client_Init();
-    Game_Init();    // game and player init
-
-    // FIXME temporarily go directly to map one until menus are sorted out
-    StartGame( 0,  0,  1);
-
     time_start = Sys_Milliseconds();
 
-    while (1) {
-        KBD_Update();
+    Game_Init();
+    StartGame( 0,  0,  1);
 
+    while (1) {
         // find time spent rendering last frame
         do {
             time_current = Sys_Milliseconds();
