@@ -6,7 +6,6 @@ include_directories(env)
 set(env_SOURCE 
 	util/angle.c
 	graphics/color.c
-	input/client_input.c
 	util/com_string.c
 	util/fileio.c
 	util/files.c
@@ -14,6 +13,7 @@ set(env_SOURCE
 	env/font_manager.c
 	util/math.c
 	env/menu_conf.c
+	input/client_input.c
 	graphics/opengl_draw.c
 	graphics/opengl_main.c
 	graphics/opengl_texture.c
@@ -33,7 +33,6 @@ set(env_HEADER
 	util/filestring.h
 	util/filesystem.h
 	env/font_manager.h
-	input/input.h
 	env/menu_conf.h
 	graphics/opengl_local.h
 	graphics/renderer.h
@@ -94,6 +93,18 @@ set(wolf_HEADER
 	game/wolf_sprites.h
 )
 
+set(sound
+    sound/sound.c
+    sound/sound.h)
+
+set (input
+     input/input.c
+     input/input.h
+     input/input_bindings.c
+     input/input_bindings.h
+     input/input_context.c
+     input/input_context.h)
+
 set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -g -pg")
 set (CMAKE_EXEC_LINKER_FLAGS "${CMAKE_EXEC_LINKER_FLAGS} -pg -s")
 
@@ -110,7 +121,7 @@ set(platform_SOURCE
 set( SOURCE ${env_SOURCE} ${wolf_SOURCE} ${platform_SOURCE} )
 set( HEADER ${env_HEADER} ${wolf_HEADER} ${platform_HEADER} )
 
-add_executable( ${EXE_NAME} ${SOURCE} ${HEADER} graphics/color.h main.c graphics/window.h)
+add_executable( ${EXE_NAME} ${SOURCE} ${HEADER} ${input} graphics/color.h main.c graphics/window.h ${sound} sound/music.h sound/music.c sound/soundfx.h sound/soundfx.c)
 
 #--------------------------------------------------------------
 # Find and link required libraries

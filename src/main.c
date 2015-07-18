@@ -1,10 +1,11 @@
-
 #include "game/wolf_local.h"
 #include "util/timer.h"
 
 #include "graphics/window.h"
-
-W32 sys_frame_time;
+#include "sound/sound.h"
+#include "sound/music.h"
+#include "input/input.h"
+#include "input/input_bindings.h"
 
 extern void StartGame(int a, int b, int g_skill);
 extern int opengl_init();
@@ -25,6 +26,20 @@ void systems_init()
         exit(1);
     }
 
+    printf("Initializing Sound...\n");
+    if (!sound_init()) {
+        printf("Sound initialization failed\n");
+        exit(1);
+    }
+
+    printf("Initializing Input...\n");
+    if (!input_init()) {
+        printf("Input initialization failed\n");
+        exit(1);
+    }
+
+    input_bindings_init();
+
     FS_InitFilesystem();
     Client_Init();
 }
@@ -42,7 +57,10 @@ int main(int argc, char *argv[])
     Game_Init();
     StartGame( 0,  0,  1);
 
+    music_play("");
+
     while (1) {
+        input_poll();
         // find time spent rendering last frame
         do {
             time_current = Sys_Milliseconds();

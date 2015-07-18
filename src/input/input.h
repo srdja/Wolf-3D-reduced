@@ -30,14 +30,14 @@
 #ifndef __INPUT_H__
 #define __INPUT_H__
 
-#include "platform.h"
-#include "../game/client.h"
+#include <stdbool.h>
+#include "input_context.h"
 
-void IN_Init (void);
-void IN_Shutdown (void);
-void IN_Frame (void);
-void IN_Move (usercmd_t *cmd);
+bool input_init();
+void input_poll();
 
+void input_add_context(InputContext *context, char *name);
+void input_set_context(char *name);
 
 #endif /* __INPUT_H__ */
 

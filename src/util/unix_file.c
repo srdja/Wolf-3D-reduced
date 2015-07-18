@@ -187,12 +187,6 @@ void FS_FindClose (void)
     fdir = NULL;
 }
 
-/**
- * \brief Deletes an existing file.
- * \param[in] filename Pointer to a NUL-terminated string that specifies the file to be deleted.
- * \return If successful the return value is nonzero, otherwise zero.
- */
-
 
 /**
  * \brief Deletes an existing empty directory.

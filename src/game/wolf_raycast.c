@@ -30,12 +30,10 @@
 #include <stdio.h>
 #include <string.h>
 
-
 #include "wolf_level.h"
 #include "wolf_raycast.h"
 #include "wolf_local.h"
 #include "../graphics/wolf_renderer.h"
-
 
 W8 tile_visible[ 64 ][ 64 ]; // can player see this tile?
 

@@ -44,13 +44,9 @@
 
 player_t Player; // player struct (pos, health etc...)
 
-
 #define PLAYERSIZE  MINDIST // player radius
 
-
 extern void M_Intermission_f (void);
-
-
 int elevatorSwitchTime;
 
 
@@ -64,6 +60,42 @@ struct atkinf {
     { {6, 0, 1}, {6, 1, 2}, {6, 4, 3}, {6, -1, 4} },
 };
 
+
+// FIXME TMP
+static short mv_x   = 0;
+static short mv_y   = 0;
+static short mv_yaw = 0;
+
+void player_use()
+{
+    ClientState.cmd.buttons |= BUTTON_USE;
+}
+
+void player_attack()
+{
+    ClientState.cmd.buttons |= BUTTON_ATTACK;
+}
+
+void player_move(float x, float y)
+{
+    mv_x += x * cl_forwardspeed;
+    mv_y += y * cl_sidespeed;
+}
+
+void player_turn(float dir)
+{
+    float speed = ClientStatic.frametime * 100.0f;
+    mv_yaw = (short) (speed * cl_yawspeed * dir);
+}
+
+
+void player_update_movement(void)
+{
+    ClientState.cmd.sidemove    = mv_x;
+    ClientState.cmd.forwardmove = mv_y;
+    ClientState.viewangles[YAW] += mv_yaw;
+    ClientState.cmd.angles[YAW] = ANGLE2SHORT (ClientState.viewangles[YAW]);
+}
 
 /**
  * \brief Change the players weapon if it is available and has ammo
@@ -318,8 +350,6 @@ static void PL_ControlMovement (player_t *self, LevelData_t *lvl)
     if (lvl->tilemap[ self->tilex ][ self->tiley ] & EXIT_TILE) {
         SpawnBJVictory();
     }
-
-
 }
 
 /**

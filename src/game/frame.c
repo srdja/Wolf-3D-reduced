@@ -244,8 +244,10 @@ void frame_run(int msec)
     if (ClientStatic.key_dest == key_game) {
         if (Player.playstate != ex_dead &&
                 Player.playstate != ex_watchingdeathcam &&
-                Player.playstate != ex_watchingbj) {
+                Player.playstate != ex_watchingbj)
+        {
             Client_SendCommand();
+            player_update_movement();
 
             Player.position.angle = angle_normalize (FINE2RAD (ClientState.viewangles[ YAW ]));
             Player.position.pitch = angle_normalize (FINE2RAD (ClientState.viewangles[ PITCH ]));

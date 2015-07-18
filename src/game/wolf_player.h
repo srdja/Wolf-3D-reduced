@@ -144,6 +144,11 @@ typedef struct player_s {
 extern player_t Player;
 
 
+void player_use(void);
+void player_attack();
+void player_move(float x,  float y);
+void player_turn(float angle);
+void player_update_movement(void);
 
 
 void PL_Spawn (placeonplane_t location, LevelData_t *lvl);

@@ -330,7 +330,7 @@ filehandle_t *FS_OpenFile (const char *filename, W32 FlagsAndAttributes)
         return hFile;
     }
 
-
+/*
 //
 // search through the path, one element at a time
 //
@@ -400,7 +400,7 @@ filehandle_t *FS_OpenFile (const char *filename, W32 FlagsAndAttributes)
         }
 
     }
-
+*/
     printf("[FS_OpenFile]: Could not find (%s)\n", filename);
 
     FS_CloseFile (hFile);

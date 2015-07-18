@@ -34,18 +34,7 @@
 
 /* Compression Method */
 #define CM_NO_COMPRESSION       0
-#define CM_SHRUNK               1
-#define CM_REDUCED_F1           2
-#define CM_REDUCED_F2           3
-#define CM_REDUCED_F3           4
-#define CM_REDUCED_F4           5
-#define CM_IMPLODED             6
-#define CM_RESERVED_7           7
 #define CM_DEFLATED             8
-#define CM_DEFLATE64            9
-#define CM_IMPLODING            10
-#define CM_RESERVED_11          11
-#define CM_BZIP2                12
 
 
 typedef struct packfile_s {
@@ -64,9 +53,7 @@ typedef struct pack_s {
     char    filename[ MAX_OSPATH ];     /* pack file name */
     FILE    *handle;                    /* handle to pack file */
     W32     numfiles;                   /* number of files in pack file */
-
     packfile_t  *files;                 /* Link list of files in pack */
-
 } pack_t;
 
 
