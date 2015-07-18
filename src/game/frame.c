@@ -246,7 +246,7 @@ void frame_run(int msec)
                 Player.playstate != ex_watchingdeathcam &&
                 Player.playstate != ex_watchingbj)
         {
-            Client_SendCommand();
+         //   Client_SendCommand();
             player_update_movement();
 
             Player.position.angle = angle_normalize (FINE2RAD (ClientState.viewangles[ YAW ]));

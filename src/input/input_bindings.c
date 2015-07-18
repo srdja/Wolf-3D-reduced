@@ -1,5 +1,4 @@
 #include <SDL2/SDL.h>
-#include <stdio.h>
 #include <stdbool.h>
 #include "../game/wolf_player.h"
 

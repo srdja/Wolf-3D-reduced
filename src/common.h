@@ -44,8 +44,6 @@ void frame_run(int msec);
 //
 #define BUTTON_ATTACK       1
 #define BUTTON_USE          2
-#define BUTTON_ANY          128         // any key whatsoever
-
 
 // usercmd_t is sent to the server each client frame
 typedef struct usercmd_s {

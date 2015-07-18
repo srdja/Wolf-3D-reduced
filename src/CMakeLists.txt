@@ -13,7 +13,6 @@ set(env_SOURCE
 	env/font_manager.c
 	util/math.c
 	env/menu_conf.c
-	input/client_input.c
 	graphics/opengl_draw.c
 	graphics/opengl_main.c
 	graphics/opengl_texture.c
