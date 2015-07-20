@@ -64,36 +64,12 @@ int Pow_Texture[ pow_last ] = {
 };
 
 
-/*
------------------------------------------------------------------------------
- Function:
-
- Parameters:
-
- Returns:
-
- Notes:
-
------------------------------------------------------------------------------
-*/
 static void Pow_Remove (powerup_t *powerup)
 {
     powerup->x = -1;
     powerup->y = -1;
 }
 
-/*
------------------------------------------------------------------------------
- Function:
-
- Parameters:
-
- Returns:
-
- Notes:
-
------------------------------------------------------------------------------
-*/
 static powerup_t *Pow_AddNew (void)
 {
     int i;
@@ -112,36 +88,14 @@ static powerup_t *Pow_AddNew (void)
     return &levelData.powerups[levelData.numPowerups - 1];
 }
 
-/*
------------------------------------------------------------------------------
- Function:
-
- Parameters:
-
- Returns:
-
- Notes:
-
------------------------------------------------------------------------------
-*/
 void Powerup_Reset (void)
 {
     levelData.numPowerups = 0;
 }
 
 extern void Client_PrepRefresh (const char *r_mapname);
-/*
------------------------------------------------------------------------------
- Function:
 
- Parameters:
 
- Returns: 1 if powerup is picked up, otherwise 0.
-
- Notes:
-
------------------------------------------------------------------------------
-*/
 static int Pow_Give (pow_t type)
 {
 
@@ -307,18 +261,6 @@ static int Pow_Give (pow_t type)
 }
 
 
-/*
------------------------------------------------------------------------------
- Function:
-
- Parameters: x, y -[in] In are in TILES.
-
- Returns:
-
- Notes:
-
------------------------------------------------------------------------------
-*/
 void Powerup_Spawn (int x, int y, int type)
 {
     powerup_t *newp;
@@ -334,18 +276,6 @@ void Powerup_Spawn (int x, int y, int type)
 }
 
 
-/*
------------------------------------------------------------------------------
- Function:
-
- Parameters:    x, y -[in] In are in TILES.
-
- Returns:
-
- Notes:
-
------------------------------------------------------------------------------
-*/
 void Powerup_PickUp (int x, int y)
 {
     int     i;
@@ -373,4 +303,3 @@ void Powerup_PickUp (int x, int y)
         levelData.tilemap[ x ][ y ] &= ~POWERUP_TILE;
     }
 }
-

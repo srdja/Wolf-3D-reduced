@@ -35,20 +35,11 @@
 #include <stdlib.h>
 #include "platform.h"
 
-#define ISUPPER( c )    ( ( c ) >= 'A' && ( c ) <= 'Z' )
 #define ISLOWER( c )    ( ( c ) >= 'a' && ( c ) <= 'z' )
 #define TOUPPER( c )    ( ISLOWER( c ) ? (c) - 'a' + 'A' : ( c ) )
-#define TOLOWER( c )    ( ISUPPER( c ) ? (c) - 'A' + 'a' : ( c ) )
 
 size_t com_strlcat (char *dest, const char *source, size_t nMaxLength);
-
-int com_stricmp (const char *string1, const char *string2);
-int com_strnicmp (const char *string1, const char *string2, size_t count);
-
 void com_snprintf (char *dest, size_t size, const char *format, ...);
-W32 com_strhash (const char *string);
-
-
 char *va (char *format, ...);
 
 #endif /* __COM_STRING_H__ */

@@ -850,7 +850,7 @@ void T_Projectile (entity_t *self)
             break;
         }
 
-        PL_Damage (&Player, self, damage);
+        player_take_damage(&Player, self, damage);
         A_StateChange (self, st_remove);  // mark for removal
         return;
     }

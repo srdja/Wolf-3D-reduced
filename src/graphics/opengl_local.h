@@ -36,22 +36,9 @@ void GL_SetDefaultState (void);
 
 extern  float   gldepthmin, gldepthmax;
 
-extern  int gl_mode;
-extern  int gl_round_down;
-extern  int gl_ztrick;
-extern  int gl_clear;
 extern  int intensity;
 
 void R_Bind (int texnum);
-
-
-typedef struct {
-    const char *renderer_string;
-    const char *vendor_string;
-    const char *version_string;
-    const char *extensions_string;
-    _boolean Version_1_2;
-} glconfig_t;
 
 typedef struct {
     float inverse_intensity;
@@ -63,15 +50,10 @@ typedef struct {
     int currenttmu;
 } glstate_t;
 
-extern glconfig_t  gl_config;
 extern glstate_t   gl_state;
-
 
 void MYgluPerspective (GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble zFar);
 
-void        window_buffer_swap(void);
-_boolean    GLimp_Init (void *hinstance, void *hWnd);
-void        GLimp_Shutdown (void);
-int         window_open(int *pwidth, int *pheight, int mode, _boolean fullscreen);
+void window_buffer_swap(void);
 
 #endif /* __OPENGL_LOCAL_H__ */

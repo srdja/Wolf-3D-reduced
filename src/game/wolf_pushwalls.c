@@ -31,7 +31,6 @@
 #include <stdio.h>
 #include <string.h>
 
-
 #include "wolf_local.h"
 #include "wolf_level.h"
 

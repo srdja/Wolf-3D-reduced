@@ -33,12 +33,29 @@
 #define __CLIENT_H__
 
 #include "../common.h"
+#include <stdbool.h>
 
 typedef enum menuState {
     IPM_GAME,
     IPM_MAIN,
     IPM_AUTOMAP,
 } menuState_t;
+
+typedef struct player_state_s {
+    bool is_using;
+    bool is_attacking;
+
+    /* Amout of movement along x and y axis per update */
+    short move_x;
+    short move_y;
+
+    /* view angle */
+    short angles[3];
+} PlayerState;
+
+typedef struct menu_state_s {
+
+} MenuState;
 
 //
 // the client_state_t structure is wiped completely at every
@@ -67,12 +84,6 @@ extern float sensitivity;
 extern float m_forward;
 extern float m_yaw;
 
-
-///////////////////
-//
-//  client_input
-//
-///////////////////
 typedef struct {
     int         down[ 2 ];      // key nums holding it down
     unsigned    downtime;       // msec timestamp
@@ -80,13 +91,12 @@ typedef struct {
     int         state;
 } kbutton_t;
 
-extern kbutton_t in_left, in_right, in_forward, in_back;
-extern kbutton_t in_moveleft, in_moveright;
-extern kbutton_t in_strafe, in_speed, in_use, in_attack;
-
-void Client_SendCommand (void);
-
 typedef struct {
+    PlayerState player;
+    MenuState   menu;
+
+    bool is_menu_active;
+
     keydest_t   key_dest;
 
     menuState_t  menuState;

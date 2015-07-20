@@ -133,10 +133,10 @@ typedef struct player_s {
     unsigned flags;
     int areanumber;
 
-    _boolean madenoise; // FIXME: move to flags?
+    bool madenoise; // FIXME: move to flags?
     entity_t *LastAttacker;
     int faceframe, facecount;   // bj's face in the HUD // FIXME decide something!
-    _boolean face_gotgun, face_ouch;
+    bool face_gotgun, face_ouch;
     state_t playstate; // fixme: move to gamestate
 
 } player_t;
@@ -144,8 +144,6 @@ typedef struct player_s {
 extern player_t Player;
 
 
-void player_use(void);
-void player_attack();
 void player_move(float x,  float y);
 void player_turn(float angle);
 void player_update_movement(void);
@@ -155,7 +153,7 @@ void PL_Spawn (placeonplane_t location, LevelData_t *lvl);
 
 void PL_Process (player_t *self, LevelData_t *lvl);
 
-void PL_Damage (player_t *self, entity_t *attacker, int points);
+void player_take_damage(player_t *self, entity_t *attacker, int points);
 _boolean PL_GiveHealth (player_t *self, int points, int max);
 _boolean PL_GiveAmmo (player_t *self, int type, int ammo);
 void PL_GiveWeapon (player_t *self, int weapon);

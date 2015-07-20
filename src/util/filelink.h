@@ -40,24 +40,17 @@
 #ifndef __FILELINK_H__
 #define __FILELINK_H__
 
-
-#include "zippak.h"
-
 typedef struct filelink_s {
     struct  filelink_s  *next;
     char    *from;
     int     fromlength;
     char    *to;
-
 } filelink_t;
 
 
 typedef struct searchpath_s {
     char    filename[ MAX_OSPATH ];
-    pack_t  *pack;      // only one of filename / pack will be used
-
     struct  searchpath_s *next;
-
 } searchpath_t;
 
 filelink_t      *fs_links;

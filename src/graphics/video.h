@@ -51,11 +51,6 @@ typedef struct {
 
 extern  viddef_t    viddef;  // global video state
 
-// Video module initialisation etc
-void    Video_Init (void);
 void    Video_MenuInit (void);
-
-void VID_NewWindow (int width, int height);
-_boolean VID_GetModeInfo (int *width, int *height, int mode);
 
 #endif /* __VIDEO_H__ */

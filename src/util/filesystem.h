@@ -95,7 +95,6 @@ W8 FS_CreateDirectory (const char *dirname);
 
 // pass in an attribute mask of things you wish to REJECT
 char *FS_FindFirst (const char *path, W32 musthave, W32 canthave);
-char *FS_FindNext (W32 musthave, W32 canthave);
 void FS_FindClose (void);
 
 

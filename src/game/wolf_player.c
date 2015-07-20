@@ -39,8 +39,6 @@
 #include "../graphics/wolf_renderer.h"
 #include "wolf_bj.h"
 #include "client.h"
-#include "../util/com_string.h"
-
 
 player_t Player; // player struct (pos, health etc...)
 
@@ -65,16 +63,6 @@ struct atkinf {
 static short mv_x   = 0;
 static short mv_y   = 0;
 static short mv_yaw = 0;
-
-void player_use()
-{
-    ClientState.cmd.buttons |= BUTTON_USE;
-}
-
-void player_attack()
-{
-    ClientState.cmd.buttons |= BUTTON_ATTACK;
-}
 
 void player_move(float x, float y)
 {
@@ -431,9 +419,9 @@ void PL_Process (player_t *self, LevelData_t *lvl)
     PL_ControlMovement (self, lvl);
 
     if (self->flags & PL_FLAG_ATTCK) {
-        PL_PlayerAttack (self, ClientState.cmd.buttons & BUTTON_ATTACK);
+        PL_PlayerAttack (self, ClientStatic.player.is_attacking);
     } else {
-        if (ClientState.cmd.buttons & BUTTON_USE) {
+        if (ClientStatic.player.is_using) {
             if (! (self->flags & PL_FLAG_REUSE) && PL_Use (self, lvl)) {
                 self->flags |= PL_FLAG_REUSE;
             }
@@ -441,7 +429,7 @@ void PL_Process (player_t *self, LevelData_t *lvl)
             self->flags &= ~PL_FLAG_REUSE;
         }
 
-        if (ClientState.cmd.buttons & BUTTON_ATTACK) {
+        if (ClientStatic.player.is_attacking) {
             self->flags |= PL_FLAG_ATTCK;
 
             self->attackframe = 0;
@@ -474,7 +462,6 @@ void PL_Process (player_t *self, LevelData_t *lvl)
                 break;
             }
         }
-
         self->weapon = self->pendingweapon;
         break;
 
@@ -540,7 +527,7 @@ void PL_Init (void)
  * \param[in] attacker Attacking entity structure
  * \param[in] points Amount of damage
  */
-void PL_Damage (player_t *self, entity_t *attacker, int points)
+void player_take_damage(player_t *self, entity_t *attacker, int points)
 {
     if (self->playstate == ex_dead || self->playstate == ex_watchingbj || self->playstate == ex_watchingdeathcam) {
         return;
@@ -556,13 +543,11 @@ void PL_Damage (player_t *self, entity_t *attacker, int points)
         points >>= 2;
     }
 
-
     self->health -= points;
 
     if (self->health <= 0) {
         self->health = 0;
         self->playstate = ex_dead;
-
         //Sound_StartSound (NULL, 0, CHAN_BODY, Sound_RegisterSound ("lsfx/009.wav"), 1, ATTN_NORM, 0);
     }
 
@@ -728,7 +713,7 @@ void PL_NextLevel (player_t *self)
     self->attackcount = self->attackframe = self->weaponframe = 0;
     self->flags = 0;
 
-    self->items &= ~ (ITEM_KEY_GOLD | ITEM_KEY_SILVER);
+    self->items &= ~(ITEM_KEY_GOLD | ITEM_KEY_SILVER);
 }
 
 /**
@@ -741,7 +726,6 @@ _boolean PL_Reborn (player_t *self)
     if (--self->lives < 1) {
         return false;
     }
-
 
     self->health = 100;
     self->ammo[ AMMO_BULLETS ] = 8;

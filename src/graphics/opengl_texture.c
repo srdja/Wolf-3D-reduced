@@ -37,11 +37,7 @@ static GLenum WrapToGL (TWrapMode mode)
     if (mode == Repeat) {
         return GL_REPEAT;
     } else {
-        if (gl_config.Version_1_2) {
-            return GL_CLAMP_TO_EDGE;
-        } else {
-            return GL_CLAMP;
-        }
+        return GL_CLAMP;
     }
 }
 
@@ -118,6 +114,7 @@ _boolean R_UploadTexture (texture_t *tex, PW8 data)
     W8 *scaled;
     W16 scaled_width, scaled_height;
     int comp = tex->bytes;
+    int gl_round_down = 1;
 
     glGenTextures (1, &tex->texnum);
     glBindTexture (GL_TEXTURE_2D, tex->texnum);
@@ -212,7 +209,6 @@ void R_Bind (int texnum)
     if (gl_state.currenttextures[ gl_state.currenttmu ] == texnum) {
         return;
     }
-
     gl_state.currenttextures[ gl_state.currenttmu ] = texnum;
 
     glBindTexture (GL_TEXTURE_2D, texnum);

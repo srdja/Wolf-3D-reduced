@@ -44,7 +44,6 @@
 #include "../util/com_math.h"
 
 
-
 #define FLOATTILE  65536.0f
 
 
@@ -63,7 +62,6 @@ extern int dir8angle[9], dir4angle[5];
 // Vectors & angles for 3D-Space
 
 
-
 typedef struct {
     long origin[2];
     float angle; //in radians
@@ -71,51 +69,24 @@ typedef struct {
 
 } placeonplane_t;
 
-
-// ------------------------- * Some Macroses * -------------------------
-
-
 #define max_of_2(a, b) ((a)>(b)?(a):(b))
 
 
 #define TILE2POS(a) (((a)<<TILE_SHIFT)+TILE_HALF)
 #define POS2TILE(a)  ((a)>>TILE_SHIFT)
-#define POS2TILEf(a)  ((a)/FLOATTILE)
 // ------------------------- * vvv FINE angles vvv * -------------------------
-#define ASTEP           0.0078125f      // 1 FINE=x DEGREES
-#define ASTEPRAD    0.000136354f    // 1 FINE=x RADIANS
-#define ANG_1RAD    7333.8598           // 1 RADIAN=x FINES
 #define ANG_0           0       //(int)((float)0/ASTEP)
-#define ANG_1           128         //(int)((float)1/ASTEP)
-#define ANG_6           768     //(int)((float)6/ASTEP)
-#define ANG_15      1920        //(int)((float)15/ASTEP)
-#define ANG_22_5    2880        //(int)((float)22.5/ASTEP)
-#define ANG_30      3840    //(int)((float)30/ASTEP)
 #define ANG_45      5760    //(int)((float)45/ASTEP)
-#define ANG_67_5    8640        //(int)((float)67.5/ASTEP)
 #define ANG_90      11520   //(int)((float)90/ASTEP)
-#define ANG_112_5   14400       //(int)((float)112.5/ASTEP)
 #define ANG_135     17280   //(int)((float)135/ASTEP)
-#define ANG_157_5   20160       //(int)((float)157.5/ASTEP)
 #define ANG_180     23040   //(int)((float)180/ASTEP)
-#define ANG_202_5   25920       //(int)((float)202.5/ASTEP)
 #define ANG_225     28800   //(int)((float)225/ASTEP)
-#define ANG_247_5   31680       //(int)((float)247.5/ASTEP)
 #define ANG_270     34560     //(int)((float)270/ASTEP)
-#define ANG_292_5   37440       //(int)((float)292.5/ASTEP)
 #define ANG_315     40320     //(int)((float)225/ASTEP)
-#define ANG_337_5 43200   //(int)((float)337.5/ASTEP)
-#define ANG_360     46080   //(int)((float)360/ASTEP)
 // ------------------------- * ^^^ FINE angles ^^^ * -------------------------
-
-
 
 #define FINE2RAD( a ) (((a) * M_PI ) / ANG_180)
 #define RAD2FINE( a ) (((a) * ANG_180) / M_PI)
-#define FINE2DEG( a ) ((float)(a) / ANG_1)
-#define DEG2FINE( a ) ((a) * ANG_1)
-
-
 
 int WM_BuildTables (void);
 
@@ -131,9 +102,6 @@ dir4type Get4dir (float angle);
 dir8type Get8dir (float angle);
 
 float TransformPoint (const double Point1X, const double Point1Y, const double Point2X, const double Point2Y);
-
-
-
 
 
 #endif /* __WOLF_MATH_H__ */

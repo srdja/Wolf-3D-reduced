@@ -27,20 +27,13 @@
 
 #include <math.h>
 
-#include "../util/com_math.h"
 #include "opengl_local.h"
 #include "video.h"
-#include "../common.h"
 
 float       gldepthmin, gldepthmax;
 
-glconfig_t gl_config;
 glstate_t  gl_state;
 
-int  gl_mode;
-int  gl_round_down;
-int  gl_ztrick;
-int  gl_clear;
 
 /**
  * \brief Set up a perspective projection matrix
@@ -49,8 +42,8 @@ int  gl_clear;
  * \param[in] zNear Specifies the distance from the viewer to the near clipping plane (always positive).
  * \param[in] zFar Specifies the distance from the viewer to the far clipping plane (always positive).
  */
-void MYgluPerspective (GLdouble fovy, GLdouble aspect,
-                              GLdouble zNear, GLdouble zFar)
+void MYgluPerspective (GLdouble fovy,  GLdouble aspect,
+                       GLdouble zNear, GLdouble zFar)
 {
     GLdouble xmin, xmax, ymin, ymax;
 
@@ -72,34 +65,10 @@ void MYgluPerspective (GLdouble fovy, GLdouble aspect,
  */
 static void R_Clear (void)
 {
-    if (gl_ztrick) {
-        static int trickframe;
-
-        if (gl_clear) {
-            glClear (GL_COLOR_BUFFER_BIT);
-        }
-        trickframe++;
-
-        if (trickframe & 1) {
-            gldepthmin = 0;
-            gldepthmax = 0.49999f;
-            glDepthFunc (GL_LEQUAL);
-        } else {
-            gldepthmin = 1;
-            gldepthmax = 0.5;
-            glDepthFunc (GL_GEQUAL);
-        }
-    } else {
-        if (gl_clear) {
-            glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        } else {
-            glClear (GL_DEPTH_BUFFER_BIT);
-        }
-
-        gldepthmin = 0;
-        gldepthmax = 1;
-        glDepthFunc (GL_LEQUAL);
-    }
+    glClear (GL_DEPTH_BUFFER_BIT);
+    gldepthmin = 0;
+    gldepthmax = 1;
+    glDepthFunc (GL_LEQUAL);
     glDepthRange (gldepthmin, gldepthmax);
 }
 
@@ -120,20 +89,9 @@ void R_SetGL2D (void)
     glDisable (GL_CULL_FACE);
     glDisable (GL_BLEND);
     glEnable (GL_ALPHA_TEST);
-    glColor4f (1, 1, 1, 1);
+    glColor4f(1, 1, 1, 1);
 }
 
-
-/**
- * \brief Register GL data and methods
- */
-static void R_Register (void)
-{
-    gl_mode = 0;
-    gl_round_down = 1;
-    gl_ztrick = 0;
-    gl_clear = 0;
-}
 
 /**
  * \brief Initialize GL subsystem.
@@ -143,36 +101,9 @@ static void R_Register (void)
  */
 int opengl_init()
 {
-    gl_mode = 1;
-
-    char renderer_buffer[ 1000 ];
-    char vendor_buffer[ 1000 ];
-    int     a, b;
-
-    R_Register();
-
-    // set our "safe" modes
-    gl_state.prev_mode = 0;
-
     Video_MenuInit();
 
-    //  get various GL strings
-    gl_config.vendor_string = glGetString (GL_VENDOR);
-    gl_config.renderer_string = glGetString (GL_RENDERER);
-    gl_config.version_string = glGetString (GL_VERSION);
-    gl_config.extensions_string = glGetString (GL_EXTENSIONS);
-
-    strncpy(renderer_buffer, gl_config.renderer_string, sizeof(renderer_buffer));
-    strncpy(vendor_buffer, gl_config.vendor_string, sizeof(vendor_buffer));
-
-    sscanf (gl_config.version_string, "%d.%d", &a, &b);
-
-    if (a >= 1 && b >= 2) {
-        gl_config.Version_1_2 = true;
-    }
-    //FIXME: A lot of these aren't required
-
-    glGetIntegerv (GL_MAX_TEXTURE_SIZE, &glMaxTexSize);
+    glGetIntegerv(GL_MAX_TEXTURE_SIZE, &glMaxTexSize);
 
     GL_SetDefaultState();
 
@@ -190,7 +121,7 @@ int opengl_init()
 void R_BeginFrame (void)
 {
     R_SetGL2D();
-    glDrawBuffer (GL_BACK);
+    glDrawBuffer(GL_BACK);
     R_Clear();
 }
 

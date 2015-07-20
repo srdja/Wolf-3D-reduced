@@ -230,7 +230,6 @@ static void R_DrawBackGnd (float pitch, colour3_t floor, colour3_t ceiling)
 {
     int height = (int) ((viddef.height >> 1) * tan (-pitch) / TanDgr (g_fov * 0.5) + (viddef.height >> 1));
     R_Draw_Fill (0, 0, viddef.width, height, ceiling);
-
     R_Draw_Fill (0, height, viddef.width, viddef.height - height, floor);
 }
 

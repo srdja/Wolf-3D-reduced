@@ -33,7 +33,6 @@
 #include "com_string.h"
 #include "filelink.h"
 
-
 /**
  * \brief Get the length of a file.
  * \param[in] Target file handle.
@@ -139,93 +138,6 @@ void FS_CloseFile (filehandle_t *fhandle)
 }
 
 /**
- * \brief Loads a file from a pak/zip file into memory.
- * \param[in] hFile Pointer to a valid filehandle_t structure.
- * \param[in] pakfiles Pointer to a valid packfile_t structure.
- * \return true on success, otherwise false.
- */
-static _boolean LoadCompressedFile (filehandle_t *hFile, packfile_t *pakfiles)
-{
-    int err;
-    W32 read;
-    W8 *uncompr;
-    W8 *buf;
-    z_stream d_stream; /* decompression stream */
-
-    buf = malloc (pakfiles->filelength + 2);
-
-    // Zlib expects the 2 byte head that the inflate method adds.
-    buf[ 0 ] = 120;
-    buf[ 1 ] = 156;
-    read = fread (buf + 2, 1, pakfiles->filelength, hFile->hFile);
-
-    if (read != pakfiles->filelength) {
-        fclose (hFile->hFile);
-        free (buf);
-
-        return false;
-    }
-
-    fclose (hFile->hFile);
-    hFile->hFile = NULL;
-
-    uncompr = malloc (pakfiles->uncompressed_length);
-
-    d_stream.zalloc = (alloc_func)0;
-    d_stream.zfree = (free_func)0;
-    d_stream.opaque = (voidpf)0;
-
-    d_stream.next_in  = buf;
-    d_stream.avail_in = (uInt)pakfiles->filelength + 2;
-
-    d_stream.next_out = uncompr;
-    d_stream.avail_out = (uInt)pakfiles->uncompressed_length;
-
-    err = inflateInit (&d_stream);
-
-    if (err != Z_OK) {
-        free (uncompr);
-        free (buf);
-        FS_CloseFile (hFile);
-
-        return false;
-    }
-
-    err = inflate (&d_stream, Z_NO_FLUSH);
-
-    if (err != Z_OK) {
-        free (uncompr);
-        free (buf);
-        FS_CloseFile (hFile);
-
-        return false;
-    }
-
-    err = inflateEnd (&d_stream);
-
-    if (err != Z_OK) {
-        free (uncompr);
-        free (buf);
-        FS_CloseFile (hFile);
-
-        return false;
-    }
-
-    free (buf);
-
-    hFile->filedata = uncompr;
-    hFile->filesize = d_stream.total_out;
-
-    // align our file data pointers
-    hFile->ptrStart =  hFile->ptrCurrent = (PW8)hFile->filedata;
-    hFile->ptrEnd = (PW8)hFile->filedata + hFile->filesize;
-
-    hFile->bLoaded = true;
-
-    return true;
-}
-
-/**
  * \brief Load the file into memory.
  * \param[out] Pointer to a valid filehandle_t structure.
  * \return true on success, otherwise false.
@@ -270,12 +182,8 @@ static _boolean LoadFile (filehandle_t *hFile)
  */
 filehandle_t *FS_OpenFile (const char *filename, W32 FlagsAndAttributes)
 {
-    searchpath_t    *search;
     char            netpath[ MAX_OSPATH ];
-    pack_t          *pak;
-    packfile_t      *pakfiles;
     filelink_t      *link;
-    W32             hashid;
     filehandle_t    *hFile;
 
 
@@ -308,7 +216,6 @@ filehandle_t *FS_OpenFile (const char *filename, W32 FlagsAndAttributes)
         }
     }
 
-
 //
 //  Check for the file in the directory tree
 //
@@ -326,81 +233,9 @@ filehandle_t *FS_OpenFile (const char *filename, W32 FlagsAndAttributes)
                 return NULL;
             }
         }
-
         return hFile;
     }
 
-/*
-//
-// search through the path, one element at a time
-//
-    hashid = com_strhash (filename);
-
-    for (search = fs_searchpaths ; search ; search = search->next) {
-        // is the element a pak file?
-        if (search->pack) {
-            // look through all the pak file elements
-            pak = search->pack;
-
-            for (pakfiles = pak->files ; pakfiles ; pakfiles = pakfiles->next) {
-                if (pakfiles->hashid == hashid) {
-                    // found it!
-                    hFile->filesize = pakfiles->uncompressed_length;
-
-                    printf("PackFile: %s : %s\n", pak->filename, filename);
-
-                    // open a new file handle on the pakfile
-                    hFile->hFile = fopen (pak->filename, "rb");
-
-                    if (hFile->hFile == NULL) {
-                        FS_CloseFile (hFile);
-                    }
-
-                    fseek (hFile->hFile, pakfiles->fileoffset, SEEK_SET);
-
-                    if (pakfiles->compression_method) {
-                        if (! LoadCompressedFile (hFile, pakfiles)) {
-                            FS_CloseFile (hFile);
-
-                            return NULL;
-                        }
-                    } else if (FlagsAndAttributes & FA_FILE_FLAG_LOAD) {
-                        if (! LoadFile (hFile)) {
-                            FS_CloseFile (hFile);
-
-                            return NULL;
-                        }
-                    }
-
-                    return hFile;
-                }
-            }
-        } else {
-            // check a file in the directory tree
-
-            com_snprintf (netpath, sizeof (netpath), "%s%c%s", search->filename, PATH_SEP, filename);
-
-            hFile->hFile = fopen (netpath, "rb");
-
-            if (! hFile->hFile) {
-                continue;
-            }
-
-            printf("[FS_OpenFile]: %s\n", netpath);
-
-            if (FlagsAndAttributes & FA_FILE_FLAG_LOAD) {
-                if (! LoadFile (hFile)) {
-                    FS_CloseFile (hFile);
-
-                    return NULL;
-                }
-            }
-
-            return hFile;
-        }
-
-    }
-*/
     printf("[FS_OpenFile]: Could not find (%s)\n", filename);
 
     FS_CloseFile (hFile);

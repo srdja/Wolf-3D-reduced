@@ -548,7 +548,8 @@ static void T_Move (entity_t *self, long dist)
                     self->type == en_clyde   ||
                     self->type == en_pinky   ||
                     self->type == en_inky    ||
-                    self->type == en_spectre) PL_Damage (&Player, self, 2); // ghosts hurt player!
+                    self->type == en_spectre)
+                player_take_damage(&Player, self, 2); // ghosts hurt player!
 
 //
 // back up
@@ -740,7 +741,7 @@ void T_Bite (entity_t *self)
 
         if (dy <= MINACTORDIST) {
             if (US_RndT() < 180) {
-                PL_Damage (&Player, self, US_RndT() >> 4);
+                player_take_damage(&Player, self, US_RndT() >> 4);
                 return;
             }
         }
@@ -901,7 +902,7 @@ void T_Shoot (entity_t *self)
             damage = US_RndT() >> 4;
         }
 
-        PL_Damage (&Player, self, damage);
+        player_take_damage(&Player, self, damage);
     }
 
     switch (self->type) {
@@ -948,7 +949,7 @@ void T_UShoot (entity_t *self)
     dist = max_of_2 (dx, dy);
 
     if (dist <= 1) {
-        PL_Damage (&Player, self, 10);
+        player_take_damage(&Player, self, 10);
     }
 }
 

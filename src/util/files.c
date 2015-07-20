@@ -72,7 +72,7 @@ static void FS_AddGameDirectory (const char *dir)
 {
     searchpath_t    *search;
     char        path[ MAX_OSPATH ];
-    pack_t      *pak;
+    //pack_t      *pak;
     char        *pakfile;
 
     strncpy(fs_gamedir, dir, sizeof(fs_gamedir));
@@ -89,32 +89,6 @@ static void FS_AddGameDirectory (const char *dir)
     // add any pak files
     //
     com_snprintf (path, sizeof (path), "%s%c*.pak", fs_gamedir, PATH_SEP);
-
-    pakfile = FS_FindFirst (path, 0, 0);
-
-    if (pakfile) {
-        pak = FS_LoadZipFile (pakfile);
-
-        if (pak) {
-            search = (searchpath_t *) malloc (sizeof (searchpath_t));
-            search->pack = pak;
-            search->next = fs_searchpaths;
-            fs_searchpaths = search;
-        }
-
-        while ((pakfile = FS_FindNext (0, 0)) != NULL) {
-            pak = FS_LoadZipFile (pakfile);
-
-            if (! pak) {
-                continue;
-            }
-
-            search = malloc (sizeof (searchpath_t));
-            search->pack = pak;
-            search->next = fs_searchpaths;
-            fs_searchpaths = search;
-        }
-    }
 }
 
 /**
@@ -142,29 +116,19 @@ void FS_SetGamedir (char *dir)
             || strstr (dir, "\\") || strstr (dir, ":")) {
         return;
     }
-
     //
     // free up any current game dir info
     //
     while (fs_searchpaths != fs_base_searchpaths) {
-        if (fs_searchpaths->pack) {
-            fclose (fs_searchpaths->pack->handle);
-            free (fs_searchpaths->pack->files);
-            free (fs_searchpaths->pack);
+
+        com_snprintf(fs_gamedir, sizeof(fs_gamedir), "%s%c%s", fs_basedir, PATH_SEP, dir);
+
+        if (fs_cddir[0]) {
+            FS_AddGameDirectory(va("%s%c%s", fs_cddir, PATH_SEP, dir));
         }
 
-        next = fs_searchpaths->next;
-        free (fs_searchpaths);
-        fs_searchpaths = next;
+        FS_AddGameDirectory(va("%s%c%s", fs_basedir, PATH_SEP, dir));
     }
-
-    com_snprintf (fs_gamedir, sizeof (fs_gamedir), "%s%c%s", fs_basedir, PATH_SEP, dir);
-
-    if (fs_cddir[ 0 ]) {
-        FS_AddGameDirectory (va ("%s%c%s", fs_cddir, PATH_SEP, dir));
-    }
-
-    FS_AddGameDirectory (va ("%s%c%s", fs_basedir, PATH_SEP, dir));
 }
 
 /**
@@ -181,7 +145,6 @@ void FS_InitFilesystem (void)
         com_snprintf (path, sizeof (path), "%s%c%s", fs_cddir, PATH_SEP, BASE_DIRECTORY);
         FS_AddGameDirectory (path);
     }
-
     //
     // start up with BASEDIRNAME by default
     //

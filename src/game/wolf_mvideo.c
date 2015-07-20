@@ -101,7 +101,7 @@ void Video_MenuInit (void)
     int y = 0;
     int nYOffset = 27;
 
-    s_mode_list.curvalue = gl_mode;
+    s_mode_list.curvalue = 0;
 
     s_opengl_menu.x = (viddef.width >> 1) + 80;
     s_opengl_menu.nitems = 0;

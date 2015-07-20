@@ -45,6 +45,10 @@ float sensitivity;
 float m_yaw;
 float m_forward;
 
+float cl_forwardspeed;
+float cl_sidespeed;
+float cl_yawspeed;
+
 client_state_t  ClientState;
 client_static_t ClientStatic;
 
@@ -191,7 +195,84 @@ void Client_PrepRefresh (const char *r_mapname)
 int tics;
 
 extern void DrawMenus();
-extern void IN_ActivateMouse (void);
+
+static void frame_run_game()
+{
+    if (Player.playstate != ex_dead &&
+        Player.playstate != ex_watchingdeathcam &&
+        Player.playstate != ex_watchingbj)
+    {
+        player_update_movement();
+
+        Player.position.angle = angle_normalize (FINE2RAD (ClientState.viewangles[ YAW ]));
+        Player.position.pitch = angle_normalize (FINE2RAD (ClientState.viewangles[ PITCH ]));
+    } else {
+        memset (&ClientState.cmd, 0, sizeof (ClientState.cmd));
+    }
+
+    if ((Player.playstate == ex_complete || Player.playstate == ex_secretlevel)) {
+        if (ClientStatic.realtime >= elevatorSwitchTime + 1429) {
+            M_Intermission_f();
+        }
+    } else {
+
+        PL_Process (&Player, r_world);   // Player processing
+        ProcessGuards();                // if single
+        PushWall_Process();
+        Door_Process (&r_world->Doors, tics);
+
+        levelstate.time += tics;
+    }
+}
+
+static void frame_run_menu()
+{
+
+}
+
+static void frame_run_automap()
+{
+    glDepthMask (GL_TRUE);
+    glClear (GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
+
+    glMatrixMode (GL_MODELVIEW);
+    glLoadIdentity();
+    glDisable (GL_DEPTH_TEST);
+
+    glEnable (GL_BLEND);
+
+    glColor4f (1, 1, 1, 1);
+
+    glMatrixMode (GL_PROJECTION);
+    glLoadIdentity();
+
+    glOrtho (0, viddef.width, viddef.height, 0, -99999, 99999);
+
+    DrawMenus();
+    R_EndFrame();
+}
+
+static void frame_run_dead()
+{
+    memset (&ClientState.cmd, 0, sizeof (ClientState.cmd));
+}
+
+static void frame_run_watching_deathcam()
+{
+    memset (&ClientState.cmd, 0, sizeof (ClientState.cmd));
+}
+
+static void frame_run_watching_bj()
+{
+    memset (&ClientState.cmd, 0, sizeof (ClientState.cmd));
+}
+
+static void frame_run_intermission()
+{
+    if (ClientStatic.realtime >= elevatorSwitchTime + 1429) {
+        M_Intermission_f();
+    }
+}
 
 /**
  * \brief Process client frame
@@ -202,11 +283,9 @@ void frame_run(int msec)
     static int extratime;
     extratime += msec;
 
-    //IN_ActivateMouse();
-
     // decide the simulation time
     ClientStatic.frametime = extratime / 1000.0f;
-    ClientStatic.realtime = Sys_Milliseconds();
+    ClientStatic.realtime  = Sys_Milliseconds();
 
     extratime = 0;
 
@@ -218,58 +297,15 @@ void frame_run(int msec)
 
     tics = 1;
 
-    if (ClientStatic.menuState == IPM_AUTOMAP) {
-        glDepthMask (GL_TRUE);
-        glClear (GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
-
-        glMatrixMode (GL_MODELVIEW);
-        glLoadIdentity();
-        glDisable (GL_DEPTH_TEST);
-
-        glEnable (GL_BLEND);
-
-        glColor4f (1, 1, 1, 1);
-
-        glMatrixMode (GL_PROJECTION);
-        glLoadIdentity();
-
-        glOrtho (0, viddef.width, viddef.height, 0, -99999, 99999);
-
-        DrawMenus();
-        R_EndFrame();
-
-        return;
+    switch (ClientStatic.menuState) {
+        case IPM_AUTOMAP:
+            frame_run_automap();
+            break;
+        case IPM_GAME:
+            frame_run_game();
+            break;
     }
 
-    if (ClientStatic.key_dest == key_game) {
-        if (Player.playstate != ex_dead &&
-                Player.playstate != ex_watchingdeathcam &&
-                Player.playstate != ex_watchingbj)
-        {
-         //   Client_SendCommand();
-            player_update_movement();
-
-            Player.position.angle = angle_normalize (FINE2RAD (ClientState.viewangles[ YAW ]));
-            Player.position.pitch = angle_normalize (FINE2RAD (ClientState.viewangles[ PITCH ]));
-        } else {
-            memset (&ClientState.cmd, 0, sizeof (ClientState.cmd));
-        }
-
-        if ((Player.playstate == ex_complete || Player.playstate == ex_secretlevel)) {
-            if (ClientStatic.realtime >= elevatorSwitchTime + 1429) {
-                M_Intermission_f();
-            }
-        } else {
-
-            PL_Process (&Player, r_world);   // Player processing
-            ProcessGuards();                // if single
-            PushWall_Process();
-            Door_Process (&r_world->Doors, tics);
-
-            levelstate.time += tics;
-        }
-    }
     Client_Screen_UpdateScreen();
-
     ClientStatic.framecount++;
 }

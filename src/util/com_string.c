@@ -121,20 +121,6 @@ int com_strnicmp (const char *string1, const char *string2, size_t count)
 }
 
 /**
- * \brief Perform a lowercase comparison of strings.
- * \param[in] string1 NUL-terminated strings to compare.
- * \param[in] string2 NUL-terminated strings to compare.
- * \return The return value indicates the relation of \c string1 to \c string2 as follows.
- * \arg \c <0  \c string1 less than \c string2
- * \arg \c 0  \c string1 identical to \c string2
- * \arg \c >0 \c string1 greater than \c string2
- */
-int com_stricmp (const char *string1, const char *string2)
-{
-    return com_strnicmp (string1, string2, 99999);
-}
-
-/**
  * \brief Write formatted data to a string.
  * \param[out] dest Storage location for output.
  * \param[in] size Maximum number of characters to store.
@@ -156,47 +142,6 @@ void com_snprintf (char *dest, size_t size, const char *format, ...)
 //  printf("Contenido de bigbuffer: '%s'\n", bigbuffer);
 
     strncpy(dest, bigbuffer, size);
-}
-
-/**
- * \brief Create another copy of string.
- * \param[in] source NUL-terminated string to copy.
- * \return Pointer to copy, otherwise NULL.
- * \note Caller is responsible for freeing allocated data by calling Z_Free
- */
-char *com_strcopy (const char *source)
-{
-    char *dest;
-    W32 length;
-
-    length = strlen (source) + 1;
-    dest = malloc (length);
-
-    if (dest == NULL) {
-        return NULL;
-    }
-
-    strncpy(dest, source, length);
-
-    return dest;
-}
-
-/**
- * \brief Create a hash id from string.
- * \param[in] string NUL-terminated string to hash.
- * \return Hash id.
- */
-W32 com_strhash (const char *string)
-{
-    W32 hash = *string;
-
-    if (hash) {
-        for (string += 1; *string != '\0'; ++string) {
-            hash = (hash << 5) - hash + *string;
-        }
-    }
-
-    return hash;
 }
 
 /**

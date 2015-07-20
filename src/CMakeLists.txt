@@ -18,7 +18,6 @@ set(env_SOURCE
 	graphics/opengl_texture.c
 	graphics/texture_manager.c
 	graphics/tga.c
-	util/zippak.c
 )
 
 set(env_HEADER
@@ -39,7 +38,6 @@ set(env_HEADER
 	graphics/tga.h
 	util/timer.h
 	graphics/video.h
-	util/zippak.h
 )
 
 include_directories (wolf)

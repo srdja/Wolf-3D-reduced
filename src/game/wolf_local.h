@@ -60,9 +60,6 @@ extern currentMap_t currentMap;
 #define MINDIST     (0x5800)
 
 
-
-
-
 typedef enum difficulty_e {
     gd_baby,
     gd_easy,
@@ -140,11 +137,8 @@ void ProcessGuards (void);
 #define WL6SPRITESDIRNAME   "sprites"
 #define SODSPRITESDIRNAME   "sodsprites"
 
-
 extern char *spritelocation;
 
 void LoadWallTexture (int wallPicNum , _boolean *pIsDark);
-
-void Game_Shutdown (void);
 
 #endif /* __WOLF_LOCAL_H__ */
