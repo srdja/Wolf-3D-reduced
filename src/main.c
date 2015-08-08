@@ -6,6 +6,7 @@
 #include "sound/music.h"
 #include "input/input.h"
 #include "input/input_bindings.h"
+#include "game/menu/intro.h"
 
 extern void StartGame(int a, int b, int g_skill);
 extern int opengl_init();
@@ -54,10 +55,9 @@ int main(int argc, char *argv[])
 
     time_start = Sys_Milliseconds();
 
-    Game_Init();
-    StartGame( 0,  0,  1);
-
     music_play("");
+
+    intro_init();
 
     while (1) {
         input_poll();
