@@ -39,6 +39,7 @@ typedef enum menuState {
     IPM_GAME,
     IPM_MAIN,
     IPM_AUTOMAP,
+    IPM_INTRO,
 } menuState_t;
 
 typedef struct player_state_s {
@@ -83,13 +84,6 @@ extern float cl_yawspeed;
 extern float sensitivity;
 extern float m_forward;
 extern float m_yaw;
-
-typedef struct {
-    int         down[ 2 ];      // key nums holding it down
-    unsigned    downtime;       // msec timestamp
-    unsigned    msec;           // msec down this frame
-    int         state;
-} kbutton_t;
 
 typedef struct {
     PlayerState player;

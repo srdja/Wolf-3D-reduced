@@ -173,7 +173,6 @@ typedef struct {
     int doornum;
     doors_t *Doors[ 256 ];
     doors_t DoorMap[ 64 ][ 64 ];
-
 } LevelDoors_t;
 
 #define MAX_POWERUPS 1000
@@ -190,11 +189,8 @@ typedef struct {
     W16 Plane2[ 64 * 64 ]; /* objects */
     W16 Plane3[ 64 * 64 ]; /* other */
 
-
     long tilemap[ 64 ][ 64 ];   // wall values only
     W8 spotvis[ 64 ][ 64 ];
-//    objtype       *actorat[ 64 ][ 64 ];
-
     // this is an array of references to texture descriptions
 // the renderer must know what to draw by this number
     int wall_tex_x[ 64 ][ 64 ]; // x_wall
@@ -278,12 +274,9 @@ typedef struct {
     int x, y;
     int dx, dy;
     int tex_x, tex_y;
-
 } Pwall_t;
 
-
 extern Pwall_t PWall;
-
 
 void PushWall_Reset (void);
 _boolean PushWall_Push (int x, int y, dir4type dir);

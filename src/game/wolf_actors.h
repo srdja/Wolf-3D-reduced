@@ -142,13 +142,10 @@ typedef struct {
     think_t think; // what to do every frame
     think_t action; // what to do once per state
     en_state next_state; // next state
-
 } stateinfo;
 
 
-
 extern entity_t Guards[ MAX_GUARDS + 1 ];
-extern entity_t *New;
 extern W16 NumGuards;
 extern stateinfo objstate[ NUMENEMIES ][ NUMSTATES ];
 

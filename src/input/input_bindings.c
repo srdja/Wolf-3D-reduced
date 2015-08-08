@@ -5,6 +5,8 @@
 #include "input.h"
 #include "input_bindings.h"
 #include "../game/client.h"
+#include "../game/menu/intro.h"
+
 
 void move_fw() {
     player_move(0, 1);
@@ -84,16 +86,14 @@ static ButtonMap *pl_attack;
 
 void input_bindings_init()
 {
-    InputContext *game = icontext_new(true);
+    InputContext *game  = icontext_new(true);
 
     forward   = button_map_new(SDL_SCANCODE_W, false, move_fw, move_fw_stop);
     backward  = button_map_new(SDL_SCANCODE_S, false, move_bw, move_bw_stop);
     strafe_l  = button_map_new(SDL_SCANCODE_A, false, move_sl, move_sl_stop);
     strafe_r  = button_map_new(SDL_SCANCODE_D, false, move_sr, move_sr_stop);
-
     turn_l    = button_map_new(SDL_SCANCODE_LEFT,  false, turn_left,  turn_left_stop);
     turn_r    = button_map_new(SDL_SCANCODE_RIGHT, false, turn_right, turn_right_stop);
-
     pl_use    = button_map_new(SDL_SCANCODE_SPACE, false, use, use_stop);
     pl_attack = button_map_new(SDL_SCANCODE_LCTRL, false, attack, attack_stop);
 
@@ -103,10 +103,14 @@ void input_bindings_init()
     icontext_add_key_map(game, strafe_r);
     icontext_add_key_map(game, turn_l);
     icontext_add_key_map(game, turn_r);
-
     icontext_add_key_map(game, pl_use);
     icontext_add_key_map(game, pl_attack);
 
     input_add_context(game, "game");
+
+    InputContext *intro = icontext_new(true);
+    icontext_add_key_map(intro, button_map_new(SDL_SCANCODE_RETURN, false, intro_next_slide, NULL));
+    input_add_context(intro, "intro");
+
     input_set_context("game");
 }

@@ -40,6 +40,7 @@
 
 
 #include "../graphics/opengl_local.h"
+#include "menu/intro.h"
 
 float sensitivity;
 float m_yaw;
@@ -75,12 +76,8 @@ extern void IN_StartupMouse (void);
  */
 void Client_Init (void)
 {
-    //Sound_Init();
-
     Menu_Init();
-
     Client_InitLocal();
-    //IN_StartupMouse();
 }
 
 extern void R_DrawWorld (void);
@@ -190,7 +187,6 @@ void Client_PrepRefresh (const char *r_mapname)
         ClientStatic.key_dest = key_console;
     }
 }
-
 
 int tics;
 
@@ -303,6 +299,9 @@ void frame_run(int msec)
             break;
         case IPM_GAME:
             frame_run_game();
+            break;
+        case IPM_INTRO:
+            intro_run();
             break;
     }
 

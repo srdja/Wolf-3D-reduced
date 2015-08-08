@@ -68,12 +68,10 @@ texture_t *TM_LoadTexture (const char *name, W8 *data, int width, int height, te
     texture_t   *tex;
     int         i;
 
-
     if (strlen (name) >= sizeof (tex->name)) {
         printf("TM_LoadTexture: \"%s\" is too long\n", name);
         return r_notexture;
     }
-
 
     // find a free texture_t space
     for (i = 0, tex = ttextures; i < numttextures; ++i, ++tex) {
@@ -233,7 +231,6 @@ void TM_FindTexture_DB (const char *name, texture_t *tex, texturetype_t type)
         return;
     }
 
-
 //
 // load the texture from disk
 //
@@ -248,10 +245,7 @@ void TM_FindTexture_DB (const char *name, texture_t *tex, texturetype_t type)
     } else {
         return;
     }
-
-
     free (data);
-
 
 //  return tex;
 }

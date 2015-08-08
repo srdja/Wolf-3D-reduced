@@ -33,7 +33,6 @@
 
 #include "tga.h"
 #include "texture_manager.h"
-#include "../common.h"
 
 
 #define TGA_HEADER_SIZE     18
@@ -41,13 +40,11 @@
 static W8 *p_buf;  // current pointer to tga data block
 
 
-
 /* TRUEVISION-XFILE magic signature string */
 static W8 magic[ 18 ] = {
     0x54, 0x52, 0x55, 0x45, 0x56, 0x49, 0x53, 0x49, 0x4f,
     0x4e, 0x2d, 0x58, 0x46, 0x49, 0x4c, 0x45, 0x2e, 0x0
 };
-
 
 typedef struct _TargaHeader {
     W8  idLength;
@@ -84,7 +81,6 @@ typedef struct _TargaHeader {
     W8 flipVert;
 
 } TargaHeader;
-
 
 
 static void flip_line (W8 *buffer, TargaHeader *info)

@@ -159,9 +159,9 @@ void ProcessGuards (void)
 
         if (objstate[ Guards[ n ].type ][ Guards[ n ].state ].rotate) {
             if (Guards[ n ].type == en_rocket || Guards[ n ].type == en_hrocket) {
-                tex += r_add8dir[ Get8dir (angle_wise (Player.position.angle, FINE2RAD (Guards[ n ].angle))) ];
+                tex += r_add8dir[ Get8dir(angle_wise(Player.position.angle, FINE2RAD (Guards[ n ].angle))) ];
             } else {
-                tex += add8dir[ Get8dir (angle_wise (Player.position.angle, FINE2RAD (Guards[ n ].angle))) ];
+                tex += add8dir[ Get8dir(angle_wise(Player.position.angle, FINE2RAD (Guards[ n ].angle))) ];
             }
         }
 

@@ -34,8 +34,6 @@
 
 #include "wolf_menu.h"
 
-
-
 #include "wolf_local.h"
 #include "wolf_player.h"
 #include "../graphics/wolf_renderer.h"
@@ -719,7 +717,6 @@ static void SOD_EndScreen_Draw (void)
         break;
 
     }
-
 
     TM_GetTextureSize (&w, &h, texname);
     R_Draw_Pic ((viddef.width - w) >> 1, (viddef.height - h) >> 1, texname);

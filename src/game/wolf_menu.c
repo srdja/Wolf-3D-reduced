@@ -92,8 +92,6 @@ extern void M_Menu_Keys_f (void);
 extern void M_Menu_Quit_f (void);
 
 extern void M_Menu_Credits (void);
-
-
 extern void M_Intro_f (void);
 extern void M_Intermission_f (void);
 extern void M_Secret_f (void);
@@ -364,7 +362,6 @@ void M_DrawCursor (int x, int y)
         cursorTime = ClientStatic.realtime;
         f ^= 1;
     }
-
     if (!cached) {
         int i;
 
@@ -380,18 +377,12 @@ void M_DrawCursor (int x, int y)
 
         cached = true;
     }
-
-
     if (g_version == SPEAROFDESTINY) {
         com_snprintf (cursorname, sizeof (cursorname), "pics/SC_CURSOR%dPIC.tga", f);
     } else {
         com_snprintf (cursorname, sizeof (cursorname), "pics/C_CURSOR%dPIC.tga", f);
     }
-
-
-
     R_Draw_Pic (x, y, cursorname);
-
 }
 
 /**
@@ -408,12 +399,10 @@ void M_DrawWindow (int x, int y, int w, int h,
                           colour3_t bg, colour3_t act, colour3_t deact)
 {
     R_Draw_Fill (x, y, w, h, bg);
-
-
-    R_Draw_Line (x,      y,  x + w, y,     1, deact); // Top
-    R_Draw_Line (x,      y,  x,   y + h,   1, deact); // Left
-    R_Draw_Line (x + w,    y,  x + w, y + h + 1, 1, act); // Right
-    R_Draw_Line (x,      y + h, x + w, y + h,   1, act); // Bottom
+    R_Draw_Line (x, y, x + w, y,  1, deact); // Top
+    R_Draw_Line (x, y, x, y + h, 1, deact); // Left
+    R_Draw_Line (x + w, y,  x + w, y + h + 1, 1, act); // Right
+    R_Draw_Line (x, y + h, x + w, y + h,   1, act); // Bottom
 }
 
 /**
@@ -469,11 +458,9 @@ void M_Main_Draw (void)
     SW32 w, h;
     int cx, cy;
 
-
     R_Draw_Fill (0, 0, viddef.width, viddef.height, bgcolour);
 
     M_Banner ("pics/C_OPTIONSPIC.tga", 0);
-
 
     TM_GetTextureSize (&w, &h, "pics/C_MOUSELBACKPIC.tga");
     R_Draw_Pic ((viddef.width - w) >> 1, (viddef.height - h), "pics/C_MOUSELBACKPIC.tga");
@@ -489,11 +476,7 @@ void M_Main_Draw (void)
             Menu_DrawString (FONT1, cx + 60, cy + 5 + i * 26, menunames[ i ], textcolour);
         }
     }
-
-
     M_DrawCursor (cx + 3, cy + m_main_cursor * 26 + 2);
-
-
 }
 
 /**
@@ -583,13 +566,9 @@ void M_SMain_Draw (void)
     SW32 w, h;
     int cx, cy;
 
-
-
     R_Draw_Tile (0, 0, viddef.width, viddef.height, "pics/C_BACKDROPPIC.tga");
 
     M_Banner ("pics/SC_OPTIONSPIC.tga", 0);
-
-
 
     TM_GetTextureSize (&w, &h, "pics/SC_MOUSELBACKPIC.tga");
     R_Draw_Pic ((viddef.width - w) >> 1, (viddef.height - h), "pics/SC_MOUSELBACKPIC.tga");
@@ -605,11 +584,7 @@ void M_SMain_Draw (void)
             Menu_DrawString (FONT1, cx + 60, cy + 5 + i * 26, menunames[ i ], textcolour);
         }
     }
-
-
     M_DrawCursor (cx + 3, cy + m_main_cursor * 26 + 2);
-
-
 }
 
 /**

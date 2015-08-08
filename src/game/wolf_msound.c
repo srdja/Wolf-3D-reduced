@@ -64,41 +64,11 @@ static void Sound_MenuInit (void)
     s_sound_menu.x = (viddef.width >> 1) + 70;
     s_sound_menu.y = (viddef.height >> 1) - 20;
     s_sound_menu.nitems = 0;
-/*
-    s_sound_mastervolume_slider.generic.type    = MTYPE_SLIDER;
-    s_sound_mastervolume_slider.generic.x   = 0;
-    s_sound_mastervolume_slider.generic.y   = 0;
-    s_sound_mastervolume_slider.generic.name    = "Master Volume:";
-    s_sound_mastervolume_slider.generic.fs  = FONT1;
-    s_sound_mastervolume_slider.generic.fontBaseColour = &textcolour;
-    s_sound_mastervolume_slider.generic.callback    = UpdateMasterVolumeFunc;
-    s_sound_mastervolume_slider.minvalue        = 0;
-    s_sound_mastervolume_slider.maxvalue        = 10;
-    s_sound_mastervolume_slider.curvalue        = Cvar_VariableValue ("s_masterVolume") * 10;
-*/
-    /*
-    s_sound_musicvolume_slider.generic.type = MTYPE_SLIDER;
-    s_sound_musicvolume_slider.generic.x    = 0;
-    s_sound_musicvolume_slider.generic.y    = 60;
-    s_sound_musicvolume_slider.generic.name = "Music Volume:";
-    s_sound_musicvolume_slider.generic.fs   = FONT1;
-    s_sound_musicvolume_slider.generic.fontBaseColour = &textcolour;
-    s_sound_musicvolume_slider.generic.callback = UpdateMusicVolumeFunc;
-    s_sound_musicvolume_slider.minvalue     = 0;
-    s_sound_musicvolume_slider.maxvalue     = 10;
-    s_sound_musicvolume_slider.curvalue     = Cvar_VariableValue ("s_musicVolume") * 10;
-*/
+
     Menu_AddItem (&s_sound_menu, (void *) &s_sound_mastervolume_slider);
     Menu_AddItem (&s_sound_menu, (void *) &s_sound_sfxvolume_slider);
     Menu_AddItem (&s_sound_menu, (void *) &s_sound_musicvolume_slider);
-
-    /*
-    if (sound_initialized) {
-        Menu_AddItem (&s_sound_menu, (void *) &s_sound_device_list);
-    }
-*/
 }
-
 
 
 static void Sound_MenuDraw (void)

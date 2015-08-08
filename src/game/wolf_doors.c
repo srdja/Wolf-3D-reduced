@@ -41,8 +41,6 @@
 #define MAXDOORS    64      // max number of sliding doors
 
 
-
-
 /**
  * \brief Resets doors status
  * \param[in] lvldoors LevelDoors_t  structure

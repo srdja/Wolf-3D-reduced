@@ -72,8 +72,6 @@ static void FS_AddGameDirectory (const char *dir)
 {
     searchpath_t    *search;
     char        path[ MAX_OSPATH ];
-    //pack_t      *pak;
-    char        *pakfile;
 
     strncpy(fs_gamedir, dir, sizeof(fs_gamedir));
 
@@ -110,8 +108,6 @@ char *FS_Gamedir (void)
  */
 void FS_SetGamedir (char *dir)
 {
-    searchpath_t    *next;
-
     if (strstr (dir, "..") || strstr (dir, "/")
             || strstr (dir, "\\") || strstr (dir, ":")) {
         return;

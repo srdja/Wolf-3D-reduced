@@ -28,21 +28,12 @@
  */
 
 #include "wolf_menu.h"
-
 #include "wolf_local.h"
 
 #include "../graphics/color.h"
 #include "../graphics/renderer.h"
 
-/////////////////////////////////////////////////////////////////////
-//
-//  Credits
-//
-/////////////////////////////////////////////////////////////////////
-
-
 static const char **credits;
-
 
 static const char *reduxcredits[] = {
     "Wolfenstein 3-D Redux",

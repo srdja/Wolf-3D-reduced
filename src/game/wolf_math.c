@@ -193,7 +193,5 @@ int LineLen2Point (const int x, const int y, const float angle)
  */
 float TransformPoint (const double Point1X, const double Point1Y, const double Point2X, const double Point2Y)
 {
-
     return (float)angle_normalize ((float)atan2 (Point1Y - Point2Y, Point1X - Point2X));
 }
-

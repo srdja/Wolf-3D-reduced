@@ -893,8 +893,6 @@ LevelData_t *Level_LoadMap (const char *levelname)
 
     int x, y0, y, layer1, layer2;
 
-
-
     if (g_version == SPEAROFDESTINY) {
         statinfo = static_sod;
         num_statics = sizeof (static_sod) / sizeof (static_sod[ 0 ]);
@@ -902,8 +900,6 @@ LevelData_t *Level_LoadMap (const char *levelname)
         statinfo = static_wl6;
         num_statics = sizeof (static_wl6) / sizeof (static_wl6[ 0 ]);
     }
-
-
 
     newMap = &levelData;
     memset (newMap, 0, sizeof (LevelData_t));
@@ -921,7 +917,6 @@ LevelData_t *Level_LoadMap (const char *levelname)
         return NULL;
     }
 
-
 //
 // Process map header
 //
@@ -938,7 +933,6 @@ LevelData_t *Level_LoadMap (const char *levelname)
 
     FS_ReadFile (&ceiling, 4, 1, fhandle);
     FS_ReadFile (&floor, 4, 1, fhandle);
-
 
     FS_ReadFile (&length, 2, 3, fhandle);
     FS_ReadFile (&offset, 4, 3, fhandle);

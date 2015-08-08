@@ -44,8 +44,6 @@
 */
 
 #include "../common.h"
-#include <memory.h>
-#include <string.h>
 
 #include "wolf_level.h"
 
