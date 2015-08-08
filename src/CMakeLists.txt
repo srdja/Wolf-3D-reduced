@@ -52,12 +52,12 @@ set(wolf_SOURCE
 	game/frame.c
 	game/wolf_doors.c
 	game/wolf_level.c
-	game/wolf_main.c
+	game/game.c
 	game/wolf_math.c
 	game/wolf_mcredits.c
 	game/wolf_menu.c
 	game/wolf_mintermission.c
-	game/wolf_mintro.c
+	game/menu/intro.c
 	game/wolf_mnewgame.c
 	game/wolf_moptions.c
 	game/wolf_mquit.c
@@ -92,7 +92,11 @@ set(wolf_HEADER
 
 set(sound
     sound/sound.c
-    sound/sound.h)
+    sound/sound.h
+    sound/soundfx.c
+    sound/soundfx.h
+    sound/music.c
+    sound/music.h)
 
 set (input
      input/input.c
@@ -118,7 +122,7 @@ set(platform_SOURCE
 set( SOURCE ${env_SOURCE} ${wolf_SOURCE} ${platform_SOURCE} )
 set( HEADER ${env_HEADER} ${wolf_HEADER} ${platform_HEADER} )
 
-add_executable( ${EXE_NAME} ${SOURCE} ${HEADER} ${input} graphics/color.h main.c graphics/window.h ${sound} sound/music.h sound/music.c sound/soundfx.h sound/soundfx.c)
+add_executable( ${EXE_NAME} ${SOURCE} ${HEADER} ${input} graphics/color.h main.c graphics/window.h ${sound} game/menu/intro.h game/menu/main_menu.h game/menu/main_menu.c game/menu/menu.h game/menu/menu.c)
 
 #--------------------------------------------------------------
 # Find and link required libraries
