@@ -27,7 +27,6 @@ set(env_HEADER
 	common.h
 	util/com_math.h
 	util/com_string.h
-	util/filelink.h
 	util/filestring.h
 	util/filesystem.h
 	env/font_manager.h

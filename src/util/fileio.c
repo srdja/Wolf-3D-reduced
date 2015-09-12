@@ -26,12 +26,12 @@
  */
 
 #include <string.h>
+#include <stdio.h>
 #include <zlib.h>
 
 #include "platform.h"
 #include "../common.h"
 #include "com_string.h"
-#include "filelink.h"
 
 /**
  * \brief Get the length of a file.
@@ -183,43 +183,17 @@ static _boolean LoadFile (filehandle_t *hFile)
 filehandle_t *FS_OpenFile (const char *filename, W32 FlagsAndAttributes)
 {
     char            netpath[ MAX_OSPATH ];
-    filelink_t      *link;
     filehandle_t    *hFile;
-
 
     hFile = (filehandle_t *)malloc (sizeof (filehandle_t));
     memset (hFile, 0, sizeof (filehandle_t));
 
-    // check for links first
-    for (link = fs_links ; link ; link = link->next) {
-        if (! strncmp (filename, link->from, link->fromlength)) {
-            com_snprintf (netpath, sizeof (netpath), "%s%s", link->to, filename + link->fromlength);
-            hFile->hFile = fopen (netpath, "rb");
-
-            if (! hFile->hFile) {
-                FS_CloseFile (hFile);
-
-                return NULL;
-            }
-
-            printf("link file: %s\n", netpath);
-
-            if (FlagsAndAttributes & FA_FILE_FLAG_LOAD) {
-                if (! LoadFile (hFile)) {
-                    FS_CloseFile (hFile);
-
-                    return NULL;
-                }
-            }
-
-            return hFile;
-        }
-    }
-
 //
 //  Check for the file in the directory tree
 //
-    com_snprintf (netpath, sizeof (netpath), "%s/%s", FS_Gamedir(), filename);
+    com_snprintf (netpath, sizeof (netpath), "%s/%s", get_resource_base_path(), filename);
+
+    printf("Loading file: %s\n", netpath);
 
     hFile->hFile = fopen (netpath, "rb");
 

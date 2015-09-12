@@ -44,13 +44,11 @@
 #include "platform.h"
 #include "filestring.h"
 
-#define MAX_GAMEPATH    64  // max length of a game pathname
-#define MAX_OSPATH  128 // max length of a filesystem pathname
+#define MAX_GAMEPATH 2048  // max length of a game pathname
+#define MAX_OSPATH   2048 // max length of a filesystem pathname
 
-void    FS_InitFilesystem (void);
-void    FS_SetGamedir (char *dir);
-char    *FS_Gamedir (void);
-char    *FS_Userdir (void);
+const char *get_resource_base_path(void);
+char       *FS_Userdir (void);
 
 /////////////////////////////////////////////////////////////////////
 //

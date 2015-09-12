@@ -41,7 +41,6 @@ void systems_init()
 
     input_bindings_init();
 
-    FS_InitFilesystem();
     Client_Init();
 }
 
