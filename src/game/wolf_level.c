@@ -151,11 +151,11 @@ statinfo_t static_sod[] = {
 statinfo_t *statinfo = static_wl6;
 int num_statics = sizeof (static_wl6) / sizeof (static_wl6[ 0 ]);
 
-static W16 cachedGuard = 0;
-static W16 cachedOfficer = 0;
-static W16 cachedSS = 0;
-static W16 cachedDog = 0;
-static W16 cachedMutant = 0;
+static uint16_t cachedGuard = 0;
+static uint16_t cachedOfficer = 0;
+static uint16_t cachedSS = 0;
+static uint16_t cachedDog = 0;
+static uint16_t cachedMutant = 0;
 
 static int progress_bar = 0;
 
@@ -168,9 +168,9 @@ LevelData_t levelData;
  * \param[in] start Start of range
  * \param[in] end End of range.
  */
-void CacheTextures (W16 start, W16 end)
+void CacheTextures (uint16_t start, uint16_t end)
 {
-    W16 i;
+    uint16_t i;
 
     if (end < start) {
         return;
@@ -191,7 +191,7 @@ void CacheTextures (W16 start, W16 end)
 void Level_ScanInfoPlane (LevelData_t *lvl)
 {
     int x, y;
-    W16 tile;
+    uint16_t tile;
 
     cachedGuard = 0;
     cachedOfficer = 0;
@@ -756,23 +756,23 @@ static void Lvl_SpawnObj (LevelData_t *lvl, int type, int x, int y)
  * \param[in/out] dest Destination buffer
  * \param[in] length The length of the EXPANDED data.
  */
-static void Lvl_CarmackExpand (W16 *source, W16 *dest, W16 length)
+static void Lvl_CarmackExpand (uint16_t *source, uint16_t *dest, uint16_t length)
 {
 #define NEARTAG 0xA7
 #define FARTAG  0xA8
 
-    W32 chhigh, offset;
-    W16 *copyptr, *outptr;
-    W8  *inptr;
-    W16 ch, count;
+    uint32_t chhigh, offset;
+    uint16_t *copyptr, *outptr;
+    uint8_t *inptr;
+    uint16_t ch, count;
 
     length /= 2;
 
-    inptr = (W8 *)source;
+    inptr = (uint8_t *)source;
     outptr = dest;
 
     while (length) {
-        ch = * (W16 *)inptr;
+        ch = * (uint16_t *)inptr;
         inptr += 2;
         chhigh = ch >> 8;
 
@@ -782,7 +782,7 @@ static void Lvl_CarmackExpand (W16 *source, W16 *dest, W16 length)
             if (! count) {
                 // have to insert a word containing the tag byte
                 ch |= *inptr++;
-                *outptr++ = (W16)ch;
+                *outptr++ = (uint16_t)ch;
                 length--;
             } else {
                 offset = *inptr++;
@@ -802,7 +802,7 @@ static void Lvl_CarmackExpand (W16 *source, W16 *dest, W16 length)
                 *outptr++ = ch;
                 length--;
             } else {
-                offset = * (W16 *)inptr;
+                offset = * (uint16_t *)inptr;
                 inptr += 2;
                 copyptr = dest + offset;
                 length -= count;
@@ -825,11 +825,11 @@ static void Lvl_CarmackExpand (W16 *source, W16 *dest, W16 length)
  * \param[in] length The length of the EXPANDED data.
  * \param[in] rlewtag tag
  */
-static void Lvl_RLEWexpand (W16 *source, W16 *dest,
+static void Lvl_RLEWexpand (uint16_t *source, uint16_t *dest,
                              long length, unsigned rlewtag)
 {
     unsigned value, count, i;
-    W16 *end;
+    uint16_t *end;
 //
 // expand it
 //
@@ -871,21 +871,21 @@ static void Lvl_RLEWexpand (W16 *source, W16 *dest,
  */
 LevelData_t *Level_LoadMap (const char *levelname)
 {
-    W16 rle;
-    W32  offset[ 3 ];
-    W16 length[ 3 ];
-    W16 w, h;
-    W32 signature;
-    W16 *buffer, expanded;
-    W8  *data;
-    W32 ceiling, floor;
+    uint16_t rle;
+    uint32_t offset[ 3 ];
+    uint16_t length[ 3 ];
+    uint16_t w, h;
+    uint32_t signature;
+    uint16_t *buffer, expanded;
+    uint8_t *data;
+    uint32_t ceiling, floor;
     LevelData_t *newMap;
     filehandle_t *fhandle;
-    W16 mapNameLength;
+    uint16_t mapNameLength;
     char *mapName;
-    W16 musicNameLength;
+    uint16_t musicNameLength;
     char *musicName;
-    SW32 filesize;
+    int32_t filesize;
 
     int x, y0, y, layer1, layer2;
 
@@ -939,7 +939,7 @@ LevelData_t *Level_LoadMap (const char *levelname)
 
     FS_ReadFile (&levelstate.fpartime, sizeof (float), 1, fhandle);
 
-    FS_ReadFile (levelstate.spartime, sizeof (W8), 5, fhandle);
+    FS_ReadFile (levelstate.spartime, sizeof (uint8_t), 5, fhandle);
     levelstate.spartime[ 5 ] = '\0';
 
 
@@ -967,14 +967,14 @@ LevelData_t *Level_LoadMap (const char *levelname)
 //
 // Plane1  -Walls
 //
-    data = (PW8)malloc (length[ 0 ]);
+    data = (uint8_t*)malloc (length[ 0 ]);
 
     FS_FileSeek (fhandle, offset[ 0 ], SEEK_SET);
     FS_ReadFile (data, 1, length[ 0 ], fhandle);
 
 
     expanded = * ((unsigned short *)data);
-    buffer = (PW16)malloc (expanded);
+    buffer = (uint16_t*)malloc (expanded);
 
     Lvl_CarmackExpand ((unsigned short *)data + 1, buffer, expanded);
     Lvl_RLEWexpand (buffer + 1, newMap->Plane1, 64 * 64 * 2, rle);
@@ -985,16 +985,16 @@ LevelData_t *Level_LoadMap (const char *levelname)
 //
 // Plane2 -Objects
 //
-    data = (PW8)malloc (length[ 1 ]);
+    data = (uint8_t*)malloc (length[ 1 ]);
 
     FS_FileSeek (fhandle, offset[ 1 ], SEEK_SET);
     FS_ReadFile (data, 1, length[ 1 ], fhandle);
 
 
-    expanded = * ((PW16)data);
-    buffer = (PW16)malloc (expanded);
+    expanded = * ((uint16_t*)data);
+    buffer = (uint16_t*)malloc (expanded);
 
-    Lvl_CarmackExpand ((PW16)data + 1, buffer, expanded);
+    Lvl_CarmackExpand ((uint16_t*)data + 1, buffer, expanded);
     Lvl_RLEWexpand (buffer + 1, newMap->Plane2, 64 * 64 * 2, rle);
 
     free (buffer);
@@ -1003,16 +1003,16 @@ LevelData_t *Level_LoadMap (const char *levelname)
 //
 // Plane3 -Other
 //
-    data = (PW8)malloc (length[ 2 ]);
+    data = (uint8_t*)malloc (length[ 2 ]);
 
     FS_FileSeek (fhandle, offset[ 2 ], SEEK_SET);
     FS_ReadFile (data, 1, length[ 2 ], fhandle);
 
 
-    expanded = * ((PW16)data);
-    buffer = (PW16)malloc (expanded);
+    expanded = * ((uint16_t*)data);
+    buffer = (uint16_t*)malloc (expanded);
 
-    Lvl_CarmackExpand ((PW16)data + 1, buffer, expanded);
+    Lvl_CarmackExpand ((uint16_t*)data + 1, buffer, expanded);
     Lvl_RLEWexpand (buffer + 1, newMap->Plane3, 64 * 64 * 2, rle);
 
     free (buffer);
@@ -1102,12 +1102,12 @@ LevelData_t *Level_LoadMap (const char *levelname)
     newMap->musicName[127] = '\0';
 
 
-    newMap->ceilingColour[ 0 ] = (W8) ((ceiling >> 16) & 0xFF);
-    newMap->ceilingColour[ 1 ] = (W8) ((ceiling >> 8) & 0xFF);
-    newMap->ceilingColour[ 2 ] = (W8) ((ceiling) & 0xFF);
-    newMap->floorColour[ 0 ] = (W8) ((floor >> 16) & 0xFF);
-    newMap->floorColour[ 1 ] = (W8) ((floor >> 8) & 0xFF);
-    newMap->floorColour[ 2 ] = (W8) ((floor) & 0xFF);
+    newMap->ceilingColour[ 0 ] = (uint8_t) ((ceiling >> 16) & 0xFF);
+    newMap->ceilingColour[ 1 ] = (uint8_t) ((ceiling >> 8) & 0xFF);
+    newMap->ceilingColour[ 2 ] = (uint8_t) ((ceiling) & 0xFF);
+    newMap->floorColour[ 0 ] = (uint8_t) ((floor >> 16) & 0xFF);
+    newMap->floorColour[ 1 ] = (uint8_t) ((floor >> 8) & 0xFF);
+    newMap->floorColour[ 2 ] = (uint8_t) ((floor) & 0xFF);
 
     return newMap;
 }
@@ -1119,18 +1119,18 @@ LevelData_t *Level_LoadMap (const char *levelname)
  */
 int Level_VerifyMap (const char *levelname)
 {
-    W16 rle;
-    W32  offset[ 3 ];
-    W16 length[ 3 ];
-    W16 w, h;
-    W32 signature;
-    W32 ceiling, floor;
+    uint16_t rle;
+    uint32_t offset[ 3 ];
+    uint16_t length[ 3 ];
+    uint16_t w, h;
+    uint32_t signature;
+    uint32_t ceiling, floor;
     filehandle_t *fhandle;
-    W16 mapNameLength;
+    uint16_t mapNameLength;
     char *mapName = NULL;
-    W16 musicNameLength;
+    uint16_t musicNameLength;
     char *musicName = NULL;
-    SW32 filesize;
+    int32_t filesize;
     int value = 1;
 
 
@@ -1173,7 +1173,7 @@ int Level_VerifyMap (const char *levelname)
 
     FS_ReadFile (&levelstate.fpartime, sizeof (float), 1, fhandle);
 
-    FS_ReadFile (levelstate.spartime, sizeof (W8), 5, fhandle);
+    FS_ReadFile (levelstate.spartime, sizeof (uint8_t), 5, fhandle);
     levelstate.spartime[ 5 ] = '\0';
 
 
@@ -1275,19 +1275,19 @@ void Level_PrecacheTextures_Sound (LevelData_t *lvl)
  * \param[in] lvl Level structure
  * return true if a straight line between 2 points is unobstructed, otherwise false.
  */
-_boolean Level_CheckLine (SW32 x1, SW32 y1, SW32 x2, SW32 y2, LevelData_t *lvl)
+bool Level_CheckLine (int32_t x1, int32_t y1, int32_t x2, int32_t y2, LevelData_t *lvl)
 {
-    SW32 xt1, yt1, xt2, yt2; /* tile positions */
-    SW32 x, y;              /* current point in !tiles! */
-    SW32 xdist, ydist;
-    SW32 xstep, ystep; /* Step value for each whole xy */
+    int32_t xt1, yt1, xt2, yt2; /* tile positions */
+    int32_t x, y;              /* current point in !tiles! */
+    int32_t xdist, ydist;
+    int32_t xstep, ystep; /* Step value for each whole xy */
 
-    SW32 deltafrac; /* current point in !1/256 of tile! */
+    int32_t deltafrac; /* current point in !1/256 of tile! */
 
-    SW32 Frac;      /* Fractional xy stepper */
+    int32_t Frac;      /* Fractional xy stepper */
 
-    SW32 partial;   /* how much to move in our direction to border */
-    SW32 intercept; /* Temp for door code */
+    int32_t partial;   /* how much to move in our direction to border */
+    int32_t intercept; /* Temp for door code */
 
 #define FRACBITS    8       /* Number of bits of fraction */
 

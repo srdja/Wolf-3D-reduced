@@ -80,21 +80,21 @@ typedef struct {
     char        nextmap[ MAX_OSPATH ];      // go here when fraglimit is hit
 
     // intermission state
-    _boolean    inGame;
+    bool    inGame;
 
-    W32         episode;
-    W32         floornum;
+    uint32_t episode;
+    uint32_t floornum;
     float       fpartime;
     char        spartime[6];
 
-    W32         total_secrets;
-    W32         found_secrets;
+    uint32_t total_secrets;
+    uint32_t found_secrets;
 
-    W32         total_treasure;
-    W32         found_treasure;
+    uint32_t total_treasure;
+    uint32_t found_treasure;
 
-    W32         total_monsters;
-    W32         killed_monsters;
+    uint32_t total_monsters;
+    uint32_t killed_monsters;
 
 
 } level_locals_t;
@@ -106,15 +106,15 @@ extern level_locals_t   levelstate;
 
 
 typedef struct {
-    W32 total_secrets;
-    W32 found_secrets;
+    uint32_t total_secrets;
+    uint32_t found_secrets;
 
-    W32 total_treasure;
-    W32 found_treasure;
+    uint32_t total_treasure;
+    uint32_t found_treasure;
 
-    W32 total_monsters;
-    W32 killed_monsters;
-    W32 time;
+    uint32_t total_monsters;
+    uint32_t killed_monsters;
+    uint32_t time;
 
 } LRstruct;
 
@@ -139,6 +139,6 @@ void ProcessGuards (void);
 
 extern char *spritelocation;
 
-void LoadWallTexture (int wallPicNum , _boolean *pIsDark);
+void LoadWallTexture (int wallPicNum , bool *pIsDark);
 
 #endif /* __WOLF_LOCAL_H__ */

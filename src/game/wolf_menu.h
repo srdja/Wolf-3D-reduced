@@ -73,8 +73,8 @@ void M_Intermission_f (void);
 
 #define NUM_CURSOR_FRAMES 2
 void M_DrawCursor (int x, int y);
-void M_BannerString (const char *string, W16 nYOffset);
-void M_Banner (const char *name, W16 nYOffest);
+void M_BannerString (const char *string, uint16_t nYOffset);
+void M_Banner (const char *name, uint16_t nYOffest);
 void M_DrawWindow (int x, int y, int w, int h, colour3_t bg, colour3_t act, colour3_t deact);
 void M_DrawInfoBar (void);
 

@@ -57,14 +57,14 @@ typedef struct r_trace_s {
     int x, y; // origin
     float angle;    // Trace angle in radians
     int flags;
-    W8 (*tile_vis)[ 64 ]; // should point to [ 64 ][ 64 ] array
+    uint8_t (*tile_vis)[ 64 ]; // should point to [ 64 ][ 64 ] array
 
 } r_trace_t;
 
 #define UPPERZCOORD  0.6f
 #define LOWERZCOORD -0.6f
 
-extern W8 tile_visible[ 64 ][ 64 ]; // can player see this tile?
+extern uint8_t tile_visible[ 64 ][ 64 ]; // can player see this tile?
 
 
 void R_RayCast (placeonplane_t viewport, LevelData_t *lvl);

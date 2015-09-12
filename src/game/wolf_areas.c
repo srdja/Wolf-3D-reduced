@@ -48,8 +48,8 @@
 #include "wolf_level.h"
 
 
-W8           areaconnect[ NUMAREAS ][ NUMAREAS ];    /* Is this area mated with another? */
- _boolean    areabyplayer[ NUMAREAS ];               /* Which areas can I see into? */
+uint8_t areaconnect[ NUMAREAS ][ NUMAREAS ];    /* Is this area mated with another? */
+ bool    areabyplayer[ NUMAREAS ];               /* Which areas can I see into? */
 
 
 

@@ -162,7 +162,7 @@ void Door_SetAreas (LevelDoors_t *lvldoors, int (*areas)[64])
  * \param[in] vertical Set to true if door is vertical, false if horizontal.
  * \return 0 if door can not be closed, otherwise 1.
  */
-static W8 CanCloseDoor (int x, int y, _boolean vertical)
+static uint8_t CanCloseDoor (int x, int y, bool vertical)
 {
     int n;
 

@@ -58,7 +58,7 @@ static const char weaponnames[ 4 ][ 32 ] = {
     "pics/GATLINGGUNPIC.tga"
 };
 
-static SW32 hud_x, hud_y;
+static int32_t hud_x, hud_y;
 
 
 /**
@@ -66,8 +66,8 @@ static SW32 hud_x, hud_y;
  */
 void R_DrawHUD (void)
 {
-    SW32 w, h;
-    W32 score = Player.score;
+    int32_t w, h;
+    uint32_t score = Player.score;
 
     TM_GetTextureSize (&w, &h, "pics/STATUSBARPIC.tga");
     hud_x = (viddef.width - w) >> 1;
@@ -192,7 +192,7 @@ void R_DrawFace (void)
 }
 
 
-SW32 r_damageflash = 0;
+int32_t r_damageflash = 0;
 
 /**
  * \brief Draws BJ's face on the heads-up-display
@@ -234,7 +234,7 @@ static void R_DrawBackGnd (float pitch, colour3_t floor, colour3_t ceiling)
 }
 
 
-W32 intensity = 0;
+uint32_t intensity = 0;
 
 
 /**
@@ -257,7 +257,7 @@ void R_DrawWorld (void)
     R_SetGL2D();    // restore 2D back
 
     if (Player.playstate == ex_dead) {
-        R_DrawBox (0, 0, viddef.width, viddef.height, (0xFF << 24) | (W8)intensity);
+        R_DrawBox (0, 0, viddef.width, viddef.height, (0xFF << 24) | (uint8_t)intensity);
 
         if (++intensity >= 240) {
             intensity = 0;
@@ -286,10 +286,10 @@ colour3_t barthirdcolour    = { 252, 156, 156 };
  * \brief Draws the "Get Psyched" plaque.
  * \param[in] percent Set progress bar to this percentage (0 to 100).
  */
-void R_DrawPsyched (W32 percent)
+void R_DrawPsyched (uint32_t percent)
 {
-    SW32 w, h;
-    W32 bar_length;
+    int32_t w, h;
+    uint32_t bar_length;
 
     R_Draw_Fill (0, 0, viddef.width, viddef.height, interbkgnd);
 

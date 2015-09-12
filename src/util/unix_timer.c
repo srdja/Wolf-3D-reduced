@@ -36,12 +36,12 @@
  * \brief  This function retrieves the system time, in milliseconds. The system time is the time elapsed since application was started.
  * \return Returns the system time, in milliseconds.
  */
-W32 Sys_Milliseconds (void)
+uint32_t Sys_Milliseconds (void)
 {
     struct timeval tp;
     struct timezone tzp;
     static int      secbase;
-    W32 curtime;
+    uint32_t curtime;
 
     gettimeofday (&tp, &tzp);
 

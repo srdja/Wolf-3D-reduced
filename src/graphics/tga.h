@@ -37,9 +37,10 @@
 #ifndef __TGA_H__
 #define __TGA_H__
 
+#include <stdint.h>
 #include "platform.h"
 
-void LoadTGA(const char *filename, W8 **pic, W16 *width, W16 *height, W16 *bytes);
+void LoadTGA(const char *filename, uint8_t **pic, uint16_t *width, uint16_t *height, uint16_t *bytes);
 
 #endif /* __TGA_H__ */
 

@@ -282,7 +282,7 @@ static void Skill_MenuInit (void)
 static void Skill_MenuDraw (void)
 {
     if (g_version == SPEAROFDESTINY) {
-        SW32 w, h;
+        int32_t w, h;
 
         R_Draw_Tile (0, 0, viddef.width, viddef.height, "pics/C_BACKDROPPIC.tga");
 

@@ -126,7 +126,7 @@ typedef struct entity_s {
     char tilex, tiley;
     char areanumber;
     int     waitfordoorx, waitfordoory; // waiting on this door if non 0
-    W8 flags;           /* State flags (See above) */
+    uint8_t flags;           /* State flags (See above) */
     en_state state;
     dir8type dir;       /* directions for motion */
     int sprite;
@@ -146,7 +146,7 @@ typedef struct {
 
 
 extern entity_t Guards[ MAX_GUARDS + 1 ];
-extern W16 NumGuards;
+extern uint16_t NumGuards;
 extern stateinfo objstate[ NUMENEMIES ][ NUMSTATES ];
 
 void ResetGuards (void);

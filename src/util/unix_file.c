@@ -53,14 +53,14 @@ static DIR     *fdir;
  * \param[in] dirname Pointer to a NUL-terminated string that specifies the path of the directory to be created.
  * \return On success nonzero, otherwise zero.
  */
-W8 FS_CreateDirectory (const char *dirname)
+uint8_t FS_CreateDirectory (const char *dirname)
 {
     int ret_val = mkdir (dirname, S_IRUSR | S_IWUSR | S_IXUSR);
 
     if (ret_val == -1 && errno == EEXIST) {
         return 1;
     }
-    return (W8) (! ret_val);
+    return (uint8_t) (! ret_val);
 }
 
 /**
@@ -76,7 +76,7 @@ W8 FS_CreateDirectory (const char *dirname)
  * \param[in] canthave File or directory can not have these attributes.
  * \return On success true, otherwise false.
  */
-static _boolean CompareAttributes (const char *path, W32 musthave, W32 canthave)
+static bool CompareAttributes (const char *path, uint32_t musthave, uint32_t canthave)
 {
     struct stat st;
 
@@ -102,7 +102,7 @@ static _boolean CompareAttributes (const char *path, W32 musthave, W32 canthave)
  * \param[in] canthave File or directory can not have these attributes.
  * \return On success string of file name or directory, otherwise NULL.
  */
-char *FS_FindFirst (const char *path, W32 musthave, W32 canthave)
+char *FS_FindFirst (const char *path, uint32_t musthave, uint32_t canthave)
 {
     struct dirent *d;
 

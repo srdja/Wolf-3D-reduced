@@ -106,7 +106,7 @@ static void Action_Draw (menuaction_s *a, int i)
 //
 /////////////////////////////////////////////////////////////////////
 
-_boolean Field_DoEnter (menufield_s *f)
+bool Field_DoEnter (menufield_s *f)
 {
     if (f->generic.callback) {
         f->generic.callback (f);
@@ -116,9 +116,9 @@ _boolean Field_DoEnter (menufield_s *f)
     return false;
 }
 
-_boolean Field_Key (menufield_s *f, int key)
+bool Field_Key (menufield_s *f, int key)
 {
-    extern _boolean keydown[];
+    extern bool keydown[];
 
     switch (key) {
     case K_KP_SLASH:
@@ -403,7 +403,7 @@ void *Menu_ItemAtCursor (menuframework_s *m)
     return m->items[ m->cursor ];
 }
 
-_boolean Menu_SelectItem (menuframework_s *s)
+bool Menu_SelectItem (menuframework_s *s)
 {
     menucommon_s *item = (menucommon_s *) Menu_ItemAtCursor (s);
 
@@ -571,8 +571,6 @@ void SpinControl_Draw (menulist_s *s)
        //                   s->generic.y + s->generic.parent->y, s->generic.name);
     }
 
-
     //Font_SetColour (s->generic.fs, *s->generic.fontHighColour);
    // Font_put_line (s->generic.fs, RCOLUMN_OFFSET + s->generic.x + s->generic.parent->x, s->generic.y + s->generic.parent->y, s->itemnames[ s->curvalue ]);
-
 }

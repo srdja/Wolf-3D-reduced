@@ -277,7 +277,7 @@ void Powerup_PickUp (int x, int y)
 {
     int     i;
     powerup_t *pow;
-    _boolean p_left = false, p_pick = false;
+    bool p_left = false, p_pick = false;
 
     for (i = 0, pow = levelData.powerups ; i < levelData.numPowerups ; i++, pow++) {
         if (pow->x == x && pow->y == y) {

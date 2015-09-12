@@ -154,17 +154,17 @@ void PL_Spawn (placeonplane_t location, LevelData_t *lvl);
 void PL_Process (player_t *self, LevelData_t *lvl);
 
 void player_take_damage(player_t *self, entity_t *attacker, int points);
-_boolean PL_GiveHealth (player_t *self, int points, int max);
-_boolean PL_GiveAmmo (player_t *self, int type, int ammo);
+bool PL_GiveHealth (player_t *self, int points, int max);
+bool PL_GiveAmmo (player_t *self, int type, int ammo);
 void PL_GiveWeapon (player_t *self, int weapon);
 void PL_GiveLife (player_t *self);
-void PL_GivePoints (player_t *self, W32 points);
+void PL_GivePoints (player_t *self, uint32_t points);
 void PL_GiveKey (player_t *self, int key);
 
 void PL_NewGame (player_t *self);
 void PL_NextLevel (player_t *self);
-_boolean PL_Reborn (player_t *self);
-_boolean PL_TryMove (player_t *self, LevelData_t *lvl);
+bool PL_Reborn (player_t *self);
+bool PL_TryMove (player_t *self, LevelData_t *lvl);
 
 void PL_Init (void);
 void PL_Reset (void);

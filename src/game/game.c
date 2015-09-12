@@ -86,8 +86,8 @@ void Game_Init (void)
 //FIXME: put this in the right place
 #define SAVEGAME_VERSION 0
 
-extern W8   areaconnect[ NUMAREAS ][ NUMAREAS ];
-extern _boolean areabyplayer[ NUMAREAS ];
+extern uint8_t areaconnect[ NUMAREAS ][ NUMAREAS ];
+extern bool areabyplayer[ NUMAREAS ];
 
 /**
  * Save current game state to file
@@ -121,7 +121,7 @@ void SaveTheGame (const char *name)
     copiedLevelData = levelData;
 
     for (i = 0 ; i < copiedLevelData.Doors.doornum ; i++) {
-        INT_PTR index = r_world->Doors.Doors[i] - &r_world->Doors.DoorMap[0][0];
+        intptr_t index = r_world->Doors.Doors[i] - &r_world->Doors.DoorMap[0][0];
         assert (index >= 0 && index < 4096);
         copiedLevelData.Doors.Doors[i] = (void *)index;
     }
@@ -206,7 +206,7 @@ int LoadTheGame (const char *name)
 
     // turn the r_world->Doors.doors back to pointers
     for (i = 0 ; i < r_world->Doors.doornum ; i++) {
-        int index = (INT_PTR)r_world->Doors.Doors[i];
+        int index = (intptr_t)r_world->Doors.Doors[i];
         assert (index >= 0 && index < 4096);
         r_world->Doors.Doors[i] = &r_world->Doors.DoorMap[0][0] + index;
     }

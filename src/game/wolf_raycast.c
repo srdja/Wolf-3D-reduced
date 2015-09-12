@@ -35,7 +35,7 @@
 #include "wolf_local.h"
 #include "../graphics/wolf_renderer.h"
 
-W8 tile_visible[ 64 ][ 64 ]; // can player see this tile?
+uint8_t tile_visible[ 64 ][ 64 ]; // can player see this tile?
 
 
 /**
@@ -102,7 +102,7 @@ void R_RayCast (placeonplane_t viewport, LevelData_t *lvl)
                 if (lvl->tilemap[ x ][ y ] & DOOR_TILE) {
 
                     if (lvl->Doors.DoorMap[ x ][ y ].action != dr_open) {
-                        _boolean backside = false;
+                        bool backside = false;
 
                         if (lvl->Doors.DoorMap[ x ][ y ].vertical) {
                             if (x < vx)
@@ -207,7 +207,7 @@ int y_tile_step[ 4 ] = { 1,  1, -1, -1 };
  * \return true to stop tracing, false otherwise.
  * \note Tells ray casting if we hit a wall or door and to stop tracing.
  */
-static _boolean R_TraceCheck (LevelData_t *lvl, int x, int y, int frac, int dfrac, _boolean vert, _boolean flip, r_trace_t *trace)
+static bool R_TraceCheck (LevelData_t *lvl, int x, int y, int frac, int dfrac, bool vert, bool flip, r_trace_t *trace)
 {
     if (lvl->tilemap[ x ][ y ] & WALL_TILE) {
         if (vert) {
@@ -317,7 +317,7 @@ void R_Trace (r_trace_t *trace, LevelData_t *lvl)
                 return;
             }
 
-            if (R_TraceCheck (lvl, xtile, YmapPos, yintercept % TILE_GLOBAL, ystep, true, (_boolean) (xtilestep == -1), trace)) {
+            if (R_TraceCheck (lvl, xtile, YmapPos, yintercept % TILE_GLOBAL, ystep, true, (bool) (xtilestep == -1), trace)) {
                 return;
             }
 
@@ -335,7 +335,7 @@ void R_Trace (r_trace_t *trace, LevelData_t *lvl)
                 return;
             }
 
-            if (R_TraceCheck (lvl, XmapPos, ytile, xintercept % TILE_GLOBAL, xstep, false, (_boolean) (ytilestep == -1), trace)) {
+            if (R_TraceCheck (lvl, XmapPos, ytile, xintercept % TILE_GLOBAL, xstep, false, (bool) (ytilestep == -1), trace)) {
                 return;
             }
 

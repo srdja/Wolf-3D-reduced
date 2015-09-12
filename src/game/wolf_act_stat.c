@@ -1631,7 +1631,7 @@ int starthitpoints[ 4 ][ NUMENEMIES ] =
 };
 
 // FIXME: unnecessary coupling
-extern _boolean sound_initialized;
+extern bool sound_initialized;
 
 void CorrectBossDeathTimeouts()
 {

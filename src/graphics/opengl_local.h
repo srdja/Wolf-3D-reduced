@@ -42,7 +42,7 @@ void R_Bind (int texnum);
 
 typedef struct {
     float inverse_intensity;
-    _boolean fullscreen;
+    bool fullscreen;
 
     int     prev_mode;
 

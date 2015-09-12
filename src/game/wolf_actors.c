@@ -40,9 +40,9 @@
 #include "wolf_local.h"
 
 entity_t Guards[ MAX_GUARDS + 1 ], *New;
-W16 NumGuards = 0;
-W8 add8dir[ 9 ] = { 4, 5, 6, 7, 0, 1, 2, 3, 0 };
-W8 r_add8dir[ 9 ] = { 4, 7, 6, 5, 0, 1, 2, 3, 0 };
+uint16_t NumGuards = 0;
+uint8_t add8dir[ 9 ] = { 4, 5, 6, 7, 0, 1, 2, 3, 0 };
+uint8_t r_add8dir[ 9 ] = { 4, 7, 6, 5, 0, 1, 2, 3, 0 };
 
 
 
@@ -134,7 +134,7 @@ static int DoGuard (entity_t *ent)  // FIXME: revise!
 static void RemoveActor (entity_t *actor)
 {
     Sprite_RemoveSprite (actor->sprite);
-    memmove (actor, actor + 1, (INT_PTR) (&Guards[ NumGuards ]) - (INT_PTR) (actor + 1));
+    memmove (actor, actor + 1, (intptr_t) (&Guards[ NumGuards ]) - (intptr_t) (actor + 1));
     NumGuards--;
 }
 

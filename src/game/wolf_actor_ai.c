@@ -740,7 +740,7 @@ void A_Smoke (entity_t *self)
  * \param[in] lvl Valid Pointer to LevelData_t structure.
  * \return true if move ok, otherwise false.
  */
-static _boolean ProjectileTryMove (entity_t *self, LevelData_t *lvl)
+static bool ProjectileTryMove (entity_t *self, LevelData_t *lvl)
 {
 #define PROJSIZE    0x2000
 

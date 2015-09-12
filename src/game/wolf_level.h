@@ -47,6 +47,7 @@
 #define __WOLF_LEVEL_H__
 
 
+#include <stdbool.h>
 #include "wolf_math.h"
 #include "wolf_sprites.h"
 #include "wolf_powerups.h"
@@ -149,7 +150,7 @@ typedef enum {
 
 typedef struct {
     int tilex, tiley;
-    _boolean vertical;
+    bool vertical;
     int ticcount;
 
     dr_state action;
@@ -185,12 +186,12 @@ typedef struct {
 typedef struct {
     char fname[ 32 ]; /* Map filename */
 
-    W16 Plane1[ 64 * 64 ]; /* walls */
-    W16 Plane2[ 64 * 64 ]; /* objects */
-    W16 Plane3[ 64 * 64 ]; /* other */
+    uint16_t Plane1[ 64 * 64 ]; /* walls */
+    uint16_t Plane2[ 64 * 64 ]; /* objects */
+    uint16_t Plane3[ 64 * 64 ]; /* other */
 
     long tilemap[ 64 ][ 64 ];   // wall values only
-    W8 spotvis[ 64 ][ 64 ];
+    uint8_t spotvis[ 64 ][ 64 ];
     // this is an array of references to texture descriptions
 // the renderer must know what to draw by this number
     int wall_tex_x[ 64 ][ 64 ]; // x_wall
@@ -216,12 +217,12 @@ typedef struct {
 
     colour3_t ceilingColour, floorColour;
 
-    W8 tileEverVisible[ 64 ][ 64 ]; // for automap
+    uint8_t tileEverVisible[ 64 ][ 64 ]; // for automap
 } LevelData_t;
 
 
 typedef struct statinfo_t {
-    _boolean block;
+    bool block;
     int powerup;
 
 } statinfo_t;
@@ -232,7 +233,7 @@ extern LevelData_t  levelData;
 
 LevelData_t *Level_LoadMap (const char *levelname);
 void Level_PrecacheTextures_Sound (LevelData_t *lvl);
-_boolean Level_CheckLine (SW32 x1, SW32 y1, SW32 x2, SW32 y2, LevelData_t *lvl);
+bool Level_CheckLine (int32_t x1, int32_t y1, int32_t x2, int32_t y2, LevelData_t *lvl);
 void Level_ScanInfoPlane (LevelData_t *lvl);
 
 ///////////////////
@@ -253,7 +254,7 @@ void Door_Use (doors_t *Door, int keys);
 //  Areas
 //
 ///////////////////
-extern  _boolean    areabyplayer[ NUMAREAS ];
+extern  bool    areabyplayer[ NUMAREAS ];
 
 void Areas_Init (int areanumber);
 void Areas_Connect (int areanumber);
@@ -267,7 +268,7 @@ void Areas_Disconnect (int area1, int area2);
 //
 ///////////////////
 typedef struct {
-    _boolean active;
+    bool active;
     int PWtilesmoved;
     int PWpointsmoved;
     dir4type dir;
@@ -279,7 +280,7 @@ typedef struct {
 extern Pwall_t PWall;
 
 void PushWall_Reset (void);
-_boolean PushWall_Push (int x, int y, dir4type dir);
+bool PushWall_Push (int x, int y, dir4type dir);
 void PushWall_Process (void);
 
 

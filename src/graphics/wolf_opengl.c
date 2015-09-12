@@ -130,7 +130,7 @@ void R_SetGL3D (placeonplane_t viewport)
  * \param[in] h Bottom
  * \param[in] color Color
  */
-void R_DrawBox (int x, int y, int w, int h, W32 color)
+void R_DrawBox (int x, int y, int w, int h, uint32_t color)
 {
     glDisable (GL_TEXTURE_2D);
 
@@ -166,10 +166,10 @@ void R_DrawBox (int x, int y, int w, int h, W32 color)
  *  wall sides.  With only a few exceptions for things like the elevator tiles
  *  and outdoor tiles that could only be used in particular orientations
  */
-void LoadWallTexture (int wallPicNum , _boolean *pIsDark)
+void LoadWallTexture (int wallPicNum , bool *pIsDark)
 {
     texture_t *twall;
-    _boolean isDark = false;
+    bool isDark = false;
 
     if ((wallPicNum & 1) &&
             wallPicNum != 31 &&
@@ -207,7 +207,7 @@ void LoadWallTexture (int wallPicNum , _boolean *pIsDark)
 void R_Draw_Wall (float x, float y, float z1, float z2, int type, int tex)
 {
     float x1, x2, y1, y2;
-    _boolean isDark;
+    bool isDark;
 
     switch (type) {
     // X wall
@@ -270,10 +270,10 @@ void R_Draw_Wall (float x, float y, float z1, float z2, int type, int tex)
  * \param[in] backside Set to true if door is back facing, otherwise set to false for front facing door.
  * \param[in] amount Set to true if door is back facing, otherwise set to false for front facing door.
  */
-void R_Draw_Door (int x, int y, float z1, float z2, _boolean vertical, _boolean backside, int tex, int amount)
+void R_Draw_Door (int x, int y, float z1, float z2, bool vertical, bool backside, int tex, int amount)
 {
     float x1, x2, y1, y2, amt;
-    _boolean isDark;
+    bool isDark;
 
     if (amount == DOOR_FULLOPEN) {
         return;
@@ -439,7 +439,7 @@ void R_DrawNumber (int x, int y, int number)
     static float w = 0.1f;
     int i;
     char string[ 20 ];
-    W32 length;
+    uint32_t length;
 
     com_snprintf (string, sizeof (string), "%d", number);
     length = strlen (string);
@@ -470,7 +470,7 @@ void R_DrawNumber (int x, int y, int number)
     glEnd();
 }
 
-W8 wfont[ ] = {
+uint8_t wfont[ ] = {
     32, 15, 32, 32, 32, 32, 32, 12, 32, 32, 32, 32, 32, 32, 32, 32,
     32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 16, 32, 32, 32, 32, 32,
     32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32,

@@ -35,6 +35,11 @@
 #include "memory.h"
 #include "../util/filesystem.h"
 #include "platform.h"
+#include <stdlib.h>
+#include <stdint.h>
+#include <inttypes.h>
+#include <stdbool.h>
+
 
 void Client_Init (void);
 void frame_run(int msec);
@@ -42,6 +47,9 @@ void frame_run(int msec);
 
 typedef enum { FONT0 = 0, FONT1, FONT2, FONT3 } FONTSELECT;
 
+
+
+#define PATH_SEP '/'
 //
 // button bits
 //
@@ -50,11 +58,11 @@ typedef enum { FONT0 = 0, FONT1, FONT2, FONT3 } FONTSELECT;
 
 // usercmd_t is sent to the server each client frame
 typedef struct usercmd_s {
-    W8  msec;
-    W8  buttons;
+    uint8_t msec;
+    uint8_t buttons;
     short   angles[ 3 ];
     short   forwardmove, sidemove, upmove;
-    W8  impulse;        // remove?
+    uint8_t impulse;        // remove?
 } usercmd_t;
 
 #endif /* __COMMON_H__ */

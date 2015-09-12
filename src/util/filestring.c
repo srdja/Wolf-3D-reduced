@@ -28,6 +28,7 @@
 
 #include <string.h>
 #include "filesystem.h"
+#include "../common.h"
 
 /**
  * \brief Returns file name from path string.
@@ -49,28 +50,13 @@ char *FS_getFileName (char *path)
 }
 
 /**
- * \brief Removes file extension from path string.
- * \param[in] in Path to remove file extension.
- * \param[in] out Pointer to hold path string.
- * \return Nothing.
- */
-void FS_RemoveExtension (const char *in, char *out)
-{
-    while (*in && *in != '.') {
-        *out++ = *in++;
-    }
-    *out = '\0';    /* NUL-terminate string */
-}
-
-
-/**
  * \brief Returns path from full path.
  * \param[in] in Path with file name.
  * \param[in,out] out path.
  * \param[in] size_out Size of out buffer in bytes.
  * \return On success true, otherwise false.
  */
-_boolean FS_getPath (const char *in, char *out, W32 size_out)
+bool FS_getPath (const char *in, char *out, uint32_t size_out)
 {
     const char *start;
     start = in + strlen (in) - 1;

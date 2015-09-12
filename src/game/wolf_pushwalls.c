@@ -52,7 +52,7 @@ void PushWall_Reset (void)
  * \return Returns true if push successful, otherwise false.
  * \note Called whenever someone tries to push a secret wall.
  */
-_boolean PushWall_Push (int x, int y, dir4type dir)
+bool PushWall_Push (int x, int y, dir4type dir)
 {
     int dx, dy;
 

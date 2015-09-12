@@ -39,8 +39,10 @@
 #ifndef __FILESTRING_H__
 #define __FILESTRING_H__
 
+#include <stdint.h>
+#include <stdbool.h>
+
 char *FS_getFileName (char *path);
-void FS_RemoveExtension (const char *in, char *out);
-_boolean FS_getPath (const char *in, char *out, W32 size_out);
+bool FS_getPath (const char *in, char *out, uint32_t size_out);
 
 #endif /* __FILESTRING_H__ */

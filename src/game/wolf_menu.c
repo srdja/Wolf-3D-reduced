@@ -96,7 +96,7 @@ extern void M_Intro_f (void);
 extern void M_Intermission_f (void);
 extern void M_Secret_f (void);
 
-_boolean    m_entersound;       // play after drawing a frame, so caching
+bool    m_entersound;       // play after drawing a frame, so caching
 // won't disrupt the sound
 
 void (*m_drawfunc) (void);
@@ -122,9 +122,9 @@ int     m_menudepth;
  * \param[in] name File name of banner image
  * \param[in] nYOffest Y offset
  */
-void M_Banner (const char *name, W16 nYOffest)
+void M_Banner (const char *name, uint16_t nYOffest)
 {
-    SW32 w, h;
+    int32_t w, h;
 
     if (g_version == SPEAROFDESTINY) {
         R_Draw_Fill (0, 20, viddef.width, 44, colourBlack);
@@ -143,7 +143,7 @@ void M_Banner (const char *name, W16 nYOffest)
  * \param[in] name File name of banner image
  * \param[in] nYOffest Y offset
  */
-void M_BannerString (const char *string, W16 nYOffset)
+void M_BannerString (const char *string, uint16_t nYOffset)
 {
     int w, h;
 
@@ -353,7 +353,7 @@ void M_DrawPic (int x, int y, const char *pic)
 void M_DrawCursor (int x, int y)
 {
     char    cursorname[80];
-    static _boolean cached;
+    static bool cached;
     int toggle[2] = { 900, 100 };
     static int cursorTime;
     static int f = 0;
@@ -410,7 +410,7 @@ void M_DrawWindow (int x, int y, int w, int h,
  */
 void M_DrawInfoBar (void)
 {
-    SW32 w, h;
+    int32_t w, h;
 
     if (g_version == SPEAROFDESTINY) {
         TM_GetTextureSize (&w, &h, "pics/SC_MOUSELBACKPIC.tga");
@@ -455,7 +455,7 @@ static const char *menunames[] = {
 void M_Main_Draw (void)
 {
     int i;
-    SW32 w, h;
+    int32_t w, h;
     int cx, cy;
 
     R_Draw_Fill (0, 0, viddef.width, viddef.height, bgcolour);
@@ -563,7 +563,7 @@ const char *M_Main_Key (int key)
 void M_SMain_Draw (void)
 {
     int i;
-    SW32 w, h;
+    int32_t w, h;
     int cx, cy;
 
     R_Draw_Tile (0, 0, viddef.width, viddef.height, "pics/C_BACKDROPPIC.tga");
@@ -642,7 +642,7 @@ static menuframework_s  s_loadgame_menu;
 static menuaction_s     s_loadgame_actions[ MAX_SAVEGAMES ];
 
 char        m_savestrings[ MAX_SAVEGAMES ][ 32 ];
-_boolean    m_savevalid[ MAX_SAVEGAMES ];
+bool    m_savevalid[ MAX_SAVEGAMES ];
 
 /**
  * \brief Create an array of save game names

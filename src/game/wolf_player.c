@@ -91,7 +91,7 @@ void player_update_movement(void)
  * \param[in] weapon Which weapon to change to.
  * \return true if player can change weapons, otherwise false.
  */
-static _boolean PL_ChangeWeapon (player_t *self, int weapon)
+static bool PL_ChangeWeapon (player_t *self, int weapon)
 {
     unsigned itemflag;
 
@@ -121,7 +121,7 @@ static _boolean PL_ChangeWeapon (player_t *self, int weapon)
  * \param[in] lvl Level data structure
  * \return true if player used something, otherwise false
  */
-static _boolean PL_Use (player_t *self, LevelData_t *lvl)
+static bool PL_Use (player_t *self, LevelData_t *lvl)
 {
     int x, y, dir;
 
@@ -181,7 +181,7 @@ static _boolean PL_Use (player_t *self, LevelData_t *lvl)
  * \param[in] lvl Level data structure
  * \return true if move is successful, otherwise false.
  */
-_boolean PL_TryMove (player_t *self, LevelData_t *lvl)
+bool PL_TryMove (player_t *self, LevelData_t *lvl)
 {
     int xl, yl, xh, yh, x, y;
     int d, n;
@@ -345,7 +345,7 @@ static void PL_ControlMovement (player_t *self, LevelData_t *lvl)
  * \param[in] self Player
  * \param[in] re_attack Set to true to refresh weapon animation
  */
-static void PL_PlayerAttack (player_t *self, _boolean re_attack)
+static void PL_PlayerAttack (player_t *self, bool re_attack)
 {
     struct atkinf *cur;
 
@@ -480,7 +480,7 @@ void PL_Reset (void)
     Player.playstate = ex_notingame;
 }
 
-extern SW32 r_damageflash;
+extern int32_t r_damageflash;
 
 
 /**
@@ -571,7 +571,7 @@ void player_take_damage(player_t *self, entity_t *attacker, int points)
  *       0 - natural player's health limit (100 or 150 with augment)
  *      >0 - indicates the limit
  */
-_boolean PL_GiveHealth (player_t *self, int points, int max)
+bool PL_GiveHealth (player_t *self, int points, int max)
 {
     if (max == 0) {
         max = (self->items & ITEM_AUGMENT) ? 150 : 100;
@@ -599,7 +599,7 @@ _boolean PL_GiveHealth (player_t *self, int points, int max)
  * \param[in] ammo Amount of ammo to give player
  * \return true if player needs this ammo, otherwise false.
  */
-_boolean PL_GiveAmmo (player_t *self, int type, int ammo)
+bool PL_GiveAmmo (player_t *self, int type, int ammo)
 {
     int max_ammo[ AMMO_TYPES ] = { 99 };
     int max;
@@ -666,7 +666,7 @@ void PL_GiveLife (player_t *self)
  * \param[in] self Player structure
  * \param[in] points Amount of points to give
  */
-void PL_GivePoints (player_t *self, W32 points)
+void PL_GivePoints (player_t *self, uint32_t points)
 {
     self->score += points;
 
@@ -721,7 +721,7 @@ void PL_NextLevel (player_t *self)
  * \param[in] self Player structure
  * \return false if no lives left, otherwise true.
  */
-_boolean PL_Reborn (player_t *self)
+bool PL_Reborn (player_t *self)
 {
     if (--self->lives < 1) {
         return false;

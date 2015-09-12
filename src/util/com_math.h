@@ -28,6 +28,7 @@
 #ifndef __COM_MATH_H__
 #define __COM_MATH_H__
 
+#include <stdint.h>
 #include "platform.h"
 
 #define DEG2RAD( a ) ( (a) * 0.01745329251994329576f ) // a * M_PI / 180.0f
@@ -44,8 +45,8 @@ typedef vec_t vec3_t[ 3 ];
 
 #define vectorCopy( a, b )  ( (b)[ 0 ] = (a)[ 0 ], (b)[ 1 ] = (a)[ 1 ], (b)[ 2 ] = (a)[ 2 ] )
 
-typedef W8  colour3_t[ 3 ]; // RGB
-typedef W8  colour4_t[4];
+typedef uint8_t colour3_t[ 3 ]; // RGB
+typedef uint8_t colour4_t[4];
 
 #define BIT( x )    ( 1 << (x) )
 #define FloatToInt( a ) (SW32)(a)

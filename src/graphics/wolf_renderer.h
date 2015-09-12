@@ -54,16 +54,16 @@ void R_ResetFlash (void);
 void R_DamageFlash (int damage);
 
 
-void R_DrawBox (int x, int y, int w, int h, W32 color);
+void R_DrawBox (int x, int y, int w, int h, uint32_t color);
 
-void R_Draw_Door (int x, int y, float z1, float z2, _boolean vertical, _boolean backside, int tex, int amount);
+void R_Draw_Door (int x, int y, float z1, float z2, bool vertical, bool backside, int tex, int amount);
 void R_Draw_Wall (float x, float y, float z1, float z2, int type, int tex);
 
 
 
 void R_DrawSprites (void);
 
-void R_DrawPsyched (W32 percent);
+void R_DrawPsyched (uint32_t percent);
 
 void R_DrawHUD (void);
 void R_DrawNumber (int x, int y, int number);

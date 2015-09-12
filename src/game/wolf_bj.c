@@ -52,7 +52,7 @@ void SpawnBJVictory (void)
     bj->x = Player.position.origin[ 0 ];
     bj->y = Player.position.origin[ 1 ];
     bj->speed = BJRUNSPEED;
-    bj->flags = (W8)FL_NONMARK; // FL_NEVERMARK;
+    bj->flags = (uint8_t)FL_NONMARK; // FL_NEVERMARK;
     bj->reacttime = 6;
 
     A_StateChange (bj, st_path1);

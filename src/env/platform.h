@@ -31,21 +31,7 @@
 #ifndef __PLATFORM_H__
 #define __PLATFORM_H__
 
-#include <stdlib.h>
-#include <stdint.h>
-#include <inttypes.h>
-#include <stdbool.h>
 
-#define PATH_SEP '/'
-
-typedef uint8_t  W8;
-typedef uint8_t *PW8;
-typedef uint16_t            W16,    *PW16;
-typedef uint32_t            W32;
-typedef int32_t             SW32;
-typedef intptr_t            INT_PTR;
-
-typedef bool _boolean;
 
 #endif /* __PLATFORM_H__ */
 

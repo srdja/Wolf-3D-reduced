@@ -60,12 +60,12 @@ typedef struct {
     FILE *hFile;
 
     /* Following is used when the file is loaded into memory */
-    _boolean bLoaded;           /* Was file loaded into memory? */
-    W32 filesize;           /* Size of file data in bytes */
+    bool bLoaded;           /* Was file loaded into memory? */
+    uint32_t filesize;           /* Size of file data in bytes */
 
-    W8  *ptrStart;          /* pointer to start of file data block */
-    W8  *ptrCurrent;            /* pointer to current position in file data block */
-    W8  *ptrEnd;                /* pointer to end of file data block */
+    uint8_t *ptrStart;          /* pointer to start of file data block */
+    uint8_t *ptrCurrent;            /* pointer to current position in file data block */
+    uint8_t *ptrEnd;                /* pointer to end of file data block */
 
     void *filedata;             /* file data loaded into memory */
 
@@ -75,24 +75,24 @@ typedef struct {
 /* Flags and Attributes */
 #define FA_FILE_FLAG_LOAD       0x01
 
-filehandle_t *FS_OpenFile (const char *filename, W32 FlagsAndAttributes);
+filehandle_t *FS_OpenFile (const char *filename, uint32_t FlagsAndAttributes);
 void FS_CloseFile (filehandle_t *fhandle);
 // note: this can't be called from another DLL, due to MS libc issues
 
-SW32 FS_ReadFile (void *buffer, W32 size, W32 count, filehandle_t *fhandle);
-W32  FS_FileSeek (filehandle_t *fhandle, SW32 offset, W32 origin);
-SW32 FS_GetFileSize (filehandle_t *fhandle);
+int32_t FS_ReadFile (void *buffer, uint32_t size, uint32_t count, filehandle_t *fhandle);
+uint32_t FS_FileSeek (filehandle_t *fhandle, int32_t offset, uint32_t origin);
+int32_t FS_GetFileSize (filehandle_t *fhandle);
 /////////////////////////////////////////////////////////////////////
 //
 //  NON-PORTABLE FILE SYSTEM SERVICES
 //
 /////////////////////////////////////////////////////////////////////
 
-W8 FS_CreateDirectory (const char *dirname);
+uint8_t FS_CreateDirectory (const char *dirname);
 #define FA_DIR      0x08
 
 // pass in an attribute mask of things you wish to REJECT
-char *FS_FindFirst (const char *path, W32 musthave, W32 canthave);
+char *FS_FindFirst (const char *path, uint32_t musthave, uint32_t canthave);
 void FS_FindClose (void);
 
 

@@ -48,7 +48,7 @@ colour3_t pc13intro = { 32, 168, 248 };
 
 typedef struct {
     void (*draw) (void);
-    W32 intro_time;
+    uint32_t intro_time;
 } Slide;
 
 #define MAX_HIGHNAME    57
@@ -56,8 +56,8 @@ typedef struct {
 
 typedef struct {
     char    name[ MAX_HIGHNAME + 1 ];
-    W32     score;
-    W16     completed, episode;
+    uint32_t score;
+    uint16_t completed, episode;
 
 } HighScore_t;
 

@@ -57,7 +57,7 @@ static GLenum MagFilterToGL (TMagFilter MagFilter)
     return GL_LINEAR;
 }
 
-static GLenum MinFilterToGL (_boolean MipMap, TMinFilter MinFilter)
+static GLenum MinFilterToGL (bool MipMap, TMinFilter MinFilter)
 {
     if (MipMap) {
         switch (MinFilter) {
@@ -109,10 +109,10 @@ static GLenum MinFilterToGL (_boolean MipMap, TMinFilter MinFilter)
  * \param[in] data Angle in radians.
  * \return true if texture was uploaded, otherwise false.
  */
-_boolean R_UploadTexture (texture_t *tex, PW8 data)
+bool R_UploadTexture (texture_t *tex, uint8_t data)
 {
-    W8 *scaled;
-    W16 scaled_width, scaled_height;
+    uint8_t *scaled;
+    uint16_t scaled_width, scaled_height;
     int comp = tex->bytes;
     int gl_round_down = 1;
 
@@ -162,7 +162,7 @@ _boolean R_UploadTexture (texture_t *tex, PW8 data)
     tex->upload_width = scaled_width;
     tex->upload_height = scaled_height;
 
-    scaled = (PW8)malloc (scaled_width * scaled_height * tex->bytes);
+    scaled = malloc (scaled_width * scaled_height * tex->bytes);
 
     if (scaled_width == tex->width && scaled_height == tex->height) {
         memcpy (scaled, data, tex->width * tex->height * tex->bytes);

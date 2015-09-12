@@ -386,7 +386,7 @@ static void AI_Retreat (entity_t *self)
  * \return true if the player has been spoted, otherwise false.
  * \note If the sight is ok, check alertness and angle to see if they notice.
  */
-static _boolean AI_CheckSight (entity_t *self)
+static bool AI_CheckSight (entity_t *self)
 {
 #define MINSIGHT 0x18000
 
@@ -446,7 +446,7 @@ static _boolean AI_CheckSight (entity_t *self)
  * \return true tf the player is detected (by sight, noise, or proximity), the entity is put into its combat frame; otherwise false (actor could be delayed).
  * \note Incorporates a random reaction delay.
  */
-static _boolean AI_FindTarget (entity_t *self)
+static bool AI_FindTarget (entity_t *self)
 {
     if (self->reacttime) { // count down reaction time
         self->reacttime -= tics;
@@ -790,7 +790,7 @@ void T_DogChase (entity_t *self)
 void T_BossChase (entity_t *self)
 {
     int dx, dy, dist;
-    W8 dodge;
+    uint8_t dodge;
 
     dodge = 0;
     dx = ABS (self->tilex - POS2TILE (Player.position.origin[ 0 ]));
@@ -997,7 +997,7 @@ void T_Launch (entity_t *self)
 
     proj->angle = (int)RAD2FINE (iangle);
     proj->speed = 0x2000;
-    proj->flags = (W8)FL_NONMARK; // FL_NEVERMARK;
+    proj->flags = (uint8_t)FL_NONMARK; // FL_NEVERMARK;
     proj->sprite = Sprite_GetNewSprite();
 
     switch (self->type) {

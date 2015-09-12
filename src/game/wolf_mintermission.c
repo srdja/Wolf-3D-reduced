@@ -61,10 +61,10 @@ static colour3_t colourTitle = { 0,   88,   88 };
 static void M_DrawInterBJ (int x, int y, int f)
 {
     char    guypic[ 32 ];
-    static _boolean cached;
+    static bool cached;
 
     if (! cached) {
-        W8 i;
+        uint8_t i;
 
         for (i = 0; i < 2; ++i) {
             com_snprintf (guypic, sizeof (guypic), "pics/L_GUY%dPIC.tga", i);
@@ -86,8 +86,8 @@ static void M_DrawInterBJ (int x, int y, int f)
 #define PAR_AMOUNT  500
 
 extern void R_DrawHUD (void);
-static W32 leveltime;
-static _boolean bgive_bonus = false;
+static uint32_t leveltime;
+static bool bgive_bonus = false;
 
 static void M_Secret_Draw (void)
 {
@@ -136,7 +136,7 @@ static void M_Secret_Draw (void)
     R_DrawHUD();
 }
 
-static W16 ElevatorBackTo[] = { 1, 1, 7, 3, 5, 3 };
+static uint16_t ElevatorBackTo[] = { 1, 1, 7, 3, 5, 3 };
 
 // This is for Spear of Destiny
 #define FROMSECRET1     3
@@ -148,10 +148,10 @@ static W16 ElevatorBackTo[] = { 1, 1, 7, 3, 5, 3 };
 static void M_Intermission_Draw (void)
 {
     char string[ 32 ];
-    W32 ratio;
-    static W32 bonus = 0;
-    W32 timeleft = 0;
-    W32 min, sec;
+    uint32_t ratio;
+    static uint32_t bonus = 0;
+    uint32_t timeleft = 0;
+    uint32_t min, sec;
 
 
 
@@ -173,7 +173,7 @@ static void M_Intermission_Draw (void)
         bgive_bonus = true;
 
         if (leveltime < (levelstate.fpartime * 4200)) {
-            timeleft = (W32) ((levelstate.fpartime * 4200) / 70 - sec);
+            timeleft = (uint32_t) ((levelstate.fpartime * 4200) / 70 - sec);
         }
 
         bonus = timeleft * PAR_AMOUNT;
@@ -369,13 +369,13 @@ static const char *M_Intermission_Key (int key)
 //  Victory
 //
 
-static W8 nvictory = 1;
+static uint8_t nvictory = 1;
 
 static void M_Victory_Draw (void)
 {
     char string[ 32 ];
-    W32 ratio;
-    W32 min, sec;
+    uint32_t ratio;
+    uint32_t min, sec;
 
     R_Draw_Fill (0, 0, viddef.width, viddef.height, interbkgnd);
     R_Draw_Pic (32, 12, "pics/L_BJWINSPIC.tga");
@@ -490,7 +490,7 @@ static const char victorytextPageTwo[ 6 ][ 1024 ] = {
 
 static void M_Victory_Draw_PageOne (void)
 {
-    SW32 w, h;
+    int32_t w, h;
 
     R_Draw_Tile (0, 0, viddef.width, viddef.height, "walls/000.tga");
 
@@ -520,7 +520,7 @@ static void M_Victory_Draw_PageOne (void)
 
 static void M_Victory_Draw_PageTwo (void)
 {
-    SW32 w, h;
+    int32_t w, h;
 
     R_Draw_Tile (0, 0, viddef.width, viddef.height, "walls/000.tga");
 
@@ -545,7 +545,7 @@ static void M_Victory_Draw_PageTwo (void)
 }
 
 
-static W16 page = 0;
+static uint16_t page = 0;
 
 static void M_Victory_Text_Draw (void)
 {
@@ -606,21 +606,21 @@ colour3_t viewcolour = { 0, 64, 64 };
 
 typedef struct {
     void (*draw) (void);
-    W32 delay_time;
+    uint32_t delay_time;
 
 } SpearVictoryLayer_t;
 
 static SpearVictoryLayer_t sodvl[ 12 ];
-static W16 victory_slide = 0;
-static W32 victory_basetime;
+static uint16_t victory_slide = 0;
+static uint32_t victory_basetime;
 
 
-static W32 collapse_basetime;
-static W8 collapse_slide = 1;
+static uint32_t collapse_basetime;
+static uint8_t collapse_slide = 1;
 
 static void SOD_Victory_BJCOLLAPSE_Draw (void)
 {
-    W32 w, h;
+    uint32_t w, h;
     static char name[ 32 ];
 
 
@@ -646,7 +646,7 @@ static void SOD_Victory_BJCOLLAPSE_Draw (void)
 
 static void SOD_EndScreen2_Draw (void)
 {
-    W32 w, h;
+    uint32_t w, h;
 
     R_Draw_Fill (0, 0, viddef.width, viddef.height, viewcolour);
 
@@ -670,7 +670,7 @@ static void SOD_EndScreen2_Draw (void)
 
 static void SOD_EndScreen_Draw (void)
 {
-    W32 w, h;
+    uint32_t w, h;
     static char texname[ 64 ];
 
     R_Draw_Fill (0, 0, viddef.width, viddef.height, viewcolour);
@@ -781,7 +781,7 @@ void M_Intermission_f (void)
 
     bgive_bonus = false;
 
-    leveltime = (W32)levelstate.time;
+    leveltime = (uint32_t)levelstate.time;
 
 
     LevelRatios.time += leveltime;

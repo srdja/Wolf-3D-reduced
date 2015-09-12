@@ -125,14 +125,14 @@ typedef struct {
 
 } menuseparator_s;
 
-_boolean Field_Key (menufield_s *field, int key);
+bool Field_Key (menufield_s *field, int key);
 
 void    Menu_AddItem (menuframework_s *menu, void *item);
 void    Menu_AdjustCursor (menuframework_s *menu, int dir);
 void    Menu_Center (menuframework_s *menu);
 void    Menu_Draw (menuframework_s *menu);
 void    *Menu_ItemAtCursor (menuframework_s *m);
-_boolean Menu_SelectItem (menuframework_s *s);
+bool Menu_SelectItem (menuframework_s *s);
 void    Menu_SetStatusBar (menuframework_s *s, const char *string);
 void    Menu_SlideItem (menuframework_s *s, int dir);
 int Menu_TallySlots (menuframework_s *menu);

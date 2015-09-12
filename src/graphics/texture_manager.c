@@ -49,7 +49,7 @@ static int         numttextures;
 
 static texture_t   *r_notexture;       // use for bad texture lookups
 
-W32 texture_registration_sequence;
+uint32_t texture_registration_sequence;
 
 
 /**
@@ -63,7 +63,7 @@ W32 texture_registration_sequence;
  * \return Pointer to filled out texture_t structure.
  * \note Any texture that was not touched on this registration sequence will be freed.
  */
-texture_t *TM_LoadTexture (const char *name, W8 *data, int width, int height, texturetype_t type, W16 bytes)
+texture_t *TM_LoadTexture (const char *name, uint8_t *data, int width, int height, texturetype_t type, uint16_t bytes)
 {
     texture_t   *tex;
     int         i;
@@ -151,7 +151,7 @@ texture_t *TM_LoadTexture (const char *name, W8 *data, int width, int height, te
  * \param[in] bytes Number of bytes of image data
  * \return Pointer to filled out texture_t structure.
  */
-void TM_LoadTexture_DB (const char *name, texture_t   *tex, W8 *data, int width, int height, texturetype_t type, W16 bytes)
+void TM_LoadTexture_DB (const char *name, texture_t   *tex, uint8_t *data, int width, int height, texturetype_t type, uint16_t bytes)
 {
 
     if (strlen (name) >= sizeof (tex->name)) {
@@ -216,9 +216,9 @@ void TM_LoadTexture_DB (const char *name, texture_t   *tex, W8 *data, int width,
 void TM_FindTexture_DB (const char *name, texture_t *tex, texturetype_t type)
 {
     int len;
-    W8  *data = NULL;   /* raw texture data */
-    W16 width, height;  /* width, height of texture */
-    W16 bytes;
+    uint8_t *data = NULL;   /* raw texture data */
+    uint16_t width, height;  /* width, height of texture */
+    uint16_t bytes;
 
     if (!name || !*name) {
         return;
@@ -256,7 +256,7 @@ void TM_FindTexture_DB (const char *name, texture_t *tex, texturetype_t type)
  */
 void TM_FreeUnusedTextures (void)
 {
-    W32     i;
+    uint32_t i;
     texture_t   *tex;
 
     // never free r_notexture texture
@@ -310,7 +310,7 @@ void TM_FreeUnusedTextures (void)
  * \param[in] wallId Wall id to lookup
  * \return texture number
  */
-unsigned int TM_getWallTextureId (W32 wallId)
+unsigned int TM_getWallTextureId (uint32_t wallId)
 {
     texture_t *outTexture = &_texWalls[ wallId ];
     return outTexture->texnum;
@@ -321,7 +321,7 @@ unsigned int TM_getWallTextureId (W32 wallId)
  * \param[in] imageId Wall id to lookup
  * \return r_notexture if the texture is not found, otherwise it will return a valid texture_t structure.
  */
-texture_t *TM_FindTexture_Wall (W32 wallId)
+texture_t *TM_FindTexture_Wall (uint32_t wallId)
 {
     texture_t *outTexture;
 
@@ -348,7 +348,7 @@ texture_t *TM_FindTexture_Wall (W32 wallId)
  * \param[in] spriteId Sprite id to lookup
  * \return texture number
  */
-unsigned int TM_getSpriteTextureId (W32 spriteId)
+unsigned int TM_getSpriteTextureId (uint32_t spriteId)
 {
     texture_t *outTexture = &_texSprites[ spriteId ];
     return outTexture->texnum;
@@ -359,7 +359,7 @@ unsigned int TM_getSpriteTextureId (W32 spriteId)
  * \param[in] imageId Wall id to lookup
  * \return r_notexture if the texture is not found, otherwise it will return a valid texture_t structure.
  */
-texture_t *TM_FindTexture_Sprite (W32 imageId)
+texture_t *TM_FindTexture_Sprite (uint32_t imageId)
 {
     texture_t *outTexture;
 
@@ -391,9 +391,9 @@ texture_t *TM_FindTexture (const char *name, texturetype_t type)
 {
     texture_t   *tex;
     int i, len;
-    W8  *data;          /* raw texture data */
-    W16 width, height;  /* width, height of texture */
-    W16 bytes;
+    uint8_t *data;          /* raw texture data */
+    uint16_t width, height;  /* width, height of texture */
+    uint16_t bytes;
 
     if (! name || ! *name) {
         return r_notexture;
@@ -445,7 +445,7 @@ texture_t *TM_FindTexture (const char *name, texturetype_t type)
  * \param[in] name Name of the texture to get dimensions of.
  * \note If texture is not found, width and height are -1.
  */
-void TM_GetTextureSize (SW32 *width, SW32 *height, const char *name)
+void TM_GetTextureSize (int32_t *width, int32_t *height, const char *name)
 {
     texture_t *tex;
 
@@ -475,7 +475,7 @@ cubic (double dx,
                       (- jm1 + jp1)) * dx + (j + j)) / 2.0;
 }
 
-_boolean pixel_region_has_alpha (int bytes)
+bool pixel_region_has_alpha (int bytes)
 {
     if (bytes == 2 || bytes == 4) {
         return true;
@@ -596,7 +596,7 @@ shrink_line (double               *dest,
     }
 }
 
-static void pixel_region_get_row (W8 *src, int y, int width, W8 *tmp_src, int BytesPerPixel)
+static void pixel_region_get_row (uint8_t *src, int y, int width, uint8_t *tmp_src, int BytesPerPixel)
 {
     int i;
     unsigned long k = 0;
@@ -608,11 +608,11 @@ static void pixel_region_get_row (W8 *src, int y, int width, W8 *tmp_src, int By
     }
 }
 
-static void pixel_region_set_row (W8 *dest,
+static void pixel_region_set_row (uint8_t *dest,
                                    int         BytesPerPixel,
                                    int         y,
                                    int         width,
-                                   W8 *data)
+                                   uint8_t *data)
 {
     int i;
     unsigned long k = 0;
@@ -625,7 +625,7 @@ static void pixel_region_set_row (W8 *dest,
 }
 
 static void
-get_premultiplied_double_row(W8 *in, int PRbytes, int x, int y, int w, double *row, W8 *tmp_src)
+get_premultiplied_double_row(uint8_t *in, int PRbytes, int x, int y, int w, double *row, uint8_t *tmp_src)
 {
     int b;
     int bytes = PRbytes;
@@ -667,10 +667,10 @@ get_premultiplied_double_row(W8 *in, int PRbytes, int x, int y, int w, double *r
 
 
 static void
-rotate_pointers (W8 **p, W32 n)
+rotate_pointers (uint8_t **p, uint32_t n)
 {
-    W32  i;
-    W8  *tmp;
+    uint32_t i;
+    uint8_t *tmp;
 
     tmp = p[ 0 ];
 
@@ -686,8 +686,8 @@ get_scaled_row (double              **src,
                 int                   y,
                 int                   new_width,
                 double               *row,
-                W8                  *src_tmp,
-                W8                  *srcPR,
+                uint8_t *src_tmp,
+                uint8_t *srcPR,
                 int old_width,
                 int old_height,
                 int bytes)
@@ -720,13 +720,13 @@ get_scaled_row (double              **src,
 non-interpolating scale_region.
  */
 static void
-scale_region_no_resample (W8 *in, int inwidth, int inheight,
-                          W8 *out, int outwidth, int outheight, char bytes)
+scale_region_no_resample (uint8_t *in, int inwidth, int inheight,
+                          uint8_t *out, int outwidth, int outheight, char bytes)
 {
     int   *x_src_offsets;
     int   *y_src_offsets;
-    W8 *src;
-    W8 *dest;
+    uint8_t *src;
+    uint8_t *dest;
     int    width, height, orig_width, orig_height;
     int    last_src_y;
     int    row_bytes;
@@ -797,11 +797,11 @@ scale_region_no_resample (W8 *in, int inwidth, int inheight,
  * \param[in] bytes Number of bytes per pixel.
  * \param[in] interpolation  See InterpolationType
  */
-void TM_ResampleTexture (W8 *in, int inwidth, int inheight, W8 *out, int outwidth, int outheight, W16 bytes, InterpolationType interpolation)
+void TM_ResampleTexture (uint8_t *in, int inwidth, int inheight, uint8_t *out, int outwidth, int outheight, uint16_t bytes, InterpolationType interpolation)
 {
     double *src[ 4 ];
-    W8  *src_tmp;
-    W8  *dest;
+    uint8_t *src_tmp;
+    uint8_t *dest;
     double *row, *accum;
     int     b;
     int     width, height;
@@ -835,9 +835,9 @@ void TM_ResampleTexture (W8 *in, int inwidth, int inheight, W8 *out, int outwidt
         src[ i ] = (double *) malloc (sizeof (double) * width * bytes);
     }
 
-    dest = (PW8) malloc (width * bytes);
+    dest =  malloc (width * bytes);
 
-    src_tmp = (PW8) malloc (orig_width * bytes);
+    src_tmp = malloc (orig_width * bytes);
 
     /* offset the row pointer by 2*bytes so the range of the array
         is [-2*bytes] to [(orig_width + 2)*bytes] */
@@ -923,7 +923,7 @@ void TM_ResampleTexture (W8 *in, int inwidth, int inheight, W8 *out, int outwidt
             double *p = accum;
             int     alpha = bytes - 1;
             int     result;
-            W8      *d = dest;
+            uint8_t *d = dest;
 
             for (x = 0 ; x < width ; ++x) {
                 if (p[ alpha ] > 0.001) {
@@ -966,7 +966,7 @@ void TM_ResampleTexture (W8 *in, int inwidth, int inheight, W8 *out, int outwidt
                 } else if (accum[ x ] > 255.0) {
                     dest[ x ] = 255;
                 } else {
-                    dest[ x ] = (W8)RINT (accum[ x ]);
+                    dest[ x ] = (uint8_t)RINT (accum[ x ]);
                 }
             }
         }
@@ -995,9 +995,9 @@ void TM_ResampleTexture (W8 *in, int inwidth, int inheight, W8 *out, int outwidt
  * \param[in] height Height of texture in pixels.
  * \note Operates in place, quartering the size of the texture.
  */
-_boolean TM_MipMap (PW8 in, W16 *width, W16 *height, W16 bytes)
+bool TM_MipMap (uint8_t in, uint16_t *width, uint16_t *height, uint16_t bytes)
 {
-    W16 new_width, new_height;
+    uint16_t new_width, new_height;
 
     if (*width == 1 && *height == 1) {
         return false;
@@ -1030,10 +1030,9 @@ _boolean TM_MipMap (PW8 in, W16 *width, W16 *height, W16 bytes)
  */
 void TM_Init (void)
 {
-    W8 *ptr;
-    W8 *data;
+    uint8_t *ptr;
+    uint8_t *data;
     int x, y;
-
 
     memset (_texWalls, 0, sizeof (_texWalls));
     memset (_texSprites, 0, sizeof (_texSprites));
@@ -1041,7 +1040,7 @@ void TM_Init (void)
     texture_registration_sequence = 1;
 
 // create a checkerboard texture
-    data = (PW8)malloc (16 * 16 * 4);
+    data = malloc (16 * 16 * 4);
 
     for (y = 0; y < 16; ++y) {
         for (x = 0; x < 16; ++x) {

@@ -30,6 +30,7 @@
  */
 
 #include <string.h>
+#include <stdlib.h>
 
 #include "tga.h"
 #include "texture_manager.h"
@@ -37,57 +38,57 @@
 
 #define TGA_HEADER_SIZE     18
 
-static W8 *p_buf;  // current pointer to tga data block
+static uint8_t *p_buf;  // current pointer to tga data block
 
 
 /* TRUEVISION-XFILE magic signature string */
-static W8 magic[ 18 ] = {
+static uint8_t magic[ 18 ] = {
     0x54, 0x52, 0x55, 0x45, 0x56, 0x49, 0x53, 0x49, 0x4f,
     0x4e, 0x2d, 0x58, 0x46, 0x49, 0x4c, 0x45, 0x2e, 0x0
 };
 
 typedef struct _TargaHeader {
-    W8  idLength;
-    W8  colorMapType;
+    uint8_t idLength;
+    uint8_t colorMapType;
 
-    W8  imageType;
+    uint8_t imageType;
     /* Known image types. */
 #define TGA_TYPE_MAPPED      1
 #define TGA_TYPE_COLOR       2
 #define TGA_TYPE_GRAY        3
 
-    W8 imageCompression;
+    uint8_t imageCompression;
     /* Only known compression is RLE */
 #define TGA_COMP_NONE        0
 #define TGA_COMP_RLE         1
 
     /* Color Map Specification. */
-    W16 colorMapIndex;
-    W16 colorMapLength;
-    W8  colorMapSize;
+    uint16_t colorMapIndex;
+    uint16_t colorMapLength;
+    uint8_t colorMapSize;
 
     /* Image Specification. */
-    W16 xOrigin;
-    W16 yOrigin;
+    uint16_t xOrigin;
+    uint16_t yOrigin;
 
-    W16 width;
-    W16 height;
+    uint16_t width;
+    uint16_t height;
 
-    W8 bpp;
-    W8 bytes;
+    uint8_t bpp;
+    uint8_t bytes;
 
-    W8 alphaBits;
-    W8 flipHoriz;
-    W8 flipVert;
+    uint8_t alphaBits;
+    uint8_t flipHoriz;
+    uint8_t flipVert;
 
 } TargaHeader;
 
 
-static void flip_line (W8 *buffer, TargaHeader *info)
+static void flip_line (uint8_t *buffer, TargaHeader *info)
 {
-    W8  temp;
-    W8 *alt;
-    SW32    x, s;
+    uint8_t temp;
+    uint8_t *alt;
+    int32_t x, s;
 
     alt = buffer + (info->bytes * (info->width - 1));
 
@@ -103,10 +104,10 @@ static void flip_line (W8 *buffer, TargaHeader *info)
     }
 }
 
-static void upsample (W8 *dest, W8 *src,
-                       W32 width, W32 bytes, W8 alphaBits)
+static void upsample (uint8_t *dest, uint8_t *src,
+                       uint32_t width, uint32_t bytes, uint8_t alphaBits)
 {
-    W32 x;
+    uint32_t x;
 
     for (x = 0 ; x < width ; ++x) {
         dest[0] = ((src[1] << 1) & 0xf8);
@@ -132,10 +133,10 @@ static void upsample (W8 *dest, W8 *src,
     }
 }
 
-static void bgr2rgb (W8 *dest, W8 *src,
-                      W32 width, W32 bytes, W32 alpha)
+static void bgr2rgb (uint8_t *dest, uint8_t *src,
+                      uint32_t width, uint32_t bytes, uint32_t alpha)
 {
-    W32 x;
+    uint32_t x;
 
     if (alpha) {
         for (x = 0 ; x < width ; ++x) {
@@ -160,15 +161,15 @@ static void bgr2rgb (W8 *dest, W8 *src,
 
 }
 
-static SW32 rle_read (filehandle_t *fp, W8 *buffer,
+static int32_t rle_read (filehandle_t *fp, uint8_t *buffer,
                        TargaHeader *info)
 {
-    static SW32   repeat = 0;
-    static SW32   direct = 0;
-    static W8 sample[ 4 ];
-    SW32 head;
-    W8  temphead;
-    SW32 x, k;
+    static int32_t repeat = 0;
+    static int32_t direct = 0;
+    static uint8_t sample[ 4 ];
+    int32_t head;
+    uint8_t temphead;
+    int32_t x, k;
 
     for (x = 0; x < info->width; ++x) {
         if (repeat == 0 && direct == 0) {
@@ -208,8 +209,8 @@ static SW32 rle_read (filehandle_t *fp, W8 *buffer,
 
 
 static void read_line (filehandle_t *fp,
-                        W8      *row,
-                        W8      *buffer,
+                        uint8_t *row,
+                        uint8_t *buffer,
                         TargaHeader     *info)
 {
     if (info->imageCompression == TGA_COMP_RLE) {
@@ -237,18 +238,18 @@ static void read_line (filehandle_t *fp,
 
 
 
-void LoadTGA (const char *filename, W8 **pic, W16 *width, W16 *height, W16 *bytes)
+void LoadTGA (const char *filename, uint8_t **pic, uint16_t *width, uint16_t *height, uint16_t *bytes)
 {
     TargaHeader     targa_header;
-    W8    header[ 18 ];
-    W8    footer[ 26 ];
-    W8    extension[ 495 ];
-    W32  cmap_bytes;
-    SW32 offset;
-    W8 tga_cmap[4 * 256], gimp_cmap[3 * 256];
-    W8 *buffer, *data, *row;
+    uint8_t header[ 18 ];
+    uint8_t footer[ 26 ];
+    uint8_t extension[ 495 ];
+    uint32_t cmap_bytes;
+    int32_t offset;
+    uint8_t tga_cmap[4 * 256], gimp_cmap[3 * 256];
+    uint8_t *buffer, *data, *row;
     int i;
-    SW32 datalength;
+    int32_t datalength;
     filehandle_t *hFile;
 
 
@@ -458,9 +459,9 @@ void LoadTGA (const char *filename, W8 **pic, W16 *width, W16 *height, W16 *byte
 
 
     /* Allocate the data. */
-    data = (PW8)malloc (targa_header.width * targa_header.height * targa_header.bytes);
+    data = malloc (targa_header.width * targa_header.height * targa_header.bytes);
 
-    buffer = (PW8) malloc (targa_header.width * targa_header.bytes);
+    buffer = malloc (targa_header.width * targa_header.bytes);
 
     if (buffer == NULL) {
         free (data);

@@ -69,7 +69,7 @@ void Sprite_RemoveSprite (int sprite_id)
  */
 int Sprite_GetNewSprite (void)
 {
-    W32 n;
+    uint32_t n;
     sprite_t *sprt;
 
     for (n = 0, sprt = levelData.sprites ; n < levelData.numSprites ; ++n, ++sprt) {
@@ -173,7 +173,7 @@ static int Sprite_cmpVis (const void *elem1, const void *elem2)
  */
 int Sprite_CreateVisList (void)
 {
-    W32 tx, ty, n, num_visible;
+    uint32_t tx, ty, n, num_visible;
     visobj_t *visptr;
     sprite_t *sprt;
 

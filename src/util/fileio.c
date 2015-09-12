@@ -38,10 +38,10 @@
  * \param[in] Target file handle.
  * \return The file length in bytes.
  */
-SW32 FS_GetFileSize (filehandle_t *fhandle)
+int32_t FS_GetFileSize (filehandle_t *fhandle)
 {
-    SW32    pos;
-    SW32    end;
+    int32_t pos;
+    int32_t end;
 
     if (fhandle->bLoaded) {
         return fhandle->filesize;
@@ -65,7 +65,7 @@ SW32 FS_GetFileSize (filehandle_t *fhandle)
  *                          SEEK_END -End of file.
  * \return If successful zero, otherwise a nonzero value.
  */
-W32 FS_FileSeek (filehandle_t *fhandle, SW32 offset, W32 origin)
+uint32_t FS_FileSeek (filehandle_t *fhandle, int32_t offset, uint32_t origin)
 {
     if (fhandle->bLoaded) {
         switch (origin) {
@@ -147,7 +147,7 @@ void FS_CloseFile (filehandle_t *fhandle)
  *      Use the FS_CloseFile function to close an object handle returned
  *      by FS_OpenFile.
  */
-filehandle_t *FS_OpenFile (const char *filename, W32 FlagsAndAttributes)
+filehandle_t *FS_OpenFile (const char *filename, uint32_t FlagsAndAttributes)
 {
     char            netpath[ MAX_OSPATH ];
     filehandle_t    *hFile;
@@ -181,15 +181,15 @@ filehandle_t *FS_OpenFile (const char *filename, W32 FlagsAndAttributes)
  * \param[in] fhandle Pointer to valid filehandle_t structure.
  * \return On success number of full items actually read, otherwise -1.
  */
-SW32 FS_ReadFile (void *buffer, W32 size, W32 count, filehandle_t *fhandle)
+int32_t FS_ReadFile (void *buffer, uint32_t size, uint32_t count, filehandle_t *fhandle)
 {
-    W8  *buf = (PW8)buffer;
+    uint8_t *buf = (uint8_t*)buffer;
 
     if (fhandle->bLoaded) {
-        W32 i;
+        uint32_t i;
 
         if ((size * count) > (fhandle->ptrEnd - fhandle->ptrCurrent)) {
-            SW32 read;
+            int32_t read;
 
             read = (fhandle->ptrEnd - fhandle->ptrCurrent);
 

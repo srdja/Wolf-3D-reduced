@@ -42,7 +42,7 @@ extern  float mapScale;
 float   mapOrigin[2];
 
 typedef struct {
-    W8  x, y;
+    uint8_t x, y;
     short   texnum;
 
 } mapTile_t;
@@ -53,7 +53,7 @@ typedef struct {
 mapTile_t   mapTiles[ MAX_MAP_TILES ];
 int         numMapTiles;
 
-extern _boolean Key_IsDown (int keynum);
+extern bool Key_IsDown (int keynum);
 
 /**
  * \brief Callback for qsort to sort tile maps by texture number
@@ -74,7 +74,7 @@ void OpenAutomap()
     int     x, y;
     int     xx, yy;
     int     tex;
-    W32 tx, ty, n;
+    uint32_t tx, ty, n;
     sprite_t *sprt;
     numMapTiles = 0;
 

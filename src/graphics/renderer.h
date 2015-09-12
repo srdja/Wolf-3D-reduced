@@ -58,7 +58,7 @@ void R_BeginFrame (void);
 void R_EndFrame (void);
 
 void R_DeleteTexture (unsigned int texnum);
-_boolean R_UploadTexture (texture_t *tex, PW8 data);
+bool R_UploadTexture (texture_t *tex, uint8_t data);
 
 void R_SetGL2D (void);
 
