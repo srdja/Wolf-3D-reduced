@@ -240,9 +240,9 @@ static void KeyCursorDrawFunc (menuframework_s *menu)
     static const char ccursor[ 2 ] = { ' ', '>' };
 
     if (bind_grab) {
-        Font_put_character (FONT0, menu->x, menu->y + menu->cursor * 20, '=');
+        //Font_put_character (FONT0, menu->x, menu->y + menu->cursor * 20, '=');
     } else {
-        Font_put_character (FONT0, menu->x, menu->y + menu->cursor * 20, ccursor[ 0 + ((int) (Sys_Milliseconds() / 250) & 1) ]);
+      //  Font_put_character (FONT0, menu->x, menu->y + menu->cursor * 20, ccursor[ 0 + ((int) (Sys_Milliseconds() / 250) & 1) ]);
     }
 }
 
@@ -251,19 +251,19 @@ static void DrawKeyBindingFunc (void *self)
     int keys[ 2 ];
     menuaction_s *a = (menuaction_s *) self;
 
-    Font_SetSize (a->generic.fs, 2);
-    Font_SetColour (a->generic.fs, *a->generic.fontBaseColour);
+    //Font_SetSize (a->generic.fs, 2);
+    //Font_SetColour (a->generic.fs, *a->generic.fontBaseColour);
 
     M_FindKeysForCommand (bindnames[  a->generic.localdata[ 0 ]  ][ 0 ], keys);
 
     if (keys[ 0 ] == -1) {
-        Font_put_line (a->generic.fs, a->generic.x + a->generic.parent->x + 30, a->generic.y + a->generic.parent->y, "???");
+       // Font_put_line (a->generic.fs, a->generic.x + a->generic.parent->x + 30, a->generic.y + a->generic.parent->y, "???");
     } else {
         char name[ 128 ];
 
 
 
-        Font_put_line (a->generic.fs, a->generic.x + a->generic.parent->x + 30, a->generic.y + a->generic.parent->y, name);
+        //Font_put_line (a->generic.fs, a->generic.x + a->generic.parent->x + 30, a->generic.y + a->generic.parent->y, name);
     }
 
 }

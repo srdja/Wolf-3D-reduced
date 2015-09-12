@@ -147,9 +147,9 @@ void M_BannerString (const char *string, W16 nYOffset)
 {
     int w, h;
 
-    Font_GetMsgDimensions (1, string, &w, &h);
-    Font_SetColour (1,  readhcolour);
-    Font_put_line (1, (viddef.width - w) >> 1, nYOffset, string);
+   // Font_GetMsgDimensions (1, string, &w, &h);
+   // Font_SetColour (1,  readhcolour);
+   // Font_put_line (1, (viddef.width - w) >> 1, nYOffset, string);
 }
 
 /**

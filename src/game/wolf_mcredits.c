@@ -77,12 +77,13 @@ static void M_Credits_MenuDraw (void)
         R_Draw_Fill (0, 0, viddef.width, viddef.height, bgcolour);
     }
 
-    Font_SetSize (FONT0, 1);
-    Font_SetColour (FONT0, colourWhite);
+  //  Font_SetSize (FONT0, 1);
+   // Font_SetColour (FONT0, colourWhite);
 
 //
 //  Draw the credits
 //
+/*
     for (i = 0, y = 50; credits[ i ] ; y += Font_GetSize (FONT0), i++) {
         int stringoffset = 0;
         int bold;
@@ -95,18 +96,18 @@ static void M_Credits_MenuDraw (void)
             stringoffset = 0;
         }
 
-        Font_GetMsgDimensions (FONT0, credits[ i ] + stringoffset, &w, &h);
+        //Font_GetMsgDimensions (FONT0, credits[ i ] + stringoffset, &w, &h);
 
         x = (viddef.width - w) >> 1;
 
         if (bold) {
-            Font_SetColour (FONT0, readhcolour);
-            Font_put_line (FONT0, x, y, credits[ i ] + stringoffset);
-            Font_SetColour (FONT0, colourWhite);
+       //     Font_SetColour (FONT0, readhcolour);
+       ///     Font_put_line (FONT0, x, y, credits[ i ] + stringoffset);
+       //     Font_SetColour (FONT0, colourWhite);
         } else {
-            Font_put_line (FONT0, x, y, credits[ i ] + stringoffset);
+      //      Font_put_line (FONT0, x, y, credits[ i ] + stringoffset);
         }
-    }
+    }*/
 
 }
 

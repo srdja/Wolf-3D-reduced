@@ -97,7 +97,7 @@ static void M_Quit_Draw (void)
 {
     int w, h;
 
-    Font_GetMsgDimensions (1, log_out_messages[ menu_random ], &w, &h);
+    //Font_GetMsgDimensions (1, log_out_messages[ menu_random ], &w, &h);
 
     if (g_version == SPEAROFDESTINY) {
         M_SMain_Draw();
@@ -107,8 +107,8 @@ static void M_Quit_Draw (void)
 
     M_DrawWindow ((viddef.width - (w + 10)) >> 1, (viddef.height - (h + 10)) >> 1, w + 10, h + 10, textcolour, colourBlack, highlight);
 
-    Font_SetColour (FONT1, colourBlack);
-    Font_put_line (FONT1, ((viddef.width - (w + 10)) >> 1) + 5, ((viddef.height - (h + 10)) >> 1) + 5, log_out_messages[ menu_random ]);
+    //Font_SetColour (FONT1, colourBlack);
+   // Font_put_line (FONT1, ((viddef.width - (w + 10)) >> 1) + 5, ((viddef.height - (h + 10)) >> 1) + 5, log_out_messages[ menu_random ]);
 }
 
 

@@ -48,7 +48,7 @@
 
 #include "platform.h"
 #include "texture_manager.h"
-#include "font_manager.h"
+#include "color.h"
 
 int opengl_init();
 
@@ -63,7 +63,7 @@ _boolean R_UploadTexture (texture_t *tex, PW8 data);
 void R_SetGL2D (void);
 
 void R_Draw_Pic (int x, int y, const char *name);
-void R_Draw_Character (int x, int y, int num, font_t *myfont);
+//void R_Draw_Character (int x, int y, int num, font_t *myfont);
 void R_Draw_Tile (int x, int y, int w, int h, const char *name);
 void R_Draw_Fill (int x, int y, int w, int h, colour3_t c);
 void R_Draw_Line (int nXStart, int nYStart, int nXEnd, int nYEnd, int width, colour3_t c);

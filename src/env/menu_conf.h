@@ -30,8 +30,7 @@
 #ifndef __MENU_CONF_H__
 #define __MENU_CONF_H__
 
-
-#include "font_manager.h"
+#include "../common.h"
 
 
 #define MAXMENUITEMS    64

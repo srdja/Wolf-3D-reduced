@@ -365,14 +365,14 @@ void Menu_Draw (menuframework_s *menu)
         menu->cursordraw (menu);
     } else if (item && item->type != MTYPE_FIELD) {
 
-        Font_SetColour (item->fs, *item->fontBaseColour);
+        //Font_SetColour (item->fs, *item->fontBaseColour);
 
         if (item->flags & MENUFONT_LEFT_JUSTIFY) {
             //Draw_Char( menu->x + item->x - 24 + item->cursor_offset, menu->y + item->y, 12 + ( ( int ) ( Sys_Milliseconds()/250 ) & 1 ) );
-            Font_put_character (item->fs, menu->x + item->x - 24 + item->cursor_offset, menu->y + item->y, ccursor[ 0 + ((int) (Sys_Milliseconds() / 250) & 1) ]);
+          //  Font_put_character (item->fs, menu->x + item->x - 24 + item->cursor_offset, menu->y + item->y, ccursor[ 0 + ((int) (Sys_Milliseconds() / 250) & 1) ]);
         } else {
             //Draw_Char( menu->x + item->cursor_offset, menu->y + item->y, 12 + ( ( int ) ( Sys_Milliseconds()/250 ) & 1 ) );
-            Font_put_character (item->fs, menu->x + item->cursor_offset, menu->y + item->y, ccursor[ 0 + ((int) (Sys_Milliseconds() / 250) & 1) ]);
+         //   Font_put_character (item->fs, menu->x + item->cursor_offset, menu->y + item->y, ccursor[ 0 + ((int) (Sys_Milliseconds() / 250) & 1) ]);
         }
     }
 
@@ -380,14 +380,14 @@ void Menu_Draw (menuframework_s *menu)
 
 void Menu_DrawString (FONTSELECT fs, int x, int y, const char *string, colour3_t c)
 {
-    Font_SetColour (fs, c);
-    Font_put_line (fs, x, y, string);
+ //   Font_SetColour (fs, c);
+ //   Font_put_line (fs, x, y, string);
 }
 
 void Menu_DrawStringR2L (FONTSELECT fs, int x, int y, const char *string, colour3_t c)
 {
-    Font_SetColour (fs, c);
-    Font_put_lineR2L (fs, x, y, string);
+ //   Font_SetColour (fs, c);
+ //   Font_put_lineR2L (fs, x, y, string);
 }
 
 void Menu_DrawStringR2LDark (FONTSELECT fs, int x, int y, const char *string)
@@ -518,13 +518,13 @@ void Slider_DoSlide (menuslider_s *s, int dir)
 
 void Slider_Draw (menuslider_s *s)
 {
-    int CharHeight = Font_GetSize (s->generic.fs);
+    int CharHeight = 0;//Font_GetSize (s->generic.fs);
 
 
     // Print out Label name
-    Font_SetColour (s->generic.fs, *s->generic.fontBaseColour);
-    Font_put_lineR2L (s->generic.fs, s->generic.x + s->generic.parent->x + LCOLUMN_OFFSET,
-                      s->generic.y + s->generic.parent->y, s->generic.name);
+    //Font_SetColour (s->generic.fs, *s->generic.fontBaseColour);
+  //  Font_put_lineR2L (s->generic.fs, s->generic.x + s->generic.parent->x + LCOLUMN_OFFSET,
+     //                 s->generic.y + s->generic.parent->y, s->generic.name);
 
     s->range = (s->curvalue - s->minvalue) / (float) (s->maxvalue - s->minvalue);
 
@@ -566,13 +566,13 @@ void SpinControl_DoSlide (menulist_s *s, int dir)
 void SpinControl_Draw (menulist_s *s)
 {
     if (s->generic.name) {
-        Font_SetColour (s->generic.fs, *s->generic.fontBaseColour);
-        Font_put_lineR2L (s->generic.fs, s->generic.x + s->generic.parent->x + LCOLUMN_OFFSET,
-                          s->generic.y + s->generic.parent->y, s->generic.name);
+       // Font_SetColour (s->generic.fs, *s->generic.fontBaseColour);
+       // Font_put_lineR2L (s->generic.fs, s->generic.x + s->generic.parent->x + LCOLUMN_OFFSET,
+       //                   s->generic.y + s->generic.parent->y, s->generic.name);
     }
 
 
-    Font_SetColour (s->generic.fs, *s->generic.fontHighColour);
-    Font_put_line (s->generic.fs, RCOLUMN_OFFSET + s->generic.x + s->generic.parent->x, s->generic.y + s->generic.parent->y, s->itemnames[ s->curvalue ]);
+    //Font_SetColour (s->generic.fs, *s->generic.fontHighColour);
+   // Font_put_line (s->generic.fs, RCOLUMN_OFFSET + s->generic.x + s->generic.parent->x, s->generic.y + s->generic.parent->y, s->itemnames[ s->curvalue ]);
 
 }

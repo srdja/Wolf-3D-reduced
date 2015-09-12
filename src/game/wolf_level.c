@@ -761,7 +761,6 @@ static void Lvl_CarmackExpand (W16 *source, W16 *dest, W16 length)
 #define NEARTAG 0xA7
 #define FARTAG  0xA8
 
-
     W32 chhigh, offset;
     W16 *copyptr, *outptr;
     W8  *inptr;
@@ -831,9 +830,6 @@ static void Lvl_RLEWexpand (W16 *source, W16 *dest,
 {
     unsigned value, count, i;
     W16 *end;
-
-
-
 //
 // expand it
 //
@@ -1231,8 +1227,6 @@ void Level_PrecacheTextures_Sound (LevelData_t *lvl)
     int x, y;
     char texname[ 32 ];
 
-
-
     for (x = 0 ; x < 64 ; ++x)
         for (y = 0 ; y < 64 ; ++y) {
             if (lvl->tilemap[ x ][ y ] & WALL_TILE) {
@@ -1250,7 +1244,6 @@ void Level_PrecacheTextures_Sound (LevelData_t *lvl)
     for (x = TEX_DOOR; x < TEX_DLOCK + 2 ; ++x) {
         LoadWallTexture (x, NULL);
     }
-
 
     // Items
     CacheTextures (26, 36);
@@ -1296,10 +1289,7 @@ _boolean Level_CheckLine (SW32 x1, SW32 y1, SW32 x2, SW32 y2, LevelData_t *lvl)
     SW32 partial;   /* how much to move in our direction to border */
     SW32 intercept; /* Temp for door code */
 
-
-
 #define FRACBITS    8       /* Number of bits of fraction */
-
 
 // get start & end tiles
     xt1 = x1 >> TILE_SHIFT;
@@ -1316,7 +1306,6 @@ _boolean Level_CheckLine (SW32 x1, SW32 y1, SW32 x2, SW32 y2, LevelData_t *lvl)
     y1 >>= FRACBITS;
     x2 >>= FRACBITS;
     y2 >>= FRACBITS;
-
 
     if (xdist) { // always positive check only for 0
         if (xt2 > xt1) {

@@ -40,6 +40,8 @@
  * \return
  * \note It can be clipped to the top of the screen to allow the console to be smoothly scrolled off.
  */
+
+/*
 void R_Draw_Character (int x, int y, int num, font_t *myfont)
 {
     int row, col;
@@ -88,7 +90,7 @@ void R_Draw_Character (int x, int y, int num, font_t *myfont)
     glDisable (GL_BLEND);
     glColor3f (1, 1, 1);
 }
-
+*/
 
 /**
  * \brief Draw image to the screen.

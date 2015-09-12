@@ -505,17 +505,17 @@ static void M_Victory_Draw_PageOne (void)
     R_Draw_Pic (32, 32, "pics/H_BLAZEPIC.tga");
 
 
-    Font_SetSize (FONT0, 2);
+   // Font_SetSize (FONT0, 2);
 
-    Font_SetColour (FONT0, colourPage);
-    Font_put_line (FONT0, (viddef.width - w - (((viddef.width >> 1) - w)  >> 1)) + 32, (viddef.height - 48) + 6, "pg 1 of 2");
+  //  Font_SetColour (FONT0, colourPage);
+   // Font_put_line (FONT0, (viddef.width - w - (((viddef.width >> 1) - w)  >> 1)) + 32, (viddef.height - 48) + 6, "pg 1 of 2");
 
-    Font_SetColour (FONT0, colourTitle);
-    Font_put_paragraph (FONT0, 240 + 32 + 10, 32, victoryTextPageOneTitle[ currentMap.episode ], 0, 350);
+   // Font_SetColour (FONT0, colourTitle);
+   // Font_put_paragraph (FONT0, 240 + 32 + 10, 32, victoryTextPageOneTitle[ currentMap.episode ], 0, 350);
 
-    Font_SetColour (FONT0, colourBlack);
-    Font_put_paragraph (FONT0, 240 + 32 + 10, 70, victorytextPageOnePartOne[ currentMap.episode ], 0, 350);
-    Font_put_paragraph (FONT0, 32 + 4, 160 + 16 + 34, victorytextPageOnePartTwo[ currentMap.episode ], 0, 600);
+   // Font_SetColour (FONT0, colourBlack);
+   /// Font_put_paragraph (FONT0, 240 + 32 + 10, 70, victorytextPageOnePartOne[ currentMap.episode ], 0, 350);
+   // Font_put_paragraph (FONT0, 32 + 4, 160 + 16 + 34, victorytextPageOnePartTwo[ currentMap.episode ], 0, 600);
 }
 
 static void M_Victory_Draw_PageTwo (void)
@@ -533,16 +533,15 @@ static void M_Victory_Draw_PageTwo (void)
     R_Draw_Pic (viddef.width - w - (((viddef.width >> 1) - w)  >> 1), viddef.height - 48, "pics/PLAQUE_BLANK.tga");
 
 
-    Font_SetSize (FONT0, 2);
+   // Font_SetSize (FONT0, 2);
 
-    Font_SetColour (FONT0, colourPage);
-    Font_put_line (FONT0, (viddef.width - w - (((viddef.width >> 1) - w)  >> 1)) + 32, (viddef.height - 48) + 6, "pg 2 of 2");
+//    Font_put_line (FONT0, (viddef.width - w - (((viddef.width >> 1) - w)  >> 1)) + 32, (viddef.height - 48) + 6, "pg 2 of 2");
 
-    Font_SetColour (FONT0, colourTitle);
-    Font_put_paragraph (FONT0, 32 + 4, 34, victoryTextPageTwoTitle[ currentMap.episode ], 0, 600);
+   // Font_SetColour (FONT0, colourTitle);
+   // Font_put_paragraph (FONT0, 32 + 4, 34, victoryTextPageTwoTitle[ currentMap.episode ], 0, 600);
 
-    Font_SetColour (FONT0, colourBlack);
-    Font_put_paragraph (FONT0, 32 + 4, 34 + 32, victorytextPageTwo[ currentMap.episode ], 0, 600);
+   // Font_SetColour (FONT0, colourBlack);
+   // Font_put_paragraph (FONT0, 32 + 4, 34 + 32, victorytextPageTwo[ currentMap.episode ], 0, 600);
 }
 
 
@@ -654,15 +653,15 @@ static void SOD_EndScreen2_Draw (void)
     TM_GetTextureSize (&w, &h, "pics/ENDSCREEN3PIC.tga");
     R_Draw_Pic ((viddef.width - w) >> 1, (viddef.height - h) >> 1, "pics/ENDSCREEN3PIC.tga");
 
-    Font_SetSize (FONT0, 2);
-    Font_SetColour (FONT0, colourWhite);
+  //  Font_SetSize (FONT0, 2);
+  //  Font_SetColour (FONT0, colourWhite);
 
     if (victory_slide == 3) {
-        Font_GetMsgDimensions (FONT0, STR_ENDGAME1, &w, &h);
-        Font_put_line (FONT0, (viddef.width - w) >> 1, viddef.height - h, STR_ENDGAME1);
+   //     Font_GetMsgDimensions (FONT0, STR_ENDGAME1, &w, &h);
+   //     Font_put_line (FONT0, (viddef.width - w) >> 1, viddef.height - h, STR_ENDGAME1);
     } else {
-        Font_GetMsgDimensions (FONT0, STR_ENDGAME2, &w, &h);
-        Font_put_line (FONT0, (viddef.width - w) >> 1, viddef.height - h, STR_ENDGAME2);
+    //    Font_GetMsgDimensions (FONT0, STR_ENDGAME2, &w, &h);
+    //    Font_put_line (FONT0, (viddef.width - w) >> 1, viddef.height - h, STR_ENDGAME2);
     }
 
 }

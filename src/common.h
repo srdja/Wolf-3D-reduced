@@ -39,6 +39,9 @@
 void Client_Init (void);
 void frame_run(int msec);
 
+
+typedef enum { FONT0 = 0, FONT1, FONT2, FONT3 } FONTSELECT;
+
 //
 // button bits
 //

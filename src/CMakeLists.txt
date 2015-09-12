@@ -10,7 +10,6 @@ set(env_SOURCE
 	util/fileio.c
 	util/files.c
 	util/filestring.c
-	env/font_manager.c
 	util/math.c
 	env/menu_conf.c
 	graphics/opengl_draw.c
@@ -29,7 +28,6 @@ set(env_HEADER
 	util/com_string.h
 	util/filestring.h
 	util/filesystem.h
-	env/font_manager.h
 	env/menu_conf.h
 	graphics/opengl_local.h
 	graphics/renderer.h

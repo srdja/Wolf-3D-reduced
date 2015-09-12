@@ -147,22 +147,22 @@ static void draw_score(void)
 
     y = 160 + ((viddef.height - 480) >> 1);
 
-    Font_SetColour (FONT0, colourWhite);
-    h = Font_GetSize (FONT0);
+    //Font_SetColour (FONT0, colourWhite);
+   // h = Font_GetSize (FONT0);
 
     for (i = 0, hs_temp = Scores ; i < MAX_SCORES ; ++i, ++hs_temp) {
         // Name
-        Font_put_line (FONT0, (8 * 8) + ((viddef.width - 640) >> 1), y, hs_temp->name);
+       // Font_put_line (FONT0, (8 * 8) + ((viddef.width - 640) >> 1), y, hs_temp->name);
 
         // Episode / Level
         com_snprintf (string, sizeof (string), "E%d/L%d", hs_temp->episode + 1, hs_temp->completed);
-        Font_put_line (FONT0, (40 * 8) + ((viddef.width - 640) >> 1), y, string);
+      //  Font_put_line (FONT0, (40 * 8) + ((viddef.width - 640) >> 1), y, string);
 
         // Score
         com_snprintf (string, sizeof (string), "%d", hs_temp->score);
-        Font_put_line (FONT0, (56 * 8) + ((viddef.width - 640) >> 1), y, string);
+      //  Font_put_line (FONT0, (56 * 8) + ((viddef.width - 640) >> 1), y, string);
 
-        y += h * 2;
+      //  y += h * 2;
     }
 
 }

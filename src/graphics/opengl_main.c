@@ -108,7 +108,6 @@ int opengl_init()
     GL_SetDefaultState();
 
     TM_Init();
-    Font_Init();
 
     glGetError();
     return 1;
