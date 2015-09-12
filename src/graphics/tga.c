@@ -252,7 +252,6 @@ void LoadTGA (const char *filename, W8 **pic, W16 *width, W16 *height, W16 *byte
     filehandle_t *hFile;
 
 
-
     *pic = NULL;
 
 //
@@ -578,100 +577,4 @@ static void rle_write (FILE   *fp,
         putc (direct, fp);
         fwrite (from, bytes, direct + 1, fp);
     }
-}
-
-
-/*
------------------------------------------------------------------------------
- Function: WriteTGA -Write targa image file.
-
- Parameters: filename -[in] Name of TGA file to save as.
-             bpp -[in] Bits per pixel. (16, 24 or 32).
-             width -[in] Width of image.
-             height -[in] Height of image.
-             Data -[in] Raw image data.
-             upsideDown -[in] Is the data upside down? 1 yes, 0 no.
-             rle -[in] Run Length encode? 1 yes, 0 no.
-
- Returns: 0 on error, otherwise 1.
-
- Notes:
------------------------------------------------------------------------------
-*/
-W8 WriteTGA (const char *filename, W16 bpp, W16 width, W16 height,
-                    void *Data, W8 upsideDown, W8 rle)
-{
-    W16 i, x, y, BytesPerPixel;
-    W8  *scanline;
-    W8 header[ 18 ];
-    FILE *filestream;
-    W8 *ptr = (PW8) Data;
-    W8 temp;
-
-    BytesPerPixel = bpp >> 3;
-
-    filestream = fopen (filename, "wb");
-
-    if (filestream == NULL) {
-        printf("Could not open file (%s) for write!\n", filename);
-        return 0;
-    }
-
-    memset (header, 0, 18);
-    header[2] = rle ? 10 : 2;
-
-    header[12] = width & 255;   // width low
-    header[13] = width >> 8;    // width high
-
-    header[14] = height & 255;  // height low
-    header[15] = height >> 8;   // height high
-
-    header[16] = bpp & 255; // pixel size
-
-    if (upsideDown) {
-        header[17] |= 1 << 5; // Image Descriptor
-    }
-
-
-    fwrite (header, sizeof (W8), sizeof (header), filestream);
-
-
-
-    scanline = (PW8) malloc (width * BytesPerPixel);
-
-    if (scanline == NULL) {
-        fclose (filestream);
-
-        return 0;
-    }
-
-    for (y = 0; y < height; ++y) {
-        W32 k = 0;
-
-        for (i = 0; i < (width * BytesPerPixel); ++i) {
-            scanline[ k++ ] = ptr[ (height - y - 1) * width * BytesPerPixel + i ];
-        }
-
-        if (bpp == 24 || bpp == 32) {
-            // swap rgb to bgr
-            for (x = 0; x < (width * BytesPerPixel); x += BytesPerPixel) {
-                temp = scanline[ x ];
-                scanline[ x ] = scanline[ x + 2 ];
-                scanline[ x + 2 ] = temp;
-            }
-        }
-
-
-        if (rle) {
-            rle_write (filestream, scanline, width, BytesPerPixel);
-        } else {
-            fwrite (scanline, sizeof (W8), width * BytesPerPixel, filestream);
-        }
-    }
-
-    free (scanline);
-
-    fclose (filestream);
-
-    return 1;
 }
