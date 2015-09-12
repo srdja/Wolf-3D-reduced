@@ -44,8 +44,6 @@
 
 #include "../game/wolf_math.h"
 
-#include "../env/platform.h"
-
 
 void R_SetGL3D (placeonplane_t viewport);
 

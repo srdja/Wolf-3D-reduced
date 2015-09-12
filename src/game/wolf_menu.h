@@ -30,7 +30,6 @@
 #ifndef __WOLF_MENU_H__
 #define __WOLF_MENU_H__
 
-#include "../env/platform.h"
 #include "../graphics/video.h"
 
 #include "../env/menu_conf.h"

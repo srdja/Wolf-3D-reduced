@@ -20,7 +20,6 @@ set(env_SOURCE
 )
 
 set(env_HEADER
-	env/platform.h
 	graphics/color.h
 	game/client.h
 	common.h

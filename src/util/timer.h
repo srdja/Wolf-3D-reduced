@@ -35,9 +35,6 @@
 #ifndef __TIMER_H__
 #define __TIMER_H__
 
-#include "platform.h"
-
-
 uint32_t Sys_Milliseconds (void);
 
 

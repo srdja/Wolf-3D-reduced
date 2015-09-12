@@ -29,7 +29,6 @@
 #define __COM_MATH_H__
 
 #include <stdint.h>
-#include "platform.h"
 
 #define DEG2RAD( a ) ( (a) * 0.01745329251994329576f ) // a * M_PI / 180.0f
 #define RAD2DEG( a ) ( (int)((a) * 57.2957795130823209071f) ) // a * 180.0f / M_PI

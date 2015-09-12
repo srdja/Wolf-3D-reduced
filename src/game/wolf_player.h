@@ -40,7 +40,6 @@
 #ifndef __WOLF_PLAYER_H__
 #define __WOLF_PLAYER_H__
 
-#include "../env/platform.h"
 #include "../common.h"
 #include "wolf_math.h"
 #include "wolf_actors.h"

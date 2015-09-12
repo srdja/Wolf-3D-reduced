@@ -38,7 +38,6 @@
 #define __TGA_H__
 
 #include <stdint.h>
-#include "platform.h"
 
 void LoadTGA(const char *filename, uint8_t **pic, uint16_t *width, uint16_t *height, uint16_t *bytes);
 

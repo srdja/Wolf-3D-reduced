@@ -41,7 +41,6 @@
 
 #include <stdio.h>
 
-#include "platform.h"
 #include "filestring.h"
 
 #define MAX_GAMEPATH 2048  // max length of a game pathname

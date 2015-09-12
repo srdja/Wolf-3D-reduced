@@ -42,8 +42,6 @@
 #ifndef __VIDEO_H__
 #define __VIDEO_H__
 
-#include "platform.h"
-
 
 typedef struct {
     unsigned width, height; // coordinates from main game

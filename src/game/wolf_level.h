@@ -52,7 +52,6 @@
 #include "wolf_sprites.h"
 #include "wolf_powerups.h"
 
-#include "../env/platform.h"
 #include "../util/com_math.h"
 
 ///////////////////

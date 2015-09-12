@@ -33,7 +33,6 @@
 #define __COM_STRING_H__
 
 #include <stdlib.h>
-#include "platform.h"
 
 #define ISLOWER( c )    ( ( c ) >= 'a' && ( c ) <= 'z' )
 #define TOUPPER( c )    ( ISLOWER( c ) ? (c) - 'a' + 'A' : ( c ) )

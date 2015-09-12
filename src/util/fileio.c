@@ -29,7 +29,6 @@
 #include <stdio.h>
 #include <zlib.h>
 
-#include "platform.h"
 #include "../common.h"
 #include "com_string.h"
 

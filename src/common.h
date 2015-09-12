@@ -34,7 +34,6 @@
 #include "../util/com_math.h"
 #include "memory.h"
 #include "../util/filesystem.h"
-#include "platform.h"
 #include <stdlib.h>
 #include <stdint.h>
 #include <inttypes.h>

@@ -25,7 +25,6 @@
  * \date 2013
  */
 
-#include "platform.h"
 #include "../graphics/texture_manager.h"
 #include "client.h"
 #include "../graphics/video.h"

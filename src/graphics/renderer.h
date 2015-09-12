@@ -46,7 +46,6 @@
 
 #include "../util/filesystem.h"
 
-#include "platform.h"
 #include "texture_manager.h"
 #include "color.h"
 
