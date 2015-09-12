@@ -28,7 +28,6 @@
 
 #include <string.h>
 #include "filesystem.h"
-#include "../common.h"
 
 /**
  * \brief Returns file name from path string.

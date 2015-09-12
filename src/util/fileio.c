@@ -138,39 +138,6 @@ void FS_CloseFile (filehandle_t *fhandle)
 }
 
 /**
- * \brief Load the file into memory.
- * \param[out] Pointer to a valid filehandle_t structure.
- * \return true on success, otherwise false.
- */
-static _boolean LoadFile (filehandle_t *hFile)
-{
-    W32 read;
-
-    hFile->filesize = FS_GetFileSize (hFile);
-    hFile->filedata = malloc (hFile->filesize);
-
-    read = fread (hFile->filedata, 1, hFile->filesize, hFile->hFile);
-
-    if (read != hFile->filesize) {
-        fclose (hFile->hFile);
-
-        return false;
-    }
-
-    fclose (hFile->hFile);
-
-    hFile->hFile = NULL;
-
-    // align our file data pointers
-    hFile->ptrStart =  hFile->ptrCurrent = (PW8)hFile->filedata;
-    hFile->ptrEnd = (PW8)hFile->filedata + hFile->filesize;
-
-    hFile->bLoaded = true;
-
-    return true;
-}
-
-/**
  * \brief Open file from the file system.
  * \param[in] filename Pointer to a NUL-terminated string with the
  * \param[in] FlagsAndAttributes Flags and attributes when opening file
@@ -188,10 +155,7 @@ filehandle_t *FS_OpenFile (const char *filename, W32 FlagsAndAttributes)
     hFile = (filehandle_t *)malloc (sizeof (filehandle_t));
     memset (hFile, 0, sizeof (filehandle_t));
 
-//
-//  Check for the file in the directory tree
-//
-    com_snprintf (netpath, sizeof (netpath), "%s/%s", get_resource_base_path(), filename);
+    com_snprintf(netpath, sizeof (netpath), "%s/%s", get_resource_base_path(), filename);
 
     printf("Loading file: %s\n", netpath);
 
@@ -199,14 +163,6 @@ filehandle_t *FS_OpenFile (const char *filename, W32 FlagsAndAttributes)
 
     if (hFile->hFile) {
         printf("[FS_OpenFile]: %s\n", netpath);
-
-        if (FlagsAndAttributes & FA_FILE_FLAG_LOAD) {
-            if (! LoadFile (hFile)) {
-                FS_CloseFile (hFile);
-
-                return NULL;
-            }
-        }
         return hFile;
     }
 

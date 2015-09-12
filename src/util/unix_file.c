@@ -141,38 +141,6 @@ char *FS_FindFirst (const char *path, W32 musthave, W32 canthave)
     }
 
     return NULL;
-
-}
-
-/**
- * \brief Continues a file search from a previous call to the FS_FindFirst function.
- * \param[in] musthave File or directory must have these attributes.
- * \param[in] canthave File or directory can not have these attributes.
- * \return On success string of file name or directory, otherwise NULL.
- */
-char *FS_FindNext (W32 musthave, W32 canthave)
-{
-    struct dirent *d;
-
-    if (fdir == NULL) {
-        return NULL;
-    }
-
-    while ((d = readdir (fdir)) != NULL) {
-        if (! *findpattern || glob_match (findpattern, d->d_name)) {
-            if (! *findbase) {
-                strncpy(findpath, d->d_name, sizeof(findpath));
-            } else {
-                com_snprintf (findpath, sizeof (findpath), "%s/%s", findbase, d->d_name);
-            }
-
-            if (CompareAttributes (findpath, musthave, canthave)) {
-                return findpath;
-            }
-        }
-    }
-
-    return NULL;
 }
 
 /**
