@@ -248,7 +248,7 @@ entity_t *SpawnActor (enemy_t which, int x, int y, dir4type dir, LevelData_t *lv
  * \param[in] dir Direction
  * \param[in] lvl Valid pointer to levelData_t structure
  */
-void SpawnStand (enemy_t which, int x, int y, int dir, LevelData_t *lvl)
+void SpawnStand (enemy_t which, int x, int y, int dir)
 {
     entity_t *self;
 

@@ -49,7 +49,7 @@ extern viddef_t viddef;
 static void Separator_Draw (menuseparator_s *s)
 {
     if (s->generic.name) {
-        Menu_DrawStringR2LDark (s->generic.fs, s->generic.x + s->generic.parent->x, s->generic.y + s->generic.parent->y, s->generic.name);
+        //Menu_DrawStringR2LDark (s->generic.fs, s->generic.x + s->generic.parent->x, s->generic.y + s->generic.parent->y, s->generic.name);
     }
 }
 
@@ -83,15 +83,18 @@ static void Action_Draw (menuaction_s *a, int i)
 {
 
     if (a->generic.flags & MENUFONT_LEFT_JUSTIFY) {
-        if ((i == a->generic.parent->cursor) && a->generic.fontHighColour)
-            Menu_DrawString (a->generic.fs, a->generic.x + a->generic.parent->x, a->generic.y + a->generic.parent->y, a->generic.name, *a->generic.fontHighColour);
-        else
-            Menu_DrawString (a->generic.fs, a->generic.x + a->generic.parent->x, a->generic.y + a->generic.parent->y, a->generic.name, *a->generic.fontBaseColour);
+        if ((i == a->generic.parent->cursor) && a->generic.fontHighColour) {
+            //Menu_DrawString (a->generic.fs, a->generic.x + a->generic.parent->x, a->generic.y + a->generic.parent->y, a->generic.name, *a->generic.fontHighColour);
+        } else {
+            // Menu_DrawString (a->generic.fs, a->generic.x + a->generic.parent->x, a->generic.y + a->generic.parent->y, a->generic.name, *a->generic.fontBaseColour);
+        }
     } else {
-        if ((i == a->generic.parent->cursor) && a->generic.fontHighColour)
-            Menu_DrawStringR2L (a->generic.fs, a->generic.x + a->generic.parent->x + LCOLUMN_OFFSET, a->generic.y + a->generic.parent->y, a->generic.name, *a->generic.fontHighColour);
-        else
-            Menu_DrawStringR2L (a->generic.fs, a->generic.x + a->generic.parent->x + LCOLUMN_OFFSET, a->generic.y + a->generic.parent->y, a->generic.name, *a->generic.fontBaseColour);
+        if ((i == a->generic.parent->cursor) &&
+            a->generic.fontHighColour) {
+            //   Menu_DrawStringR2L (a->generic.fs, a->generic.x + a->generic.parent->x + LCOLUMN_OFFSET, a->generic.y + a->generic.parent->y, a->generic.name, *a->generic.fontHighColour);
+        } else {
+            //    Menu_DrawStringR2L (a->generic.fs, a->generic.x + a->generic.parent->x + LCOLUMN_OFFSET, a->generic.y + a->generic.parent->y, a->generic.name, *a->generic.fontBaseColour);
+        }
     }
 
     if (a->generic.ownerdraw) {
@@ -118,8 +121,6 @@ bool Field_DoEnter (menufield_s *f)
 
 bool Field_Key (menufield_s *f, int key)
 {
-    extern bool keydown[];
-
     switch (key) {
     case K_KP_SLASH:
         key = '/';
@@ -324,7 +325,6 @@ void Menu_Draw (menuframework_s *menu)
 {
     int i;
     menucommon_s *item;
-    static const char ccursor[ 2 ] = { ' ', '>' };
 
     /*
     ** draw contents
@@ -377,23 +377,25 @@ void Menu_Draw (menuframework_s *menu)
     }
 
 }
-
+/*
 void Menu_DrawString (FONTSELECT fs, int x, int y, const char *string, colour3_t c)
 {
  //   Font_SetColour (fs, c);
  //   Font_put_line (fs, x, y, string);
 }
-
+ */
+/*
 void Menu_DrawStringR2L (FONTSELECT fs, int x, int y, const char *string, colour3_t c)
 {
  //   Font_SetColour (fs, c);
  //   Font_put_lineR2L (fs, x, y, string);
 }
-
+*/
+/*
 void Menu_DrawStringR2LDark (FONTSELECT fs, int x, int y, const char *string)
 {
 
-}
+}*/
 
 void *Menu_ItemAtCursor (menuframework_s *m)
 {
@@ -480,14 +482,14 @@ void MenuList_Draw (menulist_s *l)
     const char **n;
     int y = 0;
 
-    Menu_DrawStringR2LDark (l->generic.fs, l->generic.x + l->generic.parent->x + LCOLUMN_OFFSET, l->generic.y + l->generic.parent->y, l->generic.name);
+    //Menu_DrawStringR2LDark (l->generic.fs, l->generic.x + l->generic.parent->x + LCOLUMN_OFFSET, l->generic.y + l->generic.parent->y, l->generic.name);
 
     n = l->itemnames;
 
     R_Draw_Fill (l->generic.x - 112 + l->generic.parent->x, l->generic.parent->y + l->generic.y + l->curvalue * 10 + 10, 128, 10, colourBlack);
 
     while (*n) {
-        Menu_DrawStringR2LDark (l->generic.fs, l->generic.x + l->generic.parent->x + LCOLUMN_OFFSET, l->generic.y + l->generic.parent->y + y + 10, *n);
+       // Menu_DrawStringR2LDark (l->generic.fs, l->generic.x + l->generic.parent->x + LCOLUMN_OFFSET, l->generic.y + l->generic.parent->y + y + 10, *n);
 
         n++;
         y += 10;

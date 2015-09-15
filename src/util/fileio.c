@@ -70,7 +70,7 @@ uint32_t FS_FileSeek (filehandle_t *fhandle, int32_t offset, uint32_t origin)
         switch (origin) {
         case SEEK_SET:
             if (offset < 0 ||
-                    offset > fhandle->filesize) {
+                    offset > (int32_t) fhandle->filesize) {
                 return 1;
             }
 
@@ -83,7 +83,7 @@ uint32_t FS_FileSeek (filehandle_t *fhandle, int32_t offset, uint32_t origin)
             }
 
             // offset is negative
-            if ((fhandle->filesize + offset) < 0) {
+            if ((int32_t) fhandle->filesize + offset < 0) {
                 return 1;
             }
 
@@ -146,7 +146,7 @@ void FS_CloseFile (filehandle_t *fhandle)
  *      Use the FS_CloseFile function to close an object handle returned
  *      by FS_OpenFile.
  */
-filehandle_t *FS_OpenFile (const char *filename, uint32_t FlagsAndAttributes)
+filehandle_t *FS_OpenFile (const char *filename)
 {
     char            netpath[ MAX_OSPATH ];
     filehandle_t    *hFile;

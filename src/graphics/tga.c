@@ -38,8 +38,6 @@
 
 #define TGA_HEADER_SIZE     18
 
-static uint8_t *p_buf;  // current pointer to tga data block
-
 
 /* TRUEVISION-XFILE magic signature string */
 static uint8_t magic[ 18 ] = {
@@ -258,7 +256,7 @@ void LoadTGA (const char *filename, uint8_t **pic, uint16_t *width, uint16_t *he
 //
 // Load the file
 //
-    hFile = FS_OpenFile (filename, 0);
+    hFile = FS_OpenFile (filename);
 
     if (! hFile) {
         printf("Could not open (%s) for reading\n", filename);

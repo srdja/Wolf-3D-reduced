@@ -239,7 +239,7 @@ void Level_ScanInfoPlane (LevelData_t *lvl)
                     cachedGuard = 1;
                 }
 
-                SpawnStand (en_guard, x, y, tile - 108, lvl);
+                SpawnStand (en_guard, x, y, tile - 108);
                 break;
 
             case 184:
@@ -306,7 +306,7 @@ void Level_ScanInfoPlane (LevelData_t *lvl)
                     cachedOfficer = 1;
                 }
 
-                SpawnStand (en_officer, x, y, tile - 116, lvl);
+                SpawnStand (en_officer, x, y, tile - 116);
                 break;
 
 
@@ -370,7 +370,7 @@ void Level_ScanInfoPlane (LevelData_t *lvl)
                     cachedSS = 1;
                 }
 
-                SpawnStand (en_ss, x, y, tile - 126, lvl);
+                SpawnStand (en_ss, x, y, tile - 126);
                 break;
 
             case 202:
@@ -433,7 +433,7 @@ void Level_ScanInfoPlane (LevelData_t *lvl)
                     cachedDog = 1;
                 }
 
-                SpawnStand (en_dog, x, y, tile - 134, lvl);
+                SpawnStand (en_dog, x, y, tile - 134);
                 break;
 
             case 210:
@@ -565,7 +565,7 @@ void Level_ScanInfoPlane (LevelData_t *lvl)
                     cachedMutant = 1;
                 }
 
-                SpawnStand (en_mutant, x, y, tile - 216, lvl);
+                SpawnStand (en_mutant, x, y, tile - 216);
                 break;
 
             case 256:
@@ -901,7 +901,7 @@ LevelData_t *Level_LoadMap (const char *levelname)
     memset (newMap, 0, sizeof (LevelData_t));
 
 
-    fhandle = FS_OpenFile (levelname, 0);
+    fhandle = FS_OpenFile (levelname);
 
     if (! fhandle) {
         return NULL;
@@ -1134,7 +1134,7 @@ int Level_VerifyMap (const char *levelname)
     int value = 1;
 
 
-    fhandle = FS_OpenFile (levelname, 0);
+    fhandle = FS_OpenFile (levelname);
 
     if (! fhandle) {
         value = 0;

@@ -157,7 +157,7 @@ entity_t *SpawnActor (enemy_t which, int x, int y, dir4type dir, LevelData_t *lv
 void A_StateChange (entity_t *Guard, en_state NewState);
 
 
-void SpawnStand (enemy_t which, int tilex, int tiley, int dir, LevelData_t *lvl);
+void SpawnStand (enemy_t which, int tilex, int tiley, int dir);
 void SpawnPatrol (enemy_t which, int tilex, int tiley, int dir);
 void SpawnDeadGuard (enemy_t which, int x, int y);
 void SpawnBoss (enemy_t which, int x, int y);

@@ -458,7 +458,7 @@ void A_DamageActor (entity_t *self, int damage)
  */
 void A_MechaSound (entity_t *self)
 {
-    if (areabyplayer[ self->areanumber ]) {
+    if (areabyplayer[ (unsigned char) self->areanumber ]) {
         //Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/080.wav"), 1, ATTN_NORM, 0);
     }
 }

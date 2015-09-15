@@ -471,9 +471,9 @@ void M_Main_Draw (void)
 
     for (i = 0 ; menunames[ i ] != 0 ; ++i) {
         if (m_main_cursor == i) {
-            Menu_DrawString (FONT1, cx + 60, cy + 5 + i * 26, menunames[ i ], highlight);
+            //Menu_DrawString (FONT1, cx + 60, cy + 5 + i * 26, menunames[ i ], highlight);
         } else {
-            Menu_DrawString (FONT1, cx + 60, cy + 5 + i * 26, menunames[ i ], textcolour);
+            //Menu_DrawString (FONT1, cx + 60, cy + 5 + i * 26, menunames[ i ], textcolour);
         }
     }
     M_DrawCursor (cx + 3, cy + m_main_cursor * 26 + 2);
@@ -579,9 +579,9 @@ void M_SMain_Draw (void)
 
     for (i = 0 ; menunames[ i ] != 0 ; ++i) {
         if (m_main_cursor == i) {
-            Menu_DrawString (FONT1, cx + 60, cy + 5 + i * 26, menunames[ i ], highlight);
+            //Menu_DrawString (FONT1, cx + 60, cy + 5 + i * 26, menunames[ i ], highlight);
         } else {
-            Menu_DrawString (FONT1, cx + 60, cy + 5 + i * 26, menunames[ i ], textcolour);
+           // Menu_DrawString (FONT1, cx + 60, cy + 5 + i * 26, menunames[ i ], textcolour);
         }
     }
     M_DrawCursor (cx + 3, cy + m_main_cursor * 26 + 2);

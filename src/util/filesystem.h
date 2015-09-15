@@ -70,11 +70,7 @@ typedef struct {
 
 } filehandle_t;
 
-
-/* Flags and Attributes */
-#define FA_FILE_FLAG_LOAD       0x01
-
-filehandle_t *FS_OpenFile (const char *filename, uint32_t FlagsAndAttributes);
+filehandle_t *FS_OpenFile (const char *filename);
 void FS_CloseFile (filehandle_t *fhandle);
 // note: this can't be called from another DLL, due to MS libc issues
 

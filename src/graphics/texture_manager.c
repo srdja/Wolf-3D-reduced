@@ -256,7 +256,7 @@ void TM_FindTexture_DB (const char *name, texture_t *tex, texturetype_t type)
  */
 void TM_FreeUnusedTextures (void)
 {
-    uint32_t i;
+    int32_t i;
     texture_t   *tex;
 
     // never free r_notexture texture
@@ -995,7 +995,7 @@ void TM_ResampleTexture (uint8_t *in, int inwidth, int inheight, uint8_t *out, i
  * \param[in] height Height of texture in pixels.
  * \note Operates in place, quartering the size of the texture.
  */
-bool TM_MipMap (uint8_t in, uint16_t *width, uint16_t *height, uint16_t bytes)
+bool TM_MipMap (uint8_t *in, uint16_t *width, uint16_t *height, uint16_t bytes)
 {
     uint16_t new_width, new_height;
 

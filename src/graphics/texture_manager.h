@@ -145,7 +145,7 @@ void TM_Init (void);
 void TM_Shutdown (void);
 
 
-bool TM_MipMap (uint8_t in, uint16_t *width, uint16_t *height, uint16_t bytes);
+bool TM_MipMap (uint8_t *in, uint16_t *width, uint16_t *height, uint16_t bytes);
 
 unsigned int TM_getWallTextureId (uint32_t imageId);
 unsigned int TM_getSpriteTextureId (uint32_t imageId);

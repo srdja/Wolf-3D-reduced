@@ -109,7 +109,7 @@ static GLenum MinFilterToGL (bool MipMap, TMinFilter MinFilter)
  * \param[in] data Angle in radians.
  * \return true if texture was uploaded, otherwise false.
  */
-bool R_UploadTexture (texture_t *tex, uint8_t data)
+bool R_UploadTexture (texture_t *tex, uint8_t* data)
 {
     uint8_t *scaled;
     uint16_t scaled_width, scaled_height;

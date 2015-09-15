@@ -9,7 +9,7 @@ char resource_base_path[MAX_OSPATH] = {0};
 const char *get_resource_base_path(void)
 {
     if (resource_base_path[0] != 0)
-        return &resource_base_path;
+        return (const char*) &resource_base_path;
 
     char *path = SDL_GetBasePath();
 
@@ -23,5 +23,5 @@ const char *get_resource_base_path(void)
 
     free(path);
 
-    return &resource_base_path;
+    return (const char*) &resource_base_path;
 }
