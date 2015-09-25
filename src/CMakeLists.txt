@@ -115,8 +115,8 @@ set(platform_SOURCE
 )
 
 # merge platforms
-set( SOURCE ${env_SOURCE} ${wolf_SOURCE} ${platform_SOURCE} )
-set( HEADER ${env_HEADER} ${wolf_HEADER} ${platform_HEADER} )
+set( SOURCE ${env_SOURCE} ${wolf_SOURCE} ${platform_SOURCE} util/compression.c util/compression.h)
+set( HEADER ${env_HEADER} ${wolf_HEADER} ${platform_HEADER} game/entities/entity.c game/entities/entity.h util/compression.c util/compression.h)
 
 add_executable( ${EXE_NAME} ${SOURCE} ${HEADER} ${input} graphics/color.h main.c graphics/window.h ${sound} game/menu/intro.h game/menu/main_menu.h game/menu/main_menu.c game/menu/menu.h game/menu/menu.c)
 
