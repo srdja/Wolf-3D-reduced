@@ -120,11 +120,9 @@ static void Game_MenuInit (void)
     s_game_menu.nitems = 0;
     s_game_menu.cursordraw = MenuCursorDrawFunc;
 
-    if (g_version == SPEAROFDESTINY) {
-        episode_names = spear_episode_names;
-    } else {
-        episode_names = wolf3d_episode_names;
-    }
+
+    episode_names = wolf3d_episode_names;
+
 
     for (i = 0; episode_names[ i ] != 0; ++i) {
         s_episode_actions[ i ].generic.type = MTYPE_ACTION;
@@ -197,18 +195,11 @@ void StartGame (int episode, int mission, int g_skill)
     // disable updates and start the cinematic going
     M_ForceMenuOff();
 
-    if (g_version == SPEAROFDESTINY) {
-        com_snprintf (szTextMsg, sizeof (szTextMsg),
-                     // "loading ; map s%.2d.map\n", mission);
-                      "s%.2d.map\n", mission);
-    } else {
-        com_snprintf (szTextMsg, sizeof (szTextMsg),
-                    //  "loading ; map w%d%d.map\n", episode, mission);
-                      "w%d%d.map", episode, mission);
-    }
+    com_snprintf (szTextMsg, sizeof (szTextMsg),
+            //  "loading ; map w%d%d.map\n", episode, mission);
+                  "w%d%d.map", episode, mission);
 
     fprintf(stdout, "Enter game command sent [%s] \n", szTextMsg);
-    //Cbuf_AddText (szTextMsg);
     Client_PrepRefresh (szTextMsg);
 }
 
@@ -216,12 +207,7 @@ static void ToughPic (int i)
 {
     char string[ 32 ];
 
-    if (g_version == SPEAROFDESTINY) {
-        com_snprintf (string, sizeof (string), "pics/SC_SKILL%dPIC.tga", i + 1);
-    } else {
-        com_snprintf (string, sizeof (string), "pics/C_SKILL%dPIC.tga", i + 1);
-    }
-
+    com_snprintf (string, sizeof (string), "pics/C_SKILL%dPIC.tga", i + 1);
 
     R_Draw_Pic (((viddef.width - 450) >> 1) + 375, 214, string);
 }
@@ -281,32 +267,17 @@ static void Skill_MenuInit (void)
 
 static void Skill_MenuDraw (void)
 {
-    if (g_version == SPEAROFDESTINY) {
-        int32_t w, h;
+    R_Draw_Fill (0, 0, viddef.width, viddef.height, bgcolour);
+    M_BannerString ("How tough are you?", 136);
 
-        R_Draw_Tile (0, 0, viddef.width, viddef.height, "pics/C_BACKDROPPIC.tga");
-
-        TM_GetTextureSize (&w, &h, "pics/C_HOWTOUGHPIC.tga");
-        R_Draw_Pic ((viddef.width - w) >> 1, 136, "pics/C_HOWTOUGHPIC.tga");
-
-        M_DrawWindow (((viddef.width - 450) >> 1), 180, 450, 134,
-                      sodbkgdcolour, sodbord2colour, soddeactive);
-    } else {
-        R_Draw_Fill (0, 0, viddef.width, viddef.height, bgcolour);
-
-        M_BannerString ("How tough are you?", 136);
-
-        M_DrawWindow (((viddef.width - 450) >> 1), 180, 450, 134,
-                      bkgdcolour, bord2colour, deactive);
-    }
+    M_DrawWindow (((viddef.width - 450) >> 1), 180, 450, 134,
+                  bkgdcolour, bord2colour, deactive);
 
     M_DrawInfoBar();
 
     Menu_AdjustCursor (&s_skill_menu, 1);
     Menu_Draw (&s_skill_menu);
 }
-
-
 
 
 static const char *Skill_MenuKey (int key)
@@ -336,34 +307,6 @@ static void SetMissionGameFunc (void *data)
 {
     menuaction_s *a = (menuaction_s *)data;
     int floor = a->generic.parent->cursor;
-
-    if (g_version == SPEAROFDESTINY) {
-        switch (tempEpisode) {
-        case 0:
-            if (floor == 5) {
-                floor = 18;
-            }
-
-            break;
-
-        case 1:
-            floor += 5;
-            break;
-
-        case 2:
-            if (floor == 8) {
-                floor = 20;
-            } else if (floor == 9) {
-                floor = 19;
-            } else {
-                floor += 10;
-            }
-
-            break;
-        }
-
-        tempEpisode = 0;
-    }
 
     StartGame (tempEpisode, floor, tempSkill);
 }
@@ -431,23 +374,7 @@ static void Mission_MenuInit (void)
     s_mission_menu.nitems = 0;
     s_mission_menu.cursordraw = MissionMenuCursorDrawFunc;
 
-    if (g_version == SPEAROFDESTINY) {
-        switch (tempEpisode) {
-        case 0:
-            mission_names = spear_tunnels_mission_names;
-            break;
-
-        case 1:
-            mission_names = spear_dungeons_mission_names;
-            break;
-
-        case 2:
-            mission_names = spear_castle_mission_names;
-            break;
-        }
-    } else {
-        mission_names = wolf3d_mission_names;
-    }
+    mission_names = wolf3d_mission_names;
 
     for (i = 0; mission_names[ i ] != 0; ++i) {
         s_mission_actions[ i ].generic.type = MTYPE_ACTION;

@@ -69,104 +69,43 @@ void A_DeathScream (entity_t *entity)
 {
     switch (entity->type) {
     case en_mutant:
-        if (g_version == SPEAROFDESTINY) {
-            //Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/033.wav"), 1, ATTN_NORM, 0);
-        } else {
           //  Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/037.wav"), 1, ATTN_NORM, 0);
-        }
-
         break;
-
     case en_guard:
-        if (g_version == SPEAROFDESTINY) {
-         //   Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound (dsodsounds[ US_RndT() % 6 ]), 1, ATTN_NORM, 0);
-        } else {
          //   Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound (dsounds[ US_RndT() % 6 ]), 1, ATTN_NORM, 0);
-        }
-
         break;
-
     case en_officer:
-        if (g_version == SPEAROFDESTINY) {
-         //   Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/046.wav"), 1, ATTN_NORM, 0);
-        } else {
           //  Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/074.wav"), 1, ATTN_NORM, 0);
-        }
-
         break;
-
     case en_ss:
-        if (g_version == SPEAROFDESTINY) {
-          //  Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/035.wav"), 1, ATTN_NORM, 0);
-        } else {
           //  Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/046.wav"), 1, ATTN_NORM, 0);
-        }
-
         break;
-
     case en_dog:
-        if (g_version == SPEAROFDESTINY) {
-          //  Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/031.wav"), 1, ATTN_NORM, 0);
-        } else {
            // Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/035.wav"), 1, ATTN_NORM, 0);
-        }
-
         break;
-
     case en_boss:
        // Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/019.wav"), 1, ATTN_NORM, 0);
         break;
-
     case en_schabbs:
         //Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/061.wav"), 1, ATTN_NORM, 0);
         break;
-
     case en_fake:
        // Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/069.wav"), 1, ATTN_NORM, 0);
         break;
-
     case en_mecha:
        // Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/084.wav"), 1, ATTN_NORM, 0);
         break;
-
     case en_hitler:
        // Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/044.wav"), 1, ATTN_NORM, 0);
         break;
-
     case en_gretel:
         //Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/115.wav"), 1, ATTN_NORM, 0);
         break;
-
     case en_gift:
         //Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/091.wav"), 1, ATTN_NORM, 0);
         break;
-
     case en_fat:
         //Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/119.wav"), 1, ATTN_NORM, 0);
-        break;
-
-    case en_spectre:
-        //Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("lsfx/062.wav"), 1, ATTN_NORM, 0);
-        break;
-
-    case en_angel:
-        //Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/098.wav"), 1, ATTN_NORM, 0);
-        break;
-
-    case en_trans:
-        //Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/070.wav"), 1, ATTN_NORM, 0);
-        break;
-
-    case en_uber:
-        //Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/082.wav"), 1, ATTN_NORM, 0);
-        break;
-
-    case en_will:
-        //Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/072.wav"), 1, ATTN_NORM, 0);
-        break;
-
-    case en_death:
-        //Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/090.wav"), 1, ATTN_NORM, 0);
         break;
     }
 }
@@ -184,12 +123,7 @@ void A_FirstSighting (entity_t *self)
         break;
 
     case en_officer:
-        if (g_version == SPEAROFDESTINY) {
-         //   Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/043.wav"), 1, ATTN_NORM, 0);
-        } else {
-          //  Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/071.wav"), 1, ATTN_NORM, 0);
-        }
-
+        //  Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/071.wav"), 1, ATTN_NORM, 0);
         self->speed *= 5;   // go faster when chasing player
         break;
 
@@ -252,38 +186,6 @@ void A_FirstSighting (entity_t *self)
     case en_pinky:
     case en_inky:
         self->speed *= 2;           // go faster when chasing player
-        break;
-
-//
-// Spear of Destiny
-//
-    case en_spectre:
-       // Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("lsfx/003.wav"), 1, ATTN_NORM, 0);
-        self->speed = 800;          // go faster when chasing player
-        break;
-
-    case en_angel:
-        //Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/095.wav"), 1, ATTN_NORM, 0);
-        self->speed = 1536;         // go faster when chasing player
-        break;
-
-    case en_trans:
-       // Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/066.wav"), 1, ATTN_NORM, 0);
-        self->speed = 1536;         // go faster when chasing player
-        break;
-
-    case en_uber:
-        self->speed = 3000;         // go faster when chasing player
-        break;
-
-    case en_will:
-       // Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/073.wav"), 1, ATTN_NORM, 0);
-        self->speed = 2048;         // go faster when chasing player
-        break;
-
-    case en_death:
-        //Sound_StartSound (NULL, 1, CHAN_VOICE, Sound_RegisterSound ("sfx/085.wav"), 1, ATTN_NORM, 0);
-        self->speed = 2048;         // go faster when chasing player
         break;
 
     default:
@@ -374,34 +276,6 @@ static void A_KillActor (entity_t *self)
 
     case en_hitler:
         PL_GivePoints (&Player, 5000);
-        break;
-
-    case en_spectre:
-        PL_GivePoints (&Player, 200);
-        break;
-
-    case en_angel:
-        PL_GivePoints (&Player, 5000);
-        break;
-
-    case en_trans:
-        PL_GivePoints (&Player, 5000);
-        Powerup_Spawn (tilex, tiley, pow_key1);
-        break;
-
-    case en_uber:
-        PL_GivePoints (&Player, 5000);
-        Powerup_Spawn (tilex, tiley, pow_key1);
-        break;
-
-    case en_will:
-        PL_GivePoints (&Player, 5000);
-        Powerup_Spawn (tilex, tiley, pow_key1);
-        break;
-
-    case en_death:
-        PL_GivePoints (&Player, 5000);
-        Powerup_Spawn (tilex, tiley, pow_key1);
         break;
     }
 
@@ -728,7 +602,7 @@ void A_Smoke (entity_t *self)
     smoke->tilex = self->tilex;
     smoke->tiley = self->tiley;
     smoke->state = st_die1;
-    smoke->type = (self->type == en_hrocket) ? en_hsmoke : en_smoke;
+    smoke->type = en_smoke;
     smoke->ticcount = 6;
     smoke->flags = FL_NEVERMARK;
     smoke->sprite = Sprite_GetNewSprite();
@@ -743,7 +617,6 @@ void A_Smoke (entity_t *self)
 static bool ProjectileTryMove (entity_t *self, LevelData_t *lvl)
 {
 #define PROJSIZE    0x2000
-
 
     int xl, yl, xh, yh, x, y;
 
@@ -812,19 +685,13 @@ void T_Projectile (entity_t *self)
     deltay = ABS (self->y - Player.position.origin[ 1 ]);
 
     if (! ProjectileTryMove (self, r_world)) {
-        if (self->type == en_rocket || self->type == en_hrocket) {
+        if (self->type == en_rocket) {
             // rocket ran into obstacle, draw explosion!
-            if (g_version == SPEAROFDESTINY) {
-                //Sound_StartSound (NULL, 1, CHAN_WEAPON, Sound_RegisterSound ("lsfx/001.wav"), 1, ATTN_NORM, 0);
-            } else {
-               // Sound_StartSound (NULL, 1, CHAN_WEAPON, Sound_RegisterSound ("lsfx/086.wav"), 1, ATTN_NORM, 0);
-            }
-
+            // Sound_StartSound (NULL, 1, CHAN_WEAPON, Sound_RegisterSound ("lsfx/086.wav"), 1, ATTN_NORM, 0);
             A_StateChange (self, st_die1);
         } else {
             A_StateChange (self, st_remove);  // mark for removal
         }
-
         return;
     }
 
@@ -836,8 +703,6 @@ void T_Projectile (entity_t *self)
             break;
 
         case en_rocket:
-        case en_hrocket:
-        case en_spark:
             damage = (US_RndT() >> 3) + 30;
             break;
 

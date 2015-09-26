@@ -93,62 +93,6 @@ statinfo_t static_wl6[] = {
     {false, -1},            // vines           "
 };
 
-
-statinfo_t static_sod[] = {
-    {false, -1},            // puddle          spr1v
-    { true, -1},            // Green Barrel    "
-    { true, -1},            // Table/chairs    "
-    { true, -1},            // Floor lamp      "
-    {false, -1},            // Chandelier      "
-    { true, -1},            // Hanged man      "
-    {false, pow_alpo},      // Bad food        "
-    { true, -1},            // Red pillar      "
-    { true, -1},            // Tree            spr2v
-    {false, -1},            // Skeleton flat   "
-    { true, -1},            // Sink            " (SOD:gibs)
-    { true, -1},            // Potted plant    "
-    { true, -1},            // Urn             "
-    { true, -1},            // Bare table      "
-    {false, -1},            // Ceiling light   "
-    { true, -1},            // Gibs!
-    { true, -1},            // suit of armor   spr3v
-    { true, -1},            // Hanging cage    "
-    { true, -1},            // SkeletoninCage  "
-    {false, -1},            // Skeleton relax  "
-    {false, pow_key1},      // Key 1           "
-    {false, pow_key2},      // Key 2           "
-    { true, -1},            // stuff                (SOD:gibs)
-    {false, -1},            // stuff
-    {false, pow_food},      // Good food       spr4v
-    {false, pow_firstaid},      // First aid       "
-    {false, pow_clip},      // Clip            "
-    {false, pow_machinegun},    // Machine gun     "
-    {false, pow_gatlinggun},    // Gatling gun     "
-    {false, pow_cross},     // Cross           "
-    {false, pow_chalice},       // Chalice         "
-    {false, pow_bible},     // Bible           "
-    {false, pow_crown},     // crown           spr5v
-    {false, pow_fullheal},      // one up          "
-    {false, pow_gibs},      // gibs            "
-    { true, -1},            // barrel          "
-    { true, -1},            // well            "
-    { true, -1},            // Empty well      "
-    {false, pow_gibs},      // Gibs 2          "
-    { true, -1},            // flag            "
-    {false, -1},            // Red light
-    {false, -1},            // junk            "
-    {false, -1},            // junk            "
-    {false, -1},            // junk            "
-    { true, -1},            // Gibs!
-    { true, -1},            // stove           " (SOD:gibs)
-    { true, -1},            // spears          " (SOD:gibs)
-    {false, -1},            // vines           "
-    { true, -1},            // marble pillar
-    {false, pow_25clip},        // bonus 25 clip
-    { true, -1},            // truck
-    {false, pow_spear},     // SPEAR OF DESTINY!
-};
-
 statinfo_t *statinfo = static_wl6;
 int num_statics = sizeof (static_wl6) / sizeof (static_wl6[ 0 ]);
 
@@ -504,39 +448,6 @@ void Level_ScanInfoPlane (LevelData_t *lvl)
                 break;
 
 //
-// Spear
-//
-            case 106:
-                CacheTextures (SPR_SPECTRE_W1, SPR_SPECTRE_F4);
-                SpawnBoss (en_spectre, x, y);
-                break;
-
-            case 107:
-                CacheTextures (SPR_ANGEL_W1, SPR_ANGEL_DEAD);
-                SpawnBoss (en_angel, x, y);
-                break;
-
-            case 125:
-                CacheTextures (SPR_TRANS_W1, SPR_TRANS_DIE3);
-                SpawnBoss (en_trans, x, y);
-                break;
-
-            case 142:
-                CacheTextures (SPR_UBER_W1, SPR_UBER_DEAD);
-                SpawnBoss (en_uber, x, y);
-                break;
-
-            case 143:
-                CacheTextures (SPR_WILL_W1, SPR_WILL_DEAD);
-                SpawnBoss (en_will, x, y);
-                break;
-
-            case 161:
-                CacheTextures (SPR_DEATH_W1, SPR_DEATH_DEAD);
-                SpawnBoss (en_death, x, y);
-                break;
-
-//
 // mutants
 //
             case 252:
@@ -672,88 +583,83 @@ static void Lvl_SpawnStatic (LevelData_t *lvl, int type, int x, int y)
  * \param[in] x X position in tile map
  * \param[in] y Y position in tile map
  */
-static void Lvl_SpawnObj (LevelData_t *lvl, int type, int x, int y)
-{
+static void Lvl_SpawnObj (LevelData_t *lvl, int type, int x, int y) {
     if (type >= 23 && type < 23 + num_statics) {
         // static object
-        Lvl_SpawnStatic (lvl, type - 23, x, y);
+        Lvl_SpawnStatic(lvl, type - 23, x, y);
         return;
     }
 
     switch (type) {
-    case 0x13: // start N
-        lvl->pSpawn.origin[ 0 ] = TILE2POS (x);
-        lvl->pSpawn.origin[ 1 ] = TILE2POS (y);
-        lvl->pSpawn.angle = DEG2RAD (90);
-        break;
+        case 0x13: // start N
+            lvl->pSpawn.origin[0] = TILE2POS (x);
+            lvl->pSpawn.origin[1] = TILE2POS (y);
+            lvl->pSpawn.angle = DEG2RAD (90);
+            break;
 
-    case 0x14: // start E
-        lvl->pSpawn.origin[ 0 ] = TILE2POS (x);
-        lvl->pSpawn.origin[ 1 ] = TILE2POS (y);
-        lvl->pSpawn.angle = DEG2RAD (0);
-        break;
+        case 0x14: // start E
+            lvl->pSpawn.origin[0] = TILE2POS (x);
+            lvl->pSpawn.origin[1] = TILE2POS (y);
+            lvl->pSpawn.angle = DEG2RAD (0);
+            break;
 
-    case 0x15: // start S
-        lvl->pSpawn.origin[ 0 ] = TILE2POS (x);
-        lvl->pSpawn.origin[ 1 ] = TILE2POS (y);
-        lvl->pSpawn.angle = DEG2RAD (270);
-        break;
+        case 0x15: // start S
+            lvl->pSpawn.origin[0] = TILE2POS (x);
+            lvl->pSpawn.origin[1] = TILE2POS (y);
+            lvl->pSpawn.angle = DEG2RAD (270);
+            break;
 
-    case 0x16: // start W
-        lvl->pSpawn.origin[ 0 ] = TILE2POS (x);
-        lvl->pSpawn.origin[ 1 ] = TILE2POS (y);
-        lvl->pSpawn.angle = DEG2RAD (180);
-        break;
+        case 0x16: // start W
+            lvl->pSpawn.origin[0] = TILE2POS (x);
+            lvl->pSpawn.origin[1] = TILE2POS (y);
+            lvl->pSpawn.angle = DEG2RAD (180);
+            break;
 
-    case 0x5a: // turn E
-        lvl->tilemap[ x ][ y ] |= TILE_IS_E_TURN;//FIXME!
-        break;
+        case 0x5a: // turn E
+            lvl->tilemap[x][y] |= TILE_IS_E_TURN;//FIXME!
+            break;
 
-    case 0x5b: // turn NE
-        lvl->tilemap[ x ][ y ] |= TILE_IS_NE_TURN;//FIXME!
-        break;
+        case 0x5b: // turn NE
+            lvl->tilemap[x][y] |= TILE_IS_NE_TURN;//FIXME!
+            break;
 
-    case 0x5c: // turn N
-        lvl->tilemap[ x ][ y ] |= TILE_IS_N_TURN;//FIXME!
-        break;
+        case 0x5c: // turn N
+            lvl->tilemap[x][y] |= TILE_IS_N_TURN;//FIXME!
+            break;
 
-    case 0x5d: // turn NW
-        lvl->tilemap[ x ][ y ] |= TILE_IS_NW_TURN;//FIXME!
-        break;
+        case 0x5d: // turn NW
+            lvl->tilemap[x][y] |= TILE_IS_NW_TURN;//FIXME!
+            break;
 
-    case 0x5e: // turn W
-        lvl->tilemap[ x ][ y ] |= TILE_IS_W_TURN;//FIXME!
-        break;
+        case 0x5e: // turn W
+            lvl->tilemap[x][y] |= TILE_IS_W_TURN;//FIXME!
+            break;
 
-    case 0x5f: // turn SW
-        lvl->tilemap[ x ][ y ] |= TILE_IS_SW_TURN;//FIXME!
-        break;
+        case 0x5f: // turn SW
+            lvl->tilemap[x][y] |= TILE_IS_SW_TURN;//FIXME!
+            break;
 
-    case 0x60: // turn S
-        lvl->tilemap[ x ][ y ] |= TILE_IS_S_TURN;//FIXME!
-        break;
+        case 0x60: // turn S
+            lvl->tilemap[x][y] |= TILE_IS_S_TURN;//FIXME!
+            break;
 
-    case 0x61: // turn SE
-        lvl->tilemap[ x ][ y ] |= TILE_IS_SE_TURN;//FIXME!
-        break;
+        case 0x61: // turn SE
+            lvl->tilemap[x][y] |= TILE_IS_SE_TURN;//FIXME!
+            break;
 
-    case 0x62: // pushwall modifier
-        lvl->tilemap[ x ][ y ] |= SECRET_TILE;
-        levelstate.total_secrets++;
-        break;
+        case 0x62: // pushwall modifier
+            lvl->tilemap[x][y] |= SECRET_TILE;
+            levelstate.total_secrets++;
+            break;
 
-    case 0x63: // Victory trigger
-        lvl->tilemap[ x ][ y ] |= EXIT_TILE;
-        break;
-        // spawn guards
+        case 0x63: // Victory trigger
+            lvl->tilemap[x][y] |= EXIT_TILE;
+            break;
+            // spawn guards
 
     } // end of switch( type )
 
 }
-
-
-
-
 
 #define MAPHEADER_SIZE  49
 #define MAP_SIGNATURE   0x21444921
@@ -784,17 +690,11 @@ LevelData_t *Level_LoadMap (const char *levelname)
 
     int x, y0, y, layer1, layer2;
 
-    if (g_version == SPEAROFDESTINY) {
-        statinfo = static_sod;
-        num_statics = sizeof (static_sod) / sizeof (static_sod[ 0 ]);
-    } else {
-        statinfo = static_wl6;
-        num_statics = sizeof (static_wl6) / sizeof (static_wl6[ 0 ]);
-    }
+    statinfo = static_wl6;
+    num_statics = sizeof (static_wl6) / sizeof (static_wl6[ 0 ]);
 
     newMap = &levelData;
     memset (newMap, 0, sizeof (LevelData_t));
-
 
     fhandle = FS_OpenFile (levelname);
 

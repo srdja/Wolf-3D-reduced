@@ -41,7 +41,6 @@ level_locals_t  levelstate;
 
 LRstruct LevelRatios;
 
-int   g_version; // Wolfenstein or Spear of Destiny
 float g_fov;
 float  g_autoaim;
 int skill;
@@ -69,7 +68,6 @@ void Game_Init (void)
 {
     g_fov     = 68;
     g_autoaim = 1;
-    g_version = 0;
     mapScale  = 0; // automap scale
     skill     = 1;
 

@@ -507,12 +507,6 @@ static bool AI_FindTarget (entity_t *self)
         case en_gretel:
         case en_gift:
         case en_fat:
-        case en_spectre:
-        case en_angel:
-        case en_trans:
-        case en_uber:
-        case en_will:
-        case en_death:
             self->reacttime = 1;
             break;
         }
@@ -547,8 +541,7 @@ static void T_Move (entity_t *self, long dist)
             if (self->type == en_blinky ||
                     self->type == en_clyde   ||
                     self->type == en_pinky   ||
-                    self->type == en_inky    ||
-                    self->type == en_spectre)
+                    self->type == en_inky)
                 player_take_damage(&Player, self, 2); // ghosts hurt player!
 
 //
@@ -907,12 +900,7 @@ void T_Shoot (entity_t *self)
 
     switch (self->type) {
     case en_ss:
-        if (g_version == SPEAROFDESTINY) {
-            //Sound_StartSound (NULL, 1, CHAN_WEAPON, Sound_RegisterSound ("sfx/020.wav"), 1, ATTN_NORM, 0);
-        } else {
-           // Sound_StartSound (NULL, 1, CHAN_WEAPON, Sound_RegisterSound ("sfx/024.wav"), 1, ATTN_NORM, 0);
-        }
-
+        // Sound_StartSound (NULL, 1, CHAN_WEAPON, Sound_RegisterSound ("sfx/024.wav"), 1, ATTN_NORM, 0);
         break;
 
     case en_gift:
@@ -924,12 +912,7 @@ void T_Shoot (entity_t *self)
         break;
 
     default:
-        if (g_version == SPEAROFDESTINY) {
-          //  Sound_StartSound (NULL, 1, CHAN_WEAPON, Sound_RegisterSound ("sfx/038.wav"), 1, ATTN_NORM, 0);
-        } else {
-           // Sound_StartSound (NULL, 1, CHAN_WEAPON, Sound_RegisterSound ("sfx/049.wav"), 1, ATTN_NORM, 0);
-        }
-
+        // Sound_StartSound (NULL, 1, CHAN_WEAPON, Sound_RegisterSound ("sfx/049.wav"), 1, ATTN_NORM, 0);
         break;
     }
 }
@@ -968,17 +951,6 @@ void T_Launch (entity_t *self)
         iangle -= 2 * M_PI;
     }
 
-    if (self->type == en_death) {
-        // death knight launches 2 rockets with 4 degree shift each.
-        T_Shoot (self);
-
-        if (self->state == st_shoot2) {
-            iangle = angle_normalize (iangle - DEG2RAD (4));
-        } else {
-            iangle = angle_normalize (iangle + DEG2RAD (4));
-        }
-    }
-
     proj = GetNewActor();
 
     if (proj == NULL) {
@@ -1001,17 +973,6 @@ void T_Launch (entity_t *self)
     proj->sprite = Sprite_GetNewSprite();
 
     switch (self->type) {
-    case en_death:
-        proj->type = en_hrocket;
-        //Sound_StartSound (NULL, 1, CHAN_WEAPON, Sound_RegisterSound ("lsfx/078.wav"), 1, ATTN_NORM, 0);
-        break;
-
-    case en_angel:
-        proj->type = en_spark;
-        proj->state = st_path1;
-        //Sound_StartSound (NULL, 1, CHAN_WEAPON, Sound_RegisterSound ("lsfx/069.wav"), 1, ATTN_NORM, 0);
-        break;
-
     case en_fake:
         proj->type = en_fire;
         proj->state = st_path1;
@@ -1028,12 +989,6 @@ void T_Launch (entity_t *self)
 
     default:
         proj->type = en_rocket;
-
-        if (g_version == SPEAROFDESTINY) {
-          //  Sound_StartSound (NULL, 1, CHAN_WEAPON, Sound_RegisterSound ("lsfx/008.wav"), 1, ATTN_NORM, 0);
-        } else {
-          //  Sound_StartSound (NULL, 1, CHAN_WEAPON, Sound_RegisterSound ("lsfx/085.wav"), 1, ATTN_NORM, 0);
-        }
+            //  Sound_StartSound (NULL, 1, CHAN_WEAPON, Sound_RegisterSound ("lsfx/085.wav"), 1, ATTN_NORM, 0);
     }
-
 }

@@ -152,21 +152,11 @@ void Video_MenuInit (void)
 
 void Video_MenuDraw (void)
 {
+    R_Draw_Fill (0, 0, viddef.width, viddef.height, bgcolour);
 
-    if (g_version == SPEAROFDESTINY) {
-        R_Draw_Tile (0, 0, viddef.width, viddef.height, "pics/C_BACKDROPPIC.tga");
-
-        M_BannerString ("Video Setup", 15);
-        M_DrawWindow (((viddef.width - 550) >> 1), ((viddef.height - 335) >> 1), 550, 335,
-                      sodbkgdcolour, sodbord2colour, soddeactive);
-    } else {
-        R_Draw_Fill (0, 0, viddef.width, viddef.height, bgcolour);
-
-        M_BannerString ("Video Setup", 15);
-        M_DrawWindow (((viddef.width - 550) >> 1), ((viddef.height - 335) >> 1), 550, 335,
+    M_BannerString ("Video Setup", 15);
+    M_DrawWindow (((viddef.width - 550) >> 1), ((viddef.height - 335) >> 1), 550, 335,
                       bkgdcolour, bord2colour, deactive);
-    }
-
 
     // move cursor to a reasonable starting position
     Menu_AdjustCursor (&s_opengl_menu, 1);

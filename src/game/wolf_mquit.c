@@ -99,11 +99,7 @@ static void M_Quit_Draw (void)
 
     //Font_GetMsgDimensions (1, log_out_messages[ menu_random ], &w, &h);
 
-    if (g_version == SPEAROFDESTINY) {
-        M_SMain_Draw();
-    } else {
-        M_Main_Draw();
-    }
+    M_Main_Draw();
 
     M_DrawWindow ((viddef.width - (w + 10)) >> 1, (viddef.height - (h + 10)) >> 1, w + 10, h + 10, textcolour, colourBlack, highlight);
 

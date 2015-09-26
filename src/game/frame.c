@@ -120,11 +120,7 @@ void Client_PrepRefresh (const char *r_mapname)
     R_DrawPsyched (0);
     R_EndFrame();
 
-    if (g_version == SPEAROFDESTINY) {
-        spritelocation = SODSPRITESDIRNAME;
-    } else {
-        spritelocation = WL6SPRITESDIRNAME;
-    }
+    spritelocation = WL6SPRITESDIRNAME;
 
     strncpy(mapname, r_mapname, sizeof(mapname));   // skip "maps/"
 
@@ -133,20 +129,8 @@ void Client_PrepRefresh (const char *r_mapname)
         mapname[ strlen (mapname) - 4 ] = '\0';      // cut off ".map"
     }
 
-    if (g_version == SPEAROFDESTINY) {
-        currentMap.episode = 0;
-        currentMap.map = atoi (mapname + 1);
-    } else {
-        currentMap.episode = mapname[1] - '0';
-        currentMap.map =     mapname[2] - '0';
-    }
-
-    //this is a hack for "Floor 18, Part II: Death's Door"
-    //there's no gold key to leave the first room
-    //so we give it to the player here... gsh
-    if (g_version == SPEAROFDESTINY && currentMap.map == 20) {
-        Player.items |= ITEM_KEY_GOLD;
-    }
+    currentMap.episode = mapname[1] - '0';
+    currentMap.map =     mapname[2] - '0';
 
     // register models, pics, and skins
     R_BeginRegistration (mapname);

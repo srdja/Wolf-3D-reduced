@@ -59,8 +59,6 @@ typedef enum {
     pow_food,           // 10% if <100%; HEALTH1SND
     pow_fullheal,       // 99%, 25bul; BONUS1UPSND
     pow_25clip,         // 25bul if <99bul; GETAMMOBOXSND
-    pow_spear,          // spear of destiny!
-
     pow_last
 
 } pow_t;

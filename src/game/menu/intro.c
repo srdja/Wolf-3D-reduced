@@ -89,12 +89,6 @@ static void draw_title(void)
 
     R_Draw_Fill (0, 0, viddef.width, viddef.height, colourBlack);
 
-    if (g_version == SPEAROFDESTINY) {
-        TM_GetTextureSize (&w, &h, "pics/STITLEPIC.tga");
-        R_Draw_Pic ((viddef.width - w) >> 1, (viddef.height - h) >> 1, "pics/STITLEPIC.tga");
-
-        return;
-    }
     TM_GetTextureSize (&w, &h, "pics/TITLEPIC.tga");
     R_Draw_Pic ((viddef.width - w) >> 1, (viddef.height - h) >> 1, "pics/TITLEPIC.tga");
 }
@@ -103,18 +97,6 @@ static void draw_credits(void)
 {
     uint32_t w, h;
 
-    if (g_version == SPEAROFDESTINY) {
-
-        R_Draw_Tile (0, 0, viddef.width, viddef.height, "pics/C_BACKDROPPIC.tga");
-
-        R_Draw_Fill (0, 36, viddef.width, 48, colourBlack);
-        R_Draw_Fill (0, 80, viddef.width, 2, sodbgcolour);
-
-        TM_GetTextureSize (&w, &h, "pics/SCREDITSPIC.tga");
-        R_Draw_Pic ((viddef.width - w) >> 1, 0, "pics/SCREDITSPIC.tga");
-
-        return;
-    }
     R_Draw_Fill (0, 0, viddef.width, viddef.height, bgcolour);
     R_Draw_Fill (0, 36, viddef.width, 48, colourBlack);
     R_Draw_Fill (0, 80, viddef.width, 2, bannerline);
@@ -207,7 +189,7 @@ void intro_run()
         input_set_context("game");
         ClientStatic.menuState = IPM_GAME;
         Game_Init();
-        StartGame( 0,  0,  1);
+        StartGame( 1,  0,  1);
         return;
     }
     slides[intro_slide].draw();

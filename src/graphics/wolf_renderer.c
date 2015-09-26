@@ -163,13 +163,9 @@ void R_DrawFace (void)
 
 
     if (Player.health) {
-        if (g_version == SPEAROFDESTINY && Player.flags & FL_GODMODE) {
-            R_Draw_Pic (hud_x + 272, hud_y + 8, godmugshotnames[ Player.faceframe ]);
-        } else if (Player.face_gotgun) {
+        if (Player.face_gotgun) {
             R_Draw_Pic (hud_x + 272, hud_y + 8, "pics/GOTGATLINGPIC.tga");
-        } else if (g_version == SPEAROFDESTINY && Player.face_ouch) {
-            R_Draw_Pic (hud_x + 272, hud_y + 8, "pics/BJOUCHPIC.tga");
-        } else {
+        }  else {
             int health = Player.health;
 
             if (health > 100) {
@@ -339,21 +335,8 @@ void R_BeginRegistration (const char *map)
         return;
     }
 
-    if (g_version == SPEAROFDESTINY) {
-        if (strlen (map) >= 2) {
-            levelstate.floornum = atoi (map + 1);
-
-            if (levelstate.floornum == 20) {
-                levelstate.floornum = 17;
-            }
-        }
-
-        levelstate.episode = 0;
-    } else {
-        levelstate.episode  = map[1] - '0';
-        levelstate.floornum = map[2] - '0';
-    }
-
+    levelstate.episode  = map[1] - '0';
+    levelstate.floornum = map[2] - '0';
 }
 
 /**

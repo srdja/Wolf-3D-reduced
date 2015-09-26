@@ -58,9 +58,6 @@ int Pow_Texture[ pow_last ] = {
     SPR_STAT_28,    // pow_gatlinggun
     SPR_STAT_24,    // pow_food
     SPR_STAT_33,    // pow_fullheal
-// spear
-    SPR_STAT_49,    // pow_25clip
-    SPR_STAT_51,    // pow_spear
 };
 
 
@@ -109,7 +106,6 @@ static int Pow_Give (pow_t type)
         PL_GiveKey (&Player, type);
         //Sound_StartSound (NULL, 0, CHAN_ITEM, Sound_RegisterSound ("lsfx/012.wav"), 1, ATTN_NORM, 0);
         break;
-
 //
 // Treasure
 //
@@ -119,7 +115,6 @@ static int Pow_Give (pow_t type)
 
         if (++levelstate.found_treasure == levelstate.total_treasure) {
         }
-
         break;
 
     case pow_chalice:
@@ -128,7 +123,6 @@ static int Pow_Give (pow_t type)
 
         if (++levelstate.found_treasure == levelstate.total_treasure) {
         }
-
         break;
 
     case pow_bible:
@@ -137,7 +131,6 @@ static int Pow_Give (pow_t type)
 
         if (++levelstate.found_treasure == levelstate.total_treasure) {
         }
-
         break;
 
     case pow_crown:
@@ -146,7 +139,6 @@ static int Pow_Give (pow_t type)
 
         if (++levelstate.found_treasure == levelstate.total_treasure) {
         }
-
         break;
 
 //
@@ -240,15 +232,6 @@ static int Pow_Give (pow_t type)
 
        // Sound_StartSound (NULL, 0, CHAN_ITEM, Sound_RegisterSound ("lsfx/034.wav"), 1, ATTN_NORM, 0);
         break;
-
-    case pow_spear: {
-        char szTextMsg[ 256 ];
-
-        //Sound_StartSound (NULL, 0, CHAN_ITEM, Sound_RegisterSound ("sodsfx/109.wav"), 1, ATTN_NORM, 0);
-        com_snprintf (szTextMsg, sizeof (szTextMsg), "s%.2d.map", 20);
-        Client_PrepRefresh (szTextMsg);
-    }
-    break;
 
     default:
         break;

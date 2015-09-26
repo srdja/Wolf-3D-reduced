@@ -32,14 +32,9 @@
 
 #include "../common.h"
 
-
-// Game Version
-#define WOLFENSTEINWL6  0x00
-#define SPEAROFDESTINY  0x01
-
 #define MAX_EPISODES    6
 #define MAX_SKILLS      4
-#define MAX_MAPS        81 //60    changed by gsh to allow for SOD levels
+#define MAX_MAPS        60
 
 typedef struct {
     int     episode;
@@ -100,7 +95,6 @@ typedef struct {
 } level_locals_t;
 
 
-
 extern level_locals_t   levelstate;
 
 
@@ -121,7 +115,6 @@ typedef struct {
 extern LRstruct LevelRatios;
 
 
-extern int g_version;
 extern float   g_fov;
 extern float g_autoaim;
 extern  int skill;
@@ -133,9 +126,7 @@ void Game_Reset (void);
 
 void ProcessGuards (void);
 
-
 #define WL6SPRITESDIRNAME   "sprites"
-#define SODSPRITESDIRNAME   "sodsprites"
 
 extern char *spritelocation;
 

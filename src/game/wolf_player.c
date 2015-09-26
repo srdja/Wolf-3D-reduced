@@ -301,11 +301,6 @@ static void PL_ControlMovement (player_t *self, LevelData_t *lvl)
     if (!self->movx && !self->movy)
         return;
 
-#ifdef SPEAR
-
-    funnyticount = 0; // ZERO FUNNY COUNTER IF MOVED! // FIXME!
-
-#endif
     self->speed = self->movx + self->movy;
 
 // bound movement

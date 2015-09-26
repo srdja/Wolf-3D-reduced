@@ -77,11 +77,7 @@ bool PushWall_Push (int x, int y, dir4type dir)
 
     levelstate.found_secrets++;
 
-    if (g_version == SPEAROFDESTINY) {
-        //Sound_StartSound (NULL, 1, CHAN_AUTO, Sound_RegisterSound ("sfx/030.wav"), 1, ATTN_STATIC, 0);
-    } else {
-        //Sound_StartSound (NULL, 1, CHAN_AUTO, Sound_RegisterSound ("sfx/034.wav"), 1, ATTN_STATIC, 0);
-    }
+    //Sound_StartSound (NULL, 1, CHAN_AUTO, Sound_RegisterSound ("sfx/034.wav"), 1, ATTN_STATIC, 0);
 
 // good way to avoid stuckness; [un]comment one more down!
 // it makes a tile behind pushwall unpassable
@@ -101,7 +97,6 @@ bool PushWall_Push (int x, int y, dir4type dir)
 
     PWall.tex_x = r_world->wall_tex_x[ x ][ y ];
     PWall.tex_y = r_world->wall_tex_y[ x ][ y ];
-
 
     return true;
 }

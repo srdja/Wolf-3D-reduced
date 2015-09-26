@@ -73,20 +73,11 @@ static void Sound_MenuInit (void)
 
 static void Sound_MenuDraw (void)
 {
-    if (g_version == SPEAROFDESTINY) {
-        R_Draw_Tile (0, 0, viddef.width, viddef.height, "pics/C_BACKDROPPIC.tga");
+    R_Draw_Fill (0, 0, viddef.width, viddef.height, bgcolour);
 
-        M_BannerString ("Sound Setup", 15);
-        M_DrawWindow (((viddef.width - 500) >> 1), ((viddef.height - 150) >> 1) + 35, 500, 150,
-                      sodbkgdcolour, sodbord2colour, soddeactive);
-    } else {
-        R_Draw_Fill (0, 0, viddef.width, viddef.height, bgcolour);
-
-        M_BannerString ("Sound Setup", 15);
-        M_DrawWindow (((viddef.width - 500) >> 1), ((viddef.height - 150) >> 1) + 35, 500, 150,
-                      bkgdcolour, bord2colour, deactive);
-    }
-
+    M_BannerString ("Sound Setup", 15);
+    M_DrawWindow (((viddef.width - 500) >> 1), ((viddef.height - 150) >> 1) + 35, 500, 150,
+                  bkgdcolour, bord2colour, deactive);
 
     M_DrawInfoBar();
 

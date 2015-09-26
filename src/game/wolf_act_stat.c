@@ -1047,415 +1047,7 @@ stateinfo objstate[ NUMENEMIES ][ NUMSTATES ] = {
 
         ST_INFO_NULL, // st_dead
         ST_INFO_NULL // st_deathcam
-    },
-
-// --- Spear of destiny!
-    // en_spark,
-    {
-        ST_INFO_NULL, // st_stand,
-
-        {0, SPR_SPARK1, 6, T_Projectile, NULL, st_path2}, // st_path1,
-        ST_INFO_NULL, // st_path1s,
-        {0, SPR_SPARK2, 6, T_Projectile, NULL, st_path3}, // st_path2,
-        {0, SPR_SPARK3, 6, T_Projectile, NULL, st_path4}, // st_path3,
-        ST_INFO_NULL, // st_path3s,
-        {0, SPR_SPARK4, 6, T_Projectile, NULL, st_path1}, // st_path4,
-
-        ST_INFO_NULL,// st_pain,
-        ST_INFO_NULL,// st_pain1,
-
-        ST_INFO_NULL,// st_shoot1,
-        ST_INFO_NULL,// st_shoot2,
-        ST_INFO_NULL,// st_shoot3,
-        ST_INFO_NULL,//  st_shoot4,
-        ST_INFO_NULL,// st_shoot5,
-        ST_INFO_NULL,// st_shoot6,
-
-        ST_INFO_NULL,// st_shoot7,
-        ST_INFO_NULL,// st_shoot8,
-        ST_INFO_NULL,// st_shoot9,
-
-        ST_INFO_NULL,// st_chase1,
-        ST_INFO_NULL, // st_chase1s,
-        ST_INFO_NULL, // st_chase2,
-        ST_INFO_NULL,// st_chase3,
-        ST_INFO_NULL,    // st_chase3s,
-        ST_INFO_NULL, // st_chase4,
-
-        ST_INFO_NULL, // st_die1,
-        ST_INFO_NULL, // st_die2,
-        ST_INFO_NULL, // st_die3,
-        ST_INFO_NULL,// st_die4,
-        ST_INFO_NULL,// st_die5,
-
-        ST_INFO_NULL,// st_die6,
-        ST_INFO_NULL,// st_die7,
-        ST_INFO_NULL,// st_die8,
-        ST_INFO_NULL,// st_die9,
-
-        ST_INFO_NULL, // st_dead
-        ST_INFO_NULL // st_deathcam
-    },
-    // en_hrocket,
-    {
-        {1, SPR_HROCKET_1, 3, T_Projectile, A_Smoke, st_stand}, // st_stand,
-
-        ST_INFO_NULL,// st_path1,
-        ST_INFO_NULL, // st_path1s,
-        ST_INFO_NULL, // st_path2,
-        ST_INFO_NULL,// st_path3,
-        ST_INFO_NULL, // st_path3s,
-        ST_INFO_NULL, // st_path4,
-
-        ST_INFO_NULL,// st_pain,
-        ST_INFO_NULL,// st_pain1,
-
-        ST_INFO_NULL,// st_shoot1,
-        ST_INFO_NULL,// st_shoot2,
-        ST_INFO_NULL,// st_shoot3,
-        ST_INFO_NULL,//  st_shoot4,
-        ST_INFO_NULL,// st_shoot5,
-        ST_INFO_NULL,// st_shoot6,
-
-        ST_INFO_NULL,// st_shoot7,
-        ST_INFO_NULL,// st_shoot8,
-        ST_INFO_NULL,// st_shoot9,
-
-        ST_INFO_NULL,// st_chase1,
-        ST_INFO_NULL, // st_chase1s,
-        ST_INFO_NULL, // st_chase2,
-        ST_INFO_NULL,// st_chase3,
-        ST_INFO_NULL,    // st_chase3s,
-        ST_INFO_NULL, // st_chase4,
-
-        {0, SPR_HBOOM_1, 6, NULL, NULL, st_die2}, // st_die1,
-        {0, SPR_HBOOM_2, 6, NULL, NULL, st_die3}, // st_die2,
-        {0, SPR_HBOOM_3, 6, NULL, NULL, st_remove}, // st_die3,
-        ST_INFO_NULL,// st_die4,
-        ST_INFO_NULL,// st_die5,
-
-        ST_INFO_NULL,// st_die6,
-        ST_INFO_NULL,// st_die7,
-        ST_INFO_NULL,// st_die8,
-        ST_INFO_NULL,// st_die9,
-
-        ST_INFO_NULL, // st_dead
-        ST_INFO_NULL // st_deathcam
-    },
-    // en_hsmoke,
-    {
-        ST_INFO_NULL, // st_stand,
-
-        ST_INFO_NULL, // st_path1,
-        ST_INFO_NULL, // st_path1s,
-        ST_INFO_NULL, // st_path2,
-        ST_INFO_NULL, // st_path3,
-        ST_INFO_NULL, // st_path3s,
-        ST_INFO_NULL, // st_path4,
-
-        ST_INFO_NULL, // st_pain,
-        ST_INFO_NULL, // st_pain1,
-
-        ST_INFO_NULL, // st_shoot1,
-        ST_INFO_NULL, // st_shoot2,
-        ST_INFO_NULL, // st_shoot3,
-        ST_INFO_NULL, // st_shoot4,
-        ST_INFO_NULL, // st_shoot5,
-        ST_INFO_NULL, // st_shoot6,
-
-        ST_INFO_NULL, // st_shoot7,
-        ST_INFO_NULL, // st_shoot8,
-        ST_INFO_NULL, // st_shoot9,
-
-        ST_INFO_NULL, // st_chase1,
-        ST_INFO_NULL, // st_chase1s,
-        ST_INFO_NULL, // st_chase2,
-        ST_INFO_NULL, // st_chase3,
-        ST_INFO_NULL,   // st_chase3s,
-        ST_INFO_NULL, // st_chase4,
-
-        {0, SPR_HSMOKE_1, 3, NULL, NULL, st_die2}, // st_die1,
-        {0, SPR_HSMOKE_2, 3, NULL, NULL, st_die3}, // st_die2,
-        {0, SPR_HSMOKE_3, 3, NULL, NULL, st_die4}, // st_die3,
-        {0, SPR_HSMOKE_4, 3, NULL, NULL, st_remove}, // st_die4,
-        ST_INFO_NULL, // st_die5,
-
-        ST_INFO_NULL, // st_die6,
-        ST_INFO_NULL, // st_die7,
-        ST_INFO_NULL, // st_die8,
-        ST_INFO_NULL, // st_die9,
-
-        ST_INFO_NULL, // st_dead
-        ST_INFO_NULL // st_deathcam
-    },
-    // en_spectre,
-    {
-        ST_INFO_NULL, // st_stand,
-
-        {0, SPR_SPECTRE_W1, 10, T_Stand, NULL, st_path2}, // st_path1,
-        ST_INFO_NULL, // st_path1s,
-        {0, SPR_SPECTRE_W2, 10, T_Stand, NULL, st_path3}, // st_path2,
-        {0, SPR_SPECTRE_W3, 10, T_Stand, NULL, st_path4}, // st_path3,
-        ST_INFO_NULL, // st_path3s,
-        {0, SPR_SPECTRE_W4, 10, T_Stand, NULL, st_path1}, // st_path4,
-
-        ST_INFO_NULL, // st_pain,
-        ST_INFO_NULL, // st_pain1,
-
-        ST_INFO_NULL, // st_shoot1,
-        ST_INFO_NULL, // st_shoot2,
-        ST_INFO_NULL, // st_shoot3,
-        ST_INFO_NULL, // st_shoot4,
-        ST_INFO_NULL, // st_shoot5,
-        ST_INFO_NULL, // st_shoot6,
-
-        ST_INFO_NULL, // st_shoot7,
-        ST_INFO_NULL, // st_shoot8,
-        ST_INFO_NULL, // st_shoot9,
-
-        {0, SPR_SPECTRE_W1, 10, T_Ghosts, NULL, st_chase2}, // st_chase1,
-        ST_INFO_NULL, // st_chase1s,
-        {0, SPR_SPECTRE_W2, 10, T_Ghosts, NULL, st_chase3}, // st_chase2,
-        {0, SPR_SPECTRE_W3, 10, T_Ghosts, NULL, st_chase4}, // st_chase3,
-        ST_INFO_NULL,   // st_chase3s,
-        {0, SPR_SPECTRE_W4, 10, T_Ghosts, NULL, st_chase1}, // st_chase4,
-
-        {0, SPR_SPECTRE_F1, 10, NULL, NULL, st_die2}, // st_die1,
-        {0, SPR_SPECTRE_F2, 10, NULL, NULL, st_die3}, // st_die2,
-        {0, SPR_SPECTRE_F3, 10, NULL, NULL, st_die4}, // st_die3,
-        {0, SPR_SPECTRE_F4, 300, NULL, NULL, st_die5}, // st_die4,
-        {0, SPR_SPECTRE_F4, 10, NULL, A_Dormant, st_die5}, // st_die5,
-
-        ST_INFO_NULL, // st_die6,
-        ST_INFO_NULL, // st_die7,
-        ST_INFO_NULL, // st_die8,
-        ST_INFO_NULL, // st_die9,
-
-        ST_INFO_NULL, // st_dead
-        ST_INFO_NULL // st_deathcam
-    },
-    // en_angel,
-    {
-        {0, SPR_ANGEL_W1, 0, T_Stand, NULL, st_stand}, // st_stand,
-
-        ST_INFO_NULL, // st_path1,
-        ST_INFO_NULL, // st_path1s,
-        ST_INFO_NULL, // st_path2,
-        ST_INFO_NULL, // st_path3,
-        ST_INFO_NULL, // st_path3s,
-        ST_INFO_NULL, // st_path4,
-
-        {0, SPR_ANGEL_TIRED1, 40, NULL, A_Breathing, st_pain1}, // st_pain,
-        {0, SPR_ANGEL_TIRED2, 40, NULL, NULL, st_shoot4}, // st_pain1,
-
-        {0, SPR_ANGEL_SHOOT1, 10, NULL, A_StartAttack, st_shoot2}, // st_shoot1,
-        {0, SPR_ANGEL_SHOOT2, 20, NULL, T_Launch, st_shoot3}, // st_shoot2,
-        {0, SPR_ANGEL_SHOOT1, 10, NULL, A_Relaunch, st_shoot2}, // st_shoot3,
-
-        {0, SPR_ANGEL_TIRED1, 40, NULL, A_Breathing, st_shoot5}, // st_shoot4,
-        {0, SPR_ANGEL_TIRED2, 40, NULL, NULL, st_shoot6}, // st_shoot5,
-        {0, SPR_ANGEL_TIRED1, 40, NULL, A_Breathing, st_shoot7}, // st_shoot6,
-        {0, SPR_ANGEL_TIRED2, 40, NULL, NULL, st_shoot8}, // st_shoot7,
-        {0, SPR_ANGEL_TIRED1, 40, NULL, A_Breathing, st_chase1}, // st_shoot8,
-        ST_INFO_NULL, // st_shoot9,
-
-        {0, SPR_ANGEL_W1, 10, T_BossChase,  NULL, st_chase1s}, // st_chase1,
-        {0, SPR_ANGEL_W1,  3, NULL,     NULL, st_chase2}, // st_chase1s,
-        {0, SPR_ANGEL_W2,  8, T_BossChase,  NULL, st_chase3}, // st_chase2,
-        {0, SPR_ANGEL_W3, 10, T_BossChase,  NULL, st_chase3s}, // st_chase3,
-        {0, SPR_ANGEL_W3,  3, NULL,     NULL, st_chase4},   // st_chase3s,
-        {0, SPR_ANGEL_W4,  8, T_BossChase,  NULL, st_chase1}, // st_chase4,
-
-        {0, SPR_ANGEL_W1, 1, NULL, A_DeathScream, st_die2}, // st_die1,
-        {0, SPR_ANGEL_W1, 1, NULL, NULL, st_die3}, // st_die2,
-        {0, SPR_ANGEL_DIE1, 10, NULL, A_Slurpie, st_die4}, // st_die3,
-        {0, SPR_ANGEL_DIE2, 10, NULL, NULL, st_die5}, // st_die4,
-        {0, SPR_ANGEL_DIE3, 10, NULL, NULL, st_die6}, // st_die5,
-        {0, SPR_ANGEL_DIE4, 10, NULL, NULL, st_die7}, // st_die6,
-        {0, SPR_ANGEL_DIE5, 10, NULL, NULL, st_die8}, // st_die7,
-        {0, SPR_ANGEL_DIE6, 10, NULL, NULL, st_die9}, // st_die8,
-        {0, SPR_ANGEL_DIE7, 10, NULL, NULL, st_dead}, // st_die9,
-
-        {0, SPR_ANGEL_DEAD, 130, NULL, A_Victory, st_dead},  // st_dead
-        ST_INFO_NULL // st_deathcam
-    },
-    // en_trans,
-    {
-        {0, SPR_TRANS_W1, 0, T_Stand, NULL, st_stand}, // st_stand,
-
-        ST_INFO_NULL, // st_path1,
-        ST_INFO_NULL, // st_path1s,
-        ST_INFO_NULL, // st_path2,
-        ST_INFO_NULL, // st_path3,
-        ST_INFO_NULL, // st_path3s,
-        ST_INFO_NULL, // st_path4,
-
-        ST_INFO_NULL, // st_pain,
-        ST_INFO_NULL, // st_pain1,
-
-        {0, SPR_TRANS_SHOOT1, 30, NULL, NULL, st_shoot2}, // st_shoot1,
-        {0, SPR_TRANS_SHOOT2, 10, NULL, T_Shoot, st_shoot3}, // st_shoot2,
-        {0, SPR_TRANS_SHOOT3, 10, NULL, T_Shoot, st_shoot4}, // st_shoot3,
-        {0, SPR_TRANS_SHOOT2, 10, NULL, T_Shoot, st_shoot5}, // st_shoot4,
-        {0, SPR_TRANS_SHOOT3, 10, NULL, T_Shoot, st_shoot6}, // st_shoot5,
-        {0, SPR_TRANS_SHOOT2, 10, NULL, T_Shoot, st_shoot7}, // st_shoot6,
-        {0, SPR_TRANS_SHOOT3, 10, NULL, T_Shoot, st_shoot8}, // st_shoot7,
-        {0, SPR_TRANS_SHOOT1, 10, NULL, NULL, st_chase1}, // st_shoot8,
-        ST_INFO_NULL, // st_shoot9,
-
-        {0, SPR_TRANS_W1, 10, T_Chase, NULL, st_chase1s}, // st_chase1,
-        {0, SPR_TRANS_W1,  3, NULL,      NULL, st_chase2}, // st_chase1s,
-        {0, SPR_TRANS_W2,  8, T_Chase, NULL, st_chase3}, // st_chase2,
-        {0, SPR_TRANS_W3, 10, T_Chase, NULL, st_chase3s}, // st_chase3,
-        {0, SPR_TRANS_W3,  3, NULL,      NULL, st_chase4},  // st_chase3s,
-        {0, SPR_TRANS_W4,  8, T_Chase, NULL, st_chase1}, // st_chase4,
-
-        {0, SPR_TRANS_W1, 1, NULL, A_DeathScream, st_die2}, // st_die1,
-        {0, SPR_TRANS_W1, 1, NULL, NULL, st_die3}, // st_die2,
-        {0, SPR_TRANS_DIE1, 15, NULL, NULL, st_die4}, // st_die3,
-        {0, SPR_TRANS_DIE2, 15, NULL, NULL, st_die5}, // st_die4,
-        {0, SPR_TRANS_DIE3, 15, NULL, NULL, st_dead}, // st_die5,
-        ST_INFO_NULL, // st_die6,
-        ST_INFO_NULL, // st_die7,
-        ST_INFO_NULL, // st_die8,
-        ST_INFO_NULL, // st_die9,
-
-        {0, SPR_TRANS_DEAD, 0, NULL, NULL, st_dead},  // st_dead
-        ST_INFO_NULL // st_deathcam
-    },
-    // en_uber,
-    {
-        {0, SPR_UBER_W1, 0, T_Stand, NULL, st_stand}, // st_stand,
-
-        ST_INFO_NULL, // st_path1,
-        ST_INFO_NULL, // st_path1s,
-        ST_INFO_NULL, // st_path2,
-        ST_INFO_NULL, // st_path3,
-        ST_INFO_NULL, // st_path3s,
-        ST_INFO_NULL, // st_path4,
-
-        ST_INFO_NULL, // st_pain,
-        ST_INFO_NULL, // st_pain1,
-
-        {0, SPR_UBER_SHOOT1, 30, NULL, NULL, st_shoot2}, // st_shoot1,
-        {0, SPR_UBER_SHOOT2, 12, NULL, T_UShoot, st_shoot3}, // st_shoot2,
-        {0, SPR_UBER_SHOOT3, 12, NULL, T_UShoot, st_shoot4}, // st_shoot3,
-        {0, SPR_UBER_SHOOT4, 12, NULL, T_UShoot, st_shoot5}, // st_shoot4,
-        {0, SPR_UBER_SHOOT3, 12, NULL, T_UShoot, st_shoot6}, // st_shoot5,
-        {0, SPR_UBER_SHOOT2, 12, NULL, T_UShoot, st_shoot7}, // st_shoot6,
-        {0, SPR_UBER_SHOOT1, 12, NULL, NULL, st_chase1}, // st_shoot7,
-        ST_INFO_NULL, // st_shoot8,
-        ST_INFO_NULL, // st_shoot9,
-
-        {0, SPR_UBER_W1, 10, T_Chase, NULL, st_chase1s}, // st_chase1,
-        {0, SPR_UBER_W1,  3, NULL,       NULL, st_chase2}, // st_chase1s,
-        {0, SPR_UBER_W2,  8, T_Chase, NULL, st_chase3}, // st_chase2,
-        {0, SPR_UBER_W3, 10, T_Chase, NULL, st_chase3s}, // st_chase3,
-        {0, SPR_UBER_W3,  3, NULL,       NULL, st_chase4},  // st_chase3s,
-        {0, SPR_UBER_W4,  8, T_Chase, NULL, st_chase1}, // st_chase4,
-
-        {0, SPR_UBER_W1, 1, NULL, A_DeathScream, st_die2}, // st_die1,
-        {0, SPR_UBER_W1, 1, NULL, NULL, st_die3}, // st_die2,
-        {0, SPR_UBER_DIE1, 15, NULL, NULL, st_die4}, // st_die3,
-        {0, SPR_UBER_DIE2, 15, NULL, NULL, st_die5}, // st_die4,
-        {0, SPR_UBER_DIE3, 15, NULL, NULL, st_die6}, // st_die5,
-        {0, SPR_UBER_DIE4, 15, NULL, NULL, st_dead}, // st_die6,
-        ST_INFO_NULL, // st_die7,
-        ST_INFO_NULL, // st_die8,
-        ST_INFO_NULL, // st_die9,
-
-        {0, SPR_UBER_DEAD, 0, NULL, NULL, st_dead},  // st_dead
-        ST_INFO_NULL // st_deathcam
-    },
-    // en_will,
-    {
-        {0, SPR_WILL_W1, 0, T_Stand, NULL, st_stand}, // st_stand,
-
-        ST_INFO_NULL, // st_path1,
-        ST_INFO_NULL, // st_path1s,
-        ST_INFO_NULL, // st_path2,
-        ST_INFO_NULL, // st_path3,
-        ST_INFO_NULL, // st_path3s,
-        ST_INFO_NULL, // st_path4,
-
-        ST_INFO_NULL, // st_pain,
-        ST_INFO_NULL, // st_pain1,
-
-        {0, SPR_WILL_SHOOT1, 30, NULL, NULL, st_shoot2}, // st_shoot1,
-        {0, SPR_WILL_SHOOT2, 10, NULL, T_Launch, st_shoot3}, // st_shoot2,
-        {0, SPR_WILL_SHOOT3, 10, NULL, T_Shoot, st_shoot4}, // st_shoot3,
-        {0, SPR_WILL_SHOOT4, 10, NULL, T_Shoot, st_shoot5}, // st_shoot4,
-        {0, SPR_WILL_SHOOT3, 10, NULL, T_Shoot, st_shoot6}, // st_shoot5,
-        {0, SPR_WILL_SHOOT4, 10, NULL, T_Shoot, st_chase1}, // st_shoot6,
-        ST_INFO_NULL, // st_shoot7,
-        ST_INFO_NULL, // st_shoot8,
-        ST_INFO_NULL, // st_shoot9,
-
-        {0, SPR_WILL_W1, 10, T_BossChase, NULL, st_chase1s}, // st_chase1,
-        {0, SPR_WILL_W1,  3, NULL,   NULL, st_chase2}, // st_chase1s,
-        {0, SPR_WILL_W2,  8, T_BossChase, NULL, st_chase3}, // st_chase2,
-        {0, SPR_WILL_W3, 10, T_BossChase, NULL, st_chase3s}, // st_chase3,
-        {0, SPR_WILL_W3,  3, NULL,   NULL, st_chase4},  // st_chase3s,
-        {0, SPR_WILL_W4,  8, T_BossChase, NULL, st_chase1}, // st_chase4,
-
-        {0, SPR_WILL_W1, 1, NULL, A_DeathScream, st_die2}, // st_die1,
-        {0, SPR_WILL_W1, 10, NULL, NULL, st_die3}, // st_die2,
-        {0, SPR_WILL_DIE1, 10, NULL, NULL, st_die4}, // st_die3,
-        {0, SPR_WILL_DIE2, 10, NULL, NULL, st_die5}, // st_die4,
-        {0, SPR_WILL_DIE3, 10, NULL, NULL, st_dead}, // st_die5,
-        ST_INFO_NULL, // st_die6,
-        ST_INFO_NULL, // st_die7,
-        ST_INFO_NULL, // st_die8,
-        ST_INFO_NULL, // st_die9,
-
-        {0, SPR_WILL_DEAD, 20, NULL, NULL, st_dead},  // st_dead
-        ST_INFO_NULL // st_deathcam
-    },
-    // en_death
-    {
-        {0, SPR_DEATH_W1, 0, T_Stand, NULL, st_stand}, // st_stand,
-
-        ST_INFO_NULL, // st_path1,
-        ST_INFO_NULL, // st_path1s,
-        ST_INFO_NULL, // st_path2,
-        ST_INFO_NULL, // st_path3,
-        ST_INFO_NULL, // st_path3s,
-        ST_INFO_NULL, // st_path4,
-
-        ST_INFO_NULL, // st_pain,
-        ST_INFO_NULL, // st_pain1,
-
-        {0, SPR_DEATH_SHOOT1, 30, NULL, NULL, st_shoot2}, // st_shoot1,
-        {0, SPR_DEATH_SHOOT2, 10, NULL, T_Launch, st_shoot3}, // st_shoot2,
-        {0, SPR_DEATH_SHOOT4, 10, NULL, T_Shoot, st_shoot4}, // st_shoot3,
-        {0, SPR_DEATH_SHOOT3, 10, NULL, T_Launch, st_shoot5}, // st_shoot4,
-        {0, SPR_DEATH_SHOOT4, 10, NULL, T_Shoot, st_chase1}, // st_shoot5,
-        ST_INFO_NULL, // st_shoot6,
-        ST_INFO_NULL, // st_shoot7,
-        ST_INFO_NULL, // st_shoot8,
-        ST_INFO_NULL, // st_shoot9,
-
-        {0, SPR_DEATH_W1, 10, T_BossChase, NULL, st_chase1s}, // st_chase1,
-        {0, SPR_DEATH_W1,  3, NULL,   NULL, st_chase2}, // st_chase1s,
-        {0, SPR_DEATH_W2,  8, T_BossChase, NULL, st_chase3}, // st_chase2,
-        {0, SPR_DEATH_W3, 10, T_BossChase, NULL, st_chase3s}, // st_chase3,
-        {0, SPR_DEATH_W3,  3, NULL,   NULL, st_chase4}, // st_chase3s,
-        {0, SPR_DEATH_W4,  8, T_BossChase, NULL, st_chase1}, // st_chase4,
-
-        {0, SPR_DEATH_W1, 1, NULL, A_DeathScream, st_die2}, // st_die1,
-        {0, SPR_DEATH_W1, 10, NULL, NULL, st_die3}, // st_die2,
-        {0, SPR_DEATH_DIE1, 10, NULL, NULL, st_die4}, // st_die3,
-        {0, SPR_DEATH_DIE2, 10, NULL, NULL, st_die5}, // st_die4,
-        {0, SPR_DEATH_DIE3, 10, NULL, NULL, st_die6}, // st_die5,
-        {0, SPR_DEATH_DIE4, 10, NULL, NULL, st_die7}, // st_die6,
-        {0, SPR_DEATH_DIE5, 10, NULL, NULL, st_die7}, // st_die7,
-        {0, SPR_DEATH_DIE6, 10, NULL, NULL, st_die7}, // st_die8,
-        ST_INFO_NULL, // st_die9,
-
-        {0, SPR_DEATH_DEAD, 0, NULL, NULL, st_dead},  // st_dead
-        ST_INFO_NULL // st_deathcam
     }
-
 };
 
 int starthitpoints[ 4 ][ NUMENEMIES ] =
@@ -1488,18 +1080,7 @@ int starthitpoints[ 4 ][ NUMENEMIES ] =
         0,      // en_fire,
         0,      // en_rocket,
         0,      // en_smoke,
-        100,    // en_bj,
-// --- Spear of destiny!
-        0,      // en_spark,
-        0,      // en_hrocket,
-        0,      // en_hsmoke,
-
-        5,      // en_spectre,
-        1450,   // en_angel,
-        850,    // en_trans,
-        1050,   // en_uber,
-        950,    // en_will,
-        1250    // en_death
+        100    // en_bj,
     },
     //
     // DON'T HURT ME MODE
@@ -1529,62 +1110,40 @@ int starthitpoints[ 4 ][ NUMENEMIES ] =
         0,      // en_fire,
         0,      // en_rocket,
         0,      // en_smoke,
-        100,    // en_bj,
-// --- Spear of destiny!
-        0,      // en_spark,
-        0,      // en_hrocket,
-        0,      // en_hsmoke,
-
-        10,     // en_spectre,
-        1550,   // en_angel,
-        950,    // en_trans,
-        1150,   // en_uber,
-        1050,   // en_will,
-        1350    // en_death
+        100    // en_bj,
     },
     //
     // BRING 'EM ON MODE
     //
     {
-        25,   // guards
-        50, // officer
-        100,    // SS
-        1,  // dogs
+            25,   // guards
+            50, // officer
+            100,    // SS
+            1,  // dogs
 
-        1050,   // Hans
-        1550,   // Schabbs
-        400,    // fake hitler
-        1050,   // mecha hitler
-        800,    // hitler
+            1050,   // Hans
+            1550,   // Schabbs
+            400,    // fake hitler
+            1050,   // mecha hitler
+            800,    // hitler
 
-        55, // mutants
-        25, // ghosts
-        25, // ghosts
-        25, // ghosts
-        25, // ghosts
+            55, // mutants
+            25, // ghosts
+            25, // ghosts
+            25, // ghosts
+            25, // ghosts
 
-        1050,   // Gretel
-        1050,   // Gift
-        1050,   // Fat
+            1050,   // Gretel
+            1050,   // Gift
+            1050,   // Fat
 
 // --- Projectiles
-        0,      // en_needle,
-        0,      // en_fire,
-        0,      // en_rocket,
-        0,      // en_smoke,
-        100,    // en_bj,
-// --- Spear of destiny!
-        0,      // en_spark,
-        0,      // en_hrocket,
-        0,      // en_hsmoke,
-
-        15, // en_spectre,
-        1650,   // en_angel,
-        1050,   // en_trans,
-        1250,   // en_uber,
-        1150,   // en_will,
-        1450    // en_death
-    },
+            0,      // en_needle,
+            0,      // en_fire,
+            0,      // en_rocket,
+            0,      // en_smoke,
+            100    // en_bj,
+                 },
     //
     // DEATH INCARNATE MODE
     //
@@ -1615,18 +1174,7 @@ int starthitpoints[ 4 ][ NUMENEMIES ] =
         0,      // en_fire,
         0,      // en_rocket,
         0,      // en_smoke,
-        100,    // en_bj,
-// --- Spear of destiny!
-        0,      // en_spark,
-        0,      // en_hrocket,
-        0,      // en_hsmoke,
-
-        25, // en_spectre,
-        2000,   // en_angel,
-        1200,   // en_trans,
-        1400,   // en_uber,
-        1300,   // en_will,
-        1600    // en_death
+        100    // en_bj,
     }
 };
 

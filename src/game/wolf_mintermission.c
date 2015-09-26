@@ -42,8 +42,6 @@
 #include "../util/com_string.h"
 #include "../graphics/renderer.h"
 #include "../input/keycodes.h"
-#include "../graphics/color.h"
-
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -71,11 +69,8 @@ static void M_DrawInterBJ (int x, int y, int f)
 
             (void)TM_FindTexture (guypic, TT_Pic);
         }
-
         cached = true;
     }
-
-
 
     com_snprintf (guypic, sizeof (guypic), "pics/L_GUY%dPIC.tga", f);
 
@@ -97,38 +92,8 @@ static void M_Secret_Draw (void)
 
     M_DrawInterBJ (0, 38, (int) (ClientStatic.realtime / 500) % 2);
 
-    if (g_version == SPEAROFDESTINY) {
-        switch (levelstate.floornum) {
-        case 4:
-            com_snprintf (string, sizeof (string), "TRANS\nGROSSE\nDEFEATED!");
-            break;
-
-        case 9:
-            com_snprintf (string, sizeof (string), "BARNACLE\nWILHELM\nDEFEATED!");
-            break;
-
-        case 15:
-            com_snprintf (string, sizeof (string), "UBERMUTANT\nDEFEATED!");
-            break;
-
-        case 17:
-            com_snprintf (string, sizeof (string), "DEATH\nKNIGHT\nDEFEATED!");
-            break;
-
-        case 18:
-            com_snprintf (string, sizeof (string), "SECRET TUNNEL\nAREA\nCOMPLETED!");
-            break;
-
-        case 19:
-            com_snprintf (string, sizeof (string), "SECRET CASTLE\nAREA\nCOMPLETED!");
-            break;
-        }
-
-        R_put_line (240, 56, string);
-    } else {
-        com_snprintf (string, sizeof (string), "SECRET FLOOR\n COMPLETED!");
-        R_put_line (240, 56, string);
-    }
+    com_snprintf (string, sizeof (string), "SECRET FLOOR\n COMPLETED!");
+    R_put_line (240, 56, string);
 
     com_snprintf (string, sizeof (string), "15000 BONUS!");
     R_put_line (128, 256, string);
@@ -137,12 +102,6 @@ static void M_Secret_Draw (void)
 }
 
 static uint16_t ElevatorBackTo[] = { 1, 1, 7, 3, 5, 3 };
-
-// This is for Spear of Destiny
-#define FROMSECRET1     3
-#define FROMSECRET2     11
-#define SECRET1       18
-#define SECRET2       19
 
 
 static void M_Intermission_Draw (void)
@@ -153,12 +112,9 @@ static void M_Intermission_Draw (void)
     uint32_t timeleft = 0;
     uint32_t min, sec;
 
-
-
     R_Draw_Fill (0, 0, viddef.width, viddef.height, interbkgnd);
 
     M_DrawInterBJ (0, 38, (int) (ClientStatic.realtime / 500) % 2);
-
 
     sec = leveltime / 70;
 
@@ -180,7 +136,6 @@ static void M_Intermission_Draw (void)
 
         PL_GivePoints (&Player, bonus);
     }
-
 
     com_snprintf (string, sizeof (string), "FLOOR %d\nCOMPLETED", levelstate.floornum + 1);
     R_put_line (240, 38, string);
@@ -244,54 +199,13 @@ static const char *M_Intermission_Key (int key)
 
     PL_NextLevel (&Player);
 
-
     M_ForceMenuOff();
 
-    if (g_version == SPEAROFDESTINY) {
-        if (Player.playstate == ex_secretlevel) {
-            int mapon = 0;
+    int currentLevel = currentMap.episode * 10 + currentMap.map;
+    int nextLevel;
 
-            switch (currentMap.map) {
-            case FROMSECRET1:
-                mapon = SECRET1;
-                break;
-
-            case FROMSECRET2:
-                mapon = SECRET2;
-                break;
-
-            default:
-                ClientStatic.key_dest = key_console;
-                return NULL;
-            }
-
-            com_snprintf (szTextMsg, sizeof (szTextMsg),
-                          "s%.2d.map", mapon);
-        } else {
-            int mapon = 0;
-
-            switch (currentMap.map) {
-            case SECRET1:
-                mapon = FROMSECRET1 + 1;
-                break;
-
-            case SECRET2:
-                mapon = FROMSECRET2 + 1;
-                break;
-
-            default:
-                mapon = currentMap.map + 1;
-            }
-
-            com_snprintf (szTextMsg, sizeof (szTextMsg),
-                          "map s%.2d.map", mapon);
-        }
-    } else {
-        int currentLevel = currentMap.episode * 10 + currentMap.map;
-        int nextLevel;
-
-        if (Player.playstate == ex_secretlevel) {
-            switch (currentLevel) {
+    if (Player.playstate == ex_secretlevel) {
+        switch (currentLevel) {
             case 0:
                 nextLevel = 9;
                 break;
@@ -319,9 +233,9 @@ static const char *M_Intermission_Key (int key)
             default:
                 ClientStatic.key_dest = key_console;
                 return NULL;
-            }
-        } else {
-            switch (currentLevel) {
+        }
+    } else {
+        switch (currentLevel) {
 
             case 9:
                 nextLevel = 1;
@@ -350,20 +264,17 @@ static const char *M_Intermission_Key (int key)
             default:
                 nextLevel = currentLevel + 1;
                 break;
-            }
         }
-
-        com_snprintf (szTextMsg, sizeof (szTextMsg),
-                      "map w%.2d.map", nextLevel);
     }
+    com_snprintf (szTextMsg, sizeof (szTextMsg),
+                  "map w%.2d.map", nextLevel);
+
 
     Player.playstate = ex_playing;
-
 
     Client_PrepRefresh(szTextMsg);
     return NULL;
 }
-
 
 //
 //  Victory
@@ -544,7 +455,6 @@ static void M_Victory_Draw_PageTwo (void)
    // Font_put_paragraph (FONT0, 32 + 4, 34 + 32, victorytextPageTwo[ currentMap.episode ], 0, 600);
 }
 
-
 static uint16_t page = 0;
 
 static void M_Victory_Text_Draw (void)
@@ -555,7 +465,6 @@ static void M_Victory_Text_Draw (void)
         M_Victory_Draw_PageTwo();
     }
 }
-
 
 static const char *M_Victory_Key (int key)
 {
@@ -579,7 +488,6 @@ static const char *M_Victory_Key (int key)
         if (page == 1) {
             page = 0;
         }
-
         break;
 
     case K_KP_RIGHTARROW:
@@ -587,190 +495,11 @@ static const char *M_Victory_Key (int key)
         if (page == 0) {
             page = 1;
         }
-
         break;
-
     }
 
     return NULL;
 }
-
-
-//
-//  Spear Victory
-//
-
-#define NUM_VICTORY_SLIDES  11
-
-colour3_t viewcolour = { 0, 64, 64 };
-
-typedef struct {
-    void (*draw) (void);
-    uint32_t delay_time;
-
-} SpearVictoryLayer_t;
-
-static SpearVictoryLayer_t sodvl[ 12 ];
-static uint16_t victory_slide = 0;
-static uint32_t victory_basetime;
-
-
-static uint32_t collapse_basetime;
-static uint8_t collapse_slide = 1;
-
-static void SOD_Victory_BJCOLLAPSE_Draw (void)
-{
-    uint32_t w, h;
-    static char name[ 32 ];
-
-
-    R_Draw_Fill (0, 0, viddef.width, viddef.height, viewcolour);
-
-    if (ClientStatic.realtime >= (int) (collapse_basetime + 2000) &&
-            collapse_slide != 4) {
-        collapse_basetime = ClientStatic.realtime;
-        ++collapse_slide;
-    }
-
-    com_snprintf (name, sizeof (name), "pics/BJCOLLAPSE%dPIC.tga", collapse_slide);
-
-
-    TM_GetTextureSize (&w, &h, name);
-    R_Draw_Pic ((viddef.width - w) >> 1, (viddef.height - h) >> 1, name);
-}
-
-
-#define STR_ENDGAME1 "We owe you a great debt, Mr. Blazkowicz.\nYou have served your country well."
-#define STR_ENDGAME2 "With the spear gone, the Allies will finally\nbe able to destroy Hitler..."
-
-
-static void SOD_EndScreen2_Draw (void)
-{
-    uint32_t w, h;
-
-    R_Draw_Fill (0, 0, viddef.width, viddef.height, viewcolour);
-
-    TM_GetTextureSize (&w, &h, "pics/ENDSCREEN3PIC.tga");
-    R_Draw_Pic ((viddef.width - w) >> 1, (viddef.height - h) >> 1, "pics/ENDSCREEN3PIC.tga");
-
-  //  Font_SetSize (FONT0, 2);
-  //  Font_SetColour (FONT0, colourWhite);
-
-    if (victory_slide == 3) {
-   //     Font_GetMsgDimensions (FONT0, STR_ENDGAME1, &w, &h);
-   //     Font_put_line (FONT0, (viddef.width - w) >> 1, viddef.height - h, STR_ENDGAME1);
-    } else {
-    //    Font_GetMsgDimensions (FONT0, STR_ENDGAME2, &w, &h);
-    //    Font_put_line (FONT0, (viddef.width - w) >> 1, viddef.height - h, STR_ENDGAME2);
-    }
-
-}
-
-
-
-static void SOD_EndScreen_Draw (void)
-{
-    uint32_t w, h;
-    static char texname[ 64 ];
-
-    R_Draw_Fill (0, 0, viddef.width, viddef.height, viewcolour);
-
-
-    switch (victory_slide) {
-    case 2:
-        R_Draw_Tile (0, 0, viddef.width, viddef.height, "pics/C_BACKDROPPIC.tga");
-            strncpy(texname, "pics/ENDSCREEN11PIC.tga", sizeof(texname));
-        break;
-
-    case 5:
-        strncpy(texname, "pics/ENDSCREEN4PIC.tga", sizeof(texname));
-        break;
-
-    case 6:
-        strncpy(texname, "pics/ENDSCREEN5PIC.tga", sizeof(texname));
-        break;
-
-    case 7:
-        strncpy(texname, "pics/ENDSCREEN6PIC.tga", sizeof(texname));
-        break;
-
-    case 8:
-        strncpy(texname, "pics/ENDSCREEN7PIC.tga", sizeof(texname));
-        break;
-
-    case 9:
-        strncpy(texname, "pics/ENDSCREEN8PIC.tga", sizeof(texname));
-        break;
-
-    case 10:
-        strncpy(texname, "pics/ENDSCREEN9PIC.tga", sizeof(texname));
-        break;
-
-    case 11:
-        R_Draw_Tile (0, 0, viddef.width, viddef.height, "pics/C_BACKDROPPIC.tga");
-            strncpy(texname, "pics/ENDSCREEN12PIC.tga", sizeof(texname));
-        break;
-
-    default:
-        strncpy(texname, "", sizeof(texname));
-        break;
-
-    }
-
-    TM_GetTextureSize (&w, &h, texname);
-    R_Draw_Pic ((viddef.width - w) >> 1, (viddef.height - h) >> 1, texname);
-
-}
-
-
-static void M_SODVictory_Draw (void)
-{
-    if (victory_slide > NUM_VICTORY_SLIDES) {
-        M_ForceMenuOff();
-        M_Menu_Main_f();
-
-        return;
-    }
-
-    sodvl[ victory_slide ].draw();
-
-    if (sodvl[ victory_slide ].delay_time) {
-        if (ClientStatic.realtime >= (int) (victory_basetime + sodvl[ victory_slide ].delay_time)) {
-            victory_basetime = ClientStatic.realtime;
-
-            ++victory_slide;
-
-            if (victory_slide == 1) {
-                //Sound_StopBGTrack();
-
-               // Sound_StartBGTrack ("music/ENDLEVEL.ogg", "music/ENDLEVEL.ogg");
-            }
-        }
-    }
-}
-
-static const char *M_SODVictory_Key (int key)
-{
-    victory_basetime = ClientStatic.realtime;
-    ++victory_slide;
-
-    if (victory_slide == 1) {
-        //Sound_StopBGTrack();
-
-        ///Sound_StartBGTrack ("music/ENDLEVEL.ogg", "music/ENDLEVEL.ogg");
-    }
-
-    if (victory_slide > NUM_VICTORY_SLIDES) {
-        M_ForceMenuOff();
-        M_Menu_Main_f();
-    }
-
-    return NULL;
-}
-
-//
-//  End of Spear Victory
-//
 
 void M_Intermission_f (void)
 {
@@ -783,7 +512,6 @@ void M_Intermission_f (void)
 
     leveltime = (uint32_t)levelstate.time;
 
-
     LevelRatios.time += leveltime;
 
     LevelRatios.found_secrets += levelstate.found_secrets;
@@ -795,82 +523,16 @@ void M_Intermission_f (void)
     LevelRatios.found_treasure += levelstate.found_treasure;
     LevelRatios.total_treasure += levelstate.total_treasure;
 
-    if (g_version == SPEAROFDESTINY) {
-        switch (currentMap.map) {
-        case 20:
-            collapse_slide = 1;
-            victory_slide = 0;
 
-            sodvl[ 0 ].draw = SOD_Victory_BJCOLLAPSE_Draw;
-            sodvl[ 0 ].delay_time = 12000;
-
-            sodvl[ 1 ].draw = M_Victory_Draw;
-            sodvl[ 1 ].delay_time = 0;
-
-            sodvl[ 2 ].draw = SOD_EndScreen_Draw;
-            sodvl[ 2 ].delay_time = 0;
-
-            sodvl[ 3 ].draw = SOD_EndScreen2_Draw;
-            sodvl[ 3 ].delay_time = 9000;
-
-            sodvl[ 4 ].draw = SOD_EndScreen2_Draw;
-            sodvl[ 4 ].delay_time = 9000;
-
-            sodvl[ 5 ].draw = SOD_EndScreen_Draw;
-            sodvl[ 5 ].delay_time = 0;
-
-            sodvl[ 5 ].draw = SOD_EndScreen_Draw;
-            sodvl[ 5 ].delay_time = 0;
-
-            sodvl[ 6 ].draw = SOD_EndScreen_Draw;
-            sodvl[ 6 ].delay_time = 0;
-
-            sodvl[ 7 ].draw = SOD_EndScreen_Draw;
-            sodvl[ 7 ].delay_time = 0;
-
-            sodvl[ 8 ].draw = SOD_EndScreen_Draw;
-            sodvl[ 8 ].delay_time = 0;
-
-            sodvl[ 9 ].draw = SOD_EndScreen_Draw;
-            sodvl[ 9 ].delay_time = 0;
-
-            sodvl[ 10 ].draw = SOD_EndScreen_Draw;
-            sodvl[ 10 ].delay_time = 0;
-
-            sodvl[ 11 ].draw = SOD_EndScreen_Draw;
-            sodvl[ 11 ].delay_time = 0;
-
-            collapse_basetime = victory_basetime = ClientStatic.realtime;
-
-            //Sound_StartBGTrack ("music/XTHEEND.ogg", "music/XTHEEND.ogg");
-
-            M_PushMenu (M_SODVictory_Draw, M_SODVictory_Key);
-            return;
-
-        case 4:
-        case 9:
-        case 15:
-        case 18:
-        case 19:
-            PL_GivePoints (&Player, 15000);
-            M_PushMenu (M_Secret_Draw, M_Intermission_Key);
-            return;
-        }
-
-        M_PushMenu (M_Intermission_Draw, M_Intermission_Key);
-    }
-
-    if (strstr (levelstate.level_name, "Boss") != NULL && g_version == WOLFENSTEINWL6) {
+    if (strstr (levelstate.level_name, "Boss") != NULL) {
         //Sound_StartBGTrack ("music/URAHERO.ogg", "music/URAHERO.ogg");
-
         M_PushMenu (M_Victory_Draw, M_Victory_Key);
-    } else if (currentMap.map == 9 && g_version == WOLFENSTEINWL6) {
+    } else if (currentMap.map == 9) {
         PL_GivePoints (&Player, 15000);
         M_PushMenu (M_Secret_Draw, M_Intermission_Key);
     } else {
         M_PushMenu (M_Intermission_Draw, M_Intermission_Key);
     }
-
 }
 
 

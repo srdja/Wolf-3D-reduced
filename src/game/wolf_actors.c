@@ -158,13 +158,12 @@ void ProcessGuards (void)
         tex = objstate[ Guards[ n ].type ][ Guards[ n ].state ].texture;
 
         if (objstate[ Guards[ n ].type ][ Guards[ n ].state ].rotate) {
-            if (Guards[ n ].type == en_rocket || Guards[ n ].type == en_hrocket) {
+            if (Guards[ n ].type == en_rocket) {
                 tex += r_add8dir[ Get8dir(angle_wise(Player.position.angle, FINE2RAD (Guards[ n ].angle))) ];
             } else {
                 tex += add8dir[ Get8dir(angle_wise(Player.position.angle, FINE2RAD (Guards[ n ].angle))) ];
             }
         }
-
         Sprite_SetTex (Guards[ n ].sprite, 0, tex);
     }
 }
@@ -344,15 +343,6 @@ void SpawnBoss (enemy_t which, int x, int y)
         face = dir4_north;
         break;
 
-    case en_trans:
-    case en_uber:
-    case en_will:
-    case en_death:
-    case en_angel:
-    case en_spectre:
-        face = dir4_nodir;
-        break;
-
     default:
         face = dir4_nodir;
         break;
@@ -364,14 +354,13 @@ void SpawnBoss (enemy_t which, int x, int y)
         return;
     }
 
-    self->state = which == en_spectre ? st_path1 : st_stand;
+    self->state = st_stand;
     self->speed = SPDPATROL;
     self->health = starthitpoints[skill ][ which ];
     self->ticcount = objstate[ which ][ st_stand ].timeout ? US_RndT() % objstate[ which ][ st_stand ].timeout + 1 : 0;
     self->flags |= FL_SHOOTABLE | FL_AMBUSH;
 
     levelstate.total_monsters++;
-
 }
 
 /**

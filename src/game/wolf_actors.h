@@ -58,7 +58,7 @@
 #define FL_NONMARK          BIT( 8 )
 
 #define MAX_GUARDS  255
-#define NUMENEMIES  31
+#define NUMENEMIES  22
 #define NUMSTATES   35
 
 #define MINACTORDIST    0x10000 // minimum dist from player center to any actor center
@@ -87,18 +87,6 @@ typedef enum {
     en_rocket,
     en_smoke,
     en_bj,
-// --- Spear of destiny!
-    en_spark,
-    en_hrocket,
-    en_hsmoke,
-
-    en_spectre,
-    en_angel,
-    en_trans,
-    en_uber,
-    en_will,
-    en_death
-
 } enemy_t;
 
 typedef enum {

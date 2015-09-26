@@ -148,19 +148,11 @@ static void Options_MenuInit (void)
 
 static void Options_MenuDraw (void)
 {
-    if (g_version == SPEAROFDESTINY) {
-        R_Draw_Tile (0, 0, viddef.width, viddef.height, "pics/C_BACKDROPPIC.tga");
-        M_Banner ("pics/SC_CONTROLPIC.tga", 0);
-        M_DrawWindow (((viddef.width - 550) >> 1), ((viddef.height - 335) >> 1) + 40, 550, 335,
-                      sodbkgdcolour, sodbord2colour, soddeactive);
-    } else {
-        R_Draw_Fill (0, 0, viddef.width, viddef.height, bgcolour);
+    R_Draw_Fill (0, 0, viddef.width, viddef.height, bgcolour);
 
-        M_Banner ("pics/C_CONTROLPIC.tga", 0);
-        M_DrawWindow (((viddef.width - 550) >> 1), ((viddef.height - 335) >> 1) + 40, 550, 335,
-                      bkgdcolour, bord2colour, deactive);
-    }
-
+    M_Banner ("pics/C_CONTROLPIC.tga", 0);
+    M_DrawWindow (((viddef.width - 550) >> 1), ((viddef.height - 335) >> 1) + 40, 550, 335,
+                  bkgdcolour, bord2colour, deactive);
 
     M_DrawInfoBar();
     Menu_AdjustCursor (&s_options_menu, 1);
@@ -177,7 +169,6 @@ void M_Menu_Options_f (void)
     Options_MenuInit();
     M_PushMenu (Options_MenuDraw, Options_MenuKey);
 }
-
 
 
 /////////////////////////////////////////////////////////////////////
@@ -466,20 +457,11 @@ static void Keys_MenuInit (void)
 
 static void Keys_MenuDraw (void)
 {
-    if (g_version == SPEAROFDESTINY) {
-        R_Draw_Tile (0, 0, viddef.width, viddef.height, "pics/C_BACKDROPPIC.tga");
+    R_Draw_Fill (0, 0, viddef.width, viddef.height, bgcolour);
 
-        M_Banner ("pics/SC_CUSTOMIZEPIC.tga", 0);
-        M_DrawWindow (((viddef.width - 550) >> 1), ((viddef.height - 300) >> 1) + 10, 550, 300,
-                      sodbkgdcolour, sodbord2colour, soddeactive);
-    } else {
-        R_Draw_Fill (0, 0, viddef.width, viddef.height, bgcolour);
-
-        M_Banner ("pics/C_CUSTOMIZEPIC.tga", 0);
-        M_DrawWindow (((viddef.width - 550) >> 1), ((viddef.height - 300) >> 1) + 10, 550, 300,
-                      bkgdcolour, bord2colour, deactive);
-    }
-
+    M_Banner ("pics/C_CUSTOMIZEPIC.tga", 0);
+    M_DrawWindow (((viddef.width - 550) >> 1), ((viddef.height - 300) >> 1) + 10, 550, 300,
+                  bkgdcolour, bord2colour, deactive);
 
     Menu_AdjustCursor (&s_keys_menu, 1);
     Menu_Draw (&s_keys_menu);
@@ -487,7 +469,6 @@ static void Keys_MenuDraw (void)
 
 static const char *Keys_MenuKey (int key)
 {
-
     menuaction_s *item = (menuaction_s *) Menu_ItemAtCursor (&s_keys_menu);
 
     if (bind_grab) {

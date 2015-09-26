@@ -126,13 +126,8 @@ void M_Banner (const char *name, uint16_t nYOffest)
 {
     int32_t w, h;
 
-    if (g_version == SPEAROFDESTINY) {
-        R_Draw_Fill (0, 20, viddef.width, 44, colourBlack);
-        R_Draw_Fill (0, 66, viddef.width, 2, colourBlack);
-    } else {
-        R_Draw_Fill (0, 20, viddef.width, 48, colourBlack);
-        R_Draw_Fill (0, 64, viddef.width, 2, bannerline);
-    }
+    R_Draw_Fill (0, 20, viddef.width, 48, colourBlack);
+    R_Draw_Fill (0, 64, viddef.width, 2, bannerline);
 
     TM_GetTextureSize (&w, &h, name);
     R_Draw_Pic ((viddef.width - w) >> 1, nYOffest, name);
@@ -366,22 +361,14 @@ void M_DrawCursor (int x, int y)
         int i;
 
         for (i = 0 ; i < NUM_CURSOR_FRAMES ; ++i) {
-            if (g_version == SPEAROFDESTINY) {
-                com_snprintf (cursorname, sizeof (cursorname), "pics/SC_CURSOR%dPIC.tga", i);
-            } else {
-                com_snprintf (cursorname, sizeof (cursorname), "pics/C_CURSOR%dPIC.tga", i);
-            }
-
+            com_snprintf (cursorname, sizeof (cursorname), "pics/C_CURSOR%dPIC.tga", i);
             TM_FindTexture (cursorname, TT_Pic);
         }
 
         cached = true;
     }
-    if (g_version == SPEAROFDESTINY) {
-        com_snprintf (cursorname, sizeof (cursorname), "pics/SC_CURSOR%dPIC.tga", f);
-    } else {
-        com_snprintf (cursorname, sizeof (cursorname), "pics/C_CURSOR%dPIC.tga", f);
-    }
+    com_snprintf (cursorname, sizeof (cursorname), "pics/C_CURSOR%dPIC.tga", f);
+
     R_Draw_Pic (x, y, cursorname);
 }
 
@@ -412,13 +399,8 @@ void M_DrawInfoBar (void)
 {
     int32_t w, h;
 
-    if (g_version == SPEAROFDESTINY) {
-        TM_GetTextureSize (&w, &h, "pics/SC_MOUSELBACKPIC.tga");
-        R_Draw_Pic ((viddef.width - w) >> 1, viddef.height - h, "pics/SC_MOUSELBACKPIC.tga");
-    } else {
-        TM_GetTextureSize (&w, &h, "pics/C_MOUSELBACKPIC.tga");
-        R_Draw_Pic ((viddef.width - w) >> 1, viddef.height - h, "pics/C_MOUSELBACKPIC.tga");
-    }
+    TM_GetTextureSize (&w, &h, "pics/C_MOUSELBACKPIC.tga");
+    R_Draw_Pic ((viddef.width - w) >> 1, viddef.height - h, "pics/C_MOUSELBACKPIC.tga");
 }
 
 
@@ -555,38 +537,6 @@ const char *M_Main_Key (int key)
     return NULL;
 }
 
-
-
-/**
- * \brief SOD main menu
- */
-void M_SMain_Draw (void)
-{
-    int i;
-    int32_t w, h;
-    int cx, cy;
-
-    R_Draw_Tile (0, 0, viddef.width, viddef.height, "pics/C_BACKDROPPIC.tga");
-
-    M_Banner ("pics/SC_OPTIONSPIC.tga", 0);
-
-    TM_GetTextureSize (&w, &h, "pics/SC_MOUSELBACKPIC.tga");
-    R_Draw_Pic ((viddef.width - w) >> 1, (viddef.height - h), "pics/SC_MOUSELBACKPIC.tga");
-
-    cx = (viddef.width - 356) >> 1;
-    cy = (viddef.height - 272) >> 1;
-    M_DrawWindow (cx, cy, 356, 272, sodbkgdcolour, sodbord2colour, soddeactive);
-
-    for (i = 0 ; menunames[ i ] != 0 ; ++i) {
-        if (m_main_cursor == i) {
-            //Menu_DrawString (FONT1, cx + 60, cy + 5 + i * 26, menunames[ i ], highlight);
-        } else {
-           // Menu_DrawString (FONT1, cx + 60, cy + 5 + i * 26, menunames[ i ], textcolour);
-        }
-    }
-    M_DrawCursor (cx + 3, cy + m_main_cursor * 26 + 2);
-}
-
 /**
  * \brief Main menu trigger
  */
@@ -595,14 +545,7 @@ void M_Menu_Main_f (void)
     //Sound_StopBGTrack();
     //Sound_StartBGTrack ("music/WONDERIN.ogg", "music/WONDERIN.ogg");
 
-    if (g_version == SPEAROFDESTINY) {
-        M_PushMenu (M_SMain_Draw, M_Main_Key);
-
-        return;
-    }
-
     M_PushMenu (M_Main_Draw, M_Main_Key);
-
 }
 
 /*
@@ -725,15 +668,8 @@ void LoadGame_MenuDraw (void)
 {
     int cx, cy;
 
-    if (g_version == SPEAROFDESTINY) {
-        R_Draw_Tile (0, 0, viddef.width, viddef.height, "pics/C_BACKDROPPIC.tga");
-
-        M_Banner ("pics/SC_LOADGAMEPIC.tga", 0);
-    } else {
-        R_Draw_Fill (0, 0, viddef.width, viddef.height, bgcolour);
-
-        M_Banner ("pics/C_LOADGAMEPIC.tga", 0);
-    }
+    R_Draw_Fill (0, 0, viddef.width, viddef.height, bgcolour);
+    M_Banner ("pics/C_LOADGAMEPIC.tga", 0);
 
     cx = (viddef.width - 356) / 2;
     cy = (viddef.height - 272) / 2;
@@ -790,15 +726,8 @@ void SaveGame_MenuDraw (void)
 {
     int cx, cy;
 
-    if (g_version == SPEAROFDESTINY) {
-        R_Draw_Tile (0, 0, viddef.width, viddef.height, "pics/C_BACKDROPPIC.tga");
-
-        M_Banner ("pics/SC_SAVEGAMEPIC.tga", 0);
-    } else {
-        R_Draw_Fill (0, 0, viddef.width, viddef.height, bgcolour);
-
-        M_Banner ("pics/C_SAVEGAMEPIC.tga", 0);
-    }
+    R_Draw_Fill (0, 0, viddef.width, viddef.height, bgcolour);
+    M_Banner ("pics/C_SAVEGAMEPIC.tga", 0);
 
     cx = (viddef.width - 356) / 2;
     cy = (viddef.height - 272) / 2;

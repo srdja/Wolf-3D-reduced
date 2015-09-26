@@ -28,14 +28,10 @@
  *       Portion of this code was derived from Wolfenstein 3-D, and was originally written by Id Software, Inc.
  */
 
-
 #ifndef __WOLF_SPRITES_H__
 #define __WOLF_SPRITES_H__
 
-
-
 #include <stdio.h>
-
 #include "../util/com_math.h"
 
 //
@@ -66,14 +62,7 @@ enum {
     SPR_STAT_40, SPR_STAT_41, SPR_STAT_42, SPR_STAT_43,
     SPR_STAT_44, SPR_STAT_45, SPR_STAT_46, SPR_STAT_47,
 
-
-
-
     SPR_STAT_48, SPR_STAT_49, SPR_STAT_50, SPR_STAT_51,
-
-
-
-
 
 //
 // Guard
@@ -115,8 +104,6 @@ enum {
 
     SPR_DOG_DIE_1, SPR_DOG_DIE_2, SPR_DOG_DIE_3, SPR_DOG_DEAD,
     SPR_DOG_JUMP1, SPR_DOG_JUMP2, SPR_DOG_JUMP3,
-
-
 
 //
 // SS
@@ -187,8 +174,6 @@ enum {
 
     SPR_OFC_SHOOT1, SPR_OFC_SHOOT2, SPR_OFC_SHOOT3,
 
-
-
 //
 // Ghosts
 //
@@ -243,7 +228,6 @@ enum {
 
     SPR_GIFT_DIE1, SPR_GIFT_DIE2, SPR_GIFT_DIE3, SPR_GIFT_DEAD,
 
-
 //
 // Rocket, smoke and small explosion
 //
@@ -252,19 +236,6 @@ enum {
 
     SPR_SMOKE_1, SPR_SMOKE_2, SPR_SMOKE_3, SPR_SMOKE_4,
     SPR_BOOM_1, SPR_BOOM_2, SPR_BOOM_3,
-
-//
-// Angel of Death's DeathSparks(tm)
-//
-    SPR_HROCKET_1, SPR_HROCKET_2, SPR_HROCKET_3, SPR_HROCKET_4,
-    SPR_HROCKET_5, SPR_HROCKET_6, SPR_HROCKET_7, SPR_HROCKET_8,
-
-    SPR_HSMOKE_1, SPR_HSMOKE_2, SPR_HSMOKE_3, SPR_HSMOKE_4,
-    SPR_HBOOM_1, SPR_HBOOM_2, SPR_HBOOM_3,
-
-    SPR_SPARK1, SPR_SPARK2, SPR_SPARK3, SPR_SPARK4,
-
-
 
 //
 // Gretel
@@ -288,62 +259,6 @@ enum {
     SPR_BJ_W1, SPR_BJ_W2, SPR_BJ_W3, SPR_BJ_W4,
     SPR_BJ_JUMP1, SPR_BJ_JUMP2, SPR_BJ_JUMP3, SPR_BJ_JUMP4,
 
-
-//
-// SPEAR OF DESTINY
-//
-
-//
-// Trans Grosse
-//
-    SPR_TRANS_W1, SPR_TRANS_W2, SPR_TRANS_W3, SPR_TRANS_W4,
-    SPR_TRANS_SHOOT1, SPR_TRANS_SHOOT2, SPR_TRANS_SHOOT3, SPR_TRANS_DEAD,
-
-    SPR_TRANS_DIE1, SPR_TRANS_DIE2, SPR_TRANS_DIE3,
-
-//
-// Wilhelm
-//
-    SPR_WILL_W1, SPR_WILL_W2, SPR_WILL_W3, SPR_WILL_W4,
-    SPR_WILL_SHOOT1, SPR_WILL_SHOOT2, SPR_WILL_SHOOT3, SPR_WILL_SHOOT4,
-
-    SPR_WILL_DIE1, SPR_WILL_DIE2, SPR_WILL_DIE3, SPR_WILL_DEAD,
-
-//
-// UberMutant
-//
-    SPR_UBER_W1, SPR_UBER_W2, SPR_UBER_W3, SPR_UBER_W4,
-    SPR_UBER_SHOOT1, SPR_UBER_SHOOT2, SPR_UBER_SHOOT3, SPR_UBER_SHOOT4,
-
-    SPR_UBER_DIE1, SPR_UBER_DIE2, SPR_UBER_DIE3, SPR_UBER_DIE4,
-    SPR_UBER_DEAD,
-
-//
-// Death Knight
-//
-    SPR_DEATH_W1, SPR_DEATH_W2, SPR_DEATH_W3, SPR_DEATH_W4,
-    SPR_DEATH_SHOOT1, SPR_DEATH_SHOOT2, SPR_DEATH_SHOOT3, SPR_DEATH_SHOOT4,
-
-    SPR_DEATH_DIE1, SPR_DEATH_DIE2, SPR_DEATH_DIE3, SPR_DEATH_DIE4,
-    SPR_DEATH_DIE5, SPR_DEATH_DIE6, SPR_DEATH_DEAD,
-
-//
-// Ghost
-//
-    SPR_SPECTRE_W1, SPR_SPECTRE_W2, SPR_SPECTRE_W3, SPR_SPECTRE_W4,
-    SPR_SPECTRE_F1, SPR_SPECTRE_F2, SPR_SPECTRE_F3, SPR_SPECTRE_F4,
-
-//
-// Angel of Death
-//
-    SPR_ANGEL_W1, SPR_ANGEL_W2, SPR_ANGEL_W3, SPR_ANGEL_W4,
-    SPR_ANGEL_SHOOT1, SPR_ANGEL_SHOOT2, SPR_ANGEL_TIRED1, SPR_ANGEL_TIRED2,
-
-    SPR_ANGEL_DIE1, SPR_ANGEL_DIE2, SPR_ANGEL_DIE3, SPR_ANGEL_DIE4,
-    SPR_ANGEL_DIE5, SPR_ANGEL_DIE6, SPR_ANGEL_DIE7, SPR_ANGEL_DEAD,
-
-
-
 //
 // player attack frames
 //
@@ -358,10 +273,7 @@ enum {
 
     SPR_CHAINREADY, SPR_CHAINATK1, SPR_CHAINATK2, SPR_CHAINATK3,
     SPR_CHAINATK4,
-
 };
-
-
 
 
 #define SPRT_ONE_TEX    BIT( 1 )
@@ -412,6 +324,4 @@ void Sprite_SetPos (int sprite_id, int x, int y, int angle);
 void Sprite_SetTex (int sprite_id, int index, int tex);
 int Sprite_CreateVisList (void);
 
-
 #endif /* __WOLF_SPRITES_H__ */
-
