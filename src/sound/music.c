@@ -4,6 +4,7 @@
 
 #include <stdbool.h>
 #include <SDL_mixer.h>
+#include <stdio.h>
 
 #include "music.h"
 
