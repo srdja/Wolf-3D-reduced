@@ -34,11 +34,6 @@
 
 #include <stdlib.h>
 
-#define ISLOWER( c )    ( ( c ) >= 'a' && ( c ) <= 'z' )
-#define TOUPPER( c )    ( ISLOWER( c ) ? (c) - 'a' + 'A' : ( c ) )
-
-size_t com_strlcat (char *dest, const char *source, size_t nMaxLength);
 void com_snprintf (char *dest, size_t size, const char *format, ...);
-char *va (char *format, ...);
 
 #endif /* __COM_STRING_H__ */

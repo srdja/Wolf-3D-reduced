@@ -36,89 +36,6 @@
 #include <stdarg.h>
 
 #include "com_string.h"
-#include "../common.h"
-
-
-/**
- * \brief Appends one string to another.
- * \param[in,out] dest Pointer to a NUL-terminated string. The buffer must be large enough to contain both strings or else truncation will occur.
- * \param[in] source Pointer to a NUL-terminated string from which the function copies characters.
- * \param[in] nMaxLength Full size of dest, not space left.
- * \return Returns strlen( source ) + MIN( nMaxLength, strlen( initial dest ) ). If retval >= nMaxLength, truncation occurred.
- * \note At most \c nMaxLength-1 characters will be copied. Always NUL-terminates (unless \c nMaxLength <= strlen( dest) ).
- */
-size_t com_strlcat (char *dest, const char *source, size_t nMaxLength)
-{
-    char *d = dest;
-    const char *s = source;
-    size_t n = nMaxLength;
-    size_t dlen;
-
-    /* Find the end of dest and adjust bytes left but don't go past end */
-    while (n-- != 0 && *d != '\0') {
-        d++;
-    }
-
-    dlen = d - dest;
-    n = nMaxLength - dlen;
-
-    /* No room left to append string */
-    if (n == 0) {
-        return (dlen + strlen (s));
-    }
-
-    while (*s != '\0') {
-        if (n != 1) {
-            *d++ = *s;
-            n--;
-        }
-
-        s++;
-    }
-
-    *d = '\0';  /* NUL-terminate string */
-
-    return (dlen + (s - source));    /* count does not include NUL */
-
-}
-
-/**
- * \brief Compare characters of two strings without regard to case.
- * \param[in] string1 NUL-terminated strings to compare.
- * \param[in] string2 NUL-terminated strings to compare.
- * \param[in] count Number of characters to compare.
- * \return The return value indicates the relationship between the substrings as follows.
- * \arg \c <0  \c string1 substring less than \c string2 substring
- * \arg \c 0  \c string1 substring identical to \c string2 substring
- * \arg \c >0 \c string1 substring greater than \c string2 substring
- */
-int com_strnicmp (const char *string1, const char *string2, size_t count)
-{
-    char c1, c2;
-
-    if (!string1 || !*string1 ||
-            !string2 || !*string2) {
-        return -1;
-    }
-
-    do {
-        c1 = *string1++;
-        c2 = *string2++;
-
-        if (!count--) {
-            return 0;       /* strings are equal until end point */
-        }
-
-        if (c1 != c2) {
-            if (TOUPPER (c1) != TOUPPER (c2)) {  /* Uppercase compare */
-                return -1;  /* strings are not equal */
-            }
-        }
-
-    } while (c1);
-
-    return 0;       /* strings are equal */
-}
 
 /**
  * \brief Write formatted data to a string.
@@ -138,29 +55,6 @@ void com_snprintf (char *dest, size_t size, const char *format, ...)
     va_end (argptr);
 
     bigbuffer[ sizeof (bigbuffer) - 1 ] = '\0';
-// Debugging.
-//  printf("Contenido de bigbuffer: '%s'\n", bigbuffer);
 
     strncpy(dest, bigbuffer, size);
-}
-
-/**
- * \brief Does a varargs com_snprintf into a temp buffer.
- * \param[in] format  Format-control string.
- * \param[in] ... Optional arguments.
- * \return Formatted string.
- * \note If format string is longer than 1024 it will be truncated.
- */
-char *va (char *format, ...)
-{
-    va_list argptr;
-    static char string[ 1024 ];
-
-    va_start (argptr, format);
-    (void)com_snprintf (string, sizeof (string), format, argptr);
-    va_end (argptr);
-
-    string[ sizeof (string) - 1 ] = '\0';
-
-    return string;
 }
