@@ -213,7 +213,6 @@ int Sprite_CreateVisList (void)
             visptr++;
         }
     }
-
 // sorting list
     if (num_visible) { // do not sort if no entries
         qsort (vislist, num_visible, sizeof (visobj_t), Sprite_cmpVis);

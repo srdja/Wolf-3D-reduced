@@ -68,8 +68,6 @@ static void Client_InitLocal (void)
     m_forward       = 1;
 }
 
-extern void IN_StartupMouse (void);
-
 /**
  * Initialize Client sub-systems.
  * @return Initialize video and sound sub-systems.

@@ -224,7 +224,6 @@ entity_t *SpawnActor (enemy_t which, int x, int y, dir4type dir, LevelData_t *lv
 
     new_actor->areanumber = lvl->areas[ x ][ y ];
 
-//  Com_Printf( "Actor at %i,%i had areaNum: %i\n", x, y, new_actor->areanumber );
     if (new_actor->areanumber < 0) {
         // ambush marker tiles are listed as -3 area
         new_actor->areanumber = 0;

@@ -31,14 +31,9 @@
  *
  */
 
-
-#include <stdio.h>
-
 #include "wolf_powerups.h"
 #include "wolf_player.h"
 #include "wolf_local.h"
-
-#include "../util/com_string.h"
 
 int Pow_Texture[ pow_last ] = {
     SPR_STAT_34,    // pow_gibs

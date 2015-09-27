@@ -509,7 +509,6 @@ void Level_ScanInfoPlane (LevelData_t *lvl)
 
                 SpawnPatrol (en_mutant, x, y, tile - 220);
                 break;
-
 //
 // ghosts
 //

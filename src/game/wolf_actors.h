@@ -104,7 +104,7 @@ typedef enum {
 typedef struct entity_s {
     int x, y;
     int angle;
-    int type;
+    enemy_t type;
     int health;         /* Hit points before death */
     int max_health;
     int speed;          /* Speed of motion */

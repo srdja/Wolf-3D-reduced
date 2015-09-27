@@ -67,7 +67,7 @@ set(wolf_SOURCE
 	graphics/wolf_renderer.c
 	game/wolf_sprites.c
 	game/wolf_weapon.c
-)
+		game/entities/guard.c)
 
 set(wolf_HEADER
 	game/wolf_actors.h

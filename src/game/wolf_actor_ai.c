@@ -412,24 +412,6 @@ void A_StartAttack (entity_t *self)
 }
 
 /**
- * \brief Relaunch Angel of Death state either pain or chase player
- * \param[in] self Valid pointer to an entity_t structure.
- */
-void A_Relaunch (entity_t *self)
-{
-    if (++angel_temp == 3) {
-        A_StateChange (self, st_pain);
-        return;
-    }
-
-    if (US_RndT() & 1) {
-        A_StateChange (self, st_chase1);
-        return;
-    }
-}
-
-
-/**
  * \brief Player is victorious
  * \param[in] self Valid pointer to an entity_t structure.
  */
@@ -653,7 +635,6 @@ static bool ProjectileTryMove (entity_t *self, LevelData_t *lvl)
 void T_Projectile (entity_t *self)
 {
 #define PROJECTILESIZE  0xC000
-
 
     int deltax, deltay, speed, damage;
 
