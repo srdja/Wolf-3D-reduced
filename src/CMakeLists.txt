@@ -143,9 +143,9 @@ find_library(Z_LIB z)
     
 find_library(COLLECTIONS 
              NAME collectc
-             PATHS ${PROJECT_SOURCE_DIR}/lib/lib)
+             PATHS ${PROJECT_SOURCE_DIR}collections/lib/lib)
              
-include_directories(${PROJECT_SOURCE_DIR}/lib/include) 
+include_directories(${PROJECT_SOURCE_DIR}collections/lib/include)
 
 find_package(OpenGL REQUIRED)
 include_directories(${OPENGL_INCLUDE_DIRS})
