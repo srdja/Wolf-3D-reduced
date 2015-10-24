@@ -3,7 +3,7 @@ set(EXE_NAME "wolf")
 # check subdirectories
 include_directories(env)
 
-set(env_SOURCE 
+set(env_SOURCE
 	util/angle.c
 	graphics/color.c
 	util/com_string.c
@@ -128,24 +128,24 @@ SET(CMAKE_FIND_LIBRARY_PREFIXES "lib")
 SET(CMAKE_FIND_LIBRARY_SUFFIXES ".so" ".a")
 
 include(FindPkgConfig)
-    
+
 pkg_search_module(SDL2 REQUIRED sdl2)
 include_directories(${SDL2_INCLUDE_DIRS})
-    
+
 pkg_search_module(SDL_image REQUIRED SDL2_image>=2.0.0)
 include_directories(${SDL_image_INCLUDE_DIRS})
-    
+
 pkg_search_module(SDL_mixer REQUIRED SDL2_mixer>=2.0.0)
 include_directories(${SDL_mixer_INCLUDE_DIRS})
 
 find_library(M_LIB m)
 find_library(Z_LIB z)
-    
-find_library(COLLECTIONS 
+
+find_library(COLLECTIONS
              NAME collectc
-             PATHS ${PROJECT_SOURCE_DIR}collections/lib/lib)
-             
-include_directories(${PROJECT_SOURCE_DIR}collections/lib/include)
+             PATHS ${PROJECT_SOURCE_DIR}/lib/collections/lib)
+
+include_directories(${PROJECT_SOURCE_DIR}/lib/collections/include)
 
 find_package(OpenGL REQUIRED)
 include_directories(${OPENGL_INCLUDE_DIRS})
@@ -154,9 +154,9 @@ set_target_properties(${EXE_NAME} PROPERTIES LINKER_LANGUAGE C)
 
 target_link_libraries(${EXE_NAME} ${CMAKE_DL_LIBS}
                                   ${M_LIB}
-                                  ${OPENGL_LIBRARIES}       
+                                  ${OPENGL_LIBRARIES}
                                   ${Z_LIB}
-                                  ${SDL2_LIBRARIES} 
+                                  ${SDL2_LIBRARIES}
                                   ${SDL_image_LIBRARIES}
                                   ${SDL_mixer_LIBRARIES}
                                   ${COLLECTIONS}
