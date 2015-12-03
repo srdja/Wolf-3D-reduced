@@ -33,7 +33,6 @@
  */
 
 #include "../common.h"
-
 #include <math.h>
 
 #include "texture_manager.h"
@@ -101,7 +100,6 @@ texture_t *TM_LoadTexture (const char *name, uint8_t *data, int width, int heigh
 
     switch (type) {
     case TT_Pic:
-        tex->MipMap = false;
         tex->WrapS = Clamp;
         tex->WrapT = Clamp;
         tex->MinFilter = NearestMipMapOff;
@@ -109,7 +107,6 @@ texture_t *TM_LoadTexture (const char *name, uint8_t *data, int width, int heigh
         break;
 
     case TT_Wall:
-        tex->MipMap = true;
         tex->WrapS = Repeat;
         tex->WrapT = Repeat;
         tex->MinFilter = LinearMipMapLinear;
@@ -117,7 +114,6 @@ texture_t *TM_LoadTexture (const char *name, uint8_t *data, int width, int heigh
         break;
 
     case TT_Sprite:
-        tex->MipMap = true;
         tex->WrapS = Repeat;
         tex->WrapT = Repeat;
         tex->MinFilter = LinearMipMapLinear;
@@ -125,7 +121,6 @@ texture_t *TM_LoadTexture (const char *name, uint8_t *data, int width, int heigh
         break;
 
     default:
-        tex->MipMap = false;
         tex->WrapS = Clamp;
         tex->WrapT = Clamp;
         tex->MinFilter = NearestMipMapOff;
@@ -153,12 +148,10 @@ texture_t *TM_LoadTexture (const char *name, uint8_t *data, int width, int heigh
  */
 void TM_LoadTexture_DB (const char *name, texture_t   *tex, uint8_t *data, int width, int height, texturetype_t type, uint16_t bytes)
 {
-
     if (strlen (name) >= sizeof (tex->name)) {
         printf("TM_LoadTexture: \"%s\" is too long\n", name);
 
     }
-
 
     strncpy(tex->name, name, MAX_GAMEPATH);
     tex->registration_sequence = texture_registration_sequence;
@@ -170,7 +163,6 @@ void TM_LoadTexture_DB (const char *name, texture_t   *tex, uint8_t *data, int w
 
     switch (type) {
     case TT_Pic:
-        tex->MipMap = false;
         tex->WrapS = Clamp;
         tex->WrapT = Clamp;
         tex->MinFilter = NearestMipMapOff;
@@ -178,7 +170,6 @@ void TM_LoadTexture_DB (const char *name, texture_t   *tex, uint8_t *data, int w
         break;
 
     case TT_Wall:
-        tex->MipMap = true;
         tex->WrapS = Repeat;
         tex->WrapT = Repeat;
         tex->MinFilter = LinearMipMapLinear;
@@ -186,7 +177,6 @@ void TM_LoadTexture_DB (const char *name, texture_t   *tex, uint8_t *data, int w
         break;
 
     case TT_Sprite:
-        tex->MipMap = true;
         tex->WrapS = Repeat;
         tex->WrapT = Repeat;
         tex->MinFilter = LinearMipMapLinear;
@@ -194,7 +184,6 @@ void TM_LoadTexture_DB (const char *name, texture_t   *tex, uint8_t *data, int w
         break;
 
     default:
-        tex->MipMap = false;
         tex->WrapS = Clamp;
         tex->WrapT = Clamp;
         tex->MinFilter = NearestMipMapOff;
@@ -202,9 +191,7 @@ void TM_LoadTexture_DB (const char *name, texture_t   *tex, uint8_t *data, int w
         break;
     }
 
-
     R_UploadTexture (tex, data);
-
 }
 
 /**
@@ -986,42 +973,6 @@ void TM_ResampleTexture (uint8_t *in, int inwidth, int inheight, uint8_t *out, i
 
     row -= 2 * bytes;
     free (row);
-}
-
-/**
- * \brief Generate MipMap.
- * \param[in,out] in Texture data.
- * \param[in] width Width of texture in pixels.
- * \param[in] height Height of texture in pixels.
- * \note Operates in place, quartering the size of the texture.
- */
-bool TM_MipMap (uint8_t *in, uint16_t *width, uint16_t *height, uint16_t bytes)
-{
-    uint16_t new_width, new_height;
-
-    if (*width == 1 && *height == 1) {
-        return false;
-    }
-
-
-    if (*width < 2) {
-        new_width = 1;
-    } else {
-        new_width = *width >> 1;
-    }
-
-    if (*height < 2) {
-        new_height = 1;
-    } else {
-        new_height = *height >> 1;
-    }
-
-    TM_ResampleTexture (in, *width, *height, in, new_width, new_height, bytes, INTERPOLATION_CUBIC);
-
-    *width = new_width;
-    *height = new_height;
-
-    return true;
 }
 
 /**
