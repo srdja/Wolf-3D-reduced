@@ -57,48 +57,22 @@ static GLenum MagFilterToGL (TMagFilter MagFilter)
     return GL_LINEAR;
 }
 
-static GLenum MinFilterToGL (bool MipMap, TMinFilter MinFilter)
+static GLenum MinFilterToGL (TMinFilter MinFilter)
 {
-    if (MipMap) {
-        switch (MinFilter) {
-        case NearestMipMapOff:
-            return GL_NEAREST;
+     switch (MinFilter) {
+         case NearestMipMapOff:
+         case NearestMipMapNearest:
+         case NearestMipMapLinear:
+             return GL_NEAREST;
 
-        case NearestMipMapNearest:
-            return GL_NEAREST_MIPMAP_NEAREST;
+         case LinearMipMapOff:
+         case LinearMipMapNearest:
+         case LinearMipMapLinear:
+             return GL_LINEAR;
 
-        case NearestMipMapLinear:
-            return GL_NEAREST_MIPMAP_LINEAR;
-
-        case LinearMipMapOff:
-            return GL_LINEAR;
-
-        case LinearMipMapNearest:
-            return GL_LINEAR_MIPMAP_NEAREST;
-
-        case LinearMipMapLinear:
-            return GL_LINEAR_MIPMAP_LINEAR;
-
-        default:
-            break;
-        }
-    } else {
-        switch (MinFilter) {
-        case NearestMipMapOff:
-        case NearestMipMapNearest:
-        case NearestMipMapLinear:
-            return GL_NEAREST;
-
-        case LinearMipMapOff:
-        case LinearMipMapNearest:
-        case LinearMipMapLinear:
-            return GL_LINEAR;
-
-        default:
-            break;
-        }
-    }
-
+         default:
+             break;
+     }
     return GL_LINEAR;
 }
 
@@ -114,33 +88,13 @@ bool R_UploadTexture (texture_t *tex, uint8_t* data)
     uint8_t *scaled;
     uint16_t scaled_width, scaled_height;
     int comp = tex->bytes;
-    int gl_round_down = 1;
 
     glGenTextures (1, &tex->texnum);
     glBindTexture (GL_TEXTURE_2D, tex->texnum);
 
 
-    for (scaled_width = 1 ; scaled_width < tex->width ; scaled_width <<= 1) {
-        ;
-    }
-
-    if (gl_round_down && scaled_width > tex->width && tex->MipMap) {
-        scaled_width >>= 1;
-    }
-
-    for (scaled_height = 1 ; scaled_height < tex->height ; scaled_height <<= 1) {
-        ;
-    }
-
-    if (gl_round_down && scaled_height > tex->height && tex->MipMap) {
-        scaled_height >>= 1;
-    }
-
-    // let people sample down the world textures for speed
-    if (tex->MipMap) {
-        scaled_width >>= 0;
-        scaled_height >>= 0;
-    }
+    for (scaled_width  = 1; scaled_width  < tex->width;  scaled_width  <<= 1);
+    for (scaled_height = 1; scaled_height < tex->height; scaled_height <<= 1);
 
     // don't ever bother with > glMaxTexSize textures
     if (scaled_width > glMaxTexSize) {
@@ -173,26 +127,18 @@ bool R_UploadTexture (texture_t *tex, uint8_t* data)
 // upload base image
     glTexImage2D (GL_TEXTURE_2D, 0, comp, scaled_width, scaled_height, 0, tex->bytes == 4 ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, scaled);
 
-// upload mipmaps if required
-    if (tex->MipMap) {
-        int miplevel = 1;
-
-        while (TM_MipMap (scaled, &scaled_width, &scaled_height, tex->bytes)) {
-            glTexImage2D (GL_TEXTURE_2D, miplevel++, tex->bytes, scaled_width, scaled_height, 0, tex->bytes == 4 ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, scaled);
-        }
-    }
     free (scaled);
 
     if (tex->isTextureCube) {
         glTexParameteri (GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_S, WrapToGL (tex->WrapS));
         glTexParameteri (GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_T, WrapToGL (tex->WrapT));
         glTexParameteri (GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_R, WrapToGL (tex->WrapR));
-        glTexParameteri (GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_MIN_FILTER, MinFilterToGL (tex->MipMap, tex->MinFilter));
+        glTexParameteri (GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_MIN_FILTER, MinFilterToGL (tex->MinFilter));
         glTexParameteri (GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_MAG_FILTER, MagFilterToGL (tex->MagFilter));
     } else {
         glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, WrapToGL (tex->WrapS));
         glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, WrapToGL (tex->WrapT));
-        glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, MinFilterToGL (tex->MipMap, tex->MinFilter));
+        glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, MinFilterToGL (tex->MinFilter));
         glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, MagFilterToGL (tex->MagFilter));
     }
     return true;

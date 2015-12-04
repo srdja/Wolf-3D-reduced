@@ -42,52 +42,22 @@
 
 #include "../util/filesystem.h"
 
-
 #define     MAX_TEXTURES    1024
-
 
 typedef enum {
     TT_Sprite,
     TT_Wall,
     TT_Pic,
-
-    TextureTypeCount
-
 } texturetype_t;
 
 typedef enum {
     Repeat = 0,
     Clamp,
-
-    WrapModeCount   // Number of Wrap modes
-
 } TWrapMode;
-
-typedef enum {
-    Auto = 0,
-    RGBA8888,
-    RGBA4444,
-    RGBA5551,
-    RGB888,
-    RGB565,
-    DXTC1,
-    DXTC1Alpha,
-    DXTC3,
-    DXTC5,
-    Luminance,
-    Alpha,
-    AlphaLuminance,
-    DsDt,
-
-    UpImageFormatCount  // Number of Upload formats
-
-} TTexFormat;
 
 typedef enum {
     Nearest = 0,
     Linear,
-
-    MagFilterCount  // Number of Magnification filters
 
 } TMagFilter;
 
@@ -98,9 +68,6 @@ typedef enum {
     LinearMipMapOff,
     LinearMipMapNearest,
     LinearMipMapLinear,
-
-    MinFilterCount  // Number of Min filters
-
 } TMinFilter;
 
 
@@ -122,7 +89,6 @@ typedef struct texture_s {
     texturetype_t type;
     char    name[ MAX_GAMEPATH ];           // game path, including extension
 } texture_t;
-
 
 
 typedef enum {

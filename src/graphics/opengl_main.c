@@ -30,7 +30,7 @@
 #include "opengl_local.h"
 #include "video.h"
 
-float       gldepthmin, gldepthmax;
+float  gldepthmin, gldepthmax;
 
 glstate_t  gl_state;
 
@@ -60,9 +60,6 @@ void MYgluPerspective (GLdouble fovy,  GLdouble aspect,
 }
 
 
-/**
- * \brief clear buffers to preset values
- */
 static void R_Clear (void)
 {
     glClear (GL_DEPTH_BUFFER_BIT);
@@ -73,9 +70,6 @@ static void R_Clear (void)
 }
 
 
-/**
- * \brief Set 2D virtual screen mode
- */
 void R_SetGL2D (void)
 {
     // set 2D virtual screen size
@@ -92,13 +86,6 @@ void R_SetGL2D (void)
     glColor4f(1, 1, 1, 1);
 }
 
-
-/**
- * \brief Initialize GL subsystem.
- * \param[in] hinstance A handle to a window instance.
- * \param[in] hWnd A handle to a window
- * \return 1 on success, otherwise -1.
- */
 int opengl_init()
 {
     Video_MenuInit();
@@ -113,10 +100,6 @@ int opengl_init()
     return 1;
 }
 
-
-/**
- * \brief Begin frame
- */
 void R_BeginFrame (void)
 {
     R_SetGL2D();
@@ -124,9 +107,6 @@ void R_BeginFrame (void)
     R_Clear();
 }
 
-/**
- * \brief End frame
- */
 void R_EndFrame (void)
 {
     window_buffer_swap();

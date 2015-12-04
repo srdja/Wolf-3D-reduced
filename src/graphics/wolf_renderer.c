@@ -1,5 +1,4 @@
 /*
-
     Copyright (C) 2004-2012 Michael Liebscher <johnnycanuck@users.sourceforge.net>
     Copyright (C) 1997-2001 Id Software, Inc.
 
@@ -16,7 +15,6 @@
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
 */
 
 /**
@@ -35,7 +33,6 @@
 #include "../graphics/renderer.h"
 #include "../graphics/video.h"
 #include "../game/client.h"
-#include "../graphics/color.h"
 #include "../util/com_string.h"
 
 #include "../game/wolf_local.h"
@@ -45,6 +42,7 @@
 
 #include "../game/wolf_raycast.h"
 #include "wolf_renderer.h"
+#include "video.h"
 
 extern viddef_t viddef;
 
@@ -222,11 +220,11 @@ static void R_DrawFlash (void)
  * \param[in] floor floor colour.
  * \param[in] ceiling ceiling colour.
  */
-static void R_DrawBackGnd (float pitch, colour3_t floor, colour3_t ceiling)
+static void R_DrawBackGnd (colour3_t floor, colour3_t ceiling)
 {
-    int height = (int) ((viddef.height >> 1) * tan (-pitch) / TanDgr (g_fov * 0.5) + (viddef.height >> 1));
-    R_Draw_Fill (0, 0, viddef.width, height, ceiling);
-    R_Draw_Fill (0, height, viddef.width, viddef.height - height, floor);
+    int h = (viddef.height >> 1); // half of height
+    R_Draw_Fill (0, 0, viddef.width, h, ceiling);
+    R_Draw_Fill (0, h, viddef.width, viddef.height - h, floor);
 }
 
 
@@ -243,7 +241,7 @@ void R_DrawWorld (void)
 // initializing
     viewport = Player.position;
 
-    R_DrawBackGnd (viewport.pitch, r_world->floorColour, r_world->ceilingColour);
+    R_DrawBackGnd (r_world->floorColour, r_world->ceilingColour);
 
     R_SetGL3D (viewport);
 
@@ -291,8 +289,6 @@ void R_DrawPsyched (uint32_t percent)
 
     TM_GetTextureSize (&w, &h, "pics/GETPSYCHEDPIC.tga");
     R_Draw_Pic ((viddef.width - w) >> 1, ((viddef.height - h) >> 1) - 80, "pics/GETPSYCHEDPIC.tga");
-
-
     R_Draw_Fill ((viddef.width - w) >> 1, ((viddef.height - h) >> 1) + h - 80, w, 4, colourBlack);
 
     bar_length = (w * percent) / 100;

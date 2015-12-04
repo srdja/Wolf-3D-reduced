@@ -183,7 +183,6 @@ static void frame_run_game()
         player_update_movement();
 
         Player.position.angle = angle_normalize (FINE2RAD (ClientState.viewangles[ YAW ]));
-        Player.position.pitch = angle_normalize (FINE2RAD (ClientState.viewangles[ PITCH ]));
     } else {
         memset (&ClientState.cmd, 0, sizeof (ClientState.cmd));
     }
@@ -193,7 +192,6 @@ static void frame_run_game()
             M_Intermission_f();
         }
     } else {
-
         PL_Process (&Player, r_world);   // Player processing
         ProcessGuards();                // if single
         PushWall_Process();

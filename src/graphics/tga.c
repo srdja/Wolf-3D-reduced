@@ -432,8 +432,6 @@ void LoadTGA (const char *filename, uint8_t **pic, uint16_t *width, uint16_t *he
         goto TGALOADFAILED;
     }
 
-
-
     /* Handle colormap */
     if (targa_header.colorMapType == 1) {
         cmap_bytes = (targa_header.colorMapSize + 7) / 8;

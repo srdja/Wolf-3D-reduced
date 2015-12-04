@@ -457,9 +457,9 @@ cubic (double dx,
        int    jp2)
 {
     /* Catmull-Rom - not bad */
-    return (double) ((((- jm1 + 3 * j - 3 * jp1 + jp2) * dx +
-                       (2 * jm1 - 5 * j + 4 * jp1 - jp2)) * dx +
-                      (- jm1 + jp1)) * dx + (j + j)) / 2.0;
+    return ((((- jm1 + 3 * j - 3 * jp1 + jp2) * dx +
+              (2 * jm1 - 5 * j + 4 * jp1 - jp2)) * dx +
+             (- jm1 + jp1)) * dx + (j + j)) / 2.0;
 }
 
 bool pixel_region_has_alpha (int bytes)

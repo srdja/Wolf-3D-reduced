@@ -111,7 +111,6 @@ void R_SetGL3D (placeonplane_t viewport)
     glMatrixMode (GL_MODELVIEW);
     glLoadIdentity();
 
-    glRotatef ((GLfloat) (RAD2DEG (viewport.pitch)), 1, 0, 0);
     glRotatef ((GLfloat) (90 - RAD2DEG (viewport.angle)), 0, 1, 0);
     glTranslatef (-viewport.origin[ 0 ] / FLOATTILE, 0, viewport.origin[ 1 ] / FLOATTILE);
 

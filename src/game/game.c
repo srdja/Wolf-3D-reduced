@@ -196,7 +196,6 @@ int LoadTheGame (const char *name)
     fclose (f);
 
     ClientState.viewangles[ YAW ] = RAD2FINE (Player.position.angle);
-    ClientState.viewangles[ PITCH ] = RAD2FINE (Player.position.pitch);
 
     if (version != SAVEGAME_VERSION) {
         return 0;
