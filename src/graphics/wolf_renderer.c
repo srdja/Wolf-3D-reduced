@@ -312,7 +312,7 @@ void R_BeginRegistration (const char *map)
     if (! map || ! *map) {
         return;
     }
-    ++texture_registration_sequence;
+ //   ++texture_registration_sequence;
 
     com_snprintf (fullname, sizeof (fullname), "maps/%s.map", map);
 

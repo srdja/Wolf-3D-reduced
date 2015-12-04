@@ -32,12 +32,15 @@
  *      Portion of this code was derived from Quake II, and was originally written by Id Software, Inc.
  */
 
-#include "../common.h"
-#include <math.h>
 
+#include <math.h>
+#include <SDL_surface.h>
+#include <SDL_image.h>
+#include <collectc/hashtable.h>
+
+#include "../common.h"
 #include "texture_manager.h"
 #include "renderer.h"
-#include "tga.h"
 #include "../util/com_string.h"
 #include "../game/wolf_local.h"
 
@@ -46,7 +49,7 @@ static texture_t   _texWalls[ 256 ];  // Holds Walls
 static texture_t   ttextures[ MAX_TEXTURES ];
 static int         numttextures;
 
-static texture_t   *r_notexture;       // use for bad texture lookups
+static texture_t *r_notexture;       // use for bad texture lookups
 
 uint32_t texture_registration_sequence;
 
@@ -128,9 +131,7 @@ texture_t *TM_LoadTexture (const char *name, uint8_t *data, int width, int heigh
         break;
     }
 
-
     R_UploadTexture (tex, data);
-
 
     return tex;
 }
@@ -195,46 +196,33 @@ void TM_LoadTexture_DB (const char *name, texture_t   *tex, uint8_t *data, int w
 }
 
 /**
- * \brief Texture lookup based on name
+ * Loads an already cached texture.
+ *
  * \param[in] name Name of texture image.
  * \param[in,out] tex Texture structure.
  * \param[in] type Type of texture.
  */
 void TM_FindTexture_DB (const char *name, texture_t *tex, texturetype_t type)
 {
-    int len;
-    uint8_t *data = NULL;   /* raw texture data */
-    uint16_t width, height;  /* width, height of texture */
-    uint16_t bytes;
+    if (!name || !*name)
+        return;
 
-    if (!name || !*name) {
+    char *base       = SDL_GetBasePath();
+    char  path[1024] = {0};
+
+    strncpy(path, base, 1024);
+    strncat(path, "base/", 1024);
+    strncat(path, name, 1024);
+
+    SDL_Surface *img = IMG_Load(path);
+
+    if (!img) {
+        fprintf(stdout, "Unable to load texture: %s\n", path);
         return;
     }
+    TM_LoadTexture_DB(name, tex, img->pixels, img->w, img->h, type, img->format->BytesPerPixel);
 
-    // Check for file extension
-    len = strlen (name);
-
-    if (len < 5) {
-        return;
-    }
-
-//
-// load the texture from disk
-//
-    if (!strcmp (name + len - 4, ".tga")) {
-        LoadTGA (name, &data, &width, &height, &bytes);
-
-        if (! data) {
-            return;
-        }
-
-        TM_LoadTexture_DB (name, tex, data, width, height, type, bytes);
-    } else {
-        return;
-    }
-    free (data);
-
-//  return tex;
+    SDL_free(img);
 }
 
 /**
@@ -378,9 +366,6 @@ texture_t *TM_FindTexture (const char *name, texturetype_t type)
 {
     texture_t   *tex;
     int i, len;
-    uint8_t *data;          /* raw texture data */
-    uint16_t width, height;  /* width, height of texture */
-    uint16_t bytes;
 
     if (! name || ! *name) {
         return r_notexture;
@@ -404,23 +389,22 @@ texture_t *TM_FindTexture (const char *name, texturetype_t type)
 //
 // load the texture from disk
 //
-    data = NULL;
+    char *base       = SDL_GetBasePath();
+    char  path[1024] = {0};
 
-    if (! strcmp (name + len - 4, ".tga")) {
-        LoadTGA (name, &data, &width, &height, &bytes);
+    strncpy(path, base, 1024);
+    strncat(path, "base/", 1024);
+    strncat(path, name, 1024);
 
-        if (! data) {
-            return r_notexture;
-        }
+    SDL_Surface *img = IMG_Load(path);
 
-        tex = TM_LoadTexture (name, data, width, height, type, bytes);
-    } else {
+    if (!img) {
+        fprintf(stdout, "Unable to load texture: %s\n", path);
         return r_notexture;
     }
+    tex = TM_LoadTexture(name, img->pixels, img->w, img->h, type, img->format->BytesPerPixel);
 
-
-    free (data);
-
+    SDL_free(img);
 
     return tex;
 }
@@ -988,7 +972,7 @@ void TM_Init (void)
     memset (_texWalls, 0, sizeof (_texWalls));
     memset (_texSprites, 0, sizeof (_texSprites));
 
-    texture_registration_sequence = 1;
+ //   texture_registration_sequence = 1;
 
 // create a checkerboard texture
     data = malloc (16 * 16 * 4);

@@ -58,7 +58,7 @@
 extern viddef_t viddef;
 
 
-float cur_x_fov, cur_y_fov; // x & y field of view (in degrees)
+float cur_y_fov; // x & y field of view (in degrees)
 float ratio; // viewport width/height
 
 
@@ -93,7 +93,6 @@ static void R_CheckFOV (void)
 {
     ratio = (float) viddef.width / (float)viddef.height; // FIXME: move somewhere
     cur_y_fov = g_fov;
-    cur_x_fov = CalcFov (g_fov, (float)viddef.height, (float)viddef.width);
 }
 
 

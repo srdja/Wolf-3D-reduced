@@ -78,9 +78,6 @@ static GLenum MinFilterToGL (TMinFilter MinFilter)
 
 
 /**
- * \brief Finds the difference between two angles.
- * \param[in] tex Angle in radians.
- * \param[in] data Angle in radians.
  * \return true if texture was uploaded, otherwise false.
  */
 bool R_UploadTexture (texture_t *tex, uint8_t* data)
@@ -118,14 +115,13 @@ bool R_UploadTexture (texture_t *tex, uint8_t* data)
 
     scaled = malloc (scaled_width * scaled_height * tex->bytes);
 
-    if (scaled_width == tex->width && scaled_height == tex->height) {
+    if (scaled_width == tex->width && scaled_height == tex->height)
         memcpy (scaled, data, tex->width * tex->height * tex->bytes);
-    } else {
+    else
         TM_ResampleTexture (data, tex->width, tex->height, scaled, scaled_width, scaled_height, tex->bytes, INTERPOLATION_NONE);
-    }
 
 // upload base image
-    glTexImage2D (GL_TEXTURE_2D, 0, comp, scaled_width, scaled_height, 0, tex->bytes == 4 ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, scaled);
+    glTexImage2D (GL_TEXTURE_2D, 0, comp, scaled_width, scaled_height, 0, tex->bytes == 4 ? GL_BGRA : GL_BGR, GL_UNSIGNED_BYTE, scaled);
 
     free (scaled);
 
