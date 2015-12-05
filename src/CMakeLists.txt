@@ -14,9 +14,7 @@ set(env_SOURCE
 	env/menu_conf.c
 	graphics/opengl_draw.c
 	graphics/opengl_main.c
-	graphics/opengl_texture.c
 	graphics/texture_manager.c
-	graphics/tga.c
 )
 
 set(env_HEADER
@@ -31,7 +29,6 @@ set(env_HEADER
 	graphics/opengl_local.h
 	graphics/renderer.h
 	graphics/texture_manager.h
-	graphics/tga.h
 	util/timer.h
 	graphics/video.h
 )
@@ -43,7 +40,6 @@ set(wolf_SOURCE
 	game/wolf_act_stat.c
 	game/wolf_ai_com.c
 	game/wolf_areas.c
-	game/wolf_automap.c
 	game/wolf_bj.c
 	game/frame.c
 	game/wolf_doors.c
@@ -125,7 +121,7 @@ add_executable( ${EXE_NAME} ${SOURCE} ${HEADER} ${input} graphics/color.h main.c
 #--------------------------------------------------------------
 
 SET(CMAKE_FIND_LIBRARY_PREFIXES "lib")
-SET(CMAKE_FIND_LIBRARY_SUFFIXES ".so" ".a")
+SET(CMAKE_FIND_LIBRARY_SUFFIXES ".a" ".so")
 
 include(FindPkgConfig)
 
@@ -159,5 +155,4 @@ target_link_libraries(${EXE_NAME} ${CMAKE_DL_LIBS}
                                   ${SDL2_LIBRARIES}
                                   ${SDL_image_LIBRARIES}
                                   ${SDL_mixer_LIBRARIES}
-                                  ${COLLECTIONS}
-                                  )
+                                  ${COLLECTIONS})
