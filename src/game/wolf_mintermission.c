@@ -67,7 +67,7 @@ static void M_DrawInterBJ (int x, int y, int f)
         for (i = 0; i < 2; ++i) {
             com_snprintf (guypic, sizeof (guypic), "pics/L_GUY%dPIC.tga", i);
 
-            (void)TM_FindTexture (guypic, TT_Pic);
+            texture_get_picture(guypic);
         }
         cached = true;
     }
@@ -401,20 +401,16 @@ static const char victorytextPageTwo[ 6 ][ 1024 ] = {
 
 static void M_Victory_Draw_PageOne (void)
 {
-    int32_t w, h;
-
     R_Draw_Tile (0, 0, viddef.width, viddef.height, "walls/000.tga");
-
     M_DrawWindow (16, 16, 608, 408, colourWhite, colourBlack, colourBlack);
 
-    TM_GetTextureSize (&w, &h, "pics/PLAQUE_PAGE.tga");
-    R_Draw_Pic (((viddef.width >> 1) - w)  >> 1, viddef.height - 48, "pics/PLAQUE_PAGE.tga");
+    Texture *t = texture_get_picture("pics/PLAQUE_PAGE.tga");
+    R_Draw_Pic (((viddef.width >> 1) - t->width)  >> 1, viddef.height - 48, "pics/PLAQUE_PAGE.tga");
 
-    TM_GetTextureSize (&w, &h, "pics/PLAQUE_BLANK.tga");
-    R_Draw_Pic (viddef.width - w - (((viddef.width >> 1) - w)  >> 1), viddef.height - 48, "pics/PLAQUE_BLANK.tga");
+    t = texture_get_picture("pics/PLAQUE_BLANK.tga");
+    R_Draw_Pic (viddef.width - t->width - (((viddef.width >> 1) - t->width)  >> 1), viddef.height - 48, "pics/PLAQUE_BLANK.tga");
 
     R_Draw_Pic (32, 32, "pics/H_BLAZEPIC.tga");
-
 
    // Font_SetSize (FONT0, 2);
 
@@ -431,18 +427,15 @@ static void M_Victory_Draw_PageOne (void)
 
 static void M_Victory_Draw_PageTwo (void)
 {
-    int32_t w, h;
-
     R_Draw_Tile (0, 0, viddef.width, viddef.height, "walls/000.tga");
 
     M_DrawWindow (16, 16, 608, 408, colourWhite, colourBlack, colourBlack);
 
-    TM_GetTextureSize (&w, &h, "pics/PLAQUE_PAGE.tga");
-    R_Draw_Pic (((viddef.width >> 1) - w)  >> 1, viddef.height - 48, "pics/PLAQUE_PAGE.tga");
+    Texture *t = texture_get_picture("pics/PLAQUE_PAGE.tga");
+    R_Draw_Pic (((viddef.width >> 1) - t->width)  >> 1, viddef.height - 48, "pics/PLAQUE_PAGE.tga");
 
-    TM_GetTextureSize (&w, &h, "pics/PLAQUE_BLANK.tga");
-    R_Draw_Pic (viddef.width - w - (((viddef.width >> 1) - w)  >> 1), viddef.height - 48, "pics/PLAQUE_BLANK.tga");
-
+    t = texture_get_picture("pics/PLAQUE_BLANK.tga");
+    R_Draw_Pic (viddef.width - t->width - (((viddef.width >> 1) - t->width)  >> 1), viddef.height - 48, "pics/PLAQUE_BLANK.tga");
 
    // Font_SetSize (FONT0, 2);
 

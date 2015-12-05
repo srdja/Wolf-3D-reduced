@@ -44,8 +44,6 @@
 #include "wolf_renderer.h"
 #include "video.h"
 
-extern viddef_t viddef;
-
 LevelData_t *r_world;
 
 
@@ -64,12 +62,11 @@ static int32_t hud_x, hud_y;
  */
 void R_DrawHUD (void)
 {
-    int32_t w, h;
     uint32_t score = Player.score;
 
-    TM_GetTextureSize (&w, &h, "pics/STATUSBARPIC.tga");
-    hud_x = (viddef.width - w) >> 1;
-    hud_y = viddef.height - h;
+    Texture *t = texture_get_picture("pics/STATUSBARPIC.tga");
+    hud_x = (viddef.width - t->width) >> 1;
+    hud_y = viddef.height - t->height;
     R_Draw_Pic (hud_x, hud_y, "pics/STATUSBARPIC.tga");
 
     if (Player.items & ITEM_KEY_GOLD) {
@@ -282,12 +279,12 @@ colour3_t barthirdcolour    = { 252, 156, 156 };
  */
 void R_DrawPsyched (uint32_t percent)
 {
-    int32_t w, h;
+    Texture *t = texture_get_picture("pics/GETPSYCHEDPIC.tga");
+    int32_t w = t->width, h = t->height;
     uint32_t bar_length;
 
     R_Draw_Fill (0, 0, viddef.width, viddef.height, interbkgnd);
 
-    TM_GetTextureSize (&w, &h, "pics/GETPSYCHEDPIC.tga");
     R_Draw_Pic ((viddef.width - w) >> 1, ((viddef.height - h) >> 1) - 80, "pics/GETPSYCHEDPIC.tga");
     R_Draw_Fill ((viddef.width - w) >> 1, ((viddef.height - h) >> 1) + h - 80, w, 4, colourBlack);
 
@@ -307,12 +304,13 @@ void R_DrawPsyched (uint32_t percent)
  */
 void R_BeginRegistration (const char *map)
 {
-    char    fullname[ MAX_GAMEPATH ];
+    char fullname[ MAX_GAMEPATH ];
 
     if (! map || ! *map) {
         return;
     }
- //   ++texture_registration_sequence;
+
+    texture_cache_advance_index();
 
     com_snprintf (fullname, sizeof (fullname), "maps/%s.map", map);
 
@@ -341,5 +339,5 @@ void R_BeginRegistration (const char *map)
  */
 void R_EndRegistration (void)
 {
-    TM_FreeUnusedTextures();
+    texture_cache_remove_unused();
 }

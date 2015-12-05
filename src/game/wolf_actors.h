@@ -43,6 +43,8 @@
 #ifndef __WOLF_ACTORS_H__
 #define __WOLF_ACTORS_H__
 
+#include <collectc/deque.h>
+
 #include "wolf_math.h"
 #include "wolf_level.h"
 
@@ -132,6 +134,8 @@ typedef struct {
     en_state next_state; // next state
 } stateinfo;
 
+
+extern Deque *guards;
 
 extern entity_t Guards[ MAX_GUARDS + 1 ];
 extern uint16_t NumGuards;

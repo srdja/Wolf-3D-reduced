@@ -38,7 +38,6 @@
 typedef enum menuState {
     IPM_GAME,
     IPM_MAIN,
-    IPM_AUTOMAP,
     IPM_INTRO,
 } menuState_t;
 

@@ -206,28 +206,6 @@ static void frame_run_menu()
 
 }
 
-static void frame_run_automap()
-{
-    glDepthMask (GL_TRUE);
-    glClear (GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
-
-    glMatrixMode (GL_MODELVIEW);
-    glLoadIdentity();
-    glDisable (GL_DEPTH_TEST);
-
-    glEnable (GL_BLEND);
-
-    glColor4f (1, 1, 1, 1);
-
-    glMatrixMode (GL_PROJECTION);
-    glLoadIdentity();
-
-    glOrtho (0, viddef.width, viddef.height, 0, -99999, 99999);
-
-    DrawMenus();
-    R_EndFrame();
-}
-
 static void frame_run_dead()
 {
     memset (&ClientState.cmd, 0, sizeof (ClientState.cmd));
@@ -274,9 +252,6 @@ void frame_run(int msec)
     tics = 1;
 
     switch (ClientStatic.menuState) {
-        case IPM_AUTOMAP:
-            frame_run_automap();
-            break;
         case IPM_GAME:
             frame_run_game();
             break;

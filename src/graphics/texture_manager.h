@@ -3,6 +3,7 @@
     Copyright (C) 2004 Michael Liebscher
     Copyright (C) 1997-2001 Id Software, Inc.
     Copyright (C) 1995 Spencer Kimball and Peter Mattis.
+    Copyright (C) 2015 Srđan Panić
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License
@@ -20,96 +21,43 @@
 
 */
 
-/*
- *  texture_manager.c:  Texture manager.
- *
- *  Author: Michael Liebscher <johnnycanuck@users.sourceforge.net>
- *  Date:   2004
- *
- *  Acknowledgement:
- *  Portion of this code was derived from
- *  The GIMP (an image manipulation program) and was originally
- *  written by Spencer Kimball and Peter Mattis.
- *
- *  Portion of this code was derived from Quake II, and was originally
- *  written by Id Software, Inc.
- *
- */
-
 #ifndef __TEXTURE_MANAGER_H__
 #define __TEXTURE_MANAGER_H__
 
-
 #include "../util/filesystem.h"
-
-#define     MAX_TEXTURES    1024
+#include <GL/gl.h>
 
 typedef enum {
     TT_Sprite,
     TT_Wall,
     TT_Pic,
-} texturetype_t;
-
-typedef enum {
-    Repeat = 0,
-    Clamp,
-} TWrapMode;
-
-typedef enum {
-    Nearest = 0,
-    Linear,
-
-} TMagFilter;
-
-typedef enum {
-    NearestMipMapOff = 0,
-    NearestMipMapNearest,
-    NearestMipMapLinear,
-    LinearMipMapOff,
-    LinearMipMapNearest,
-    LinearMipMapLinear,
-} TMinFilter;
-
+} TextureType;
 
 typedef struct texture_s {
-    bool        isTextureCube;
+    GLfloat WrapS;
+    GLfloat WrapT;
+    GLfloat MinFilter;
+    GLfloat MagFilter;
+    GLint   id;
 
-    TWrapMode       WrapS;
-    TWrapMode       WrapT;
-    TWrapMode       WrapR;
+    uint32_t cache_index;
 
-    TMinFilter      MinFilter;
-    TMagFilter      MagFilter;
+    uint16_t width;
+    uint16_t height;
+    uint16_t bytes_per_pixel;
 
-    uint32_t registration_sequence;      // 0 = free
-    uint16_t width, height;
-    uint16_t upload_width, upload_height;
-    unsigned int texnum;
-    uint16_t bytes;
-    texturetype_t type;
-    char    name[ MAX_GAMEPATH ];           // game path, including extension
-} texture_t;
+    TextureType type;
+    char name[MAX_GAMEPATH];
+} Texture;
 
 
-typedef enum {
-    INTERPOLATION_NONE,   /* None (Fastest) */
-} InterpolationType;
+void texture_tm_init(void);
+void texture_cache_advance_index(void);
+void texture_cache_remove_unused(void);
 
-
-extern uint32_t texture_registration_sequence;
-
-void TM_Init (void);
-
-unsigned int TM_getWallTextureId (uint32_t imageId);
-unsigned int TM_getSpriteTextureId (uint32_t imageId);
-
-texture_t *TM_FindTexture_Wall (uint32_t imageId);
-texture_t *TM_FindTexture_Sprite (uint32_t imageId);
-texture_t *TM_FindTexture (const char *name, texturetype_t type);
-
-void TM_GetTextureSize (int32_t *width, int32_t *height, const char *name);
-void TM_ResampleTexture (uint8_t *in, int inwidth, int inheight, uint8_t *out,  int outwidth, int outheight, uint16_t bytes, InterpolationType interpolation);
-void TM_FreeUnusedTextures (void);
+Texture *texture_get_wall(uint32_t id);
+Texture *texture_get_sprite(uint32_t id);
+Texture *texture_get_picture(char *name);
 
 
 #endif /* __TEXTURE_MANAGER_H__ */

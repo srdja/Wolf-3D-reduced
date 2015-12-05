@@ -34,12 +34,17 @@
 #include <stdio.h>
 #include <string.h>
 
+#include <collectc/deque.h>
+
 #include "wolf_actors.h"
 #include "wolf_act_stat.h"
 #include "wolf_player.h"
 #include "wolf_local.h"
 
-entity_t Guards[ MAX_GUARDS + 1 ], *New;
+
+
+
+entity_t Guards[ MAX_GUARDS + 1 ];
 uint16_t NumGuards = 0;
 uint8_t add8dir[ 9 ] = { 4, 5, 6, 7, 0, 1, 2, 3, 0 };
 uint8_t r_add8dir[ 9 ] = { 4, 7, 6, 5, 0, 1, 2, 3, 0 };
@@ -108,7 +113,6 @@ static int DoGuard (entity_t *ent)  // FIXME: revise!
             ent->ticcount += objstate[ ent->type ][ ent->state ].timeout;
         }
     }
-
 //
 // think
 //
@@ -175,7 +179,6 @@ void ResetGuards (void)
 {
     memset (Guards, 0, sizeof (Guards));
     NumGuards = 0;
-    New = NULL;
 }
 
 /**

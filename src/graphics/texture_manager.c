@@ -3,6 +3,7 @@
     Copyright (C) 2004-2012 Michael Liebscher <johnnycanuck@users.sourceforge.net>
     Copyright (C) 1997-2001 Id Software, Inc.
     Copyright (C) 1995 Spencer Kimball and Peter Mattis.
+    Copyright (C) 2015 Srđan Panić
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License
@@ -20,389 +21,210 @@
 
 */
 
-/**
- * \file texture_manager.c
- * \brief Texture manager.
- * \author Michael Liebscher
- * \date 2004-2012
- * \note
- *      Portion of this code was derived from
- *      The GIMP (an image manipulation program) and was originally
- *      written by Spencer Kimball and Peter Mattis.
- *      Portion of this code was derived from Quake II, and was originally written by Id Software, Inc.
- */
-
-
-#include <math.h>
 #include <SDL_surface.h>
 #include <SDL_image.h>
 #include <collectc/hashtable.h>
+#include <GL/gl.h>
 
 #include "../common.h"
 #include "texture_manager.h"
-#include "renderer.h"
 #include "../util/com_string.h"
-#include "../game/wolf_local.h"
+#include "opengl_local.h"
 
-static texture_t   _texSprites[ 768 ];  // Holds  sprites
-static texture_t   _texWalls[ 256 ];  // Holds Walls
-static texture_t   ttextures[ MAX_TEXTURES ];
-static int         numttextures;
 
-static texture_t *r_notexture;       // use for bad texture lookups
+#define MAX_TEXTURE_PATH 1024
 
-uint32_t texture_registration_sequence;
+
+/* A separate cache for walls an sprites since their IDs collide. */
+static HashTable *sprites;
+static HashTable *walls;
+static HashTable *pictures;
+
+static Texture   *no_texture;
+static uint32_t  texture_cache_index;
+
+
+static Texture  *texture_new_missing(void);
+static void      set_filters(TextureType type, Texture *tex);
 
 
 /**
- * \brief Load raw image into video memory.
- * \param[in] name Name of texture image.
- * \param[in] data Image data.
- * \param[in] width Width of image in pixels.
- * \param[in] height Height of image in pixels.
- * \param[in] type Texture type
- * \param[in] bytes Image data byte length
- * \return Pointer to filled out texture_t structure.
- * \note Any texture that was not touched on this registration sequence will be freed.
+ * Initializes the texture manager.
  */
-texture_t *TM_LoadTexture (const char *name, uint8_t *data, int width, int height, texturetype_t type, uint16_t bytes)
+void texture_tm_init(void)
 {
-    texture_t   *tex;
-    int         i;
+    HashTableConf table_config;
+    hashtable_conf_init(&table_config);
 
-    if (strlen (name) >= sizeof (tex->name)) {
-        printf("TM_LoadTexture: \"%s\" is too long\n", name);
-        return r_notexture;
+    table_config.hash        = POINTER_HASH;
+    table_config.key_compare = CMP_POINTER;
+    table_config.key_length  = KEY_LENGTH_POINTER;
+
+    sprites  = hashtable_new_conf(&table_config);
+    walls    = hashtable_new_conf(&table_config);
+
+    /* pictures are mapped to string names */
+    pictures = hashtable_new();
+
+    if (!sprites || !walls || !pictures) {
+        fprintf(stderr, "Failed to initialize texture manager.\n");
+        return;
     }
+    texture_cache_index = 1;
 
-    // find a free texture_t space
-    for (i = 0, tex = ttextures; i < numttextures; ++i, ++tex) {
-        if (! tex->texnum) {
+    no_texture = texture_new_missing();
+}
+
+/**
+ * Uploads the texture pixel data to video memory.
+ */
+static void texture_upload(Texture *tex, uint8_t *data) {
+    glGenTextures(1, &tex->id);
+    glBindTexture(GL_TEXTURE_2D, tex->id);
+
+    glTexImage2D(GL_TEXTURE_2D, 0, tex->bytes_per_pixel, tex->width, tex->height, 0, tex->bytes_per_pixel == 4 ? GL_BGRA : GL_BGR, GL_UNSIGNED_BYTE, data);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, tex->WrapS);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, tex->WrapT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, tex->MinFilter);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, tex->MagFilter);
+}
+
+/**
+ * Advances the texture cache index.
+ */
+void texture_cache_advance_index()
+{
+    texture_cache_index++;
+}
+
+/**
+ * Bind the texture of id [id]. The texture must already be uploaded to video memory.
+ */
+void texture_use(int id)
+{
+    if (gl_state.bound_texture_id == id)
+        return;
+
+    gl_state.bound_texture_id = id;
+    glBindTexture(GL_TEXTURE_2D, id);
+}
+
+/**
+ * Sets the texture filters.
+ */
+static void set_filters(TextureType type, Texture *tex)
+{
+    switch (type) {
+        case TT_Pic:
+            tex->WrapS = GL_CLAMP;
+            tex->WrapT = GL_CLAMP;
+            tex->MinFilter = GL_NEAREST;
+            tex->MagFilter = GL_NEAREST;
             break;
-        }
+        case TT_Wall:
+            tex->WrapS = GL_REPEAT;
+            tex->WrapT = GL_REPEAT;
+            tex->MinFilter = GL_LINEAR;
+            tex->MagFilter = GL_LINEAR;
+            break;
+        case TT_Sprite:
+            tex->WrapS = GL_REPEAT;
+            tex->WrapT = GL_REPEAT;
+            tex->MinFilter = GL_LINEAR;
+            tex->MagFilter = GL_NEAREST;
+            break;
+        default:
+            tex->WrapS = GL_CLAMP;
+            tex->WrapT = GL_CLAMP;
+            tex->MinFilter = GL_NEAREST;
+            tex->MagFilter = GL_NEAREST;
+            break;
     }
-
-    if (i == numttextures) {
-        if (numttextures == MAX_TEXTURES) {
-            printf("MAX_TEXTURES reached\n");
-            return r_notexture;
-        }
-
-        numttextures++;
-    }
-
-    tex = &ttextures[ i ];
-
-    strncpy(tex->name, name, MAX_GAMEPATH);
-    tex->registration_sequence = texture_registration_sequence;
-
-    tex->width = width;
-    tex->height = height;
-    tex->type = type;
-    tex->bytes = bytes;
-
-    switch (type) {
-    case TT_Pic:
-        tex->WrapS = Clamp;
-        tex->WrapT = Clamp;
-        tex->MinFilter = NearestMipMapOff;
-        tex->MagFilter = Nearest;
-        break;
-
-    case TT_Wall:
-        tex->WrapS = Repeat;
-        tex->WrapT = Repeat;
-        tex->MinFilter = LinearMipMapLinear;
-        tex->MagFilter = Linear;
-        break;
-
-    case TT_Sprite:
-        tex->WrapS = Repeat;
-        tex->WrapT = Repeat;
-        tex->MinFilter = LinearMipMapLinear;
-        tex->MagFilter = Nearest;
-        break;
-
-    default:
-        tex->WrapS = Clamp;
-        tex->WrapT = Clamp;
-        tex->MinFilter = NearestMipMapOff;
-        tex->MagFilter = Nearest;
-        break;
-    }
-
-    R_UploadTexture (tex, data);
-
-    return tex;
 }
 
 /**
- * \brief Load raw image into video memory.
- * \param[in] name Name of texture image.
- * \param[in] tex Texture structure.
- * \param[in] data Image data.
- * \param[in] width Width of image in pixels.
- * \param[in] height Height of image in pixels.
- * \param[in] type Texture type
- * \param[in] bytes Number of bytes of image data
- * \return Pointer to filled out texture_t structure.
+ * Loads an image from the disk. The name should contain the name and any
+ * subdirectory of base if there is one.
  */
-void TM_LoadTexture_DB (const char *name, texture_t   *tex, uint8_t *data, int width, int height, texturetype_t type, uint16_t bytes)
-{
-    if (strlen (name) >= sizeof (tex->name)) {
-        printf("TM_LoadTexture: \"%s\" is too long\n", name);
-
-    }
-
-    strncpy(tex->name, name, MAX_GAMEPATH);
-    tex->registration_sequence = texture_registration_sequence;
-
-    tex->width = width;
-    tex->height = height;
-    tex->type = type;
-    tex->bytes = bytes;
-
-    switch (type) {
-    case TT_Pic:
-        tex->WrapS = Clamp;
-        tex->WrapT = Clamp;
-        tex->MinFilter = NearestMipMapOff;
-        tex->MagFilter = Nearest;
-        break;
-
-    case TT_Wall:
-        tex->WrapS = Repeat;
-        tex->WrapT = Repeat;
-        tex->MinFilter = LinearMipMapLinear;
-        tex->MagFilter = Linear;
-        break;
-
-    case TT_Sprite:
-        tex->WrapS = Repeat;
-        tex->WrapT = Repeat;
-        tex->MinFilter = LinearMipMapLinear;
-        tex->MagFilter = Nearest;
-        break;
-
-    default:
-        tex->WrapS = Clamp;
-        tex->WrapT = Clamp;
-        tex->MinFilter = NearestMipMapOff;
-        tex->MagFilter = Nearest;
-        break;
-    }
-
-    R_UploadTexture (tex, data);
-}
-
-/**
- * Loads an already cached texture.
- *
- * \param[in] name Name of texture image.
- * \param[in,out] tex Texture structure.
- * \param[in] type Type of texture.
- */
-void TM_FindTexture_DB (const char *name, texture_t *tex, texturetype_t type)
+static SDL_Surface *load_from_disk(char *name)
 {
     if (!name || !*name)
-        return;
+        return NULL;
 
     char *base       = SDL_GetBasePath();
-    char  path[1024] = {0};
+    char  path[MAX_TEXTURE_PATH] = {0};
 
-    strncpy(path, base, 1024);
-    strncat(path, "base/", 1024);
-    strncat(path, name, 1024);
+    strncpy(path, base, MAX_TEXTURE_PATH);
+    strncat(path, "base/", MAX_TEXTURE_PATH);
+    strncat(path, name, MAX_TEXTURE_PATH);
 
     SDL_Surface *img = IMG_Load(path);
 
     if (!img) {
         fprintf(stdout, "Unable to load texture: %s\n", path);
-        return;
+        return NULL;
     }
-    TM_LoadTexture_DB(name, tex, img->pixels, img->w, img->h, type, img->format->BytesPerPixel);
-
-    SDL_free(img);
+    return img;
 }
 
 /**
- * \brief Free unused textures.
- * \note Any texture that was not touched on this registration sequence will be freed.
+ * Creates a new "missing" texture.
  */
-void TM_FreeUnusedTextures (void)
+static Texture *texture_new_missing(void)
 {
-    int32_t i;
-    texture_t   *tex;
+    uint32_t  color = 0xFD5F00FF;
+    size_t    size  = (16 * 16);
+    uint32_t *data  = malloc(size * 4);
 
-    // never free r_notexture texture
-    r_notexture->registration_sequence = texture_registration_sequence;
+    int x;
+    for (x = 0; x < size; x++)
+        data[x] = color;
 
-    for (i = 0, tex = ttextures ; i < numttextures ; ++i, ++tex) {
-        if (tex->registration_sequence == texture_registration_sequence)
-            continue;       // used this sequence
+    Texture *tex = calloc(1, sizeof(Texture));
 
-        if (! tex->registration_sequence)
-            continue;       // free image_t slot
+    if (!tex)
+        return no_texture;
 
-        if (tex->type == TT_Pic)
-            continue;       // don't free pics
+    tex->cache_index = texture_cache_index;
+    tex->type        = TT_Pic;
+    tex->width       = 16;
+    tex->height      = 16;
+    tex->bytes_per_pixel = 4;
 
-        // free texture
-        R_DeleteTexture (tex->texnum);
-        memset (tex, 0, sizeof (*tex));
-    }
+    strncpy(tex->name, "missing", MAX_GAMEPATH);
+    set_filters(TT_Pic, tex);
+    texture_upload(tex, data);
+    free (data);
 
-
-    for (i = 0 ; i <  256; i++) {
-        tex = &_texWalls[ i ];
-
-        if (tex->registration_sequence == texture_registration_sequence)
-            continue;       // used this sequence
-
-        if (! tex->registration_sequence)
-            continue;       // free image_t slot
-
-        R_DeleteTexture (tex->texnum);
-        memset (tex, 0, sizeof (*tex));
-    }
-
-    for (i = 0 ; i < 768 ; i++) {
-        tex = &_texSprites[ i ];
-
-        if (tex->registration_sequence == texture_registration_sequence)
-            continue;       // used this sequence
-
-        if (! tex->registration_sequence)
-            continue;       // free image_t slot
-
-        R_DeleteTexture (tex->texnum);
-        memset (tex, 0, sizeof (*tex));
-    }
+    return tex;
 }
 
 /**
- * \brief Get wall texture number based on wall id
- * \param[in] wallId Wall id to lookup
- * \return texture number
+ * Creates and returns a new Texture from the image file [name]. This function also uploads the pixel
+ * buffer to video memory. It does not however add it to the texture cache.
  */
-unsigned int TM_getWallTextureId (uint32_t wallId)
+static Texture *texture_new(const char *name, TextureType type, uint32_t cache_index)
 {
-    texture_t *outTexture = &_texWalls[ wallId ];
-    return outTexture->texnum;
-}
+    Texture *tex = calloc(1, sizeof(Texture));
 
-/**
- * \brief Get wall texture based on wall id
- * \param[in] imageId Wall id to lookup
- * \return r_notexture if the texture is not found, otherwise it will return a valid texture_t structure.
- */
-texture_t *TM_FindTexture_Wall (uint32_t wallId)
-{
-    texture_t *outTexture;
+    if (!tex)
+        return no_texture;
 
+    SDL_Surface *img = load_from_disk(name);
 
-    if (wallId > 256) {
-        return r_notexture;
-    }
+    if (!img)
+        return no_texture;
 
-    outTexture = &_texWalls[ wallId ];
-    outTexture->registration_sequence = texture_registration_sequence;
+    tex->cache_index = cache_index;
+    tex->type        = type;
+    tex->width       = img->w;
+    tex->height      = img->h;
+    tex->bytes_per_pixel = img->format->BytesPerPixel;
 
-    if (! outTexture->texnum) {
-        char fileName[ 32 ];
-
-        com_snprintf (fileName, sizeof (fileName), "walls/%.3d.tga", wallId);
-        TM_FindTexture_DB (fileName, outTexture, TT_Wall);
-    }
-
-    return outTexture;
-}
-
-/**
- * \brief Get sprite texture number based on sprite id
- * \param[in] spriteId Sprite id to lookup
- * \return texture number
- */
-unsigned int TM_getSpriteTextureId (uint32_t spriteId)
-{
-    texture_t *outTexture = &_texSprites[ spriteId ];
-    return outTexture->texnum;
-}
-
-/**
- * \brief Get sprite texture based on sprite id
- * \param[in] imageId Wall id to lookup
- * \return r_notexture if the texture is not found, otherwise it will return a valid texture_t structure.
- */
-texture_t *TM_FindTexture_Sprite (uint32_t imageId)
-{
-    texture_t *outTexture;
-
-
-    if (imageId > 768) {
-        return r_notexture;
-    }
-
-    outTexture = &_texSprites[ imageId ];
-    outTexture->registration_sequence = texture_registration_sequence;
-
-    if (! outTexture->texnum) {
-        char fileName[ 32 ];
-
-        com_snprintf (fileName, sizeof (fileName), "%s/%.3d.tga", spritelocation, imageId);
-        TM_FindTexture_DB (fileName, outTexture, TT_Sprite);
-    }
-
-    return outTexture;
-}
-
-/**
- * \brief Find texture based on file name
- * \param[in] name Name of the texture to find.
- * \param[in] type Type of texture (see texturetype_t).
- * \return r_notexture if the texture is not found, otherwise it will return a valid texture_t structure.
- */
-texture_t *TM_FindTexture (const char *name, texturetype_t type)
-{
-    texture_t   *tex;
-    int i, len;
-
-    if (! name || ! *name) {
-        return r_notexture;
-    }
-
-    // Check for file extension
-    len = strlen (name);
-
-    if (len < 5) {
-        return r_notexture;
-    }
-
-    // look for it in the texture cache
-    for (i = 0, tex = ttextures; i < numttextures; ++i, ++tex) {
-        if (! strcmp (name, tex->name)) {
-            tex->registration_sequence = texture_registration_sequence;
-            return tex;
-        }
-    }
-
-//
-// load the texture from disk
-//
-    char *base       = SDL_GetBasePath();
-    char  path[1024] = {0};
-
-    strncpy(path, base, 1024);
-    strncat(path, "base/", 1024);
-    strncat(path, name, 1024);
-
-    SDL_Surface *img = IMG_Load(path);
-
-    if (!img) {
-        fprintf(stdout, "Unable to load texture: %s\n", path);
-        return r_notexture;
-    }
-    tex = TM_LoadTexture(name, img->pixels, img->w, img->h, type, img->format->BytesPerPixel);
+    strncpy(tex->name, name, MAX_GAMEPATH);
+    set_filters(type, tex);
+    texture_upload(tex, img->pixels);
 
     SDL_free(img);
 
@@ -410,586 +232,100 @@ texture_t *TM_FindTexture (const char *name, texturetype_t type)
 }
 
 /**
- * \brief Get texture dimensions
- * \param[out] width Width of texture.
- * \param[out] height Height of texture.
- * \param[in] name Name of the texture to get dimensions of.
- * \note If texture is not found, width and height are -1.
+ * Clears all unused textures. Any texture whose cache index does not match the current
+ * cache index is considered stale.
  */
-void TM_GetTextureSize (int32_t *width, int32_t *height, const char *name)
+void texture_cache_remove_unused(void)
 {
-    texture_t *tex;
+    HashTableIter iter;
+    hashtable_iter_init(&iter, sprites);
 
-    tex = TM_FindTexture (name, TT_Pic);
-
-    if (! tex) {
-        *width = *height = -1;
-        return;
-    }
-
-    *width = tex->width;
-    *height = tex->height;
-}
-
-
-/* Note: cubic function no longer clips result */
-static double
-cubic (double dx,
-       int    jm1,
-       int    j,
-       int    jp1,
-       int    jp2)
-{
-    /* Catmull-Rom - not bad */
-    return ((((- jm1 + 3 * j - 3 * jp1 + jp2) * dx +
-              (2 * jm1 - 5 * j + 4 * jp1 - jp2)) * dx +
-             (- jm1 + jp1)) * dx + (j + j)) / 2.0;
-}
-
-bool pixel_region_has_alpha (int bytes)
-{
-    if (bytes == 2 || bytes == 4) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-
-static void
-expand_line (double               *dest,
-             double               *src,
-             int                   bytes,
-             int                   old_width,
-             int                   width)
-{
-    double  ratio;
-    int     x, b;
-    int     src_col;
-    double  frac;
-    double *s;
-
-    ratio = old_width / (double) width;
-
-    /* we can overflow src's boundaries, so we expect our caller to have
-        allocated extra space for us to do so safely (see scale_region ()) */
-
-    /* this could be optimized much more by precalculating the coefficients for
-        each x */
-
-    for (x = 0; x < width; ++x) {
-        src_col = ((int) (x * ratio + 2.0 - 0.5)) - 2;
-        /* +2, -2 is there because (int) rounds towards 0 and we need
-            to round down */
-        frac = (x * ratio - 0.5) - src_col;
-        s = &src[ src_col * bytes ];
-
-        for (b = 0 ; b < bytes ; b++)
-            dest[ b ] = cubic (frac, (int)s[ b - bytes ], (int)s[ b ], (int)s[ b + bytes ], (int)s[ b + bytes * 2 ]);
-
-        dest += bytes;
-    }
-
-}
-
-
-static void
-shrink_line (double               *dest,
-             double               *src,
-             int                   bytes,
-             int                   old_width,
-             int                   width)
-{
-    int          x;
-    int          b;
-    double      *srcp;
-    double      *destp;
-    double       accum[4];
-    double       slice;
-    const double avg_ratio = (double) width / old_width;
-    const double inv_width = 1.0 / width;
-    int          slicepos;      /* slice position relative to width */
-
-//  g_return_if_fail( bytes <= 4 );
-
-    /* This algorithm calculates the weighted average of pixel data that
-        each output pixel must receive, taking into account that it always
-        scales down, i.e. there's always more than one input pixel per each
-        output pixel.  */
-
-    srcp = src;
-    destp = dest;
-
-    slicepos = 0;
-
-    /* Initialize accum to the first pixel slice.  As there is no partial
-        pixel at start, that value is 0.  The source data is interleaved, so
-        we maintain BYTES accumulators at the same time to deal with that
-        many channels simultaneously.  */
-    for (b = 0 ; b < bytes ; ++b) {
-        accum[ b ] = 0.0;
-    }
-
-    for (x = 0 ; x < width ; x++) {
-        /* Accumulate whole pixels.  */
-        do {
-            for (b = 0 ; b < bytes ; b++)
-                accum[ b ] += *srcp++;
-
-            slicepos += width;
-        } while (slicepos < old_width);
-
-        slicepos -= old_width;
-
-        if (slicepos == 0) {
-            /* Simplest case: we have reached a whole pixel boundary.  Store
-                the average value per channel and reset the accumulators for
-                the next round.
-
-                The main reason to treat this case separately is to avoid an
-                access to out-of-bounds memory for the first pixel.  */
-            for (b = 0; b < bytes; b++) {
-                *destp++ = accum[b] * avg_ratio;
-                accum[b] = 0.0;
-            }
-        } else {
-            for (b = 0; b < bytes; b++) {
-                /* We have accumulated a whole pixel per channel where just a
-                    slice of it was needed.  Subtract now the previous pixel's
-                    extra slice.  */
-                slice = srcp[- bytes + b] * slicepos * inv_width;
-                *destp++ = (accum[b] - slice) * avg_ratio;
-
-                /* That slice is the initial value for the next round.  */
-                accum[b] = slice;
-            }
+    while (hashtable_iter_has_next(&iter)) {
+        TableEntry *e = hashtable_iter_next(&iter);
+        Texture    *t = e->value;
+        if (t->cache_index != texture_cache_index) {
+            hashtable_iter_remove(&iter);
+            glDeleteTextures(1, t->id);
+            free(t);
         }
     }
-}
+    hashtable_iter_init(&iter, walls);
 
-static void pixel_region_get_row (uint8_t *src, int y, int width, uint8_t *tmp_src, int BytesPerPixel)
-{
-    int i;
-    unsigned long k = 0;
-    unsigned char *scanline = tmp_src;
-    unsigned char *ptr = src;
-
-    for (i = 0 ; i < (width * BytesPerPixel) ; ++i) {
-        scanline[ k++ ] = ptr[ y * width * BytesPerPixel + i ];
-    }
-}
-
-static void pixel_region_set_row (uint8_t *dest,
-                                   int         BytesPerPixel,
-                                   int         y,
-                                   int         width,
-                                   uint8_t *data)
-{
-    int i;
-    unsigned long k = 0;
-    unsigned char *scanline = dest;
-    unsigned char *ptr = data;
-
-    for (i = 0 ; i < (width * BytesPerPixel) ; ++i) {
-        scanline[ y * width * BytesPerPixel + i ] = ptr[ k++ ];
-    }
-}
-
-static void
-get_premultiplied_double_row(uint8_t *in, int PRbytes, int x, int y, int w, double *row, uint8_t *tmp_src)
-{
-    int b;
-    int bytes = PRbytes;
-
-    pixel_region_get_row (in, y, w, tmp_src, bytes);
-
-    if (pixel_region_has_alpha (bytes)) {
-        /* premultiply the alpha into the double array */
-        double *irow  = row;
-        int     alpha = bytes - 1;
-        double  mod_alpha;
-
-        for (x = 0; x < w; ++x) {
-            mod_alpha = tmp_src[ alpha ] / 255.0;
-
-            for (b = 0; b < alpha; ++b) {
-                irow[ b ] = mod_alpha * tmp_src[ b ];
-            }
-
-            irow[ b ] = tmp_src[ alpha ];
-            irow += bytes;
-            tmp_src += bytes;
-        }
-    } else { /* no alpha */
-        for (x = 0; x < w * bytes; ++x) {
-            row[ x ] = tmp_src[ x ];
+    while (hashtable_iter_has_next(&iter)) {
+        TableEntry *e = hashtable_iter_next(&iter);
+        Texture    *t = e->value;
+        if (t->cache_index < texture_cache_index) {
+            hashtable_iter_remove(&iter);
+            glDeleteTextures(1, t->id);
+            free(t);
         }
     }
-
-    /* set the off edge pixels to their nearest neighbor */
-    for (b = 0; b < 2 * bytes; b++) {
-        row[ b - 2 * bytes ] = row[ b % bytes ];
-    }
-
-    for (b = 0; b < bytes * 2; b++) {
-        row[ b + w * bytes ] = row[ (w - 1) * bytes + b % bytes ];
-    }
-}
-
-
-static void
-rotate_pointers (uint8_t **p, uint32_t n)
-{
-    uint32_t i;
-    uint8_t *tmp;
-
-    tmp = p[ 0 ];
-
-    for (i = 0 ; i < n - 1 ; i++) {
-        p[ i ] = p[ i + 1 ];
-    }
-
-    p[ i ] = tmp;
-}
-
-static void
-get_scaled_row (double              **src,
-                int                   y,
-                int                   new_width,
-                double               *row,
-                uint8_t *src_tmp,
-                uint8_t *srcPR,
-                int old_width,
-                int old_height,
-                int bytes)
-{
-    /* get the necesary lines from the source image, scale them,
-        and put them into src[] */
-    rotate_pointers ((unsigned char **)src, 4);
-
-    if (y < 0) {
-        y = 0;
-    }
-
-    if (y < old_height) {
-        get_premultiplied_double_row(srcPR, bytes, 0, y, old_width, row, src_tmp);
-
-        if (new_width > old_width) {
-            expand_line (src[3], row, bytes, old_width, new_width);
-        } else if (old_width > new_width) {
-            shrink_line (src[3], row, bytes, old_width, new_width);
-        } else { /* no scailing needed */
-            memcpy (src[3], row, sizeof (double) * new_width * bytes);
-        }
-    } else {
-        memcpy (src[3], src[2], sizeof (double) * new_width * bytes);
-    }
-}
-
-
-/*
-non-interpolating scale_region.
- */
-static void
-scale_region_no_resample (uint8_t *in, int inwidth, int inheight,
-                          uint8_t *out, int outwidth, int outheight, char bytes)
-{
-    int   *x_src_offsets;
-    int   *y_src_offsets;
-    uint8_t *src;
-    uint8_t *dest;
-    int    width, height, orig_width, orig_height;
-    int    last_src_y;
-    int    row_bytes;
-    int    x, y, b;
-
-
-    orig_width = inwidth;
-    orig_height = inheight;
-
-    width = outwidth;
-    height = outheight;
-
-
-    /*  the data pointers...  */
-    x_src_offsets = (int *) malloc (sizeof (int) * width * bytes);
-    y_src_offsets = (int *) malloc (sizeof (int) * height);
-    src  = (unsigned char *) malloc (orig_width * bytes);
-    dest = (unsigned char *) malloc (width * bytes);
-
-    /*  pre-calc the scale tables  */
-    for (b = 0; b < bytes; b++) {
-        for (x = 0; x < width; x++) {
-            x_src_offsets[ b + x * bytes ] =
-                b + bytes * ((x * orig_width + orig_width / 2) / width);
-        }
-    }
-
-    for (y = 0; y < height; y++) {
-        y_src_offsets[ y ] = (y * orig_height + orig_height / 2) / height;
-    }
-
-    /*  do the scaling  */
-    row_bytes = width * bytes;
-    last_src_y = -1;
-
-    for (y = 0; y < height; y++) {
-        /* if the source of this line was the same as the source
-        *  of the last line, there's no point in re-rescaling.
-        */
-        if (y_src_offsets[ y ] != last_src_y) {
-            pixel_region_get_row (in, y_src_offsets[ y ], orig_width, src, bytes);
-
-            //pixel_region_get_row( srcPR, 0, y_src_offsets[y], orig_width, src, 1 );
-            for (x = 0 ; x < row_bytes ; x++) {
-                dest[ x ] = src[ x_src_offsets[ x ] ];
-            }
-
-            last_src_y = y_src_offsets[ y ];
-        }
-
-        pixel_region_set_row (out, bytes, y, width, dest);
-    }
-
-    free (x_src_offsets);
-    free (y_src_offsets);
-    free (src);
-    free (dest);
 }
 
 /**
- * \brief Resize texture.
- * \param[in] in Original texture data.
- * \param[in] inwidth Original width of texture in pixels.
- * \param[in] inheight Original height of texture in pixels.
- * \param[in,out] out Resized texture data.
- * \param[in] outwidth New width of texture in pixels.
- * \param[in] outheight New height of texture in pixels.
- * \param[in] bytes Number of bytes per pixel.
- * \param[in] interpolation  See InterpolationType
+ * Adds the texture to cache and returns it.
  */
-void TM_ResampleTexture (uint8_t *in, int inwidth, int inheight, uint8_t *out, int outwidth, int outheight, uint16_t bytes, InterpolationType interpolation)
+Texture *add_to_cache_by_id(uint32_t id, HashTable *cache, TextureType type)
 {
-    double *src[ 4 ];
-    uint8_t *src_tmp;
-    uint8_t *dest;
-    double *row, *accum;
-    int     b;
-    int     width, height;
-    int     orig_width, orig_height;
-    double  y_rat;
-    int     i;
-    int     old_y = -4;
-    int     new_y;
-    int     x, y;
+    Texture *tex = hashtable_get(cache, (void*) id);
 
+    /* Texture is already in the cache */
+    if (tex) {
+        tex->cache_index = texture_cache_index;
+        return tex;
+    }
+    char name[64];
 
-    if (interpolation == INTERPOLATION_NONE) {
-        scale_region_no_resample (in, inwidth, inheight, out, outwidth, outheight, (char)bytes);
-        return;
+    switch (type) {
+    case TT_Wall:   com_snprintf(name, sizeof(name), "walls/%.3d.tga", id); break;
+    case TT_Sprite: com_snprintf(name, sizeof(name), "sprites/%.3d.tga", id); break;
+    case TT_Pic:    return no_texture;
     }
 
+    if (!(tex = texture_new(&name, type, texture_cache_index)))
+        return NULL;
 
-    orig_width = inwidth;
-    orig_height = inheight;
+    if (!hashtable_add(cache, (void*) id, tex))
+        return NULL;
 
-    width = outwidth;
-    height = outheight;
-
-
-    /*  find the ratios of old y to new y  */
-    y_rat = (double) orig_height / (double) height;
-
-
-    /*  the data pointers...  */
-    for (i = 0 ; i < 4 ; ++i) {
-        src[ i ] = (double *) malloc (sizeof (double) * width * bytes);
-    }
-
-    dest =  malloc (width * bytes);
-
-    src_tmp = malloc (orig_width * bytes);
-
-    /* offset the row pointer by 2*bytes so the range of the array
-        is [-2*bytes] to [(orig_width + 2)*bytes] */
-    row = (double *) malloc (sizeof (double) * (orig_width + 2 * 2) * bytes);
-    row += bytes * 2;
-
-    accum = (double *) malloc (sizeof (double) * width * bytes);
-
-
-    /*  Scale the selected region  */
-
-    for (y = 0 ; y < height ; y++) {
-
-        if (height < orig_height) {
-            int          max;
-            double       frac;
-            const double inv_ratio = 1.0 / y_rat;
-
-            if (y == 0) { /* load the first row if this is the first time through */
-                get_scaled_row (&src[0], 0, width, row, src_tmp, in, orig_width, orig_height, bytes);
-            }
-
-            new_y = (int) (y * y_rat);
-            frac = 1.0 - (y * y_rat - new_y);
-
-            for (x = 0 ; x < width * bytes; ++x) {
-                accum[x] = src[3][x] * frac;
-            }
-
-            max = (int) ((y + 1) * y_rat) - new_y - 1;
-
-            get_scaled_row (&src[ 0 ], ++new_y, width, row, src_tmp, in, orig_width, orig_height, bytes);
-
-            while (max > 0) {
-                for (x = 0 ; x < width * bytes ; ++x) {
-                    accum[x] += src[ 3 ][ x ];
-                }
-
-                get_scaled_row (&src[ 0 ], ++new_y, width, row, src_tmp, in, orig_width, orig_height, bytes);
-                max--;
-            }
-
-            frac = (y + 1) * y_rat - ((int) ((y + 1) * y_rat));
-
-            for (x = 0 ; x < width * bytes ; ++x) {
-                accum[ x ] += frac * src[ 3 ][ x ];
-                accum[ x ] *= inv_ratio;
-            }
-        } else if (height > orig_height) {
-            double p0, p1, p2, p3;
-            double dy;
-
-            new_y = (int)floor (y * y_rat - 0.5);
-
-            while (old_y <= new_y) {
-                /* get the necesary lines from the source image, scale them,
-                    and put them into src[] */
-                get_scaled_row (&src[ 0 ], old_y + 2, width, row, src_tmp, in, orig_width, orig_height, bytes);
-                old_y++;
-            }
-
-            dy = (y * y_rat - 0.5) - new_y;
-
-            p0 = cubic (dy, 1, 0, 0, 0);
-            p1 = cubic (dy, 0, 1, 0, 0);
-            p2 = cubic (dy, 0, 0, 1, 0);
-            p3 = cubic (dy, 0, 0, 0, 1);
-
-            for (x = 0 ; x < width * bytes ; ++x) {
-                accum[ x ] = (p0 * src[ 0 ][ x ] + p1 * src[ 1 ][ x ] +
-                              p2 * src[ 2 ][ x ] + p3 * src[ 3 ][ x ]);
-            }
-
-
-        } else { /* height == orig_height */
-            get_scaled_row (&src[ 0 ], y, width, row, src_tmp, in, orig_width, orig_height, bytes);
-            memcpy (accum, src[ 3 ], sizeof (double) * width * bytes);
-        }
-
-        if (pixel_region_has_alpha (bytes)) {
-            /* unmultiply the alpha */
-            double  inv_alpha;
-            double *p = accum;
-            int     alpha = bytes - 1;
-            int     result;
-            uint8_t *d = dest;
-
-            for (x = 0 ; x < width ; ++x) {
-                if (p[ alpha ] > 0.001) {
-                    inv_alpha = 255.0 / p[ alpha ];
-
-                    for (b = 0 ; b < alpha ; b++) {
-                        result = (int)RINT (inv_alpha * p[ b ]);
-
-                        if (result < 0) {
-                            d[ b ] = 0;
-                        } else if (result > 255) {
-                            d[ b ] = 255;
-                        } else {
-                            d[ b ] = result;
-                        }
-                    }
-
-                    result = (int)RINT (p[ alpha ]);
-
-                    if (result > 255) {
-                        d[ alpha ] = 255;
-                    } else {
-                        d[ alpha ] = result;
-                    }
-                } else { /* alpha <= 0 */
-                    for (b = 0 ; b <= alpha ; ++b) {
-                        d[ b ] = 0;
-                    }
-                }
-
-                d += bytes;
-                p += bytes;
-            }
-        } else {
-            int w = width * bytes;
-
-            for (x = 0 ; x < w ; ++x) {
-                if (accum[ x ] < 0.0) {
-                    dest[ x ] = 0;
-                } else if (accum[ x ] > 255.0) {
-                    dest[ x ] = 255;
-                } else {
-                    dest[ x ] = (uint8_t)RINT (accum[ x ]);
-                }
-            }
-        }
-
-        pixel_region_set_row (out, bytes, y, width, dest);
-    }
-
-    /*  free up temporary arrays  */
-    free (accum);
-
-    for (i = 0 ; i < 4 ; ++i) {
-        free (src[ i ]);
-    }
-
-    free (src_tmp);
-    free (dest);
-
-    row -= 2 * bytes;
-    free (row);
+    return tex;
 }
 
 /**
- * \brief Initialize Texture Manager.
- * \note Generates default texture.
+ * Returns a wall from the texture cache if it exists. If doesn't exist it is loaded
+ * into the cache and returned.
  */
-void TM_Init (void)
+Texture *texture_get_wall(uint32_t id)
 {
-    uint8_t *ptr;
-    uint8_t *data;
-    int x, y;
+    return add_to_cache_by_id(id, walls, TT_Wall);
+}
 
-    memset (_texWalls, 0, sizeof (_texWalls));
-    memset (_texSprites, 0, sizeof (_texSprites));
+/**
+ * Returns a sprite from the texture cache if it exists. If doesn't exist it is loaded
+ * into the cache and returned.
+ */
+Texture *texture_get_sprite(uint32_t id)
+{
+    return add_to_cache_by_id(id, sprites, TT_Sprite);
+}
 
- //   texture_registration_sequence = 1;
+/**
+ * Returns a picture from the texture cache if it exists. If doesn't exist it is loaded
+ * into the cache and returned.
+ */
+Texture *texture_get_picture(char *name)
+{
+    Texture *tex = hashtable_get(pictures, name);
 
-// create a checkerboard texture
-    data = malloc (16 * 16 * 4);
-
-    for (y = 0; y < 16; ++y) {
-        for (x = 0; x < 16; ++x) {
-            ptr = &data[ (y * 16 + x) * 4 ];
-
-            if ((y < 8) ^ (x < 8)) {
-                ptr[ 0 ] = ptr[ 1 ] = ptr[ 2 ] = 0x00;
-                ptr[ 3 ] = 0xFF;
-            } else {
-                ptr[ 0 ] = ptr[ 1 ] = ptr[ 2 ] = 0xFF;
-                ptr[ 3 ] = 0xFF;
-            }
-        }
+    if (tex) {
+        tex->cache_index = texture_cache_index;
+        return tex;
     }
-    r_notexture = TM_LoadTexture ("***r_notexture***", data, 16, 16, TT_Pic, 4);
-    free (data);
+    if (!(tex = texture_new(name, TT_Pic, texture_cache_index)))
+        return NULL;
+
+    if (!hashtable_add(pictures, name, tex))
+        return NULL;
+
+    return tex;
 }

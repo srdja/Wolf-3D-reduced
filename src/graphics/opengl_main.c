@@ -94,7 +94,7 @@ int opengl_init()
 
     GL_SetDefaultState();
 
-    TM_Init();
+    texture_tm_init();
 
     glGetError();
     return 1;

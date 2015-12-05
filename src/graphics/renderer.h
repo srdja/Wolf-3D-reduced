@@ -45,7 +45,6 @@
 #define __RENDERER_H__
 
 #include "../util/filesystem.h"
-
 #include "texture_manager.h"
 #include "color.h"
 
@@ -56,8 +55,7 @@ void R_EndRegistration (void);
 void R_BeginFrame (void);
 void R_EndFrame (void);
 
-void R_DeleteTexture (unsigned int texnum);
-bool R_UploadTexture (texture_t *tex, uint8_t* data);
+//void texture_upload(Texture *tex, uint8_t *data);
 
 void R_SetGL2D (void);
 

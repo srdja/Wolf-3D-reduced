@@ -122,7 +122,7 @@ void CacheTextures (uint16_t start, uint16_t end)
     }
 
     for (i = start ; i <= end ; ++i) {
-        TM_FindTexture_Sprite (i);
+        texture_get_sprite(i);
     }
 
     R_DrawPsyched (++progress_bar + 30);
@@ -924,7 +924,8 @@ void Level_PrecacheTextures_Sound (LevelData_t *lvl)
 
             if (lvl->tilemap[ x ][ y ] & POWERUP_TILE) {
                 int tex = lvl->tilemap[ x ][ y ] & POWERUP_TILE;
-                TM_FindTexture_Sprite (tex);
+//                texture_get_sprite(tex);
+                texture_get_sprite(tex);
             }
         }
 
@@ -941,17 +942,17 @@ void Level_PrecacheTextures_Sound (LevelData_t *lvl)
 
     for (x = 1; x < 8 ; ++x) {
         com_snprintf (texname, sizeof (texname), "pics/FACE%dAPIC.tga", x);
-        (void)TM_FindTexture (texname, TT_Pic);
+        texture_get_picture(texname);
 
         com_snprintf (texname, sizeof (texname), "pics/FACE%dBPIC.tga", x);
-        (void)TM_FindTexture (texname, TT_Pic);
+        texture_get_picture(texname);
 
         com_snprintf (texname, sizeof (texname), "pics/FACE%dCPIC.tga", x);
-        (void)TM_FindTexture (texname, TT_Pic);
+        texture_get_picture(texname);
     }
 
     com_snprintf (texname, sizeof (texname), "pics/FACE8APIC.tga");
-    (void)TM_FindTexture (texname, TT_Pic);
+    texture_get_picture(texname);
 }
 
 /**

@@ -75,39 +75,32 @@ static Slide slides[6];
 
 static void draw_pc13(void)
 {
-    uint32_t w, h;
-
     R_Draw_Fill (0, 0, viddef.width, viddef.height, pc13intro);
-    TM_GetTextureSize (&w, &h, "pics/PC13PIC.tga");
-    R_Draw_Pic ((viddef.width - w) - 16, (viddef.height - h) - 26, "pics/PC13PIC.tga");
+    Texture *t = texture_get_picture("pics/PC13PIC.tga");
+    R_Draw_Pic ((viddef.width - t->width) - 16, (viddef.height - t->height) - 26, "pics/PC13PIC.tga");
 }
 
 
 static void draw_title(void)
 {
-    uint32_t w, h;
-
     R_Draw_Fill (0, 0, viddef.width, viddef.height, colourBlack);
 
-    TM_GetTextureSize (&w, &h, "pics/TITLEPIC.tga");
-    R_Draw_Pic ((viddef.width - w) >> 1, (viddef.height - h) >> 1, "pics/TITLEPIC.tga");
+    Texture *t = texture_get_picture("pics/TITLEPIC.tga");
+    R_Draw_Pic ((viddef.width - t->width) >> 1, (viddef.height - t->height) >> 1, "pics/TITLEPIC.tga");
 }
 
 static void draw_credits(void)
 {
-    uint32_t w, h;
-
     R_Draw_Fill (0, 0, viddef.width, viddef.height, bgcolour);
     R_Draw_Fill (0, 36, viddef.width, 48, colourBlack);
     R_Draw_Fill (0, 80, viddef.width, 2, bannerline);
 
-    TM_GetTextureSize (&w, &h, "pics/CREDITSPIC.tga");
-    R_Draw_Pic ((viddef.width - w) >> 1, 0, "pics/CREDITSPIC.tga");
+    Texture *t = texture_get_picture("pics/CREDITSPIC.tga");
+    R_Draw_Pic ((viddef.width - t->width) >> 1, 0, "pics/CREDITSPIC.tga");
 }
 
 static void draw_score(void)
 {
-    uint32_t w, h;
     uint16_t i;
     uint32_t y;
 
@@ -118,13 +111,8 @@ static void draw_score(void)
 
     M_Banner ("pics/HIGHSCORESPIC.tga", 0);
 
-    TM_GetTextureSize (&w, &h, "pics/C_NAMEPIC.tga");
-    R_Draw_Pic ((8 * 8) + ((viddef.width - 640) >> 1), 136 + ((viddef.height - 480) >> 1), "pics/C_NAMEPIC.tga");
-
-    TM_GetTextureSize (&w, &h, "pics/C_LEVELPIC.tga");
+    R_Draw_Pic ((8  * 8) + ((viddef.width - 640) >> 1), 136 + ((viddef.height - 480) >> 1), "pics/C_NAMEPIC.tga");
     R_Draw_Pic ((40 * 8) + ((viddef.width - 640) >> 1), 136 + ((viddef.height - 480) >> 1), "pics/C_LEVELPIC.tga");
-
-    TM_GetTextureSize (&w, &h, "pics/C_SCOREPIC.tga");
     R_Draw_Pic ((56 * 8) + ((viddef.width - 640) >> 1), 136 + ((viddef.height - 480) >> 1), "pics/C_SCOREPIC.tga");
 
     y = 160 + ((viddef.height - 480) >> 1);
@@ -189,7 +177,7 @@ void intro_run()
         input_set_context("game");
         ClientStatic.menuState = IPM_GAME;
         Game_Init();
-        StartGame( 1,  0,  1);
+        StartGame( 0,  0,  1);
         return;
     }
     slides[intro_slide].draw();

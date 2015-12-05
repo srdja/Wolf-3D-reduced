@@ -71,7 +71,7 @@ void R_Draw_Character (int x, int y, int num, font_t *myfont)
 
     glEnable (GL_BLEND);
 
-    R_Bind (myfont->texfont->texnum);
+    texture_use (myfont->texfont->id);
 
     glBegin (GL_QUADS);
         glTexCoord2f (fcol, frow);
@@ -102,13 +102,13 @@ void R_Draw_Character (int x, int y, int num, font_t *myfont)
  */
 void R_Draw_Pic (int x, int y, const char *pic)
 {
-    texture_t *tex = TM_FindTexture (pic, TT_Pic);
+    Texture *tex = texture_get_picture(pic);
 
     if (!tex) {
         return;
     }
 
-    R_Bind (tex->texnum);
+    texture_use(tex->id);
 
     glBegin (GL_QUADS);
         glTexCoord2f (0.0, 0.0);
@@ -134,27 +134,24 @@ void R_Draw_Pic (int x, int y, const char *pic)
  */
 void R_Draw_Tile (int x, int y, int w, int h, const char *pic)
 {
-    texture_t   *image;
+    Texture *tex;
 
-    image = TM_FindTexture (pic, TT_Wall);
-
-    if (! image) {
+    if (!(tex = texture_get_picture(pic)))
         return;
-    }
 
-    R_Bind (image->texnum);
+    texture_use(tex->id);
 
     glBegin (GL_QUADS);
-        glTexCoord2i (x / image->upload_width, y / image->upload_height);
+        glTexCoord2i (x / tex->width, y / tex->height);
         glVertex2i (x, y);
 
-        glTexCoord2i ((x + w) / image->upload_width, y / image->upload_height);
+        glTexCoord2i ((x + w) / tex->width, y / tex->height);
         glVertex2i (x + w, y);
 
-        glTexCoord2i ((x + w) / image->upload_width, (y + h) / image->upload_height);
+        glTexCoord2i ((x + w) / tex->width, (y + h) / tex->height);
         glVertex2i (x + w, y + h);
 
-        glTexCoord2i (x / image->upload_width, (y + h) / image->upload_height);
+        glTexCoord2i (x / tex->width, (y + h) / tex->height);
         glVertex2i (x, y + h);
     glEnd();
 }

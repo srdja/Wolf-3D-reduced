@@ -502,10 +502,8 @@ static void M_LetsSeeThatAgain_Draw (void)
         fangle = TransformPoint (deathcamEnt->x, deathcamEnt->y, Player.position.origin[0], Player.position.origin[1]);
 
         Player.position.angle = fangle;
-        Player.position.pitch = 0;
 
         ClientState.viewangles[ YAW ] = RAD2FINE (Player.position.angle);
-        ClientState.viewangles[ PITCH ] = RAD2FINE (Player.position.pitch);
 
         dist = 0x14000l;
 

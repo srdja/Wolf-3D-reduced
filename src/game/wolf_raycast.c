@@ -75,15 +75,12 @@ void R_RayCast (placeonplane_t viewport, LevelData_t *lvl)
 
     // FIXME: control ray count and make angle init
     for (n = 0 ; n < 640 ; ++n) {
-
         trace.x = x;
         trace.y = y;
 
         tanval = (float) (tanfov2 * (-1.0 + 2.0 * (double)n / (double) (640 - 1)));
 
         trace.angle = angle_normalize (angle + (float)atan (tanval));
-
-
 
         R_Trace (&trace, lvl);
     }
@@ -345,6 +342,5 @@ void R_Trace (r_trace_t *trace, LevelData_t *lvl)
             XmapPos = xintercept >> TILE_SHIFT;
         }
 
-    } // end of while( 1 )
-
+    }
 }

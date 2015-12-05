@@ -166,7 +166,7 @@ void R_DrawBox (int x, int y, int w, int h, uint32_t color)
  */
 void LoadWallTexture (int wallPicNum , bool *pIsDark)
 {
-    texture_t *twall;
+    Texture *twall;
     bool isDark = false;
 
     if ((wallPicNum & 1) &&
@@ -177,13 +177,11 @@ void LoadWallTexture (int wallPicNum , bool *pIsDark)
         isDark = true;
         wallPicNum--;
     }
+    twall = texture_get_wall(wallPicNum);
+    texture_use(twall->id);
 
-    twall = TM_FindTexture_Wall (wallPicNum);
-    R_Bind (twall->texnum);
-
-    if (pIsDark) {
+    if (pIsDark)
         *pIsDark = isDark;
-    }
 }
 
 /**
@@ -331,7 +329,7 @@ void R_DrawSprites (void)
     float Ex, Ey, Dx, Dy;
     int n_sprt, n;
     float ang;
-    texture_t *twall;
+    Texture *twall;
 
 // build visible sprites list
 
@@ -352,9 +350,9 @@ void R_DrawSprites (void)
             continue; // little hack to save speed & z-buffer
         }
 
-        twall = TM_FindTexture_Sprite (vislist[ n ].tex);
+        twall = texture_get_sprite(vislist[n].tex); // should be get texture
 
-        R_Bind (twall->texnum);
+        texture_use(twall->id);
 
         glBegin (GL_QUADS);
             Ex = Dx = vislist[ n ].x / FLOATTILE;
@@ -381,7 +379,7 @@ void R_DrawSprites (void)
  */
 void R_DrawWeapon (void)
 {
-    texture_t *tex;
+    Texture *tex;
     static int w = 128;
     static int h = 154;  // image was drawn for 320x200 res, so stretch to fit 320x240
     float scale = (float) (viddef.height / 240);
@@ -395,13 +393,13 @@ void R_DrawWeapon (void)
             return;
         }
         y = 7 * viddef.height / 200;
-        tex = TM_FindTexture_Sprite (SPR_DEATHCAM);
+        tex = texture_get_sprite(SPR_DEATHCAM); // get_texture
     } else {
         y = (int) (viddef.height - (h * scale) - 79);
-        //tex = TM_FindTexture_Sprite (Player.weapon * 5 + Player.weaponframe + SPR_KNIFEREADY);
-        tex = TM_FindTexture_Sprite (422);
+        //tex = texture_get_sprite (Player.weapon * 5 + Player.weaponframe + SPR_KNIFEREADY);
+        tex = texture_get_sprite(422); // get_texture
     }
-    R_Bind (tex->texnum);
+    texture_use(tex->id);
 
     glAlphaFunc (GL_GREATER, 0.3f);
 
@@ -431,7 +429,7 @@ void R_DrawWeapon (void)
  */
 void R_DrawNumber (int x, int y, int number)
 {
-    texture_t *tex;
+    Texture *tex;
     int col;
     float fcol;
     static float w = 0.1f;
@@ -442,11 +440,11 @@ void R_DrawNumber (int x, int y, int number)
     com_snprintf (string, sizeof (string), "%d", number);
     length = strlen (string);
 
-    tex = TM_FindTexture ("pics/N_NUMPIC.tga", TT_Pic);
+    tex = texture_get_picture("pics/N_NUMPIC.tga");
 
     glEnable (GL_TEXTURE_2D);
 
-    R_Bind (tex->texnum);
+    texture_use(tex->id);
 
     glBegin (GL_QUADS);
         for (i = length - 1 ; i >= 0 ; --i) {
@@ -483,16 +481,16 @@ uint8_t wfont[ ] = {
  */
 void R_put_line (int x, int y, const char *string)
 {
-    texture_t *tex;
+    Texture *tex;
     int mx = x;
     int num;
     float frow, fcol;
     static float    h = 0.25f;  // (32 / 128.0f);
     static float    w = 0.0625f; // (32 / 512.0f);
 
-    tex = TM_FindTexture ("pics/L_FONTPIC.tga", TT_Pic);
+    tex = texture_get_picture("pics/L_FONTPIC.tga");
 
-    R_Bind (tex->texnum);
+    texture_use(tex->id);
 
     glBegin (GL_QUADS);
         while (*string) {

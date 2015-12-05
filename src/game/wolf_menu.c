@@ -65,17 +65,12 @@ colour3_t soddeactive   = { 0, 0, 112 };
 colour3_t sodbkgdcolour = { 0, 0, 88 };
 
 
-
-
 const char *menu_in_sound   = "lsfx/032.wav";
 const char *menu_move_sound = "lsfx/005.wav";
 const char *menu_out_sound  = "lsfx/039.wav";
 
 
-
-
 static int m_main_cursor;
-
 
 void M_Menu_Main_f (void);
 extern void M_Menu_Game_f (void);
@@ -124,13 +119,11 @@ int     m_menudepth;
  */
 void M_Banner (const char *name, uint16_t nYOffest)
 {
-    int32_t w, h;
-
     R_Draw_Fill (0, 20, viddef.width, 48, colourBlack);
     R_Draw_Fill (0, 64, viddef.width, 2, bannerline);
 
-    TM_GetTextureSize (&w, &h, name);
-    R_Draw_Pic ((viddef.width - w) >> 1, nYOffest, name);
+    Texture *t = texture_get_picture(name);
+    R_Draw_Pic ((viddef.width - t->width) >> 1, nYOffest, name);
 }
 
 /**
@@ -362,7 +355,7 @@ void M_DrawCursor (int x, int y)
 
         for (i = 0 ; i < NUM_CURSOR_FRAMES ; ++i) {
             com_snprintf (cursorname, sizeof (cursorname), "pics/C_CURSOR%dPIC.tga", i);
-            TM_FindTexture (cursorname, TT_Pic);
+            texture_get_picture(cursorname);
         }
 
         cached = true;
@@ -397,10 +390,8 @@ void M_DrawWindow (int x, int y, int w, int h,
  */
 void M_DrawInfoBar (void)
 {
-    int32_t w, h;
-
-    TM_GetTextureSize (&w, &h, "pics/C_MOUSELBACKPIC.tga");
-    R_Draw_Pic ((viddef.width - w) >> 1, viddef.height - h, "pics/C_MOUSELBACKPIC.tga");
+    Texture *t = texture_get_picture("pics/C_MOUSELBACKPIC.tga");
+    R_Draw_Pic ((viddef.width - t->width) >> 1, viddef.height - t->height, "pics/C_MOUSELBACKPIC.tga");
 }
 
 
@@ -437,15 +428,14 @@ static const char *menunames[] = {
 void M_Main_Draw (void)
 {
     int i;
-    int32_t w, h;
     int cx, cy;
 
     R_Draw_Fill (0, 0, viddef.width, viddef.height, bgcolour);
 
     M_Banner ("pics/C_OPTIONSPIC.tga", 0);
 
-    TM_GetTextureSize (&w, &h, "pics/C_MOUSELBACKPIC.tga");
-    R_Draw_Pic ((viddef.width - w) >> 1, (viddef.height - h), "pics/C_MOUSELBACKPIC.tga");
+    Texture *t = texture_get_picture("pics/C_MOUSELBACKPIC.tga");
+    R_Draw_Pic ((viddef.width - t->width) >> 1, (viddef.height - t->height), "pics/C_MOUSELBACKPIC.tga");
 
     cx = (viddef.width - 356) / 2;
     cy = (viddef.height - 272) / 2;
@@ -837,17 +827,8 @@ void M_Keydown (int key)
     }
 }
 
-extern void Automap();
 
 void DrawMenus()
 {
-    switch (ClientStatic.menuState) {
 
-    case IPM_AUTOMAP:
-        Automap();
-        break;
-
-    default:
-        break;
-    }
 }

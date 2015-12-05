@@ -190,8 +190,7 @@ typedef struct {
     uint16_t Plane3[ 64 * 64 ]; /* other */
 
     long tilemap[ 64 ][ 64 ];   // wall values only
-    uint8_t spotvis[ 64 ][ 64 ];
-    // this is an array of references to texture descriptions
+      // this is an array of references to texture descriptions
 // the renderer must know what to draw by this number
     int wall_tex_x[ 64 ][ 64 ]; // x_wall
     int wall_tex_y[ 64 ][ 64 ]; // y_wall

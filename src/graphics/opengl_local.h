@@ -38,16 +38,13 @@ extern  float   gldepthmin, gldepthmax;
 
 extern  int intensity;
 
-void R_Bind (int texnum);
+void texture_use(int texnum);
 
 typedef struct {
     float inverse_intensity;
-    bool fullscreen;
-
-    int     prev_mode;
-
-    int currenttextures[4];
-    int currenttmu;
+    bool  fullscreen;
+    int   prev_mode;
+    int   bound_texture_id;
 } glstate_t;
 
 extern glstate_t   gl_state;
